@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.skytech.api.mapper.EventTeamMapper" >
+    <resultMap id="BaseResultMap" type="com.skytech.api.model.EventTeam" >
+        <id column="sid" property="sid" jdbcType="VARCHAR" />
+        <result column="event_sid" property="eventSid" jdbcType="VARCHAR" />
+        <result column="event_name" property="eventName" jdbcType="VARCHAR" />
+        <result column="team_sid" property="teamSid" jdbcType="VARCHAR" />
+        <result column="team_name" property="teamName" jdbcType="VARCHAR" />
+        <result column="joined_datetime" property="joinedDatetime" jdbcType="DATE" />
+    </resultMap>
+    <sql id="Example_Where_Clause" >
+        <where >
+            <foreach collection="oredCriteria" item="criteria" separator="or" >
+                <if test="criteria.valid" >
+                    <trim prefix="(" suffix=")" prefixOverrides="and" >
+                        <foreach collection="criteria.criteria" item="criterion" >
+                            <choose >
+                                <when test="criterion.noValue" >
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue" >
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue" >
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue" >
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                                    #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+
+    <sql id="Update_By_Example_Where_Clause" >
+        <where >
+            <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+                <if test="criteria.valid" >
+                    <trim prefix="(" suffix=")" prefixOverrides="and" >
+                        <foreach collection="criteria.criteria" item="criterion" >
+                            <choose >
+                                <when test="criterion.noValue" >
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue" >
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue" >
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue" >
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                                    #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Base_Column_List" >
+        sid,event_sid,event_name,team_sid,team_name,joined_datetime
+    </sql>
+    <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.skytech.api.model.EventTeamExample" >
+        select
+        <if test="distinct" >
+            distinct
+        </if>
+        <include refid="Base_Column_List" />
+        from event_team
+        <if test="_parameter != null" >
+            <include refid="Example_Where_Clause" />
+        </if>
+        <if test="orderByClause != null" >
+            order by ${orderByClause}
+        </if>
+        <if test="pagination != null and pagination.begin >= 0" >
+            limit #{pagination.begin}, #{pagination.pageSize}
+        </if>
+    </select>
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+        select
+        <include refid="Base_Column_List" />
+        from event_team
+        where sid = #{sid,jdbcType=VARCHAR}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+        delete from event_team
+        where sid = #{sid,jdbcType=VARCHAR}
+    </delete>
+
+    <delete id="deleteByExample" parameterType="com.skytech.api.model.EventTeamExample" >
+        delete from event_team
+        <if test="_parameter != null" >
+            <include refid="Example_Where_Clause" />
+        </if>
+    </delete>
+
+    <insert id="insert" parameterType="com.skytech.api.model.EventTeam" >
+        insert into event_team (
+        sid,
+        event_sid,
+        event_name,
+        team_sid,
+        team_name,
+        joined_datetime
+        )
+        values (
+        #{sid,jdbcType=VARCHAR},
+        #{eventSid,jdbcType=VARCHAR},
+        #{eventName,jdbcType=VARCHAR},
+        #{teamSid,jdbcType=VARCHAR},
+        #{teamName,jdbcType=VARCHAR},
+        #{joinedDatetime,jdbcType=DATE}
+        )
+    </insert>
+
+    <insert id="insertSelective" parameterType="com.skytech.api.model.EventTeam" >
+        insert into event_team
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="sid != null" >
+            sid,
+            </if>
+            <if test="eventSid != null" >
+            event_sid,
+            </if>
+            <if test="eventName != null" >
+            event_name,
+            </if>
+            <if test="teamSid != null" >
+            team_sid,
+            </if>
+            <if test="teamName != null" >
+            team_name,
+            </if>
+            <if test="joinedDatetime != null" >
+            joined_datetime
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+
+            <if test="sid != null" >
+                #{sid,jdbcType=VARCHAR},
+            </if>
+            <if test="eventSid != null" >
+                #{eventSid,jdbcType=VARCHAR},
+            </if>
+            <if test="eventName != null" >
+                #{eventName,jdbcType=VARCHAR},
+            </if>
+            <if test="teamSid != null" >
+                #{teamSid,jdbcType=VARCHAR},
+            </if>
+            <if test="teamName != null" >
+                #{teamName,jdbcType=VARCHAR},
+            </if>
+            <if test="joinedDatetime != null" >
+                #{joinedDatetime,jdbcType=DATE}
+            </if>
+        </trim>
+    </insert>
+
+    <select id="countByExample" parameterType="com.skytech.api.model.EventTeamExample" resultType="java.lang.Integer" >
+        select count(*) from event_team
+        <if test="_parameter != null" >
+            <include refid="Example_Where_Clause" />
+        </if>
+    </select>
+
+    <update id="updateByExampleSelective" parameterType="map" >
+        update event_team
+        <set >
+            <if test="sid != null" >
+            sid= #{sid,jdbcType=VARCHAR},
+            </if>
+            <if test="eventSid != null" >
+            event_sid= #{eventSid,jdbcType=VARCHAR},
+            </if>
+            <if test="eventName != null" >
+            event_name= #{eventName,jdbcType=VARCHAR},
+            </if>
+            <if test="teamSid != null" >
+            team_sid= #{teamSid,jdbcType=VARCHAR},
+            </if>
+            <if test="teamName != null" >
+            team_name= #{teamName,jdbcType=VARCHAR},
+            </if>
+            <if test="joinedDatetime != null" >
+            joined_datetime= #{joinedDatetime,jdbcType=DATE}
+            </if>
+        </set>
+        <if test="_parameter != null" >
+            <include refid="Update_By_Example_Where_Clause" />
+        </if>
+    </update>
+
+    <update id="updateByExample" parameterType="map" >
+        update event_team
+        set
+        sid= #{sid,jdbcType=VARCHAR},
+        event_sid= #{eventSid,jdbcType=VARCHAR},
+        event_name= #{eventName,jdbcType=VARCHAR},
+        team_sid= #{teamSid,jdbcType=VARCHAR},
+        team_name= #{teamName,jdbcType=VARCHAR},
+        joined_datetime= #{joinedDatetime,jdbcType=DATE}
+        <if test="_parameter != null" >
+            <include refid="Update_By_Example_Where_Clause" />
+        </if>
+    </update>
+    <update id="updateByPrimaryKeySelective" parameterType="com.skytech.api.model.EventTeam" >
+        update event_team
+        <set >
+            <if test="sid != null" >
+                sid= #{sid,jdbcType=VARCHAR},
+            </if>
+            <if test="eventSid != null" >
+                event_sid= #{eventSid,jdbcType=VARCHAR},
+            </if>
+            <if test="eventName != null" >
+                event_name= #{eventName,jdbcType=VARCHAR},
+            </if>
+            <if test="teamSid != null" >
+                team_sid= #{teamSid,jdbcType=VARCHAR},
+            </if>
+            <if test="teamName != null" >
+                team_name= #{teamName,jdbcType=VARCHAR},
+            </if>
+            <if test="joinedDatetime != null" >
+                joined_datetime= #{joinedDatetime,jdbcType=DATE}
+            </if>
+        </set>
+        where sid = #{sid,jdbcType=VARCHAR}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.skytech.api.model.EventTeam" >
+        update event_team
+        set
+        sid= #{sid,jdbcType=VARCHAR},
+        event_sid= #{eventSid,jdbcType=VARCHAR},
+        event_name= #{eventName,jdbcType=VARCHAR},
+        team_sid= #{teamSid,jdbcType=VARCHAR},
+        team_name= #{teamName,jdbcType=VARCHAR},
+        joined_datetime= #{joinedDatetime,jdbcType=DATE}
+        where sid = #{sid,jdbcType=VARCHAR}
+    </update>
+</mapper>

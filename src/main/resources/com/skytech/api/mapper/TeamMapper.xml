@@ -1,0 +1,290 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.skytech.api.mapper.TeamMapper" >
+    <resultMap id="BaseResultMap" type="com.skytech.api.model.Team" >
+        <id column="sid" property="sid" jdbcType="VARCHAR" />
+        <result column="team_name" property="teamName" jdbcType="VARCHAR" />
+        <result column="info" property="info" jdbcType="VARCHAR" />
+        <result column="created_datetime" property="createdDatetime" jdbcType="DATE" />
+        <result column="cover" property="cover" jdbcType="VARCHAR" />
+        <result column="department" property="department" jdbcType="VARCHAR" />
+        <result column="staff_id" property="staffId" jdbcType="VARCHAR" />
+        <result column="updated_datetime" property="updatedDatetime" jdbcType="DATE" />
+    </resultMap>
+    <sql id="Example_Where_Clause" >
+        <where >
+            <foreach collection="oredCriteria" item="criteria" separator="or" >
+                <if test="criteria.valid" >
+                    <trim prefix="(" suffix=")" prefixOverrides="and" >
+                        <foreach collection="criteria.criteria" item="criterion" >
+                            <choose >
+                                <when test="criterion.noValue" >
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue" >
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue" >
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue" >
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                                    #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+
+    <sql id="Update_By_Example_Where_Clause" >
+        <where >
+            <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+                <if test="criteria.valid" >
+                    <trim prefix="(" suffix=")" prefixOverrides="and" >
+                        <foreach collection="criteria.criteria" item="criterion" >
+                            <choose >
+                                <when test="criterion.noValue" >
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue" >
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue" >
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue" >
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                                    #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Base_Column_List" >
+        sid,team_name,info,created_datetime,cover,department,staff_id,updated_datetime
+    </sql>
+    <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.skytech.api.model.TeamExample" >
+        select
+        <if test="distinct" >
+            distinct
+        </if>
+        <include refid="Base_Column_List" />
+        from team
+        <if test="_parameter != null" >
+            <include refid="Example_Where_Clause" />
+        </if>
+        <if test="orderByClause != null" >
+            order by ${orderByClause}
+        </if>
+        <if test="pagination != null and pagination.begin >= 0" >
+            limit #{pagination.begin}, #{pagination.pageSize}
+        </if>
+    </select>
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+        select
+        <include refid="Base_Column_List" />
+        from team
+        where sid = #{sid,jdbcType=VARCHAR}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+        delete from team
+        where sid = #{sid,jdbcType=VARCHAR}
+    </delete>
+
+    <delete id="deleteByExample" parameterType="com.skytech.api.model.TeamExample" >
+        delete from team
+        <if test="_parameter != null" >
+            <include refid="Example_Where_Clause" />
+        </if>
+    </delete>
+
+    <insert id="insert" parameterType="com.skytech.api.model.Team" >
+        insert into team (
+        sid,
+        team_name,
+        info,
+        created_datetime,
+        cover,
+        department,
+        staff_id,
+        updated_datetime
+        )
+        values (
+        #{sid,jdbcType=VARCHAR},
+        #{teamName,jdbcType=VARCHAR},
+        #{info,jdbcType=VARCHAR},
+        #{createdDatetime,jdbcType=DATE},
+        #{cover,jdbcType=VARCHAR},
+        #{department,jdbcType=VARCHAR},
+        #{staffId,jdbcType=VARCHAR},
+        #{updatedDatetime,jdbcType=DATE}
+        )
+    </insert>
+
+    <insert id="insertSelective" parameterType="com.skytech.api.model.Team" >
+        insert into team
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="sid != null" >
+            sid,
+            </if>
+            <if test="teamName != null" >
+            team_name,
+            </if>
+            <if test="info != null" >
+            info,
+            </if>
+            <if test="createdDatetime != null" >
+            created_datetime,
+            </if>
+            <if test="cover != null" >
+            cover,
+            </if>
+            <if test="department != null" >
+            department,
+            </if>
+            <if test="staffId != null" >
+            staff_id,
+            </if>
+            <if test="updatedDatetime != null" >
+            updated_datetime
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+
+            <if test="sid != null" >
+                #{sid,jdbcType=VARCHAR},
+            </if>
+            <if test="teamName != null" >
+                #{teamName,jdbcType=VARCHAR},
+            </if>
+            <if test="info != null" >
+                #{info,jdbcType=VARCHAR},
+            </if>
+            <if test="createdDatetime != null" >
+                #{createdDatetime,jdbcType=DATE},
+            </if>
+            <if test="cover != null" >
+                #{cover,jdbcType=VARCHAR},
+            </if>
+            <if test="department != null" >
+                #{department,jdbcType=VARCHAR},
+            </if>
+            <if test="staffId != null" >
+                #{staffId,jdbcType=VARCHAR},
+            </if>
+            <if test="updatedDatetime != null" >
+                #{updatedDatetime,jdbcType=DATE}
+            </if>
+        </trim>
+    </insert>
+
+    <select id="countByExample" parameterType="com.skytech.api.model.TeamExample" resultType="java.lang.Integer" >
+        select count(*) from team
+        <if test="_parameter != null" >
+            <include refid="Example_Where_Clause" />
+        </if>
+    </select>
+
+    <update id="updateByExampleSelective" parameterType="map" >
+        update team
+        <set >
+            <if test="sid != null" >
+            sid= #{sid,jdbcType=VARCHAR},
+            </if>
+            <if test="teamName != null" >
+            team_name= #{teamName,jdbcType=VARCHAR},
+            </if>
+            <if test="info != null" >
+            info= #{info,jdbcType=VARCHAR},
+            </if>
+            <if test="createdDatetime != null" >
+            created_datetime= #{createdDatetime,jdbcType=DATE},
+            </if>
+            <if test="cover != null" >
+            cover= #{cover,jdbcType=VARCHAR},
+            </if>
+            <if test="department != null" >
+            department= #{department,jdbcType=VARCHAR},
+            </if>
+            <if test="staffId != null" >
+            staff_id= #{staffId,jdbcType=VARCHAR},
+            </if>
+            <if test="updatedDatetime != null" >
+            updated_datetime= #{updatedDatetime,jdbcType=DATE}
+            </if>
+        </set>
+        <if test="_parameter != null" >
+            <include refid="Update_By_Example_Where_Clause" />
+        </if>
+    </update>
+
+    <update id="updateByExample" parameterType="map" >
+        update team
+        set
+        sid= #{sid,jdbcType=VARCHAR},
+        team_name= #{teamName,jdbcType=VARCHAR},
+        info= #{info,jdbcType=VARCHAR},
+        created_datetime= #{createdDatetime,jdbcType=DATE},
+        cover= #{cover,jdbcType=VARCHAR},
+        department= #{department,jdbcType=VARCHAR},
+        staff_id= #{staffId,jdbcType=VARCHAR},
+        updated_datetime= #{updatedDatetime,jdbcType=DATE}
+        <if test="_parameter != null" >
+            <include refid="Update_By_Example_Where_Clause" />
+        </if>
+    </update>
+    <update id="updateByPrimaryKeySelective" parameterType="com.skytech.api.model.Team" >
+        update team
+        <set >
+            <if test="sid != null" >
+                sid= #{sid,jdbcType=VARCHAR},
+            </if>
+            <if test="teamName != null" >
+                team_name= #{teamName,jdbcType=VARCHAR},
+            </if>
+            <if test="info != null" >
+                info= #{info,jdbcType=VARCHAR},
+            </if>
+            <if test="createdDatetime != null" >
+                created_datetime= #{createdDatetime,jdbcType=DATE},
+            </if>
+            <if test="cover != null" >
+                cover= #{cover,jdbcType=VARCHAR},
+            </if>
+            <if test="department != null" >
+                department= #{department,jdbcType=VARCHAR},
+            </if>
+            <if test="staffId != null" >
+                staff_id= #{staffId,jdbcType=VARCHAR},
+            </if>
+            <if test="updatedDatetime != null" >
+                updated_datetime= #{updatedDatetime,jdbcType=DATE}
+            </if>
+        </set>
+        where sid = #{sid,jdbcType=VARCHAR}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.skytech.api.model.Team" >
+        update team
+        set
+        sid= #{sid,jdbcType=VARCHAR},
+        team_name= #{teamName,jdbcType=VARCHAR},
+        info= #{info,jdbcType=VARCHAR},
+        created_datetime= #{createdDatetime,jdbcType=DATE},
+        cover= #{cover,jdbcType=VARCHAR},
+        department= #{department,jdbcType=VARCHAR},
+        staff_id= #{staffId,jdbcType=VARCHAR},
+        updated_datetime= #{updatedDatetime,jdbcType=DATE}
+        where sid = #{sid,jdbcType=VARCHAR}
+    </update>
+</mapper>
