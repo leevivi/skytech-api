@@ -2,13 +2,18 @@ package com.skytech.api.service;
 
 import com.owthree.core.JsonMap;
 import com.owthree.core.Pagination;
-import com.skytech.api.model.Account;
-import com.skytech.api.model.AccountExample;
 import com.owthree.core.service.GenericService;
+import com.skytech.api.model.Account;
+
+import java.util.Map;
 
 public interface AccountService extends GenericService<Account, String> {
 
     Pagination<Account> findForPage(int page, int limit);
+
+    Map<String, Object> register(String email, String password, String firstName, String lastName);
+
+    Account login(String email, String password);
 
     JsonMap save(Account account);
 

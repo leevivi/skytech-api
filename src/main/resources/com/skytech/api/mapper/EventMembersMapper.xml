@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.skytech.api.mapper.EventMapper" >
-    <resultMap id="BaseResultMap" type="com.skytech.api.model.Event" >
+<mapper namespace="com.skytech.api.mapper.EventMembersMapper" >
+    <resultMap id="BaseResultMap" type="com.skytech.api.model.EventMembers" >
         <id column="sid" property="sid" jdbcType="VARCHAR" />
+        <result column="event_sid" property="eventSid" jdbcType="VARCHAR" />
         <result column="event_name" property="eventName" jdbcType="VARCHAR" />
-        <result column="info" property="info" jdbcType="VARCHAR" />
-        <result column="created_datetime" property="createdDatetime" jdbcType="TIMESTAMP" />
-        <result column="cover" property="cover" jdbcType="VARCHAR" />
-        <result column="start_date" property="startDate" jdbcType="DATE" />
-        <result column="color" property="color" jdbcType="VARCHAR" />
+        <result column="account_sid" property="accountSid" jdbcType="VARCHAR" />
+        <result column="account_name" property="accountName" jdbcType="VARCHAR" />
+        <result column="joined_datetime" property="joinedDatetime" jdbcType="TIMESTAMP" />
     </resultMap>
     <sql id="Example_Where_Clause" >
         <where >
@@ -70,15 +69,15 @@
         </where>
     </sql>
     <sql id="Base_Column_List" >
-        sid,event_name,info,created_datetime,cover,start_date,color
+        sid,event_sid,event_name,account_sid,account_name,joined_datetime
     </sql>
-    <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.skytech.api.model.EventExample" >
+    <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.skytech.api.model.EventMembersExample" >
         select
         <if test="distinct" >
             distinct
         </if>
         <include refid="Base_Column_List" />
-        from event
+        from event_members
         <if test="_parameter != null" >
             <include refid="Example_Where_Clause" />
         </if>
@@ -93,65 +92,60 @@
     <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
         select
         <include refid="Base_Column_List" />
-        from event
+        from event_members
         where sid = #{sid,jdbcType=VARCHAR}
     </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
-        delete from event
+        delete from event_members
         where sid = #{sid,jdbcType=VARCHAR}
     </delete>
 
-    <delete id="deleteByExample" parameterType="com.skytech.api.model.EventExample" >
-        delete from event
+    <delete id="deleteByExample" parameterType="com.skytech.api.model.EventMembersExample" >
+        delete from event_members
         <if test="_parameter != null" >
             <include refid="Example_Where_Clause" />
         </if>
     </delete>
 
-    <insert id="insert" parameterType="com.skytech.api.model.Event" >
-        insert into event (
+    <insert id="insert" parameterType="com.skytech.api.model.EventMembers" >
+        insert into event_members (
         sid,
+        event_sid,
         event_name,
-        info,
-        created_datetime,
-        cover,
-        start_date,
-        color
+        account_sid,
+        account_name,
+        joined_datetime
         )
         values (
         #{sid,jdbcType=VARCHAR},
+        #{eventSid,jdbcType=VARCHAR},
         #{eventName,jdbcType=VARCHAR},
-        #{info,jdbcType=VARCHAR},
-        #{createdDatetime,jdbcType=TIMESTAMP},
-        #{cover,jdbcType=VARCHAR},
-        #{startDate,jdbcType=DATE},
-        #{color,jdbcType=VARCHAR}
+        #{accountSid,jdbcType=VARCHAR},
+        #{accountName,jdbcType=VARCHAR},
+        #{joinedDatetime,jdbcType=TIMESTAMP}
         )
     </insert>
 
-    <insert id="insertSelective" parameterType="com.skytech.api.model.Event" >
-        insert into event
+    <insert id="insertSelective" parameterType="com.skytech.api.model.EventMembers" >
+        insert into event_members
         <trim prefix="(" suffix=")" suffixOverrides="," >
             <if test="sid != null" >
             sid,
             </if>
+            <if test="eventSid != null" >
+            event_sid,
+            </if>
             <if test="eventName != null" >
             event_name,
             </if>
-            <if test="info != null" >
-            info,
+            <if test="accountSid != null" >
+            account_sid,
             </if>
-            <if test="createdDatetime != null" >
-            created_datetime,
+            <if test="accountName != null" >
+            account_name,
             </if>
-            <if test="cover != null" >
-            cover,
-            </if>
-            <if test="startDate != null" >
-            start_date,
-            </if>
-            <if test="color != null" >
-            color
+            <if test="joinedDatetime != null" >
+            joined_datetime
             </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides="," >
@@ -159,57 +153,51 @@
             <if test="sid != null" >
                 #{sid,jdbcType=VARCHAR},
             </if>
+            <if test="eventSid != null" >
+                #{eventSid,jdbcType=VARCHAR},
+            </if>
             <if test="eventName != null" >
                 #{eventName,jdbcType=VARCHAR},
             </if>
-            <if test="info != null" >
-                #{info,jdbcType=VARCHAR},
+            <if test="accountSid != null" >
+                #{accountSid,jdbcType=VARCHAR},
             </if>
-            <if test="createdDatetime != null" >
-                #{createdDatetime,jdbcType=TIMESTAMP},
+            <if test="accountName != null" >
+                #{accountName,jdbcType=VARCHAR},
             </if>
-            <if test="cover != null" >
-                #{cover,jdbcType=VARCHAR},
-            </if>
-            <if test="startDate != null" >
-                #{startDate,jdbcType=DATE},
-            </if>
-            <if test="color != null" >
-                #{color,jdbcType=VARCHAR}
+            <if test="joinedDatetime != null" >
+                #{joinedDatetime,jdbcType=TIMESTAMP}
             </if>
         </trim>
     </insert>
 
-    <select id="countByExample" parameterType="com.skytech.api.model.EventExample" resultType="java.lang.Integer" >
-        select count(*) from event
+    <select id="countByExample" parameterType="com.skytech.api.model.EventMembersExample" resultType="java.lang.Integer" >
+        select count(*) from event_members
         <if test="_parameter != null" >
             <include refid="Example_Where_Clause" />
         </if>
     </select>
 
     <update id="updateByExampleSelective" parameterType="map" >
-        update event
+        update event_members
         <set >
             <if test="sid != null" >
             sid= #{sid,jdbcType=VARCHAR},
             </if>
+            <if test="eventSid != null" >
+            event_sid= #{eventSid,jdbcType=VARCHAR},
+            </if>
             <if test="eventName != null" >
             event_name= #{eventName,jdbcType=VARCHAR},
             </if>
-            <if test="info != null" >
-            info= #{info,jdbcType=VARCHAR},
+            <if test="accountSid != null" >
+            account_sid= #{accountSid,jdbcType=VARCHAR},
             </if>
-            <if test="createdDatetime != null" >
-            created_datetime= #{createdDatetime,jdbcType=TIMESTAMP},
+            <if test="accountName != null" >
+            account_name= #{accountName,jdbcType=VARCHAR},
             </if>
-            <if test="cover != null" >
-            cover= #{cover,jdbcType=VARCHAR},
-            </if>
-            <if test="startDate != null" >
-            start_date= #{startDate,jdbcType=DATE},
-            </if>
-            <if test="color != null" >
-            color= #{color,jdbcType=VARCHAR}
+            <if test="joinedDatetime != null" >
+            joined_datetime= #{joinedDatetime,jdbcType=TIMESTAMP}
             </if>
         </set>
         <if test="_parameter != null" >
@@ -218,56 +206,51 @@
     </update>
 
     <update id="updateByExample" parameterType="map" >
-        update event
+        update event_members
         set
         sid= #{sid,jdbcType=VARCHAR},
+        event_sid= #{eventSid,jdbcType=VARCHAR},
         event_name= #{eventName,jdbcType=VARCHAR},
-        info= #{info,jdbcType=VARCHAR},
-        created_datetime= #{createdDatetime,jdbcType=TIMESTAMP},
-        cover= #{cover,jdbcType=VARCHAR},
-        start_date= #{startDate,jdbcType=DATE},
-        color= #{color,jdbcType=VARCHAR}
+        account_sid= #{accountSid,jdbcType=VARCHAR},
+        account_name= #{accountName,jdbcType=VARCHAR},
+        joined_datetime= #{joinedDatetime,jdbcType=TIMESTAMP}
         <if test="_parameter != null" >
             <include refid="Update_By_Example_Where_Clause" />
         </if>
     </update>
-    <update id="updateByPrimaryKeySelective" parameterType="com.skytech.api.model.Event" >
-        update event
+    <update id="updateByPrimaryKeySelective" parameterType="com.skytech.api.model.EventMembers" >
+        update event_members
         <set >
             <if test="sid != null" >
                 sid= #{sid,jdbcType=VARCHAR},
             </if>
+            <if test="eventSid != null" >
+                event_sid= #{eventSid,jdbcType=VARCHAR},
+            </if>
             <if test="eventName != null" >
                 event_name= #{eventName,jdbcType=VARCHAR},
             </if>
-            <if test="info != null" >
-                info= #{info,jdbcType=VARCHAR},
+            <if test="accountSid != null" >
+                account_sid= #{accountSid,jdbcType=VARCHAR},
             </if>
-            <if test="createdDatetime != null" >
-                created_datetime= #{createdDatetime,jdbcType=TIMESTAMP},
+            <if test="accountName != null" >
+                account_name= #{accountName,jdbcType=VARCHAR},
             </if>
-            <if test="cover != null" >
-                cover= #{cover,jdbcType=VARCHAR},
-            </if>
-            <if test="startDate != null" >
-                start_date= #{startDate,jdbcType=DATE},
-            </if>
-            <if test="color != null" >
-                color= #{color,jdbcType=VARCHAR}
+            <if test="joinedDatetime != null" >
+                joined_datetime= #{joinedDatetime,jdbcType=TIMESTAMP}
             </if>
         </set>
         where sid = #{sid,jdbcType=VARCHAR}
     </update>
-    <update id="updateByPrimaryKey" parameterType="com.skytech.api.model.Event" >
-        update event
+    <update id="updateByPrimaryKey" parameterType="com.skytech.api.model.EventMembers" >
+        update event_members
         set
         sid= #{sid,jdbcType=VARCHAR},
+        event_sid= #{eventSid,jdbcType=VARCHAR},
         event_name= #{eventName,jdbcType=VARCHAR},
-        info= #{info,jdbcType=VARCHAR},
-        created_datetime= #{createdDatetime,jdbcType=TIMESTAMP},
-        cover= #{cover,jdbcType=VARCHAR},
-        start_date= #{startDate,jdbcType=DATE},
-        color= #{color,jdbcType=VARCHAR}
+        account_sid= #{accountSid,jdbcType=VARCHAR},
+        account_name= #{accountName,jdbcType=VARCHAR},
+        joined_datetime= #{joinedDatetime,jdbcType=TIMESTAMP}
         where sid = #{sid,jdbcType=VARCHAR}
     </update>
 </mapper>

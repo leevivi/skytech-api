@@ -11,8 +11,8 @@
         <result column="max_bpm" property="maxBpm" jdbcType="FLOAT" />
         <result column="cal" property="cal" jdbcType="INTEGER" />
         <result column="distance" property="distance" jdbcType="INTEGER" />
-        <result column="start_datetime" property="startDatetime" jdbcType="DATE" />
-        <result column="created_datetime" property="createdDatetime" jdbcType="DATE" />
+        <result column="start_datetime" property="startDatetime" jdbcType="TIMESTAMP" />
+        <result column="created_datetime" property="createdDatetime" jdbcType="TIMESTAMP" />
         <result column="running_type" property="runningType" jdbcType="VARCHAR" />
     </resultMap>
     <sql id="Example_Where_Clause" >
@@ -138,8 +138,8 @@
         #{maxBpm,jdbcType=FLOAT},
         #{cal,jdbcType=INTEGER},
         #{distance,jdbcType=INTEGER},
-        #{startDatetime,jdbcType=DATE},
-        #{createdDatetime,jdbcType=DATE},
+        #{startDatetime,jdbcType=TIMESTAMP},
+        #{createdDatetime,jdbcType=TIMESTAMP},
         #{runningType,jdbcType=VARCHAR}
         )
     </insert>
@@ -214,10 +214,10 @@
                 #{distance,jdbcType=INTEGER},
             </if>
             <if test="startDatetime != null" >
-                #{startDatetime,jdbcType=DATE},
+                #{startDatetime,jdbcType=TIMESTAMP},
             </if>
             <if test="createdDatetime != null" >
-                #{createdDatetime,jdbcType=DATE},
+                #{createdDatetime,jdbcType=TIMESTAMP},
             </if>
             <if test="runningType != null" >
                 #{runningType,jdbcType=VARCHAR}
@@ -263,10 +263,10 @@
             distance= #{distance,jdbcType=INTEGER},
             </if>
             <if test="startDatetime != null" >
-            start_datetime= #{startDatetime,jdbcType=DATE},
+            start_datetime= #{startDatetime,jdbcType=TIMESTAMP},
             </if>
             <if test="createdDatetime != null" >
-            created_datetime= #{createdDatetime,jdbcType=DATE},
+            created_datetime= #{createdDatetime,jdbcType=TIMESTAMP},
             </if>
             <if test="runningType != null" >
             running_type= #{runningType,jdbcType=VARCHAR}
@@ -289,8 +289,8 @@
         max_bpm= #{maxBpm,jdbcType=FLOAT},
         cal= #{cal,jdbcType=INTEGER},
         distance= #{distance,jdbcType=INTEGER},
-        start_datetime= #{startDatetime,jdbcType=DATE},
-        created_datetime= #{createdDatetime,jdbcType=DATE},
+        start_datetime= #{startDatetime,jdbcType=TIMESTAMP},
+        created_datetime= #{createdDatetime,jdbcType=TIMESTAMP},
         running_type= #{runningType,jdbcType=VARCHAR}
         <if test="_parameter != null" >
             <include refid="Update_By_Example_Where_Clause" />
@@ -327,10 +327,10 @@
                 distance= #{distance,jdbcType=INTEGER},
             </if>
             <if test="startDatetime != null" >
-                start_datetime= #{startDatetime,jdbcType=DATE},
+                start_datetime= #{startDatetime,jdbcType=TIMESTAMP},
             </if>
             <if test="createdDatetime != null" >
-                created_datetime= #{createdDatetime,jdbcType=DATE},
+                created_datetime= #{createdDatetime,jdbcType=TIMESTAMP},
             </if>
             <if test="runningType != null" >
                 running_type= #{runningType,jdbcType=VARCHAR}
@@ -350,8 +350,8 @@
         max_bpm= #{maxBpm,jdbcType=FLOAT},
         cal= #{cal,jdbcType=INTEGER},
         distance= #{distance,jdbcType=INTEGER},
-        start_datetime= #{startDatetime,jdbcType=DATE},
-        created_datetime= #{createdDatetime,jdbcType=DATE},
+        start_datetime= #{startDatetime,jdbcType=TIMESTAMP},
+        created_datetime= #{createdDatetime,jdbcType=TIMESTAMP},
         running_type= #{runningType,jdbcType=VARCHAR}
         where sid = #{sid,jdbcType=VARCHAR}
     </update>

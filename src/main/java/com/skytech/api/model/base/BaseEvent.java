@@ -7,7 +7,7 @@ import java.util.Date;
 /**
 *
 * @author 剑神卓凌昭
-* @date   2018-11-06 14:36:15
+* @date   2018-11-29 19:11:47
 */
 public class BaseEvent extends BaseModel<String>{
 
@@ -20,14 +20,21 @@ public class BaseEvent extends BaseModel<String>{
 
     private String cover;
 
+   @JSONField(format="yyyy-MM-dd HH:mm:ss")
+    private Date startDate;
+
+    private String color;
+
     public BaseEvent() {}
 
-    public BaseEvent(String sid, String eventName, String info, Date createdDatetime, String cover) {
+    public BaseEvent(String sid, String eventName, String info, Date createdDatetime, String cover, Date startDate, String color) {
         this.sid = sid;
         this.eventName = eventName;
         this.info = info;
         this.createdDatetime = createdDatetime;
         this.cover = cover;
+        this.startDate = startDate;
+        this.color = color;
     }
 
     /********** get/set ***********/
@@ -59,6 +66,20 @@ public class BaseEvent extends BaseModel<String>{
     public void setCover(String cover) {
         this.cover = cover;
     }
+    public Date getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(Date startDate) {
+        this.startDate = startDate;
+    }
+    public String getColor() {
+        return color;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
+    }
 
     @Override
     public String toString() {
@@ -71,6 +92,8 @@ public class BaseEvent extends BaseModel<String>{
         sb.append(", info=").append(info);
         sb.append(", createdDatetime=").append(createdDatetime);
         sb.append(", cover=").append(cover);
+        sb.append(", startDate=").append(startDate);
+        sb.append(", color=").append(color);
         sb.append("]");
         return sb.toString();
     }

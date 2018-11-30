@@ -31,7 +31,7 @@ public class EventServiceImpl extends GenericServiceImpl<Event, EventExample, St
         EventExample eventExample = new EventExample();
         BaseEventExample.Criteria criteria = eventExample.createCriteria();
 
-        Pagination<Event> pagination = this.queryByPage(eventExample, (page - 1) * limit, limit, "create_datetime desc");
+        Pagination<Event> pagination = this.queryByPage(eventExample, (page - 1) * limit, limit, "created_datetime desc");
 
         return pagination;
     }
@@ -44,7 +44,7 @@ public class EventServiceImpl extends GenericServiceImpl<Event, EventExample, St
         List<Event> events = eventMapper.selectByExample(eventExample);
 
         event.setSid(UUID.randomUUID().toString().replaceAll("-", ""));
-        event.setCreateDatetime(new Date());
+//        event.setCreateDatetime(new Date());
         int i = eventMapper.insertSelective(event);
         if (i > 0) {
             return JsonMap.of(true, "保存成功");

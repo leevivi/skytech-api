@@ -1,32 +1,33 @@
 package com.skytech.api.controller;
 
+import com.owthree.core.JsonMap;
 import com.owthree.core.Pagination;
 import com.skytech.api.model.Account;
 import com.skytech.api.service.AccountService;
-import com.owthree.core.JsonMap;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.Map;
 
 /**
-*
-* @author 剑神卓凌昭
-* @date   2018-11-06 14:36:15
-*/
+ * @author 剑神卓凌昭
+ * @date 2018-11-06 14:36:15
+ */
 @RestController
 public class AccountController {
 
     @Autowired
     private AccountService accountService;
 
-    @ApiOperation(value="列表")
+    @ApiOperation(value = "列表")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "page", value = "页码", required = true, dataType = "Integer"),
             @ApiImplicitParam(name = "limit", value = "每页数量", required = true, dataType = "Integer")
@@ -45,7 +46,7 @@ public class AccountController {
         return data;
     }
 
-    @ApiOperation(value="详情")
+    @ApiOperation(value = "详情")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "sid", value = "sid", required = true, dataType = "String")
     })
@@ -56,7 +57,7 @@ public class AccountController {
         return JsonMap.of(true, "", account);
     }
 
-    @ApiOperation(value="新增")
+    @ApiOperation(value = "新增")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "account", value = "", required = true, dataType = "Account")
     })
@@ -67,7 +68,7 @@ public class AccountController {
 
     }
 
-    @ApiOperation(value="修改")
+    @ApiOperation(value = "修改")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "dataId", value = "dataId", required = true, dataType = "String"),
             @ApiImplicitParam(name = "account", value = "", required = true, dataType = "Account")
@@ -79,7 +80,7 @@ public class AccountController {
 
     }
 
-    @ApiOperation(value="删除")
+    @ApiOperation(value = "删除")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "sid", value = "sid", required = true, dataType = "String")
     })
@@ -88,5 +89,55 @@ public class AccountController {
 
         return accountService.delete(sid);
 
+    }
+
+    /**
+     * @param session
+     * @param email
+     * @param password
+     * @param firstName
+     * @param lastName
+     * @return
+     */
+    @ApiOperation(value = "注册")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "email", value = "email", required = true, dataType = "String"),
+            @ApiImplicitParam(name = "password", value = "password", required = true, dataType = "String"),
+            @ApiImplicitParam(name = "firstName", value = "firstName", required = true, dataType = "String"),
+            @ApiImplicitParam(name = "lastName", value = "lastName", required = true, dataType = "String")
+    })
+    @PostMapping(value = "/account/register")
+    public Map<String, Object> register(HttpSession session, String email, String password, String firstName, String lastName) {
+
+        Map<String, Object> map = accountService.register(email, password, firstName, lastName);
+        String code = map.get("code").toString();
+        if (StringUtils.equals(code, "2000")) {
+            session.setAttribute("accountSid", map.get("accountSid").toString());
+        }
+        return map;
+    }
+
+    /**
+     * @param session
+     * @param email
+     * @param password
+     * @return
+     */
+    @ApiOperation(value = "登陆")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "email", value = "email", required = true, dataType = "String"),
+            @ApiImplicitParam(name = "password", value = "password", required = true, dataType = "String")
+    })
+    @PostMapping(value = "/account/login")
+    public Map<String, Object> login(HttpSession session, String email, String password) {
+
+        Account account = accountService.login(email, password);
+
+        if (account != null) {
+            session.setAttribute("accountSid", account.getSid());
+            return JsonMap.of(true, "登陆成功", account);
+        } else {
+            return JsonMap.of(false, "邮箱或者密码错误");
+        }
     }
 }

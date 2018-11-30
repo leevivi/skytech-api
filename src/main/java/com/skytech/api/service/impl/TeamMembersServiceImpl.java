@@ -44,7 +44,7 @@ public class TeamMembersServiceImpl extends GenericServiceImpl<TeamMembers, Team
         List<TeamMembers> teamMemberss = teamMembersMapper.selectByExample(teamMembersExample);
 
         teamMembers.setSid(UUID.randomUUID().toString().replaceAll("-", ""));
-        teamMembers.setCreateDatetime(new Date());
+//        teamMembers.setCreateDatetime(new Date());
         int i = teamMembersMapper.insertSelective(teamMembers);
         if (i > 0) {
             return JsonMap.of(true, "保存成功");

@@ -44,7 +44,7 @@ public class EventTeamServiceImpl extends GenericServiceImpl<EventTeam, EventTea
         List<EventTeam> eventTeams = eventTeamMapper.selectByExample(eventTeamExample);
 
         eventTeam.setSid(UUID.randomUUID().toString().replaceAll("-", ""));
-        eventTeam.setCreateDatetime(new Date());
+//        eventTeam.setCreateDatetime(new Date());
         int i = eventTeamMapper.insertSelective(eventTeam);
         if (i > 0) {
             return JsonMap.of(true, "保存成功");

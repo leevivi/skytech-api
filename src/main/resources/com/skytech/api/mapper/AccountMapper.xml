@@ -13,8 +13,8 @@
         <result column="height" property="height" jdbcType="INTEGER" />
         <result column="weight" property="weight" jdbcType="INTEGER" />
         <result column="step_target" property="stepTarget" jdbcType="INTEGER" />
-        <result column="register_datetime" property="registerDatetime" jdbcType="DATE" />
-        <result column="updated_datetime" property="updatedDatetime" jdbcType="DATE" />
+        <result column="register_datetime" property="registerDatetime" jdbcType="TIMESTAMP" />
+        <result column="updated_datetime" property="updatedDatetime" jdbcType="TIMESTAMP" />
     </resultMap>
     <sql id="Example_Where_Clause" >
         <where >
@@ -142,8 +142,8 @@
         #{height,jdbcType=INTEGER},
         #{weight,jdbcType=INTEGER},
         #{stepTarget,jdbcType=INTEGER},
-        #{registerDatetime,jdbcType=DATE},
-        #{updatedDatetime,jdbcType=DATE}
+        #{registerDatetime,jdbcType=TIMESTAMP},
+        #{updatedDatetime,jdbcType=TIMESTAMP}
         )
     </insert>
 
@@ -226,10 +226,10 @@
                 #{stepTarget,jdbcType=INTEGER},
             </if>
             <if test="registerDatetime != null" >
-                #{registerDatetime,jdbcType=DATE},
+                #{registerDatetime,jdbcType=TIMESTAMP},
             </if>
             <if test="updatedDatetime != null" >
-                #{updatedDatetime,jdbcType=DATE}
+                #{updatedDatetime,jdbcType=TIMESTAMP}
             </if>
         </trim>
     </insert>
@@ -278,10 +278,10 @@
             step_target= #{stepTarget,jdbcType=INTEGER},
             </if>
             <if test="registerDatetime != null" >
-            register_datetime= #{registerDatetime,jdbcType=DATE},
+            register_datetime= #{registerDatetime,jdbcType=TIMESTAMP},
             </if>
             <if test="updatedDatetime != null" >
-            updated_datetime= #{updatedDatetime,jdbcType=DATE}
+            updated_datetime= #{updatedDatetime,jdbcType=TIMESTAMP}
             </if>
         </set>
         <if test="_parameter != null" >
@@ -303,8 +303,8 @@
         height= #{height,jdbcType=INTEGER},
         weight= #{weight,jdbcType=INTEGER},
         step_target= #{stepTarget,jdbcType=INTEGER},
-        register_datetime= #{registerDatetime,jdbcType=DATE},
-        updated_datetime= #{updatedDatetime,jdbcType=DATE}
+        register_datetime= #{registerDatetime,jdbcType=TIMESTAMP},
+        updated_datetime= #{updatedDatetime,jdbcType=TIMESTAMP}
         <if test="_parameter != null" >
             <include refid="Update_By_Example_Where_Clause" />
         </if>
@@ -346,10 +346,10 @@
                 step_target= #{stepTarget,jdbcType=INTEGER},
             </if>
             <if test="registerDatetime != null" >
-                register_datetime= #{registerDatetime,jdbcType=DATE},
+                register_datetime= #{registerDatetime,jdbcType=TIMESTAMP},
             </if>
             <if test="updatedDatetime != null" >
-                updated_datetime= #{updatedDatetime,jdbcType=DATE}
+                updated_datetime= #{updatedDatetime,jdbcType=TIMESTAMP}
             </if>
         </set>
         where sid = #{sid,jdbcType=VARCHAR}
@@ -368,8 +368,8 @@
         height= #{height,jdbcType=INTEGER},
         weight= #{weight,jdbcType=INTEGER},
         step_target= #{stepTarget,jdbcType=INTEGER},
-        register_datetime= #{registerDatetime,jdbcType=DATE},
-        updated_datetime= #{updatedDatetime,jdbcType=DATE}
+        register_datetime= #{registerDatetime,jdbcType=TIMESTAMP},
+        updated_datetime= #{updatedDatetime,jdbcType=TIMESTAMP}
         where sid = #{sid,jdbcType=VARCHAR}
     </update>
 </mapper>
