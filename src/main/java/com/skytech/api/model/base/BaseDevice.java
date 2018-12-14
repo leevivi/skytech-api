@@ -9,48 +9,48 @@ import java.util.Date;
 * @author 剑神卓凌昭
 * @date   2018-12-01 23:22:09
 */
-public class BaseEvent extends BaseModel<String>{
+public class BaseDevice extends BaseModel<String>{
 
-    private String eventName;
+    private String model;
 
-    private String info;
+    private String deviceId;
+
+    private String batch;
 
    @JSONField(format="yyyy-MM-dd HH:mm:ss")
     private Date createdDatetime;
 
-    private String cover;
+    public BaseDevice() {}
 
-   @JSONField(format="yyyy-MM-dd HH:mm:ss")
-    private Date startDate;
-
-    private String color;
-
-    public BaseEvent() {}
-
-    public BaseEvent(String sid, String eventName, String info, Date createdDatetime, String cover, Date startDate, String color) {
+    public BaseDevice(String sid, String model, String deviceId, String batch, Date createdDatetime) {
         this.sid = sid;
-        this.eventName = eventName;
-        this.info = info;
+        this.model = model;
+        this.deviceId = deviceId;
+        this.batch = batch;
         this.createdDatetime = createdDatetime;
-        this.cover = cover;
-        this.startDate = startDate;
-        this.color = color;
     }
 
     /********** get/set ***********/
-    public String getEventName() {
-        return eventName;
+    public String getModel() {
+        return model;
     }
 
-    public void setEventName(String eventName) {
-        this.eventName = eventName;
+    public void setModel(String model) {
+        this.model = model;
     }
-    public String getInfo() {
-        return info;
+    public String getDeviceId() {
+        return deviceId;
     }
 
-    public void setInfo(String info) {
-        this.info = info;
+    public void setDeviceId(String deviceId) {
+        this.deviceId = deviceId;
+    }
+    public String getBatch() {
+        return batch;
+    }
+
+    public void setBatch(String batch) {
+        this.batch = batch;
     }
     public Date getCreatedDatetime() {
         return createdDatetime;
@@ -58,27 +58,6 @@ public class BaseEvent extends BaseModel<String>{
 
     public void setCreatedDatetime(Date createdDatetime) {
         this.createdDatetime = createdDatetime;
-    }
-    public String getCover() {
-        return cover;
-    }
-
-    public void setCover(String cover) {
-        this.cover = cover;
-    }
-    public Date getStartDate() {
-        return startDate;
-    }
-
-    public void setStartDate(Date startDate) {
-        this.startDate = startDate;
-    }
-    public String getColor() {
-        return color;
-    }
-
-    public void setColor(String color) {
-        this.color = color;
     }
 
     @Override
@@ -88,12 +67,10 @@ public class BaseEvent extends BaseModel<String>{
         sb.append(" [");
         sb.append("Hash = ").append(hashCode());
         sb.append(", sid=").append(sid);
-        sb.append(", eventName=").append(eventName);
-        sb.append(", info=").append(info);
+        sb.append(", model=").append(model);
+        sb.append(", deviceId=").append(deviceId);
+        sb.append(", batch=").append(batch);
         sb.append(", createdDatetime=").append(createdDatetime);
-        sb.append(", cover=").append(cover);
-        sb.append(", startDate=").append(startDate);
-        sb.append(", color=").append(color);
         sb.append("]");
         return sb.toString();
     }
@@ -109,7 +86,7 @@ public class BaseEvent extends BaseModel<String>{
         if (getClass() != that.getClass()) {
             return false;
         }
-        BaseEvent other = (BaseEvent) that;
+        BaseDevice other = (BaseDevice) that;
         return (this.getSid() == null ? other.getSid() == null : this.getSid().equals(other.getSid()));
     }
 

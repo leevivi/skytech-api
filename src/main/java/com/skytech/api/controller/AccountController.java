@@ -11,7 +11,9 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpSession;
 import java.util.HashMap;
@@ -139,5 +141,16 @@ public class AccountController {
         } else {
             return JsonMap.of(false, "邮箱或者密码错误");
         }
+    }
+
+    @PostMapping(value = "/account/saveProfile")
+    public JsonMap saveProfile(HttpSession session, Account account, @RequestParam(value = "picFile", required = false) MultipartFile picFile) {
+
+        Object accountSidObj = session.getAttribute("accountSid");
+
+        String accountSid = accountSidObj.toString();
+
+        return accountService.saveProfile(accountSid, account, picFile);
+
     }
 }

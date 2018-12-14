@@ -14,6 +14,7 @@
         <result column="start_datetime" property="startDatetime" jdbcType="TIMESTAMP" />
         <result column="created_datetime" property="createdDatetime" jdbcType="TIMESTAMP" />
         <result column="running_type" property="runningType" jdbcType="VARCHAR" />
+        <result column="device_sid" property="deviceSid" jdbcType="VARCHAR" />
     </resultMap>
     <sql id="Example_Where_Clause" >
         <where >
@@ -75,7 +76,7 @@
         </where>
     </sql>
     <sql id="Base_Column_List" >
-        sid,account_sid,account_name,steps,duration,average_bpm,max_bpm,cal,distance,start_datetime,created_datetime,running_type
+        sid,account_sid,account_name,steps,duration,average_bpm,max_bpm,cal,distance,start_datetime,created_datetime,running_type,device_sid
     </sql>
     <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.skytech.api.model.RunningRecordExample" >
         select
@@ -126,7 +127,8 @@
         distance,
         start_datetime,
         created_datetime,
-        running_type
+        running_type,
+        device_sid
         )
         values (
         #{sid,jdbcType=VARCHAR},
@@ -140,7 +142,8 @@
         #{distance,jdbcType=INTEGER},
         #{startDatetime,jdbcType=TIMESTAMP},
         #{createdDatetime,jdbcType=TIMESTAMP},
-        #{runningType,jdbcType=VARCHAR}
+        #{runningType,jdbcType=VARCHAR},
+        #{deviceSid,jdbcType=VARCHAR}
         )
     </insert>
 
@@ -181,7 +184,10 @@
             created_datetime,
             </if>
             <if test="runningType != null" >
-            running_type
+            running_type,
+            </if>
+            <if test="deviceSid != null" >
+            device_sid
             </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides="," >
@@ -220,7 +226,10 @@
                 #{createdDatetime,jdbcType=TIMESTAMP},
             </if>
             <if test="runningType != null" >
-                #{runningType,jdbcType=VARCHAR}
+                #{runningType,jdbcType=VARCHAR},
+            </if>
+            <if test="deviceSid != null" >
+                #{deviceSid,jdbcType=VARCHAR}
             </if>
         </trim>
     </insert>
@@ -269,7 +278,10 @@
             created_datetime= #{createdDatetime,jdbcType=TIMESTAMP},
             </if>
             <if test="runningType != null" >
-            running_type= #{runningType,jdbcType=VARCHAR}
+            running_type= #{runningType,jdbcType=VARCHAR},
+            </if>
+            <if test="deviceSid != null" >
+            device_sid= #{deviceSid,jdbcType=VARCHAR}
             </if>
         </set>
         <if test="_parameter != null" >
@@ -291,7 +303,8 @@
         distance= #{distance,jdbcType=INTEGER},
         start_datetime= #{startDatetime,jdbcType=TIMESTAMP},
         created_datetime= #{createdDatetime,jdbcType=TIMESTAMP},
-        running_type= #{runningType,jdbcType=VARCHAR}
+        running_type= #{runningType,jdbcType=VARCHAR},
+        device_sid= #{deviceSid,jdbcType=VARCHAR}
         <if test="_parameter != null" >
             <include refid="Update_By_Example_Where_Clause" />
         </if>
@@ -333,7 +346,10 @@
                 created_datetime= #{createdDatetime,jdbcType=TIMESTAMP},
             </if>
             <if test="runningType != null" >
-                running_type= #{runningType,jdbcType=VARCHAR}
+                running_type= #{runningType,jdbcType=VARCHAR},
+            </if>
+            <if test="deviceSid != null" >
+                device_sid= #{deviceSid,jdbcType=VARCHAR}
             </if>
         </set>
         where sid = #{sid,jdbcType=VARCHAR}
@@ -352,7 +368,8 @@
         distance= #{distance,jdbcType=INTEGER},
         start_datetime= #{startDatetime,jdbcType=TIMESTAMP},
         created_datetime= #{createdDatetime,jdbcType=TIMESTAMP},
-        running_type= #{runningType,jdbcType=VARCHAR}
+        running_type= #{runningType,jdbcType=VARCHAR},
+        device_sid= #{deviceSid,jdbcType=VARCHAR}
         where sid = #{sid,jdbcType=VARCHAR}
     </update>
 </mapper>

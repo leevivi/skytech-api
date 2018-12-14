@@ -8,7 +8,7 @@ import java.util.Date;
 /**
 *
 * @author 剑神卓凌昭
-* @date   2018-11-29 19:11:47
+* @date   2018-12-01 23:22:09
 */
 public class BaseRunningRecord extends BaseModel<String>{
 
@@ -36,9 +36,11 @@ public class BaseRunningRecord extends BaseModel<String>{
 
     private String runningType;
 
+    private String deviceSid;
+
     public BaseRunningRecord() {}
 
-    public BaseRunningRecord(String sid, String accountSid, String accountName, Integer steps, Integer duration, BigDecimal averageBpm, BigDecimal maxBpm, Integer cal, Integer distance, Date startDatetime, Date createdDatetime, String runningType) {
+    public BaseRunningRecord(String sid, String accountSid, String accountName, Integer steps, Integer duration, BigDecimal averageBpm, BigDecimal maxBpm, Integer cal, Integer distance, Date startDatetime, Date createdDatetime, String runningType, String deviceSid) {
         this.sid = sid;
         this.accountSid = accountSid;
         this.accountName = accountName;
@@ -51,6 +53,7 @@ public class BaseRunningRecord extends BaseModel<String>{
         this.startDatetime = startDatetime;
         this.createdDatetime = createdDatetime;
         this.runningType = runningType;
+        this.deviceSid = deviceSid;
     }
 
     /********** get/set ***********/
@@ -131,6 +134,13 @@ public class BaseRunningRecord extends BaseModel<String>{
     public void setRunningType(String runningType) {
         this.runningType = runningType;
     }
+    public String getDeviceSid() {
+        return deviceSid;
+    }
+
+    public void setDeviceSid(String deviceSid) {
+        this.deviceSid = deviceSid;
+    }
 
     @Override
     public String toString() {
@@ -150,6 +160,7 @@ public class BaseRunningRecord extends BaseModel<String>{
         sb.append(", startDatetime=").append(startDatetime);
         sb.append(", createdDatetime=").append(createdDatetime);
         sb.append(", runningType=").append(runningType);
+        sb.append(", deviceSid=").append(deviceSid);
         sb.append("]");
         return sb.toString();
     }

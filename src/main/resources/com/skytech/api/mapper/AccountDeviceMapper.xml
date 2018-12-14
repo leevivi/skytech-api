@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.skytech.api.mapper.AccountDeviceMapper" >
+    <resultMap id="BaseResultMap" type="com.skytech.api.model.AccountDevice" >
+        <id column="sid" property="sid" jdbcType="VARCHAR" />
+        <result column="account_sid" property="accountSid" jdbcType="VARCHAR" />
+        <result column="device_sid" property="deviceSid" jdbcType="VARCHAR" />
+        <result column="created_datetime" property="createdDatetime" jdbcType="TIMESTAMP" />
+        <result column="device_status" property="deviceStatus" jdbcType="TINYINT" />
+    </resultMap>
+    <sql id="Example_Where_Clause" >
+        <where >
+            <foreach collection="oredCriteria" item="criteria" separator="or" >
+                <if test="criteria.valid" >
+                    <trim prefix="(" suffix=")" prefixOverrides="and" >
+                        <foreach collection="criteria.criteria" item="criterion" >
+                            <choose >
+                                <when test="criterion.noValue" >
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue" >
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue" >
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue" >
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                                    #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+
+    <sql id="Update_By_Example_Where_Clause" >
+        <where >
+            <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+                <if test="criteria.valid" >
+                    <trim prefix="(" suffix=")" prefixOverrides="and" >
+                        <foreach collection="criteria.criteria" item="criterion" >
+                            <choose >
+                                <when test="criterion.noValue" >
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue" >
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue" >
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue" >
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                                    #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Base_Column_List" >
+        sid,account_sid,device_sid,created_datetime,device_status
+    </sql>
+    <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.skytech.api.model.AccountDeviceExample" >
+        select
+        <if test="distinct" >
+            distinct
+        </if>
+        <include refid="Base_Column_List" />
+        from account_device
+        <if test="_parameter != null" >
+            <include refid="Example_Where_Clause" />
+        </if>
+        <if test="orderByClause != null" >
+            order by ${orderByClause}
+        </if>
+        <if test="pagination != null and pagination.begin >= 0" >
+            limit #{pagination.begin}, #{pagination.pageSize}
+        </if>
+    </select>
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+        select
+        <include refid="Base_Column_List" />
+        from account_device
+        where sid = #{sid,jdbcType=VARCHAR}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+        delete from account_device
+        where sid = #{sid,jdbcType=VARCHAR}
+    </delete>
+
+    <delete id="deleteByExample" parameterType="com.skytech.api.model.AccountDeviceExample" >
+        delete from account_device
+        <if test="_parameter != null" >
+            <include refid="Example_Where_Clause" />
+        </if>
+    </delete>
+
+    <insert id="insert" parameterType="com.skytech.api.model.AccountDevice" >
+        insert into account_device (
+        sid,
+        account_sid,
+        device_sid,
+        created_datetime,
+        device_status
+        )
+        values (
+        #{sid,jdbcType=VARCHAR},
+        #{accountSid,jdbcType=VARCHAR},
+        #{deviceSid,jdbcType=VARCHAR},
+        #{createdDatetime,jdbcType=TIMESTAMP},
+        #{deviceStatus,jdbcType=TINYINT}
+        )
+    </insert>
+
+    <insert id="insertSelective" parameterType="com.skytech.api.model.AccountDevice" >
+        insert into account_device
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="sid != null" >
+            sid,
+            </if>
+            <if test="accountSid != null" >
+            account_sid,
+            </if>
+            <if test="deviceSid != null" >
+            device_sid,
+            </if>
+            <if test="createdDatetime != null" >
+            created_datetime,
+            </if>
+            <if test="deviceStatus != null" >
+            device_status
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+
+            <if test="sid != null" >
+                #{sid,jdbcType=VARCHAR},
+            </if>
+            <if test="accountSid != null" >
+                #{accountSid,jdbcType=VARCHAR},
+            </if>
+            <if test="deviceSid != null" >
+                #{deviceSid,jdbcType=VARCHAR},
+            </if>
+            <if test="createdDatetime != null" >
+                #{createdDatetime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="deviceStatus != null" >
+                #{deviceStatus,jdbcType=TINYINT}
+            </if>
+        </trim>
+    </insert>
+
+    <select id="countByExample" parameterType="com.skytech.api.model.AccountDeviceExample" resultType="java.lang.Integer" >
+        select count(*) from account_device
+        <if test="_parameter != null" >
+            <include refid="Example_Where_Clause" />
+        </if>
+    </select>
+
+    <update id="updateByExampleSelective" parameterType="map" >
+        update account_device
+        <set >
+            <if test="sid != null" >
+            sid= #{sid,jdbcType=VARCHAR},
+            </if>
+            <if test="accountSid != null" >
+            account_sid= #{accountSid,jdbcType=VARCHAR},
+            </if>
+            <if test="deviceSid != null" >
+            device_sid= #{deviceSid,jdbcType=VARCHAR},
+            </if>
+            <if test="createdDatetime != null" >
+            created_datetime= #{createdDatetime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="deviceStatus != null" >
+            device_status= #{deviceStatus,jdbcType=TINYINT}
+            </if>
+        </set>
+        <if test="_parameter != null" >
+            <include refid="Update_By_Example_Where_Clause" />
+        </if>
+    </update>
+
+    <update id="updateByExample" parameterType="map" >
+        update account_device
+        set
+        sid= #{sid,jdbcType=VARCHAR},
+        account_sid= #{accountSid,jdbcType=VARCHAR},
+        device_sid= #{deviceSid,jdbcType=VARCHAR},
+        created_datetime= #{createdDatetime,jdbcType=TIMESTAMP},
+        device_status= #{deviceStatus,jdbcType=TINYINT}
+        <if test="_parameter != null" >
+            <include refid="Update_By_Example_Where_Clause" />
+        </if>
+    </update>
+    <update id="updateByPrimaryKeySelective" parameterType="com.skytech.api.model.AccountDevice" >
+        update account_device
+        <set >
+            <if test="sid != null" >
+                sid= #{sid,jdbcType=VARCHAR},
+            </if>
+            <if test="accountSid != null" >
+                account_sid= #{accountSid,jdbcType=VARCHAR},
+            </if>
+            <if test="deviceSid != null" >
+                device_sid= #{deviceSid,jdbcType=VARCHAR},
+            </if>
+            <if test="createdDatetime != null" >
+                created_datetime= #{createdDatetime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="deviceStatus != null" >
+                device_status= #{deviceStatus,jdbcType=TINYINT}
+            </if>
+        </set>
+        where sid = #{sid,jdbcType=VARCHAR}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.skytech.api.model.AccountDevice" >
+        update account_device
+        set
+        sid= #{sid,jdbcType=VARCHAR},
+        account_sid= #{accountSid,jdbcType=VARCHAR},
+        device_sid= #{deviceSid,jdbcType=VARCHAR},
+        created_datetime= #{createdDatetime,jdbcType=TIMESTAMP},
+        device_status= #{deviceStatus,jdbcType=TINYINT}
+        where sid = #{sid,jdbcType=VARCHAR}
+    </update>
+</mapper>

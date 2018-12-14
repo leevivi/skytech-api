@@ -12,6 +12,7 @@ import com.skytech.api.model.base.BaseAccountExample;
 import com.skytech.api.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.*;
 
@@ -129,5 +130,24 @@ public class AccountServiceImpl extends GenericServiceImpl<Account, AccountExamp
             return JsonMap.of(false, "删除失败");
         }
         return JsonMap.of(true, "删除成功");
+    }
+
+    @Override
+    public JsonMap saveProfile(String accountSid, Account account, MultipartFile picFile) {
+        Account one = accountMapper.selectByPrimaryKey(accountSid);
+        one.setStepTarget(account.getStepTarget());
+        one.setAge(account.getAge());
+        one.setGender(account.getGender());
+        one.setHeight(account.getHeight());
+        one.setWeight(account.getWeight());
+
+        one.setUpdatedDatetime(new Date());
+
+        int i = accountMapper.updateByPrimaryKeySelective(one);
+
+        if (i > 0) {
+            return JsonMap.of(true, "保存成功");
+        }
+        return JsonMap.of(false, "保存失败");
     }
 }

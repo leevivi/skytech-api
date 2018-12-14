@@ -819,6 +819,77 @@ protected List<Criteria> oredCriteria;
             return (Criteria) this;
         }
 
+        public Criteria andDeviceSidIsNull() {
+            addCriterion("device_sid is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andDeviceSidIsNotNull() {
+            addCriterion("device_sid is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andDeviceSidEqualTo(String value) {
+            addCriterion("device_sid =", value, "deviceSid");
+            return (Criteria) this;
+        }
+
+        public Criteria andDeviceSidNotEqualTo(String value) {
+            addCriterion("device_sid <>", value, "deviceSid");
+            return (Criteria) this;
+        }
+
+        public Criteria andDeviceSidGreaterThan(String value) {
+            addCriterion("device_sid >", value, "deviceSid");
+            return (Criteria) this;
+        }
+
+        public Criteria andDeviceSidGreaterThanOrEqualTo(String value) {
+            addCriterion("device_sid >=", value, "deviceSid");
+            return (Criteria) this;
+        }
+
+        public Criteria andDeviceSidLessThan(String value) {
+            addCriterion("device_sid <", value, "deviceSid");
+            return (Criteria) this;
+        }
+
+        public Criteria andDeviceSidLessThanOrEqualTo(String value) {
+            addCriterion("device_sid <=", value, "deviceSid");
+            return (Criteria) this;
+        }
+
+
+        public Criteria andDeviceSidLike(String value) {
+            addCriterion("device_sid like", value, "deviceSid");
+            return (Criteria) this;
+        }
+
+        public Criteria andDeviceSidNotLike(String value) {
+            addCriterion("device_sid not like", value, "deviceSid");
+            return (Criteria) this;
+        }
+
+        public Criteria andDeviceSidIn(List<String> values) {
+            addCriterion("device_sid in", values, "deviceSid");
+            return (Criteria) this;
+        }
+
+        public Criteria andDeviceSidNotIn(List<String> values) {
+            addCriterion("device_sid not in", values, "deviceSid");
+            return (Criteria) this;
+        }
+
+        public Criteria andDeviceSidBetween(String value1, String value2) {
+            addCriterion("device_sid between", value1, value2, "deviceSid");
+            return (Criteria) this;
+        }
+
+        public Criteria andDeviceSidNotBetween(String value1, String value2) {
+            addCriterion("device_sid not between", value1, value2, "deviceSid");
+            return (Criteria) this;
+        }
+
     }
 
     public static class Criteria extends GeneratedCriteria {

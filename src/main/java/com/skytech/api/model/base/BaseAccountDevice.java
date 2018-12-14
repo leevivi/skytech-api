@@ -9,45 +9,28 @@ import java.util.Date;
 * @author 剑神卓凌昭
 * @date   2018-12-01 23:22:09
 */
-public class BaseEventMembers extends BaseModel<String>{
-
-    private String eventSid;
-
-    private String eventName;
+public class BaseAccountDevice extends BaseModel<String>{
 
     private String accountSid;
 
-    private String accountName;
+    private String deviceSid;
 
    @JSONField(format="yyyy-MM-dd HH:mm:ss")
-    private Date joinedDatetime;
+    private Date createdDatetime;
 
-    public BaseEventMembers() {}
+    private Byte deviceStatus;
 
-    public BaseEventMembers(String sid, String eventSid, String eventName, String accountSid, String accountName, Date joinedDatetime) {
+    public BaseAccountDevice() {}
+
+    public BaseAccountDevice(String sid, String accountSid, String deviceSid, Date createdDatetime, Byte deviceStatus) {
         this.sid = sid;
-        this.eventSid = eventSid;
-        this.eventName = eventName;
         this.accountSid = accountSid;
-        this.accountName = accountName;
-        this.joinedDatetime = joinedDatetime;
+        this.deviceSid = deviceSid;
+        this.createdDatetime = createdDatetime;
+        this.deviceStatus = deviceStatus;
     }
 
     /********** get/set ***********/
-    public String getEventSid() {
-        return eventSid;
-    }
-
-    public void setEventSid(String eventSid) {
-        this.eventSid = eventSid;
-    }
-    public String getEventName() {
-        return eventName;
-    }
-
-    public void setEventName(String eventName) {
-        this.eventName = eventName;
-    }
     public String getAccountSid() {
         return accountSid;
     }
@@ -55,19 +38,26 @@ public class BaseEventMembers extends BaseModel<String>{
     public void setAccountSid(String accountSid) {
         this.accountSid = accountSid;
     }
-    public String getAccountName() {
-        return accountName;
+    public String getDeviceSid() {
+        return deviceSid;
     }
 
-    public void setAccountName(String accountName) {
-        this.accountName = accountName;
+    public void setDeviceSid(String deviceSid) {
+        this.deviceSid = deviceSid;
     }
-    public Date getJoinedDatetime() {
-        return joinedDatetime;
+    public Date getCreatedDatetime() {
+        return createdDatetime;
     }
 
-    public void setJoinedDatetime(Date joinedDatetime) {
-        this.joinedDatetime = joinedDatetime;
+    public void setCreatedDatetime(Date createdDatetime) {
+        this.createdDatetime = createdDatetime;
+    }
+    public Byte getDeviceStatus() {
+        return deviceStatus;
+    }
+
+    public void setDeviceStatus(Byte deviceStatus) {
+        this.deviceStatus = deviceStatus;
     }
 
     @Override
@@ -77,11 +67,10 @@ public class BaseEventMembers extends BaseModel<String>{
         sb.append(" [");
         sb.append("Hash = ").append(hashCode());
         sb.append(", sid=").append(sid);
-        sb.append(", eventSid=").append(eventSid);
-        sb.append(", eventName=").append(eventName);
         sb.append(", accountSid=").append(accountSid);
-        sb.append(", accountName=").append(accountName);
-        sb.append(", joinedDatetime=").append(joinedDatetime);
+        sb.append(", deviceSid=").append(deviceSid);
+        sb.append(", createdDatetime=").append(createdDatetime);
+        sb.append(", deviceStatus=").append(deviceStatus);
         sb.append("]");
         return sb.toString();
     }
@@ -97,7 +86,7 @@ public class BaseEventMembers extends BaseModel<String>{
         if (getClass() != that.getClass()) {
             return false;
         }
-        BaseEventMembers other = (BaseEventMembers) that;
+        BaseAccountDevice other = (BaseAccountDevice) that;
         return (this.getSid() == null ? other.getSid() == null : this.getSid().equals(other.getSid()));
     }
 
