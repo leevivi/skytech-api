@@ -2,9 +2,11 @@ package com.skytech.api.service;
 
 import com.owthree.core.JsonMap;
 import com.owthree.core.Pagination;
-import com.skytech.api.model.Sleep;
-import com.skytech.api.model.SleepExample;
 import com.owthree.core.service.GenericService;
+import com.skytech.api.model.Sleep;
+
+import java.util.Date;
+import java.util.List;
 
 public interface SleepService extends GenericService<Sleep, String> {
 
@@ -15,6 +17,8 @@ public interface SleepService extends GenericService<Sleep, String> {
     JsonMap update(String sleepSid, Sleep sleep);
 
     JsonMap delete(String... sleepSids);
+
+    List<Sleep> report(String accountSid, String deviceSid, Date startDate, Date endDate);
 }
 
 

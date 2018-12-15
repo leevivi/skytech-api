@@ -2,6 +2,7 @@ package com.skytech.api.service.impl;
 
 import com.owthree.core.JsonMap;
 import com.owthree.core.Pagination;
+import com.owthree.core.service.impl.GenericServiceImpl;
 import com.skytech.api.mapper.AccountMapper;
 import com.skytech.api.mapper.HeartRateMapper;
 import com.skytech.api.model.Account;
@@ -9,7 +10,6 @@ import com.skytech.api.model.HeartRate;
 import com.skytech.api.model.HeartRateExample;
 import com.skytech.api.model.base.BaseHeartRateExample;
 import com.skytech.api.service.HeartRateService;
-import com.owthree.core.service.impl.GenericServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -47,12 +47,22 @@ public class HeartRateServiceImpl extends GenericServiceImpl<HeartRate, HeartRat
         heartRate.setAccountName(account.getFirstName() + account.getLastName());
 
         HeartRateExample heartRateExample = new HeartRateExample();
-
+        heartRateExample.createCriteria().andAccountSidEqualTo(heartRate.getAccountSid()).andDeviceSidEqualTo(heartRate.getDeviceSid());
+        int i = 0;
         List<HeartRate> heartRates = heartRateMapper.selectByExample(heartRateExample);
+        if (heartRates.isEmpty()) {
+            heartRate.setSid(UUID.randomUUID().toString().replaceAll("-", ""));
+            heartRate.setCreatedDatetime(new Date());
+            i = heartRateMapper.insertSelective(heartRate);
+        } else {
+            HeartRate one = heartRates.get(0);
+            one.setCreatedDatetime(new Date());
+            one.setStartDatetime(heartRate.getStartDatetime());
+            one.setEndDatetime(heartRate.getEndDatetime());
+            one.setData(heartRate.getData());
+            i = heartRateMapper.updateByPrimaryKeySelective(one);
+        }
 
-        heartRate.setSid(UUID.randomUUID().toString().replaceAll("-", ""));
-        heartRate.setCreatedDatetime(new Date());
-        int i = heartRateMapper.insertSelective(heartRate);
         if (i > 0) {
             return JsonMap.of(true, "保存成功");
         } else {
@@ -87,5 +97,14 @@ public class HeartRateServiceImpl extends GenericServiceImpl<HeartRate, HeartRat
             return JsonMap.of(false, "删除失败");
         }
         return JsonMap.of(true, "删除成功");
+    }
+
+    @Override
+    public List<HeartRate> report(String accountSid, String deviceSid, Date startDate, Date endDate) {
+        HeartRateExample heartRateExample = new HeartRateExample();
+        heartRateExample.createCriteria().andAccountSidEqualTo(accountSid).andDeviceSidEqualTo(deviceSid).andStartDatetimeBetween(startDate, endDate);
+        heartRateExample.setOrderByClause(" start_datetime asc");
+        List<HeartRate> heartRates = heartRateMapper.selectByExample(heartRateExample);
+        return heartRates;
     }
 }

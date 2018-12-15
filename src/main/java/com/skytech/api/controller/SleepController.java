@@ -2,6 +2,7 @@ package com.skytech.api.controller;
 
 import com.owthree.core.JsonMap;
 import com.owthree.core.Pagination;
+import com.owthree.core.utils.DateUtil;
 import com.skytech.api.model.Sleep;
 import com.skytech.api.service.SleepService;
 import io.swagger.annotations.ApiImplicitParam;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpSession;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -43,6 +45,19 @@ public class SleepController {
         data.put("data", pagination.getDataList());
 
         return data;
+    }
+
+    @GetMapping(value = "/sleep/report")
+    public Map<String, Object> report(HttpSession session, String deviceSid, String startDate, String endDate) {
+        Object accountSidObj = session.getAttribute("accountSid");
+
+        String accountSid = accountSidObj.toString();
+        List<Sleep> sleeps = sleepService.report(accountSid, deviceSid, DateUtil.parseDate(startDate), DateUtil.parseDate(endDate));
+
+        Map<String, Object> data = new HashMap<>();
+        data.put("sleeps", sleeps);
+
+        return JsonMap.of(true, "", data);
     }
 
     @ApiOperation(value = "详情")

@@ -47,11 +47,21 @@ public class SleepServiceImpl extends GenericServiceImpl<Sleep, SleepExample, St
         sleep.setAccountName(account.getFirstName() + account.getLastName());
         SleepExample sleepExample = new SleepExample();
 
+        sleepExample.createCriteria().andAccountSidEqualTo(sleep.getAccountSid()).andDeviceSidEqualTo(sleep.getDeviceSid());
+        int i = 0;
         List<Sleep> sleeps = sleepMapper.selectByExample(sleepExample);
-
-        sleep.setSid(UUID.randomUUID().toString().replaceAll("-", ""));
-        sleep.setCreatedDatetime(new Date());
-        int i = sleepMapper.insertSelective(sleep);
+        if (sleeps.isEmpty()) {
+            sleep.setSid(UUID.randomUUID().toString().replaceAll("-", ""));
+            sleep.setCreatedDatetime(new Date());
+            i = sleepMapper.insertSelective(sleep);
+        } else {
+            Sleep one = sleeps.get(0);
+            one.setCreatedDatetime(new Date());
+            one.setStartDatetime(sleep.getStartDatetime());
+            one.setEndDatetime(sleep.getEndDatetime());
+            one.setData(sleep.getData());
+            i = sleepMapper.updateByPrimaryKeySelective(one);
+        }
         if (i > 0) {
             return JsonMap.of(true, "保存成功");
         } else {
@@ -86,5 +96,14 @@ public class SleepServiceImpl extends GenericServiceImpl<Sleep, SleepExample, St
             return JsonMap.of(false, "删除失败");
         }
         return JsonMap.of(true, "删除成功");
+    }
+
+    @Override
+    public List<Sleep> report(String accountSid, String deviceSid, Date startDate, Date endDate) {
+        SleepExample sleepExample = new SleepExample();
+        sleepExample.createCriteria().andAccountSidEqualTo(accountSid).andDeviceSidEqualTo(deviceSid).andStartDatetimeBetween(startDate, endDate);
+        sleepExample.setOrderByClause(" start_datetime asc");
+        List<Sleep> sleeps = sleepMapper.selectByExample(sleepExample);
+        return sleeps;
     }
 }

@@ -2,9 +2,11 @@ package com.skytech.api.service;
 
 import com.owthree.core.JsonMap;
 import com.owthree.core.Pagination;
-import com.skytech.api.model.HeartRate;
-import com.skytech.api.model.HeartRateExample;
 import com.owthree.core.service.GenericService;
+import com.skytech.api.model.HeartRate;
+
+import java.util.Date;
+import java.util.List;
 
 public interface HeartRateService extends GenericService<HeartRate, String> {
 
@@ -15,6 +17,8 @@ public interface HeartRateService extends GenericService<HeartRate, String> {
     JsonMap update(String heartRateSid, HeartRate heartRate);
 
     JsonMap delete(String... heartRateSids);
+
+    List<HeartRate> report(String accountSid, String deviceSid, Date startDate, Date endDate);
 }
 
 
