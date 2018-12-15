@@ -1,5 +1,6 @@
 package com.skytech.api.service.impl;
 
+import com.aliyun.oss.OSSClient;
 import com.owthree.core.JsonMap;
 import com.owthree.core.Pagination;
 import com.owthree.core.service.impl.GenericServiceImpl;
@@ -14,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.*;
 
 @Service("accountService")
@@ -146,8 +148,38 @@ public class AccountServiceImpl extends GenericServiceImpl<Account, AccountExamp
         int i = accountMapper.updateByPrimaryKeySelective(one);
 
         if (i > 0) {
+
             return JsonMap.of(true, "保存成功");
         }
         return JsonMap.of(false, "保存失败");
+    }
+
+    @Override
+    public JsonMap saveAvatar(String accountSid, MultipartFile picFile) {
+        // Endpoint以杭州为例，其它Region请按实际情况填写。
+        String endpoint = "oss-cn-hongkong.aliyuncs.com";
+// 阿里云主账号AccessKey拥有所有API的访问权限，风险很高。强烈建议您创建并使用RAM账号进行API访问或日常运维，请登录 https://ram.console.aliyun.com 创建RAM账号。
+        String accessKeyId = "LTAIeUiaiUxdYQYO";
+        String accessKeySecret = "wCBWDdag1Rbb21mxk5B7rNQKbn5XCb";
+
+// 创建OSSClient实例。
+        OSSClient ossClient = new OSSClient(endpoint, accessKeyId, accessKeySecret);
+
+// 上传文件。<yourLocalFile>由本地文件路径加文件名包括后缀组成，例如/users/local/myfile.txt。
+        try {
+            ossClient.putObject("skytech-account", "avatar/" + accountSid, picFile.getInputStream());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        ;
+
+// 关闭OSSClient。
+        ossClient.shutdown();
+
+        Account account = accountMapper.selectByPrimaryKey(accountSid);
+        account.setAvarta("https://skytech-account.oss-cn-hongkong.aliyuncs.com/avatar/" + accountSid);
+        accountMapper.updateByPrimaryKeySelective(account);
+
+        return JsonMap.of(true, "上传成功");
     }
 }

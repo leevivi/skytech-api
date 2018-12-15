@@ -23,6 +23,8 @@ public interface AccountService extends GenericService<Account, String> {
     JsonMap update(String accountSid, Account account);
 
     JsonMap delete(String... accountSids);
+
+    JsonMap saveAvatar(String accountSid,MultipartFile picFile);
 }
 
 

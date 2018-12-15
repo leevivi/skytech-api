@@ -153,4 +153,15 @@ public class AccountController {
         return accountService.saveProfile(accountSid, account, picFile);
 
     }
+
+    @PostMapping(value = "/account/saveAvatar")
+    public JsonMap saveProfile(HttpSession session, @RequestParam(value = "picFile", required = false) MultipartFile picFile) {
+
+        Object accountSidObj = session.getAttribute("accountSid");
+
+        String accountSid = accountSidObj.toString();
+
+        return accountService.saveAvatar(accountSid, picFile);
+
+    }
 }
