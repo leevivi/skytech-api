@@ -180,6 +180,9 @@ public class AccountServiceImpl extends GenericServiceImpl<Account, AccountExamp
         account.setAvarta("https://skytech-account.oss-cn-hongkong.aliyuncs.com/avatar/" + accountSid);
         accountMapper.updateByPrimaryKeySelective(account);
 
-        return JsonMap.of(true, "上传成功");
+        Map<String, Object> data = new HashMap<>();
+        data.put("avatarUrl", "https://skytech-account.oss-cn-hongkong.aliyuncs.com/avatar/" + accountSid);
+
+        return JsonMap.of(true, "上传成功", data);
     }
 }
