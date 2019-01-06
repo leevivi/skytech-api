@@ -56,7 +56,7 @@ public class AccountServiceImpl extends GenericServiceImpl<Account, AccountExamp
         Account account = new Account();
         account.setSid(UUIDUtil.getUUID());
         account.setEmail(email);
-        account.setPassword(Md5Util.encodeHex(password));
+        account.setPassword(password);
         account.setFirstName(firstName);
         account.setLastName(lastName);
         int num = accountMapper.insertSelective(account);
@@ -77,7 +77,7 @@ public class AccountServiceImpl extends GenericServiceImpl<Account, AccountExamp
     @Override
     public Account login(String email, String password) {
         AccountExample accountExample = new AccountExample();
-        accountExample.createCriteria().andEmailEqualTo(email).andPasswordEqualTo(Md5Util.encodeHex(password));
+        accountExample.createCriteria().andEmailEqualTo(email).andPasswordEqualTo(password);
 
         List<Account> accounts = accountMapper.selectByExample(accountExample);
 
