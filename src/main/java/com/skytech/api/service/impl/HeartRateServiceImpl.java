@@ -47,7 +47,7 @@ public class HeartRateServiceImpl extends GenericServiceImpl<HeartRate, HeartRat
         heartRate.setAccountName(account.getFirstName() + account.getLastName());
 
         HeartRateExample heartRateExample = new HeartRateExample();
-        heartRateExample.createCriteria().andAccountSidEqualTo(heartRate.getAccountSid()).andDeviceSidEqualTo(heartRate.getDeviceSid());
+        heartRateExample.createCriteria().andAccountSidEqualTo(heartRate.getAccountSid()).andDeviceSidEqualTo(heartRate.getDeviceSid()).andRecordDateEqualTo(heartRate.getRecordDate());
         int i = 0;
         List<HeartRate> heartRates = heartRateMapper.selectByExample(heartRateExample);
         if (heartRates.isEmpty()) {
@@ -57,8 +57,8 @@ public class HeartRateServiceImpl extends GenericServiceImpl<HeartRate, HeartRat
         } else {
             HeartRate one = heartRates.get(0);
             one.setCreatedDatetime(new Date());
-            one.setStartDatetime(heartRate.getStartDatetime());
-            one.setEndDatetime(heartRate.getEndDatetime());
+//            one.setStartDatetime(heartRate.getStartDatetime());
+//            one.setEndDatetime(heartRate.getEndDatetime());
             one.setData(heartRate.getData());
             i = heartRateMapper.updateByPrimaryKeySelective(one);
         }

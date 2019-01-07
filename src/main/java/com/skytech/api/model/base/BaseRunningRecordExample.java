@@ -890,6 +890,67 @@ protected List<Criteria> oredCriteria;
             return (Criteria) this;
         }
 
+        public Criteria andFrequencyIsNull() {
+            addCriterion("frequency is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andFrequencyIsNotNull() {
+            addCriterion("frequency is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andFrequencyEqualTo(Integer value) {
+            addCriterion("frequency =", value, "frequency");
+            return (Criteria) this;
+        }
+
+        public Criteria andFrequencyNotEqualTo(Integer value) {
+            addCriterion("frequency <>", value, "frequency");
+            return (Criteria) this;
+        }
+
+        public Criteria andFrequencyGreaterThan(Integer value) {
+            addCriterion("frequency >", value, "frequency");
+            return (Criteria) this;
+        }
+
+        public Criteria andFrequencyGreaterThanOrEqualTo(Integer value) {
+            addCriterion("frequency >=", value, "frequency");
+            return (Criteria) this;
+        }
+
+        public Criteria andFrequencyLessThan(Integer value) {
+            addCriterion("frequency <", value, "frequency");
+            return (Criteria) this;
+        }
+
+        public Criteria andFrequencyLessThanOrEqualTo(Integer value) {
+            addCriterion("frequency <=", value, "frequency");
+            return (Criteria) this;
+        }
+
+
+        public Criteria andFrequencyIn(List<Integer> values) {
+            addCriterion("frequency in", values, "frequency");
+            return (Criteria) this;
+        }
+
+        public Criteria andFrequencyNotIn(List<Integer> values) {
+            addCriterion("frequency not in", values, "frequency");
+            return (Criteria) this;
+        }
+
+        public Criteria andFrequencyBetween(Integer value1, Integer value2) {
+            addCriterion("frequency between", value1, value2, "frequency");
+            return (Criteria) this;
+        }
+
+        public Criteria andFrequencyNotBetween(Integer value1, Integer value2) {
+            addCriterion("frequency not between", value1, value2, "frequency");
+            return (Criteria) this;
+        }
+
     }
 
     public static class Criteria extends GeneratedCriteria {

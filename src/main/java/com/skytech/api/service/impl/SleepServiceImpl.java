@@ -47,7 +47,7 @@ public class SleepServiceImpl extends GenericServiceImpl<Sleep, SleepExample, St
         sleep.setAccountName(account.getFirstName() + account.getLastName());
         SleepExample sleepExample = new SleepExample();
 
-        sleepExample.createCriteria().andAccountSidEqualTo(sleep.getAccountSid()).andDeviceSidEqualTo(sleep.getDeviceSid());
+        sleepExample.createCriteria().andAccountSidEqualTo(sleep.getAccountSid()).andDeviceSidEqualTo(sleep.getDeviceSid()).andRecordDateEqualTo(sleep.getRecordDate());
         int i = 0;
         List<Sleep> sleeps = sleepMapper.selectByExample(sleepExample);
         if (sleeps.isEmpty()) {
@@ -57,8 +57,8 @@ public class SleepServiceImpl extends GenericServiceImpl<Sleep, SleepExample, St
         } else {
             Sleep one = sleeps.get(0);
             one.setCreatedDatetime(new Date());
-            one.setStartDatetime(sleep.getStartDatetime());
-            one.setEndDatetime(sleep.getEndDatetime());
+//            one.setStartDatetime(sleep.getStartDatetime());
+//            one.setEndDatetime(sleep.getEndDatetime());
             one.setData(sleep.getData());
             i = sleepMapper.updateByPrimaryKeySelective(one);
         }

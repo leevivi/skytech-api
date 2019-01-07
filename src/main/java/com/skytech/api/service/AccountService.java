@@ -14,7 +14,7 @@ public interface AccountService extends GenericService<Account, String> {
 
     Map<String, Object> register(String email, String password, String firstName, String lastName);
 
-    Account login(String email, String password);
+    Map<String,Object> login(String email, String password);
 
     JsonMap saveProfile(String accountSid, Account account, MultipartFile picFile);
 

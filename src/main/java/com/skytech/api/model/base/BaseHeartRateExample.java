@@ -585,6 +585,67 @@ protected List<Criteria> oredCriteria;
             return (Criteria) this;
         }
 
+        public Criteria andRecordDateIsNull() {
+            addCriterion("record_date is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andRecordDateIsNotNull() {
+            addCriterion("record_date is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andRecordDateEqualTo(Date value) {
+            addCriterion("record_date =", value, "recordDate");
+            return (Criteria) this;
+        }
+
+        public Criteria andRecordDateNotEqualTo(Date value) {
+            addCriterion("record_date <>", value, "recordDate");
+            return (Criteria) this;
+        }
+
+        public Criteria andRecordDateGreaterThan(Date value) {
+            addCriterion("record_date >", value, "recordDate");
+            return (Criteria) this;
+        }
+
+        public Criteria andRecordDateGreaterThanOrEqualTo(Date value) {
+            addCriterion("record_date >=", value, "recordDate");
+            return (Criteria) this;
+        }
+
+        public Criteria andRecordDateLessThan(Date value) {
+            addCriterion("record_date <", value, "recordDate");
+            return (Criteria) this;
+        }
+
+        public Criteria andRecordDateLessThanOrEqualTo(Date value) {
+            addCriterion("record_date <=", value, "recordDate");
+            return (Criteria) this;
+        }
+
+
+        public Criteria andRecordDateIn(List<Date> values) {
+            addCriterion("record_date in", values, "recordDate");
+            return (Criteria) this;
+        }
+
+        public Criteria andRecordDateNotIn(List<Date> values) {
+            addCriterion("record_date not in", values, "recordDate");
+            return (Criteria) this;
+        }
+
+        public Criteria andRecordDateBetween(Date value1, Date value2) {
+            addCriterion("record_date between", value1, value2, "recordDate");
+            return (Criteria) this;
+        }
+
+        public Criteria andRecordDateNotBetween(Date value1, Date value2) {
+            addCriterion("record_date not between", value1, value2, "recordDate");
+            return (Criteria) this;
+        }
+
     }
 
     public static class Criteria extends GeneratedCriteria {

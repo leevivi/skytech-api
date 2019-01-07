@@ -2,12 +2,13 @@ package com.skytech.api.model.base;
 
 import com.owthree.core.model.BaseModel;
 import com.alibaba.fastjson.annotation.JSONField;
+import java.math.BigDecimal;
 import java.util.Date;
 
 /**
 *
 * @author 剑神卓凌昭
-* @date   2018-12-14 22:27:58
+* @date   2019-01-06 20:38:17
 */
 public class BaseSleep extends BaseModel<String>{
 
@@ -28,9 +29,12 @@ public class BaseSleep extends BaseModel<String>{
 
     private String deviceSid;
 
+   @JSONField(format="yyyy-MM-dd HH:mm:ss")
+    private Date recordDate;
+
     public BaseSleep() {}
 
-    public BaseSleep(String sid, String accountSid, String accountName, String data, Date startDatetime, Date createdDatetime, Date endDatetime, String deviceSid) {
+    public BaseSleep(String sid, String accountSid, String accountName, String data, Date startDatetime, Date createdDatetime, Date endDatetime, String deviceSid, Date recordDate) {
         this.sid = sid;
         this.accountSid = accountSid;
         this.accountName = accountName;
@@ -39,6 +43,7 @@ public class BaseSleep extends BaseModel<String>{
         this.createdDatetime = createdDatetime;
         this.endDatetime = endDatetime;
         this.deviceSid = deviceSid;
+        this.recordDate = recordDate;
     }
 
     /********** get/set ***********/
@@ -91,6 +96,13 @@ public class BaseSleep extends BaseModel<String>{
     public void setDeviceSid(String deviceSid) {
         this.deviceSid = deviceSid;
     }
+    public Date getRecordDate() {
+        return recordDate;
+    }
+
+    public void setRecordDate(Date recordDate) {
+        this.recordDate = recordDate;
+    }
 
     @Override
     public String toString() {
@@ -106,6 +118,7 @@ public class BaseSleep extends BaseModel<String>{
         sb.append(", createdDatetime=").append(createdDatetime);
         sb.append(", endDatetime=").append(endDatetime);
         sb.append(", deviceSid=").append(deviceSid);
+        sb.append(", recordDate=").append(recordDate);
         sb.append("]");
         return sb.toString();
     }

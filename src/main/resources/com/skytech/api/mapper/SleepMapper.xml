@@ -10,6 +10,7 @@
         <result column="created_datetime" property="createdDatetime" jdbcType="TIMESTAMP" />
         <result column="end_datetime" property="endDatetime" jdbcType="TIMESTAMP" />
         <result column="device_sid" property="deviceSid" jdbcType="VARCHAR" />
+        <result column="record_date" property="recordDate" jdbcType="DATE" />
     </resultMap>
     <sql id="Example_Where_Clause" >
         <where >
@@ -71,7 +72,7 @@
         </where>
     </sql>
     <sql id="Base_Column_List" >
-        sid,account_sid,account_name,data,start_datetime,created_datetime,end_datetime,device_sid
+        sid,account_sid,account_name,data,start_datetime,created_datetime,end_datetime,device_sid,record_date
     </sql>
     <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.skytech.api.model.SleepExample" >
         select
@@ -118,7 +119,8 @@
         start_datetime,
         created_datetime,
         end_datetime,
-        device_sid
+        device_sid,
+        record_date
         )
         values (
         #{sid,jdbcType=VARCHAR},
@@ -128,7 +130,8 @@
         #{startDatetime,jdbcType=TIMESTAMP},
         #{createdDatetime,jdbcType=TIMESTAMP},
         #{endDatetime,jdbcType=TIMESTAMP},
-        #{deviceSid,jdbcType=VARCHAR}
+        #{deviceSid,jdbcType=VARCHAR},
+        #{recordDate,jdbcType=DATE}
         )
     </insert>
 
@@ -157,7 +160,10 @@
             end_datetime,
             </if>
             <if test="deviceSid != null" >
-            device_sid
+            device_sid,
+            </if>
+            <if test="recordDate != null" >
+            record_date
             </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides="," >
@@ -184,7 +190,10 @@
                 #{endDatetime,jdbcType=TIMESTAMP},
             </if>
             <if test="deviceSid != null" >
-                #{deviceSid,jdbcType=VARCHAR}
+                #{deviceSid,jdbcType=VARCHAR},
+            </if>
+            <if test="recordDate != null" >
+                #{recordDate,jdbcType=DATE}
             </if>
         </trim>
     </insert>
@@ -221,7 +230,10 @@
             end_datetime= #{endDatetime,jdbcType=TIMESTAMP},
             </if>
             <if test="deviceSid != null" >
-            device_sid= #{deviceSid,jdbcType=VARCHAR}
+            device_sid= #{deviceSid,jdbcType=VARCHAR},
+            </if>
+            <if test="recordDate != null" >
+            record_date= #{recordDate,jdbcType=DATE}
             </if>
         </set>
         <if test="_parameter != null" >
@@ -239,7 +251,8 @@
         start_datetime= #{startDatetime,jdbcType=TIMESTAMP},
         created_datetime= #{createdDatetime,jdbcType=TIMESTAMP},
         end_datetime= #{endDatetime,jdbcType=TIMESTAMP},
-        device_sid= #{deviceSid,jdbcType=VARCHAR}
+        device_sid= #{deviceSid,jdbcType=VARCHAR},
+        record_date= #{recordDate,jdbcType=DATE}
         <if test="_parameter != null" >
             <include refid="Update_By_Example_Where_Clause" />
         </if>
@@ -269,7 +282,10 @@
                 end_datetime= #{endDatetime,jdbcType=TIMESTAMP},
             </if>
             <if test="deviceSid != null" >
-                device_sid= #{deviceSid,jdbcType=VARCHAR}
+                device_sid= #{deviceSid,jdbcType=VARCHAR},
+            </if>
+            <if test="recordDate != null" >
+                record_date= #{recordDate,jdbcType=DATE}
             </if>
         </set>
         where sid = #{sid,jdbcType=VARCHAR}
@@ -284,7 +300,8 @@
         start_datetime= #{startDatetime,jdbcType=TIMESTAMP},
         created_datetime= #{createdDatetime,jdbcType=TIMESTAMP},
         end_datetime= #{endDatetime,jdbcType=TIMESTAMP},
-        device_sid= #{deviceSid,jdbcType=VARCHAR}
+        device_sid= #{deviceSid,jdbcType=VARCHAR},
+        record_date= #{recordDate,jdbcType=DATE}
         where sid = #{sid,jdbcType=VARCHAR}
     </update>
 </mapper>

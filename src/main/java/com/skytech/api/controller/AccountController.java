@@ -133,11 +133,11 @@ public class AccountController {
     @PostMapping(value = "/account/login")
     public Map<String, Object> login(HttpSession session, String email, String password) {
 
-        Account account = accountService.login(email, password);
+        Map<String, Object> data = accountService.login(email, password);
 
-        if (account != null) {
-            session.setAttribute("accountSid", account.getSid());
-            return JsonMap.of(true, "登陆成功", account);
+        if (data != null) {
+            session.setAttribute("accountSid", ((Account) data.get("account")).getSid());
+            return JsonMap.of(true, "登陆成功", data);
         } else {
             return JsonMap.of(false, "邮箱或者密码错误");
         }

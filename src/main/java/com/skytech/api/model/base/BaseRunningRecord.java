@@ -8,7 +8,7 @@ import java.util.Date;
 /**
 *
 * @author 剑神卓凌昭
-* @date   2018-12-01 23:22:09
+* @date   2019-01-06 20:38:17
 */
 public class BaseRunningRecord extends BaseModel<String>{
 
@@ -38,9 +38,11 @@ public class BaseRunningRecord extends BaseModel<String>{
 
     private String deviceSid;
 
+    private Integer frequency;
+
     public BaseRunningRecord() {}
 
-    public BaseRunningRecord(String sid, String accountSid, String accountName, Integer steps, Integer duration, BigDecimal averageBpm, BigDecimal maxBpm, Integer cal, Integer distance, Date startDatetime, Date createdDatetime, String runningType, String deviceSid) {
+    public BaseRunningRecord(String sid, String accountSid, String accountName, Integer steps, Integer duration, BigDecimal averageBpm, BigDecimal maxBpm, Integer cal, Integer distance, Date startDatetime, Date createdDatetime, String runningType, String deviceSid, Integer frequency) {
         this.sid = sid;
         this.accountSid = accountSid;
         this.accountName = accountName;
@@ -54,6 +56,7 @@ public class BaseRunningRecord extends BaseModel<String>{
         this.createdDatetime = createdDatetime;
         this.runningType = runningType;
         this.deviceSid = deviceSid;
+        this.frequency = frequency;
     }
 
     /********** get/set ***********/
@@ -141,6 +144,13 @@ public class BaseRunningRecord extends BaseModel<String>{
     public void setDeviceSid(String deviceSid) {
         this.deviceSid = deviceSid;
     }
+    public Integer getFrequency() {
+        return frequency;
+    }
+
+    public void setFrequency(Integer frequency) {
+        this.frequency = frequency;
+    }
 
     @Override
     public String toString() {
@@ -161,6 +171,7 @@ public class BaseRunningRecord extends BaseModel<String>{
         sb.append(", createdDatetime=").append(createdDatetime);
         sb.append(", runningType=").append(runningType);
         sb.append(", deviceSid=").append(deviceSid);
+        sb.append(", frequency=").append(frequency);
         sb.append("]");
         return sb.toString();
     }

@@ -4,11 +4,11 @@ import com.aliyun.oss.OSSClient;
 import com.owthree.core.JsonMap;
 import com.owthree.core.Pagination;
 import com.owthree.core.service.impl.GenericServiceImpl;
-import com.owthree.core.utils.Md5Util;
 import com.owthree.core.utils.UUIDUtil;
+import com.skytech.api.mapper.AccountDeviceMapper;
 import com.skytech.api.mapper.AccountMapper;
-import com.skytech.api.model.Account;
-import com.skytech.api.model.AccountExample;
+import com.skytech.api.mapper.DeviceMapper;
+import com.skytech.api.model.*;
 import com.skytech.api.model.base.BaseAccountExample;
 import com.skytech.api.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +23,12 @@ public class AccountServiceImpl extends GenericServiceImpl<Account, AccountExamp
 
     @Autowired
     private AccountMapper accountMapper;
+
+    @Autowired
+    private DeviceMapper deviceMapper;
+
+    @Autowired
+    private AccountDeviceMapper accountDeviceMapper;
 
     @Override
     protected AccountMapper getGenericMapper() {
@@ -75,14 +81,26 @@ public class AccountServiceImpl extends GenericServiceImpl<Account, AccountExamp
     }
 
     @Override
-    public Account login(String email, String password) {
+    public Map<String, Object> login(String email, String password) {
         AccountExample accountExample = new AccountExample();
         accountExample.createCriteria().andEmailEqualTo(email).andPasswordEqualTo(password);
 
         List<Account> accounts = accountMapper.selectByExample(accountExample);
 
+        Map<String, Object> data = new HashMap<>();
         if (!accounts.isEmpty()) {
-            return accounts.get(0);
+            data.put("account", accounts.get(0));
+            AccountDeviceExample accountDeviceExample = new AccountDeviceExample();
+            accountDeviceExample.createCriteria().andAccountSidEqualTo(accounts.get(0).getSid());
+            List<AccountDevice> accountDevices = accountDeviceMapper.selectByExample(accountDeviceExample);
+            List<String> macAddress = new ArrayList<>();
+            for (AccountDevice accountDevice : accountDevices) {
+                String deviceSid = accountDevice.getDeviceSid();
+                Device device = deviceMapper.selectByPrimaryKey(deviceSid);
+                macAddress.add(device.getBatch());
+            }
+            data.put("macAddress", macAddress);
+            return data;
         } else {
             return null;
         }
