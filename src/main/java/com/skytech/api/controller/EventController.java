@@ -39,9 +39,11 @@ public class EventController {
             @ApiImplicitParam(name = "limit", value = "每页数量", required = true, dataType = "Integer")
     })
     @GetMapping(value = "/event/listForPage")
-    public Map<String, Object> listForPage(int page, int limit) {
+    public Map<String, Object> listForPage(HttpSession session, int page, int limit) {
+        Object accountSidObj = session.getAttribute("accountSid");
 
-        Pagination<Event> pagination = eventService.findForPage(page, limit);
+        String accountSid = accountSidObj.toString();
+        Pagination<Event> pagination = eventService.findForPage(accountSid, page, limit);
 
         Map<String, Object> data = new HashMap<>();
         data.put("code", 0);
@@ -81,7 +83,7 @@ public class EventController {
                 isMember = true;
             }
         }
-
+        event.setMemberNums(members.size());
         Map<String, Object> data = new HashMap<>();
         data.put("event", event);
         data.put("isMember", isMember);

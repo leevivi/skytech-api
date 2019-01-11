@@ -2,16 +2,18 @@ package com.skytech.api.service.impl;
 
 import com.owthree.core.JsonMap;
 import com.owthree.core.Pagination;
+import com.owthree.core.service.impl.GenericServiceImpl;
+import com.skytech.api.mapper.AccountMapper;
 import com.skytech.api.mapper.EventMapper;
+import com.skytech.api.model.Account;
 import com.skytech.api.model.Event;
 import com.skytech.api.model.EventExample;
 import com.skytech.api.model.base.BaseEventExample;
 import com.skytech.api.service.EventService;
-import com.owthree.core.service.impl.GenericServiceImpl;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -21,15 +23,24 @@ public class EventServiceImpl extends GenericServiceImpl<Event, EventExample, St
     @Autowired
     private EventMapper eventMapper;
 
+    @Autowired
+    private AccountMapper accountMapper;
+
     @Override
     protected EventMapper getGenericMapper() {
         return this.eventMapper;
     }
 
     @Override
-    public Pagination<Event> findForPage(int page, int limit) {
+    public Pagination<Event> findForPage(String accountSid, int page, int limit) {
+        Account account = accountMapper.selectByPrimaryKey(accountSid);
+
         EventExample eventExample = new EventExample();
         BaseEventExample.Criteria criteria = eventExample.createCriteria();
+
+        if (!StringUtils.endsWith(account.getEmail(), "skytech.com.hk")) {
+            criteria.andSidNotEqualTo("1");
+        }
 
         Pagination<Event> pagination = this.queryByPage(eventExample, (page - 1) * limit, limit, "created_datetime desc");
 

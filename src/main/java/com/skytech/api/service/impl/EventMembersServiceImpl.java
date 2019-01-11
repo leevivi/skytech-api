@@ -104,6 +104,7 @@ public class EventMembersServiceImpl extends GenericServiceImpl<EventMembers, Ev
         for (EventMembers eventMember : eventMembers) {
             String accountSid = eventMember.getAccountSid();
             Account account = accountMapper.selectByPrimaryKey(accountSid);
+
             account.setSteps(10000);
 
             members.add(account);
