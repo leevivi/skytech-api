@@ -3,7 +3,7 @@ spring:
     name: api
   datasource:
     name: skytech
-    url: jdbc:mysql://rm-j6c4h5730u6ivt82xmo.mysql.rds.aliyuncs.com:3306/skytech?characterEncoding=utf-8
+    url: jdbc:mysql://rm-j6c4h5730u6ivt82xmo.mysql.rds.aliyuncs.com:3306/skytech?characterEncoding=utf-8&serverTimezone=Asia/Shanghai
     username: skytech
     password: 1957Forget
   # 使用druid数据源

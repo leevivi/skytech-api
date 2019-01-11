@@ -23,6 +23,9 @@ public class BaseEvent extends BaseModel<String> {
     @JSONField(format = "yyyy-MM-dd HH:mm:ss")
     private Date startDate;
 
+    @JSONField(format = "yyyy-MM-dd HH:mm:ss")
+    private Date endDate;
+
     private String color;
 
     private String detailUrl;
@@ -30,7 +33,7 @@ public class BaseEvent extends BaseModel<String> {
     public BaseEvent() {
     }
 
-    public BaseEvent(String sid, String eventName, String info, Date createdDatetime, String cover, Date startDate, String color, String detailUrl) {
+    public BaseEvent(String sid, String eventName, String info, Date createdDatetime, String cover, Date startDate, String color, String detailUrl, Date endDate) {
         this.sid = sid;
         this.eventName = eventName;
         this.info = info;
@@ -39,6 +42,7 @@ public class BaseEvent extends BaseModel<String> {
         this.startDate = startDate;
         this.color = color;
         this.detailUrl = detailUrl;
+        this.endDate = endDate;
     }
 
     /********** get/set ***********/
@@ -98,6 +102,14 @@ public class BaseEvent extends BaseModel<String> {
         this.detailUrl = detailUrl;
     }
 
+    public Date getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(Date endDate) {
+        this.endDate = endDate;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -112,6 +124,7 @@ public class BaseEvent extends BaseModel<String> {
         sb.append(", startDate=").append(startDate);
         sb.append(", color=").append(color);
         sb.append(", detailUrl=").append(detailUrl);
+        sb.append(", endDate=").append(endDate);
         sb.append("]");
         return sb.toString();
     }

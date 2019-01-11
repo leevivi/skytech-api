@@ -99,4 +99,13 @@ public class AccountDeviceController {
         return accountDeviceService.connect(accountSid, device);
 
     }
+
+    @PostMapping(value = "/accountDevice/disConnect")
+    public JsonMap disConnect(HttpSession session, Device device) {
+        Object accountSidObj = session.getAttribute("accountSid");
+
+        String accountSid = accountSidObj.toString();
+        return accountDeviceService.disConnect(accountSid, device);
+
+    }
 }

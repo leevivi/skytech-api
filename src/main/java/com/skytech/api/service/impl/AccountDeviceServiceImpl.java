@@ -128,4 +128,15 @@ public class AccountDeviceServiceImpl extends GenericServiceImpl<AccountDevice, 
         }
         return JsonMap.of(false, "");
     }
+
+    @Override
+    public JsonMap disConnect(String accountSid, Device device) {
+        AccountDeviceExample accountDeviceExample = new AccountDeviceExample();
+        accountDeviceExample.createCriteria().andAccountSidEqualTo(accountSid).andDeviceSidEqualTo(device.getDeviceId());
+        int i = accountDeviceMapper.deleteByExample(accountDeviceExample);
+        if (i > 0) {
+            return JsonMap.of(true, "SUCCESS");
+        }
+        return JsonMap.of(false, "FAILED");
+    }
 }

@@ -148,10 +148,10 @@
             account_name,
             </if>
             <if test="joinedDatetime != null" >
-            joined_datetime
+            joined_datetime,
             </if>
             <if test="staffId != null" >
-                staff_id
+            staff_id
             </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides="," >
@@ -172,7 +172,7 @@
                 #{accountName,jdbcType=VARCHAR},
             </if>
             <if test="joinedDatetime != null" >
-                #{joinedDatetime,jdbcType=TIMESTAMP}
+                #{joinedDatetime,jdbcType=TIMESTAMP},
             </if>
             <if test="staffId != null" >
                 #{staffId,jdbcType=VARCHAR}

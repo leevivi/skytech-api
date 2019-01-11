@@ -8,6 +8,7 @@
         <result column="created_datetime" property="createdDatetime" jdbcType="TIMESTAMP" />
         <result column="cover" property="cover" jdbcType="VARCHAR" />
         <result column="start_date" property="startDate" jdbcType="DATE" />
+        <result column="end_date" property="endDate" jdbcType="DATE" />
         <result column="color" property="color" jdbcType="VARCHAR" />
         <result column="detail_url" property="detailUrl" jdbcType="VARCHAR" />
     </resultMap>
@@ -71,7 +72,7 @@
         </where>
     </sql>
     <sql id="Base_Column_List" >
-        sid,event_name,info,created_datetime,cover,start_date,color,detail_url
+        sid,event_name,info,created_datetime,cover,start_date,end_date,color,detail_url
     </sql>
     <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.skytech.api.model.EventExample" >
         select

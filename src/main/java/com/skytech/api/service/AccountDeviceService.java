@@ -17,6 +17,8 @@ public interface AccountDeviceService extends GenericService<AccountDevice, Stri
     JsonMap delete(String... accountDeviceSids);
 
     JsonMap connect(String accountSid, Device device);
+
+    JsonMap disConnect(String accountSid, Device device);
 }
 
 
