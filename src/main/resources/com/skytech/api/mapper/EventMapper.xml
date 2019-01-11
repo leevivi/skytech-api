@@ -9,6 +9,7 @@
         <result column="cover" property="cover" jdbcType="VARCHAR" />
         <result column="start_date" property="startDate" jdbcType="DATE" />
         <result column="color" property="color" jdbcType="VARCHAR" />
+        <result column="detail_url" property="detailUrl" jdbcType="VARCHAR" />
     </resultMap>
     <sql id="Example_Where_Clause" >
         <where >
@@ -70,7 +71,7 @@
         </where>
     </sql>
     <sql id="Base_Column_List" >
-        sid,event_name,info,created_datetime,cover,start_date,color
+        sid,event_name,info,created_datetime,cover,start_date,color,detail_url
     </sql>
     <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.skytech.api.model.EventExample" >
         select
@@ -116,7 +117,8 @@
         created_datetime,
         cover,
         start_date,
-        color
+        color,
+        detail_url
         )
         values (
         #{sid,jdbcType=VARCHAR},
@@ -125,7 +127,8 @@
         #{createdDatetime,jdbcType=TIMESTAMP},
         #{cover,jdbcType=VARCHAR},
         #{startDate,jdbcType=DATE},
-        #{color,jdbcType=VARCHAR}
+        #{color,jdbcType=VARCHAR},
+        #{detailUrl,jdbcType=VARCHAR}
         )
     </insert>
 

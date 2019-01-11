@@ -8,6 +8,7 @@ import com.owthree.core.utils.UUIDUtil;
 import com.skytech.api.mapper.AccountDeviceMapper;
 import com.skytech.api.mapper.AccountMapper;
 import com.skytech.api.mapper.DeviceMapper;
+import com.skytech.api.mapper.RunningRecordMapper;
 import com.skytech.api.model.*;
 import com.skytech.api.model.base.BaseAccountExample;
 import com.skytech.api.service.AccountService;
@@ -29,6 +30,9 @@ public class AccountServiceImpl extends GenericServiceImpl<Account, AccountExamp
 
     @Autowired
     private AccountDeviceMapper accountDeviceMapper;
+
+    @Autowired
+    private RunningRecordMapper runningRecordMapper;
 
     @Override
     protected AccountMapper getGenericMapper() {
@@ -54,7 +58,7 @@ public class AccountServiceImpl extends GenericServiceImpl<Account, AccountExamp
         int i = accountMapper.countByExample(accountExample);
         if (i > 0) { //该邮箱已经存在，直接登陆即可
             data.put("code", "5000");
-            data.put("message", "该邮箱已经存在，直接登陆即可");
+            data.put("message", "ACCOUNT IS EXITED");
 
             return data;
         }
@@ -69,12 +73,12 @@ public class AccountServiceImpl extends GenericServiceImpl<Account, AccountExamp
 
         if (num > 0) {
             data.put("code", "2000");
-            data.put("message", "注册成功");
+            data.put("message", "SUCCESS");
             data.put("accountSid", account.getSid());
             return data;
         } else {
             data.put("code", "5000");
-            data.put("message", "注册失败");
+            data.put("message", "FAILED");
 
             return data;
         }
@@ -94,12 +98,29 @@ public class AccountServiceImpl extends GenericServiceImpl<Account, AccountExamp
             accountDeviceExample.createCriteria().andAccountSidEqualTo(accounts.get(0).getSid());
             List<AccountDevice> accountDevices = accountDeviceMapper.selectByExample(accountDeviceExample);
             List<String> macAddress = new ArrayList<>();
+            List<String> devices = new ArrayList<>();
             for (AccountDevice accountDevice : accountDevices) {
                 String deviceSid = accountDevice.getDeviceSid();
                 Device device = deviceMapper.selectByPrimaryKey(deviceSid);
+
                 macAddress.add(device.getBatch());
+                devices.add(deviceSid);
             }
             data.put("macAddress", macAddress);
+            data.put("devices", devices);
+
+            RunningRecordExample runningRecordExample = new RunningRecordExample();
+            runningRecordExample.createCriteria().andAccountSidEqualTo(accounts.get(0).getSid());
+
+            int distances = 0;
+            int durations = 0;
+            List<RunningRecord> runningRecords = runningRecordMapper.selectByExample(runningRecordExample);
+            for (RunningRecord record : runningRecords) {
+                distances += record.getDistance();
+                durations += record.getDuration();
+            }
+            data.put("distances", distances);
+            data.put("durations", durations);
             return data;
         } else {
             return null;
@@ -160,7 +181,8 @@ public class AccountServiceImpl extends GenericServiceImpl<Account, AccountExamp
         one.setGender(account.getGender());
         one.setHeight(account.getHeight());
         one.setWeight(account.getWeight());
-
+        one.setFirstName(account.getFirstName());
+        one.setLastName(account.getLastName());
         one.setUpdatedDatetime(new Date());
 
         int i = accountMapper.updateByPrimaryKeySelective(one);

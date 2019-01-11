@@ -16,6 +16,7 @@
         <result column="running_type" property="runningType" jdbcType="VARCHAR" />
         <result column="device_sid" property="deviceSid" jdbcType="VARCHAR" />
         <result column="frequency" property="frequency" jdbcType="INTEGER" />
+        <result column="heart_rate" property="heartRate" jdbcType="VARCHAR" />
     </resultMap>
     <sql id="Example_Where_Clause" >
         <where >
@@ -77,7 +78,7 @@
         </where>
     </sql>
     <sql id="Base_Column_List" >
-        sid,account_sid,account_name,steps,duration,average_bpm,max_bpm,cal,distance,start_datetime,created_datetime,running_type,device_sid,frequency
+        sid,account_sid,account_name,steps,duration,average_bpm,max_bpm,cal,distance,start_datetime,created_datetime,running_type,device_sid,frequency,heart_rate
     </sql>
     <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.skytech.api.model.RunningRecordExample" >
         select
@@ -130,7 +131,8 @@
         created_datetime,
         running_type,
         device_sid,
-        frequency
+        frequency,
+        heart_rate
         )
         values (
         #{sid,jdbcType=VARCHAR},
@@ -147,6 +149,7 @@
         #{runningType,jdbcType=VARCHAR},
         #{deviceSid,jdbcType=VARCHAR},
         #{frequency,jdbcType=INTEGER}
+        #{heartRate,jdbcType=VARCHAR}
         )
     </insert>
 
@@ -195,6 +198,9 @@
             <if test="frequency != null" >
             frequency
             </if>
+            <if test="heartRate != null" >
+            heart_rate
+            </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides="," >
 
@@ -239,6 +245,9 @@
             </if>
             <if test="frequency != null" >
                 #{frequency,jdbcType=INTEGER}
+            </if>
+            <if test="heartRate != null" >
+                #{heartRate,jdbcType=VARCHAR}
             </if>
         </trim>
     </insert>
@@ -367,6 +376,9 @@
             <if test="frequency != null" >
                 frequency= #{frequency,jdbcType=INTEGER}
             </if>
+            <if test="heartRate != null" >
+                heart_rate= #{heartRate,jdbcType=VARCHAR}
+            </if>
         </set>
         where sid = #{sid,jdbcType=VARCHAR}
     </update>
@@ -387,6 +399,7 @@
         running_type= #{runningType,jdbcType=VARCHAR},
         device_sid= #{deviceSid,jdbcType=VARCHAR},
         frequency= #{frequency,jdbcType=INTEGER}
+        heart_rate= #{heartRate,jdbcType=VARCHAR}
         where sid = #{sid,jdbcType=VARCHAR}
     </update>
 </mapper>

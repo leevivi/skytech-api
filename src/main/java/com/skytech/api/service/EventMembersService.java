@@ -16,7 +16,7 @@ public interface EventMembersService extends GenericService<EventMembers, String
 
     JsonMap save(EventMembers eventMembers);
 
-    JsonMap save(String accountSid, String eventSid);
+    JsonMap save(String accountSid, String eventSid, String accountName, String staffId);
 
     JsonMap update(String eventMembersSid, EventMembers eventMembers);
 

@@ -40,9 +40,11 @@ public class BaseRunningRecord extends BaseModel<String>{
 
     private Integer frequency;
 
+    private String heartRate;
+
     public BaseRunningRecord() {}
 
-    public BaseRunningRecord(String sid, String accountSid, String accountName, Integer steps, Integer duration, BigDecimal averageBpm, BigDecimal maxBpm, Integer cal, Integer distance, Date startDatetime, Date createdDatetime, String runningType, String deviceSid, Integer frequency) {
+    public BaseRunningRecord(String sid, String accountSid, String accountName, Integer steps, Integer duration, BigDecimal averageBpm, BigDecimal maxBpm, Integer cal, Integer distance, Date startDatetime, Date createdDatetime, String runningType, String deviceSid, Integer frequency,String heartRate) {
         this.sid = sid;
         this.accountSid = accountSid;
         this.accountName = accountName;
@@ -57,6 +59,7 @@ public class BaseRunningRecord extends BaseModel<String>{
         this.runningType = runningType;
         this.deviceSid = deviceSid;
         this.frequency = frequency;
+        this.heartRate = heartRate;
     }
 
     /********** get/set ***********/
@@ -152,6 +155,14 @@ public class BaseRunningRecord extends BaseModel<String>{
         this.frequency = frequency;
     }
 
+    public String getHeartRate() {
+        return heartRate;
+    }
+
+    public void setHeartRate(String heartRate) {
+        this.heartRate = heartRate;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -172,6 +183,7 @@ public class BaseRunningRecord extends BaseModel<String>{
         sb.append(", runningType=").append(runningType);
         sb.append(", deviceSid=").append(deviceSid);
         sb.append(", frequency=").append(frequency);
+        sb.append(", heartRate=").append(heartRate);
         sb.append("]");
         return sb.toString();
     }

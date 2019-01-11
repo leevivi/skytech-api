@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -111,18 +112,18 @@ public class EventMembersServiceImpl extends GenericServiceImpl<EventMembers, Ev
     }
 
     @Override
-    public JsonMap save(String accountSid, String eventSid) {
-        Account account = accountMapper.selectByPrimaryKey(accountSid);
+    public JsonMap save(String accountSid, String eventSid, String accountName, String staffId) {
 
         Event event = eventMapper.selectByPrimaryKey(eventSid);
 
         EventMembers one = new EventMembers();
         one.setSid(UUIDUtil.getUUID());
         one.setAccountSid(accountSid);
-        one.setAccountName(account.getFirstName() + "" + account.getLastName());
+        one.setAccountName(accountName);
         one.setEventSid(eventSid);
         one.setEventName(event.getEventName());
-
+        one.setStaffId(staffId);
+        one.setJoinedDatetime(new Date());
         int i = eventMembersMapper.insertSelective(one);
 
         if (i > 0) {

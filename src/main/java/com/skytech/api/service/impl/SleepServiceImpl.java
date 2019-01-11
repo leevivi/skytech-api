@@ -47,21 +47,29 @@ public class SleepServiceImpl extends GenericServiceImpl<Sleep, SleepExample, St
         sleep.setAccountName(account.getFirstName() + account.getLastName());
         SleepExample sleepExample = new SleepExample();
 
-        sleepExample.createCriteria().andAccountSidEqualTo(sleep.getAccountSid()).andDeviceSidEqualTo(sleep.getDeviceSid()).andRecordDateEqualTo(sleep.getRecordDate());
+
         int i = 0;
-        List<Sleep> sleeps = sleepMapper.selectByExample(sleepExample);
-        if (sleeps.isEmpty()) {
+        if (null != sleep.getRecordDate()) {
+            sleepExample.createCriteria().andAccountSidEqualTo(sleep.getAccountSid()).andDeviceSidEqualTo(sleep.getDeviceSid()).andRecordDateEqualTo(sleep.getRecordDate());
+            List<Sleep> sleeps = sleepMapper.selectByExample(sleepExample);
+            if (sleeps.isEmpty()) {
+                sleep.setSid(UUID.randomUUID().toString().replaceAll("-", ""));
+                sleep.setCreatedDatetime(new Date());
+                i = sleepMapper.insertSelective(sleep);
+            } else {
+                Sleep one = sleeps.get(0);
+                one.setCreatedDatetime(new Date());
+//            one.setStartDatetime(sleep.getStartDatetime());
+//            one.setEndDatetime(sleep.getEndDatetime());
+                one.setData(sleep.getData());
+                i = sleepMapper.updateByPrimaryKeySelective(one);
+            }
+        } else {
             sleep.setSid(UUID.randomUUID().toString().replaceAll("-", ""));
             sleep.setCreatedDatetime(new Date());
             i = sleepMapper.insertSelective(sleep);
-        } else {
-            Sleep one = sleeps.get(0);
-            one.setCreatedDatetime(new Date());
-//            one.setStartDatetime(sleep.getStartDatetime());
-//            one.setEndDatetime(sleep.getEndDatetime());
-            one.setData(sleep.getData());
-            i = sleepMapper.updateByPrimaryKeySelective(one);
         }
+
         if (i > 0) {
             return JsonMap.of(true, "保存成功");
         } else {

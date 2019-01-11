@@ -1,15 +1,15 @@
 package com.skytech.api.model.base;
 
-import com.owthree.core.model.BaseModel;
 import com.alibaba.fastjson.annotation.JSONField;
+import com.owthree.core.model.BaseModel;
+
 import java.util.Date;
 
 /**
-*
-* @author 剑神卓凌昭
-* @date   2018-12-01 23:22:09
-*/
-public class BaseEventMembers extends BaseModel<String>{
+ * @author 剑神卓凌昭
+ * @date 2018-12-01 23:22:09
+ */
+public class BaseEventMembers extends BaseModel<String> {
 
     private String eventSid;
 
@@ -19,18 +19,22 @@ public class BaseEventMembers extends BaseModel<String>{
 
     private String accountName;
 
-   @JSONField(format="yyyy-MM-dd HH:mm:ss")
+    @JSONField(format = "yyyy-MM-dd HH:mm:ss")
     private Date joinedDatetime;
 
-    public BaseEventMembers() {}
+    private String staffId;
 
-    public BaseEventMembers(String sid, String eventSid, String eventName, String accountSid, String accountName, Date joinedDatetime) {
+    public BaseEventMembers() {
+    }
+
+    public BaseEventMembers(String sid, String eventSid, String eventName, String accountSid, String accountName, Date joinedDatetime, String staffId) {
         this.sid = sid;
         this.eventSid = eventSid;
         this.eventName = eventName;
         this.accountSid = accountSid;
         this.accountName = accountName;
         this.joinedDatetime = joinedDatetime;
+        this.staffId = staffId;
     }
 
     /********** get/set ***********/
@@ -41,6 +45,7 @@ public class BaseEventMembers extends BaseModel<String>{
     public void setEventSid(String eventSid) {
         this.eventSid = eventSid;
     }
+
     public String getEventName() {
         return eventName;
     }
@@ -48,6 +53,7 @@ public class BaseEventMembers extends BaseModel<String>{
     public void setEventName(String eventName) {
         this.eventName = eventName;
     }
+
     public String getAccountSid() {
         return accountSid;
     }
@@ -55,6 +61,7 @@ public class BaseEventMembers extends BaseModel<String>{
     public void setAccountSid(String accountSid) {
         this.accountSid = accountSid;
     }
+
     public String getAccountName() {
         return accountName;
     }
@@ -62,12 +69,21 @@ public class BaseEventMembers extends BaseModel<String>{
     public void setAccountName(String accountName) {
         this.accountName = accountName;
     }
+
     public Date getJoinedDatetime() {
         return joinedDatetime;
     }
 
     public void setJoinedDatetime(Date joinedDatetime) {
         this.joinedDatetime = joinedDatetime;
+    }
+
+    public String getStaffId() {
+        return staffId;
+    }
+
+    public void setStaffId(String staffId) {
+        this.staffId = staffId;
     }
 
     @Override
@@ -82,6 +98,7 @@ public class BaseEventMembers extends BaseModel<String>{
         sb.append(", accountSid=").append(accountSid);
         sb.append(", accountName=").append(accountName);
         sb.append(", joinedDatetime=").append(joinedDatetime);
+        sb.append(", staffId=").append(staffId);
         sb.append("]");
         return sb.toString();
     }

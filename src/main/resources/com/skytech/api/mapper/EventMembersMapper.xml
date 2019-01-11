@@ -8,6 +8,7 @@
         <result column="account_sid" property="accountSid" jdbcType="VARCHAR" />
         <result column="account_name" property="accountName" jdbcType="VARCHAR" />
         <result column="joined_datetime" property="joinedDatetime" jdbcType="TIMESTAMP" />
+        <result column="staff_id" property="staffId" jdbcType="TIMESTAMP" />
     </resultMap>
     <sql id="Example_Where_Clause" >
         <where >
@@ -69,7 +70,7 @@
         </where>
     </sql>
     <sql id="Base_Column_List" >
-        sid,event_sid,event_name,account_sid,account_name,joined_datetime
+        sid,event_sid,event_name,account_sid,account_name,joined_datetime,staff_id
     </sql>
     <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.skytech.api.model.EventMembersExample" >
         select
@@ -114,7 +115,8 @@
         event_name,
         account_sid,
         account_name,
-        joined_datetime
+        joined_datetime,
+        staff_id
         )
         values (
         #{sid,jdbcType=VARCHAR},
@@ -122,7 +124,8 @@
         #{eventName,jdbcType=VARCHAR},
         #{accountSid,jdbcType=VARCHAR},
         #{accountName,jdbcType=VARCHAR},
-        #{joinedDatetime,jdbcType=TIMESTAMP}
+        #{joinedDatetime,jdbcType=TIMESTAMP},
+        #{staffId,jdbcType=VARCHAR}
         )
     </insert>
 
@@ -147,6 +150,9 @@
             <if test="joinedDatetime != null" >
             joined_datetime
             </if>
+            <if test="staffId != null" >
+                staff_id
+            </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides="," >
 
@@ -167,6 +173,9 @@
             </if>
             <if test="joinedDatetime != null" >
                 #{joinedDatetime,jdbcType=TIMESTAMP}
+            </if>
+            <if test="staffId != null" >
+                #{staffId,jdbcType=VARCHAR}
             </if>
         </trim>
     </insert>

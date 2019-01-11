@@ -1,33 +1,36 @@
 package com.skytech.api.model.base;
 
-import com.owthree.core.model.BaseModel;
 import com.alibaba.fastjson.annotation.JSONField;
+import com.owthree.core.model.BaseModel;
+
 import java.util.Date;
 
 /**
-*
-* @author 剑神卓凌昭
-* @date   2018-12-01 23:22:09
-*/
-public class BaseEvent extends BaseModel<String>{
+ * @author 剑神卓凌昭
+ * @date 2018-12-01 23:22:09
+ */
+public class BaseEvent extends BaseModel<String> {
 
     private String eventName;
 
     private String info;
 
-   @JSONField(format="yyyy-MM-dd HH:mm:ss")
+    @JSONField(format = "yyyy-MM-dd HH:mm:ss")
     private Date createdDatetime;
 
     private String cover;
 
-   @JSONField(format="yyyy-MM-dd HH:mm:ss")
+    @JSONField(format = "yyyy-MM-dd HH:mm:ss")
     private Date startDate;
 
     private String color;
 
-    public BaseEvent() {}
+    private String detailUrl;
 
-    public BaseEvent(String sid, String eventName, String info, Date createdDatetime, String cover, Date startDate, String color) {
+    public BaseEvent() {
+    }
+
+    public BaseEvent(String sid, String eventName, String info, Date createdDatetime, String cover, Date startDate, String color, String detailUrl) {
         this.sid = sid;
         this.eventName = eventName;
         this.info = info;
@@ -35,6 +38,7 @@ public class BaseEvent extends BaseModel<String>{
         this.cover = cover;
         this.startDate = startDate;
         this.color = color;
+        this.detailUrl = detailUrl;
     }
 
     /********** get/set ***********/
@@ -45,6 +49,7 @@ public class BaseEvent extends BaseModel<String>{
     public void setEventName(String eventName) {
         this.eventName = eventName;
     }
+
     public String getInfo() {
         return info;
     }
@@ -52,6 +57,7 @@ public class BaseEvent extends BaseModel<String>{
     public void setInfo(String info) {
         this.info = info;
     }
+
     public Date getCreatedDatetime() {
         return createdDatetime;
     }
@@ -59,6 +65,7 @@ public class BaseEvent extends BaseModel<String>{
     public void setCreatedDatetime(Date createdDatetime) {
         this.createdDatetime = createdDatetime;
     }
+
     public String getCover() {
         return cover;
     }
@@ -66,6 +73,7 @@ public class BaseEvent extends BaseModel<String>{
     public void setCover(String cover) {
         this.cover = cover;
     }
+
     public Date getStartDate() {
         return startDate;
     }
@@ -73,12 +81,21 @@ public class BaseEvent extends BaseModel<String>{
     public void setStartDate(Date startDate) {
         this.startDate = startDate;
     }
+
     public String getColor() {
         return color;
     }
 
     public void setColor(String color) {
         this.color = color;
+    }
+
+    public String getDetailUrl() {
+        return detailUrl;
+    }
+
+    public void setDetailUrl(String detailUrl) {
+        this.detailUrl = detailUrl;
     }
 
     @Override
@@ -94,6 +111,7 @@ public class BaseEvent extends BaseModel<String>{
         sb.append(", cover=").append(cover);
         sb.append(", startDate=").append(startDate);
         sb.append(", color=").append(color);
+        sb.append(", detailUrl=").append(detailUrl);
         sb.append("]");
         return sb.toString();
     }

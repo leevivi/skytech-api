@@ -95,13 +95,13 @@ public class EventController {
             @ApiImplicitParam(name = "event", value = "", required = true, dataType = "Event")
     })
     @PostMapping(value = "/event/join")
-    public JsonMap join(HttpSession session, String eventSid) {
+    public JsonMap join(HttpSession session, String eventSid, String accountName, String staffId) {
 
         Object accountSidObj = session.getAttribute("accountSid");
 
         String accountSid = accountSidObj.toString();
 
-        return eventMembersService.save(accountSid, eventSid);
+        return eventMembersService.save(accountSid, eventSid, accountName, staffId);
 
     }
 
