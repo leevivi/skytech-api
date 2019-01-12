@@ -109,7 +109,7 @@ public class SleepServiceImpl extends GenericServiceImpl<Sleep, SleepExample, St
     @Override
     public List<Sleep> report(String accountSid, String deviceSid, Date startDate, Date endDate) {
         SleepExample sleepExample = new SleepExample();
-        sleepExample.createCriteria().andAccountSidEqualTo(accountSid).andDeviceSidEqualTo(deviceSid).andStartDatetimeBetween(startDate, endDate);
+        sleepExample.createCriteria().andAccountSidEqualTo(accountSid).andDeviceSidEqualTo(deviceSid).andRecordDateBetween(startDate, endDate);
         sleepExample.setOrderByClause(" start_datetime asc");
         List<Sleep> sleeps = sleepMapper.selectByExample(sleepExample);
         return sleeps;

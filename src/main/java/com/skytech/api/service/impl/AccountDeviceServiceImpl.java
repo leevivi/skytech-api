@@ -92,23 +92,23 @@ public class AccountDeviceServiceImpl extends GenericServiceImpl<AccountDevice, 
     @Override
     public JsonMap connect(String accountSid, Device device) {
         DeviceExample deviceExample = new DeviceExample();
-        deviceExample.createCriteria().andDeviceIdEqualTo(device.getDeviceId());
+        deviceExample.createCriteria().andBatchEqualTo(device.getDeviceId());
 
         List<Device> devices = deviceMapper.selectByExample(deviceExample);
         Date now = new Date();
         int i = 0;
-
+        String deviceSid = "";
         if (devices.isEmpty()) {
-            String deviceSid = UUIDUtil.getUUID();
+            deviceSid = UUIDUtil.getUUID();
 
             device.setSid(deviceSid);
             device.setCreatedDatetime(now);
-
+            device.setBatch(device.getDeviceId());
             i = deviceMapper.insertSelective(device);
 
         } else {
             Device one = devices.get(0);
-
+            deviceSid = one.getSid();
             one.setCreatedDatetime(now);
             i = deviceMapper.updateByPrimaryKeySelective(one);
         }
@@ -117,13 +117,14 @@ public class AccountDeviceServiceImpl extends GenericServiceImpl<AccountDevice, 
             AccountDevice accountDevice = new AccountDevice();
             accountDevice.setSid(UUIDUtil.getUUID());
             accountDevice.setAccountSid(accountSid);
-            accountDevice.setDeviceSid(device.getDeviceId());
+            accountDevice.setDeviceSid(deviceSid);
             accountDevice.setDeviceStatus((byte) 1);
             accountDevice.setCreatedDatetime(now);
             int j = accountDeviceMapper.insertSelective(accountDevice);
 
             if (j > 0) {
-                return JsonMap.of(true, "");
+                device = deviceMapper.selectByPrimaryKey(deviceSid);
+                return JsonMap.of(true, "", device);
             }
         }
         return JsonMap.of(false, "");
@@ -132,7 +133,7 @@ public class AccountDeviceServiceImpl extends GenericServiceImpl<AccountDevice, 
     @Override
     public JsonMap disConnect(String accountSid, Device device) {
         AccountDeviceExample accountDeviceExample = new AccountDeviceExample();
-        accountDeviceExample.createCriteria().andAccountSidEqualTo(accountSid).andDeviceSidEqualTo(device.getDeviceId());
+        accountDeviceExample.createCriteria().andAccountSidEqualTo(accountSid).andDeviceSidEqualTo(device.getSid());
         int i = accountDeviceMapper.deleteByExample(accountDeviceExample);
         if (i > 0) {
             return JsonMap.of(true, "SUCCESS");
