@@ -1,9 +1,9 @@
 package com.skytech.api.service.impl;
 
-import com.owthree.core.JsonMap;
-import com.owthree.core.Pagination;
-import com.owthree.core.service.impl.GenericServiceImpl;
-import com.owthree.core.utils.UUIDUtil;
+import com.skytech.api.core.JsonMap;
+import com.skytech.api.core.Pagination;
+import com.skytech.api.core.service.impl.GenericServiceImpl;
+import com.skytech.api.core.utils.UUIDUtil;
 import com.skytech.api.mapper.AccountDeviceMapper;
 import com.skytech.api.mapper.DeviceMapper;
 import com.skytech.api.model.AccountDevice;

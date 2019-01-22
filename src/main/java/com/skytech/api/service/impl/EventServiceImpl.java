@@ -1,8 +1,8 @@
 package com.skytech.api.service.impl;
 
-import com.owthree.core.JsonMap;
-import com.owthree.core.Pagination;
-import com.owthree.core.service.impl.GenericServiceImpl;
+import com.skytech.api.core.JsonMap;
+import com.skytech.api.core.Pagination;
+import com.skytech.api.core.service.impl.GenericServiceImpl;
 import com.skytech.api.mapper.AccountMapper;
 import com.skytech.api.mapper.EventMapper;
 import com.skytech.api.model.Account;

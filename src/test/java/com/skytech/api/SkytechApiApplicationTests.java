@@ -1,6 +1,6 @@
 package com.skytech.api;
 
-import com.owthree.core.utils.UUIDUtil;
+import com.skytech.api.core.utils.UUIDUtil;
 import com.skytech.api.mapper.AccountDeviceMapper;
 import com.skytech.api.mapper.AccountMapper;
 import com.skytech.api.mapper.DeviceMapper;

@@ -1,7 +1,7 @@
 package com.skytech.api.controller;
 
-import com.owthree.core.JsonMap;
-import com.owthree.core.Pagination;
+import com.skytech.api.core.JsonMap;
+import com.skytech.api.core.Pagination;
 import com.skytech.api.model.Event;
 import com.skytech.api.service.EventMembersService;
 import com.skytech.api.service.EventService;

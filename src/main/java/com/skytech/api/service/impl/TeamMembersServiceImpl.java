@@ -1,13 +1,13 @@
 package com.skytech.api.service.impl;
 
-import com.owthree.core.JsonMap;
-import com.owthree.core.Pagination;
+import com.skytech.api.core.JsonMap;
+import com.skytech.api.core.Pagination;
 import com.skytech.api.mapper.TeamMembersMapper;
 import com.skytech.api.model.TeamMembers;
 import com.skytech.api.model.TeamMembersExample;
 import com.skytech.api.model.base.BaseTeamMembersExample;
 import com.skytech.api.service.TeamMembersService;
-import com.owthree.core.service.impl.GenericServiceImpl;
+import com.skytech.api.core.service.impl.GenericServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

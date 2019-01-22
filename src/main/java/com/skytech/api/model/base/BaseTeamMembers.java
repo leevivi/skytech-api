@@ -1,6 +1,6 @@
 package com.skytech.api.model.base;
 
-import com.owthree.core.model.BaseModel;
+import com.skytech.api.core.model.BaseModel;
 import com.alibaba.fastjson.annotation.JSONField;
 import java.math.BigDecimal;
 import java.util.Date;

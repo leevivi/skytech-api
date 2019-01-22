@@ -1,7 +1,7 @@
 package com.skytech.api.controller;
 
-import com.owthree.core.JsonMap;
-import com.owthree.core.Pagination;
+import com.skytech.api.core.JsonMap;
+import com.skytech.api.core.Pagination;
 import com.skytech.api.model.RunningRecord;
 import com.skytech.api.service.RunningRecordService;
 import io.swagger.annotations.ApiImplicitParam;

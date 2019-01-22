@@ -1,9 +1,9 @@
 package com.skytech.api.controller;
 
 import com.alibaba.fastjson.JSON;
-import com.owthree.core.JsonMap;
-import com.owthree.core.Pagination;
-import com.owthree.core.utils.DateUtil;
+import com.skytech.api.core.JsonMap;
+import com.skytech.api.core.Pagination;
+import com.skytech.api.core.utils.DateUtil;
 import com.skytech.api.model.HeartRate;
 import com.skytech.api.service.HeartRateService;
 import io.swagger.annotations.ApiImplicitParam;

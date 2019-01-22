@@ -1,7 +1,7 @@
 package com.skytech.api.model.base;
 
-import com.owthree.core.model.BaseCriteria;
-import com.owthree.core.model.BaseModelExample;
+import com.skytech.api.core.model.BaseCriteria;
+import com.skytech.api.core.model.BaseModelExample;
 import java.math.*;
 import java.util.*;
 

@@ -1,9 +1,9 @@
 package com.skytech.api.controller;
 
-import com.owthree.core.Pagination;
+import com.skytech.api.core.Pagination;
 import com.skytech.api.model.Team;
 import com.skytech.api.service.TeamService;
-import com.owthree.core.JsonMap;
+import com.skytech.api.core.JsonMap;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;

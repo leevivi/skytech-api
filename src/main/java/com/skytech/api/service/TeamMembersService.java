@@ -1,10 +1,10 @@
 package com.skytech.api.service;
 
-import com.owthree.core.JsonMap;
-import com.owthree.core.Pagination;
+import com.skytech.api.core.JsonMap;
+import com.skytech.api.core.Pagination;
 import com.skytech.api.model.TeamMembers;
 import com.skytech.api.model.TeamMembersExample;
-import com.owthree.core.service.GenericService;
+import com.skytech.api.core.service.GenericService;
 
 public interface TeamMembersService extends GenericService<TeamMembers, String> {
 

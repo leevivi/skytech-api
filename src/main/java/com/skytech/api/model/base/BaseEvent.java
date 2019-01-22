@@ -1,7 +1,7 @@
 package com.skytech.api.model.base;
 
 import com.alibaba.fastjson.annotation.JSONField;
-import com.owthree.core.model.BaseModel;
+import com.skytech.api.core.model.BaseModel;
 
 import java.util.Date;
 
