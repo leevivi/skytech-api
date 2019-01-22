@@ -10,7 +10,7 @@
         <result column="created_datetime" property="createdDatetime" jdbcType="TIMESTAMP" />
         <result column="end_datetime" property="endDatetime" jdbcType="TIMESTAMP" />
         <result column="device_sid" property="deviceSid" jdbcType="VARCHAR" />
-        <result column="record_date" property="recordDate" jdbcType="DATE" />
+        <result column="record_date" property="recordDate" jdbcType="TIMESTAMP" />
     </resultMap>
     <sql id="Example_Where_Clause" >
         <where >
@@ -131,7 +131,7 @@
         #{createdDatetime,jdbcType=TIMESTAMP},
         #{endDatetime,jdbcType=TIMESTAMP},
         #{deviceSid,jdbcType=VARCHAR},
-        #{recordDate,jdbcType=DATE}
+        #{recordDate,jdbcType=TIMESTAMP}
         )
     </insert>
 
@@ -193,7 +193,7 @@
                 #{deviceSid,jdbcType=VARCHAR},
             </if>
             <if test="recordDate != null" >
-                #{recordDate,jdbcType=DATE}
+                #{recordDate,jdbcType=TIMESTAMP}
             </if>
         </trim>
     </insert>
@@ -233,7 +233,7 @@
             device_sid= #{deviceSid,jdbcType=VARCHAR},
             </if>
             <if test="recordDate != null" >
-            record_date= #{recordDate,jdbcType=DATE}
+            record_date= #{recordDate,jdbcType=TIMESTAMP}
             </if>
         </set>
         <if test="_parameter != null" >
@@ -252,7 +252,7 @@
         created_datetime= #{createdDatetime,jdbcType=TIMESTAMP},
         end_datetime= #{endDatetime,jdbcType=TIMESTAMP},
         device_sid= #{deviceSid,jdbcType=VARCHAR},
-        record_date= #{recordDate,jdbcType=DATE}
+        record_date= #{recordDate,jdbcType=TIMESTAMP}
         <if test="_parameter != null" >
             <include refid="Update_By_Example_Where_Clause" />
         </if>
@@ -285,7 +285,7 @@
                 device_sid= #{deviceSid,jdbcType=VARCHAR},
             </if>
             <if test="recordDate != null" >
-                record_date= #{recordDate,jdbcType=DATE}
+                record_date= #{recordDate,jdbcType=TIMESTAMP}
             </if>
         </set>
         where sid = #{sid,jdbcType=VARCHAR}
@@ -301,7 +301,7 @@
         created_datetime= #{createdDatetime,jdbcType=TIMESTAMP},
         end_datetime= #{endDatetime,jdbcType=TIMESTAMP},
         device_sid= #{deviceSid,jdbcType=VARCHAR},
-        record_date= #{recordDate,jdbcType=DATE}
+        record_date= #{recordDate,jdbcType=TIMESTAMP}
         where sid = #{sid,jdbcType=VARCHAR}
     </update>
 </mapper>

@@ -7,19 +7,15 @@ import com.owthree.core.utils.UUIDUtil;
 import com.skytech.api.mapper.AccountMapper;
 import com.skytech.api.mapper.EventMapper;
 import com.skytech.api.mapper.EventMembersMapper;
-import com.skytech.api.model.Account;
-import com.skytech.api.model.Event;
-import com.skytech.api.model.EventMembers;
-import com.skytech.api.model.EventMembersExample;
+import com.skytech.api.mapper.RunningRecordMapper;
+import com.skytech.api.model.*;
 import com.skytech.api.model.base.BaseEventMembersExample;
 import com.skytech.api.service.EventMembersService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.UUID;
+import java.math.BigDecimal;
+import java.util.*;
 
 @Service("eventMembersService")
 public class EventMembersServiceImpl extends GenericServiceImpl<EventMembers, EventMembersExample, String> implements EventMembersService {
@@ -32,6 +28,9 @@ public class EventMembersServiceImpl extends GenericServiceImpl<EventMembers, Ev
 
     @Autowired
     private AccountMapper accountMapper;
+
+    @Autowired
+    private RunningRecordMapper runningRecordMapper;
 
     @Override
     protected EventMembersMapper getGenericMapper() {
@@ -95,25 +94,54 @@ public class EventMembersServiceImpl extends GenericServiceImpl<EventMembers, Ev
     }
 
     @Override
-    public List<Account> findForEvent(String eventSid) {
+    public List<Map<String, Object>> findForEvent(String eventSid) {
         EventMembersExample eventMembersExample = new EventMembersExample();
         eventMembersExample.createCriteria().andEventSidEqualTo(eventSid);
 
         List<EventMembers> eventMembers = eventMembersMapper.selectByExample(eventMembersExample);
-        List<Account> members = new ArrayList<>();
+        List<Map<String, Object>> members = new ArrayList<>();
         for (EventMembers eventMember : eventMembers) {
+            Map<String, Object> m = new HashMap<>();
             String accountSid = eventMember.getAccountSid();
             Account account = accountMapper.selectByPrimaryKey(accountSid);
+            m.put("accountSid", accountSid);
+            m.put("accountName", eventMember.getAccountName());
+            m.put("accountAvatar", account.getAvarta());
 
-            account.setSteps(10000);
 
-            members.add(account);
+            RunningRecordExample runningRecordExample = new RunningRecordExample();
+            runningRecordExample.createCriteria().andAccountSidEqualTo(accountSid);
+
+            int distances = 0;
+
+            List<RunningRecord> runningRecords = runningRecordMapper.selectByExample(runningRecordExample);
+            for (RunningRecord record : runningRecords) {
+                distances += record.getDistance();
+            }
+            m.put("distances", distances);
+
+            members.add(m);
         }
+
+        Collections.sort(members, new Comparator<Map<String, Object>>() {
+            public int compare(Map<String, Object> o1, Map<String, Object> o2) {
+                return new BigDecimal(o2.get("distances").toString()).compareTo(new BigDecimal(o1.get("distances").toString()));
+            }
+        });
+
         return members;
     }
 
     @Override
     public JsonMap save(String accountSid, String eventSid, String accountName, String staffId) {
+
+        EventMembersExample eventMembersExample = new EventMembersExample();
+        eventMembersExample.createCriteria().andEventSidEqualTo(eventSid).andAccountSidEqualTo(accountSid);
+        int count = eventMembersMapper.countByExample(eventMembersExample);
+
+        if (count > 0) {
+            return JsonMap.of(false, "You had joined this event!");
+        }
 
         Event event = eventMapper.selectByPrimaryKey(eventSid);
 
@@ -128,9 +156,9 @@ public class EventMembersServiceImpl extends GenericServiceImpl<EventMembers, Ev
         int i = eventMembersMapper.insertSelective(one);
 
         if (i > 0) {
-            return JsonMap.of(true, "加入成功");
+            return JsonMap.of(true, "SUCCESS");
         } else {
-            return JsonMap.of(false, "加入失败");
+            return JsonMap.of(false, "FAILED");
         }
 
     }

@@ -13,6 +13,7 @@ import com.skytech.api.service.HeartRateService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -49,7 +50,19 @@ public class HeartRateServiceImpl extends GenericServiceImpl<HeartRate, HeartRat
         HeartRateExample heartRateExample = new HeartRateExample();
         int i = 0;
         if (null != heartRate.getRecordDate()) {
-            heartRateExample.createCriteria().andAccountSidEqualTo(heartRate.getAccountSid()).andDeviceSidEqualTo(heartRate.getDeviceSid()).andRecordDateEqualTo(heartRate.getRecordDate());
+
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(heartRate.getRecordDate());
+
+            calendar.set(Calendar.HOUR_OF_DAY, 0);
+            calendar.set(Calendar.MINUTE, 0);
+            calendar.set(Calendar.SECOND, 0);
+
+            Date date1 = calendar.getTime();
+            calendar.add(Calendar.DATE, 1);
+            calendar.add(Calendar.SECOND, -1);
+            Date date2 = calendar.getTime();
+            heartRateExample.createCriteria().andAccountSidEqualTo(heartRate.getAccountSid()).andDeviceSidEqualTo(heartRate.getDeviceSid()).andRecordDateBetween(date1, date2);
 
             List<HeartRate> heartRates = heartRateMapper.selectByExample(heartRateExample);
             if (heartRates.isEmpty()) {
@@ -59,6 +72,7 @@ public class HeartRateServiceImpl extends GenericServiceImpl<HeartRate, HeartRat
             } else {
                 HeartRate one = heartRates.get(0);
                 one.setCreatedDatetime(new Date());
+                one.setRecordDate(heartRate.getRecordDate());
 //            one.setStartDatetime(heartRate.getStartDatetime());
 //            one.setEndDatetime(heartRate.getEndDatetime());
                 one.setData(heartRate.getData());
@@ -109,7 +123,7 @@ public class HeartRateServiceImpl extends GenericServiceImpl<HeartRate, HeartRat
     @Override
     public List<HeartRate> report(String accountSid, String deviceSid, Date startDate, Date endDate) {
         HeartRateExample heartRateExample = new HeartRateExample();
-        heartRateExample.createCriteria().andAccountSidEqualTo(accountSid).andDeviceSidEqualTo(deviceSid).andStartDatetimeBetween(startDate, endDate);
+        heartRateExample.createCriteria().andAccountSidEqualTo(accountSid).andDeviceSidEqualTo(deviceSid).andRecordDateBetween(startDate, endDate);
         heartRateExample.setOrderByClause(" start_datetime asc");
         List<HeartRate> heartRates = heartRateMapper.selectByExample(heartRateExample);
         return heartRates;

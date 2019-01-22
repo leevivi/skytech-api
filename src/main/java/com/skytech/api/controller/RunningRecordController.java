@@ -32,9 +32,9 @@ public class RunningRecordController {
             @ApiImplicitParam(name = "limit", value = "每页数量", required = true, dataType = "Integer")
     })
     @GetMapping(value = "/runningRecord/listForPage")
-    public Map<String, Object> listForPage(int page, int limit) {
+    public Map<String, Object> listForPage(String deviceSid, int page, int limit) {
 
-        Pagination<RunningRecord> pagination = runningRecordService.findForPage(page, limit);
+        Pagination<RunningRecord> pagination = runningRecordService.findForPage(deviceSid,page, limit);
 
         Map<String, Object> data = new HashMap<>();
         data.put("code", 0);

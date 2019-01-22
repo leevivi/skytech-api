@@ -12,6 +12,7 @@ import com.skytech.api.model.Device;
 import com.skytech.api.model.DeviceExample;
 import com.skytech.api.model.base.BaseAccountDeviceExample;
 import com.skytech.api.service.AccountDeviceService;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -107,6 +108,7 @@ public class AccountDeviceServiceImpl extends GenericServiceImpl<AccountDevice, 
             i = deviceMapper.insertSelective(device);
 
         } else {
+
             Device one = devices.get(0);
             deviceSid = one.getSid();
             one.setCreatedDatetime(now);
@@ -114,13 +116,35 @@ public class AccountDeviceServiceImpl extends GenericServiceImpl<AccountDevice, 
         }
 
         if (i > 0) {
-            AccountDevice accountDevice = new AccountDevice();
-            accountDevice.setSid(UUIDUtil.getUUID());
-            accountDevice.setAccountSid(accountSid);
-            accountDevice.setDeviceSid(deviceSid);
-            accountDevice.setDeviceStatus((byte) 1);
-            accountDevice.setCreatedDatetime(now);
-            int j = accountDeviceMapper.insertSelective(accountDevice);
+            AccountDeviceExample accountDeviceExample = new AccountDeviceExample();
+            accountDeviceExample.createCriteria().andDeviceSidEqualTo(devices.get(0).getSid());
+            List<AccountDevice> accountDevices = this.selectByExample(accountDeviceExample);
+
+            int j = 0;
+            if (accountDevices.isEmpty()) {
+                AccountDevice accountDevice = new AccountDevice();
+                accountDevice.setSid(UUIDUtil.getUUID());
+                accountDevice.setAccountSid(accountSid);
+                accountDevice.setDeviceSid(deviceSid);
+                accountDevice.setDeviceStatus((byte) 1);
+                accountDevice.setCreatedDatetime(now);
+                j = accountDeviceMapper.insertSelective(accountDevice);
+            } else {
+
+                boolean flag = false;
+                for (AccountDevice accountDevice : accountDevices) {
+                    String accountSid1 = accountDevice.getAccountSid();
+                    if (StringUtils.equals(accountSid, accountSid1)) {
+                        flag = true;
+                    }
+                }
+
+                if (!flag) {
+                    return JsonMap.of(false, "The device has been bound to other accounts");
+                }
+
+            }
+
 
             if (j > 0) {
                 device = deviceMapper.selectByPrimaryKey(deviceSid);

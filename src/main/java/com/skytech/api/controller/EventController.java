@@ -2,7 +2,6 @@ package com.skytech.api.controller;
 
 import com.owthree.core.JsonMap;
 import com.owthree.core.Pagination;
-import com.skytech.api.model.Account;
 import com.skytech.api.model.Event;
 import com.skytech.api.service.EventMembersService;
 import com.skytech.api.service.EventService;
@@ -76,18 +75,34 @@ public class EventController {
 
         boolean isMember = false;
 
-        List<Account> members = eventMembersService.findForEvent(sid);
+        List<Map<String, Object>> members = eventMembersService.findForEvent(sid);
 
-        for (Account member : members) {
-            if (StringUtils.equals(accountSid, member.getSid())) {
+
+        Map<String, Object> m = new HashMap<>();
+        for (int i = 1; i <= members.size(); i++) {
+            if (StringUtils.equals(accountSid, members.get(i - 1).get("accountSid").toString())) {
                 isMember = true;
+                if (i > 5) {
+                    m.put("position", i);
+                    m.put("accountSid", accountSid);
+                    m.put("accountName", members.get(i - 1).get("accountName"));
+                    m.put("accountAvatar", members.get(i - 1).get("accountAvatar"));
+                }
+
             }
         }
+
         event.setMemberNums(members.size());
         Map<String, Object> data = new HashMap<>();
         data.put("event", event);
         data.put("isMember", isMember);
-        data.put("members", members);
+        if (members.size() > 5) {
+            data.put("members", members.subList(0, 5));
+        } else {
+            data.put("members", members);
+        }
+
+        data.put("mine", m);
 
         return JsonMap.of(true, "", data);
     }

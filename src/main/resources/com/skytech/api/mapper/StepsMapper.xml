@@ -1,16 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.skytech.api.mapper.HeartRateMapper" >
-    <resultMap id="BaseResultMap" type="com.skytech.api.model.HeartRate" >
+<mapper namespace="com.skytech.api.mapper.StepsMapper" >
+    <resultMap id="BaseResultMap" type="com.skytech.api.model.Steps" >
         <id column="sid" property="sid" jdbcType="VARCHAR" />
         <result column="account_sid" property="accountSid" jdbcType="VARCHAR" />
-        <result column="account_name" property="accountName" jdbcType="VARCHAR" />
-        <result column="data" property="data" jdbcType="VARCHAR" />
-        <result column="start_datetime" property="startDatetime" jdbcType="TIMESTAMP" />
-        <result column="created_datetime" property="createdDatetime" jdbcType="TIMESTAMP" />
-        <result column="end_datetime" property="endDatetime" jdbcType="TIMESTAMP" />
         <result column="device_sid" property="deviceSid" jdbcType="VARCHAR" />
         <result column="record_date" property="recordDate" jdbcType="TIMESTAMP" />
+        <result column="step_num" property="stepNum" jdbcType="INTEGER" />
+        <result column="created_datetime" property="createdDatetime" jdbcType="TIMESTAMP" />
     </resultMap>
     <sql id="Example_Where_Clause" >
         <where >
@@ -72,15 +69,15 @@
         </where>
     </sql>
     <sql id="Base_Column_List" >
-        sid,account_sid,account_name,data,start_datetime,created_datetime,end_datetime,device_sid,record_date
+        sid,account_sid,device_sid,record_date,step_num,created_datetime
     </sql>
-    <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.skytech.api.model.HeartRateExample" >
+    <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.skytech.api.model.StepsExample" >
         select
         <if test="distinct" >
             distinct
         </if>
         <include refid="Base_Column_List" />
-        from heart_rate
+        from steps
         <if test="_parameter != null" >
             <include refid="Example_Where_Clause" />
         </if>
@@ -95,48 +92,42 @@
     <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
         select
         <include refid="Base_Column_List" />
-        from heart_rate
+        from steps
         where sid = #{sid,jdbcType=VARCHAR}
     </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
-        delete from heart_rate
+        delete from steps
         where sid = #{sid,jdbcType=VARCHAR}
     </delete>
 
-    <delete id="deleteByExample" parameterType="com.skytech.api.model.HeartRateExample" >
-        delete from heart_rate
+    <delete id="deleteByExample" parameterType="com.skytech.api.model.StepsExample" >
+        delete from steps
         <if test="_parameter != null" >
             <include refid="Example_Where_Clause" />
         </if>
     </delete>
 
-    <insert id="insert" parameterType="com.skytech.api.model.HeartRate" >
-        insert into heart_rate (
+    <insert id="insert" parameterType="com.skytech.api.model.Steps" >
+        insert into steps (
         sid,
         account_sid,
-        account_name,
-        data,
-        start_datetime,
-        created_datetime,
-        end_datetime,
         device_sid,
-        record_date
+        record_date,
+        step_num,
+        created_datetime
         )
         values (
         #{sid,jdbcType=VARCHAR},
         #{accountSid,jdbcType=VARCHAR},
-        #{accountName,jdbcType=VARCHAR},
-        #{data,jdbcType=VARCHAR},
-        #{startDatetime,jdbcType=TIMESTAMP},
-        #{createdDatetime,jdbcType=TIMESTAMP},
-        #{endDatetime,jdbcType=TIMESTAMP},
         #{deviceSid,jdbcType=VARCHAR},
-        #{recordDate,jdbcType=TIMESTAMP}
+        #{recordDate,jdbcType=TIMESTAMP},
+        #{stepNum,jdbcType=INTEGER},
+        #{createdDatetime,jdbcType=TIMESTAMP}
         )
     </insert>
 
-    <insert id="insertSelective" parameterType="com.skytech.api.model.HeartRate" >
-        insert into heart_rate
+    <insert id="insertSelective" parameterType="com.skytech.api.model.Steps" >
+        insert into steps
         <trim prefix="(" suffix=")" suffixOverrides="," >
             <if test="sid != null" >
             sid,
@@ -144,26 +135,17 @@
             <if test="accountSid != null" >
             account_sid,
             </if>
-            <if test="accountName != null" >
-            account_name,
-            </if>
-            <if test="data != null" >
-            data,
-            </if>
-            <if test="startDatetime != null" >
-            start_datetime,
-            </if>
-            <if test="createdDatetime != null" >
-            created_datetime,
-            </if>
-            <if test="endDatetime != null" >
-            end_datetime,
-            </if>
             <if test="deviceSid != null" >
             device_sid,
             </if>
             <if test="recordDate != null" >
-            record_date
+            record_date,
+            </if>
+            <if test="stepNum != null" >
+            step_num,
+            </if>
+            <if test="createdDatetime != null" >
+            created_datetime
             </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides="," >
@@ -174,39 +156,30 @@
             <if test="accountSid != null" >
                 #{accountSid,jdbcType=VARCHAR},
             </if>
-            <if test="accountName != null" >
-                #{accountName,jdbcType=VARCHAR},
-            </if>
-            <if test="data != null" >
-                #{data,jdbcType=VARCHAR},
-            </if>
-            <if test="startDatetime != null" >
-                #{startDatetime,jdbcType=TIMESTAMP},
-            </if>
-            <if test="createdDatetime != null" >
-                #{createdDatetime,jdbcType=TIMESTAMP},
-            </if>
-            <if test="endDatetime != null" >
-                #{endDatetime,jdbcType=TIMESTAMP},
-            </if>
             <if test="deviceSid != null" >
                 #{deviceSid,jdbcType=VARCHAR},
             </if>
             <if test="recordDate != null" >
-                #{recordDate,jdbcType=TIMESTAMP}
+                #{recordDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="stepNum != null" >
+                #{stepNum,jdbcType=INTEGER},
+            </if>
+            <if test="createdDatetime != null" >
+                #{createdDatetime,jdbcType=TIMESTAMP}
             </if>
         </trim>
     </insert>
 
-    <select id="countByExample" parameterType="com.skytech.api.model.HeartRateExample" resultType="java.lang.Integer" >
-        select count(*) from heart_rate
+    <select id="countByExample" parameterType="com.skytech.api.model.StepsExample" resultType="java.lang.Integer" >
+        select count(*) from steps
         <if test="_parameter != null" >
             <include refid="Example_Where_Clause" />
         </if>
     </select>
 
     <update id="updateByExampleSelective" parameterType="map" >
-        update heart_rate
+        update steps
         <set >
             <if test="sid != null" >
             sid= #{sid,jdbcType=VARCHAR},
@@ -214,26 +187,17 @@
             <if test="accountSid != null" >
             account_sid= #{accountSid,jdbcType=VARCHAR},
             </if>
-            <if test="accountName != null" >
-            account_name= #{accountName,jdbcType=VARCHAR},
-            </if>
-            <if test="data != null" >
-            data= #{data,jdbcType=VARCHAR},
-            </if>
-            <if test="startDatetime != null" >
-            start_datetime= #{startDatetime,jdbcType=TIMESTAMP},
-            </if>
-            <if test="createdDatetime != null" >
-            created_datetime= #{createdDatetime,jdbcType=TIMESTAMP},
-            </if>
-            <if test="endDatetime != null" >
-            end_datetime= #{endDatetime,jdbcType=TIMESTAMP},
-            </if>
             <if test="deviceSid != null" >
             device_sid= #{deviceSid,jdbcType=VARCHAR},
             </if>
             <if test="recordDate != null" >
-            record_date= #{recordDate,jdbcType=TIMESTAMP}
+            record_date= #{recordDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="stepNum != null" >
+            step_num= #{stepNum,jdbcType=INTEGER},
+            </if>
+            <if test="createdDatetime != null" >
+            created_datetime= #{createdDatetime,jdbcType=TIMESTAMP}
             </if>
         </set>
         <if test="_parameter != null" >
@@ -242,23 +206,20 @@
     </update>
 
     <update id="updateByExample" parameterType="map" >
-        update heart_rate
+        update steps
         set
         sid= #{sid,jdbcType=VARCHAR},
         account_sid= #{accountSid,jdbcType=VARCHAR},
-        account_name= #{accountName,jdbcType=VARCHAR},
-        data= #{data,jdbcType=VARCHAR},
-        start_datetime= #{startDatetime,jdbcType=TIMESTAMP},
-        created_datetime= #{createdDatetime,jdbcType=TIMESTAMP},
-        end_datetime= #{endDatetime,jdbcType=TIMESTAMP},
         device_sid= #{deviceSid,jdbcType=VARCHAR},
-        record_date= #{recordDate,jdbcType=TIMESTAMP}
+        record_date= #{recordDate,jdbcType=TIMESTAMP},
+        step_num= #{stepNum,jdbcType=INTEGER},
+        created_datetime= #{createdDatetime,jdbcType=TIMESTAMP}
         <if test="_parameter != null" >
             <include refid="Update_By_Example_Where_Clause" />
         </if>
     </update>
-    <update id="updateByPrimaryKeySelective" parameterType="com.skytech.api.model.HeartRate" >
-        update heart_rate
+    <update id="updateByPrimaryKeySelective" parameterType="com.skytech.api.model.Steps" >
+        update steps
         <set >
             <if test="sid != null" >
                 sid= #{sid,jdbcType=VARCHAR},
@@ -266,42 +227,30 @@
             <if test="accountSid != null" >
                 account_sid= #{accountSid,jdbcType=VARCHAR},
             </if>
-            <if test="accountName != null" >
-                account_name= #{accountName,jdbcType=VARCHAR},
-            </if>
-            <if test="data != null" >
-                data= #{data,jdbcType=VARCHAR},
-            </if>
-            <if test="startDatetime != null" >
-                start_datetime= #{startDatetime,jdbcType=TIMESTAMP},
-            </if>
-            <if test="createdDatetime != null" >
-                created_datetime= #{createdDatetime,jdbcType=TIMESTAMP},
-            </if>
-            <if test="endDatetime != null" >
-                end_datetime= #{endDatetime,jdbcType=TIMESTAMP},
-            </if>
             <if test="deviceSid != null" >
                 device_sid= #{deviceSid,jdbcType=VARCHAR},
             </if>
             <if test="recordDate != null" >
-                record_date= #{recordDate,jdbcType=TIMESTAMP}
+                record_date= #{recordDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="stepNum != null" >
+                step_num= #{stepNum,jdbcType=INTEGER},
+            </if>
+            <if test="createdDatetime != null" >
+                created_datetime= #{createdDatetime,jdbcType=TIMESTAMP}
             </if>
         </set>
         where sid = #{sid,jdbcType=VARCHAR}
     </update>
-    <update id="updateByPrimaryKey" parameterType="com.skytech.api.model.HeartRate" >
-        update heart_rate
+    <update id="updateByPrimaryKey" parameterType="com.skytech.api.model.Steps" >
+        update steps
         set
         sid= #{sid,jdbcType=VARCHAR},
         account_sid= #{accountSid,jdbcType=VARCHAR},
-        account_name= #{accountName,jdbcType=VARCHAR},
-        data= #{data,jdbcType=VARCHAR},
-        start_datetime= #{startDatetime,jdbcType=TIMESTAMP},
-        created_datetime= #{createdDatetime,jdbcType=TIMESTAMP},
-        end_datetime= #{endDatetime,jdbcType=TIMESTAMP},
         device_sid= #{deviceSid,jdbcType=VARCHAR},
-        record_date= #{recordDate,jdbcType=TIMESTAMP}
+        record_date= #{recordDate,jdbcType=TIMESTAMP},
+        step_num= #{stepNum,jdbcType=INTEGER},
+        created_datetime= #{createdDatetime,jdbcType=TIMESTAMP}
         where sid = #{sid,jdbcType=VARCHAR}
     </update>
 </mapper>

@@ -13,6 +13,7 @@ import com.skytech.api.service.SleepService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -50,7 +51,18 @@ public class SleepServiceImpl extends GenericServiceImpl<Sleep, SleepExample, St
 
         int i = 0;
         if (null != sleep.getRecordDate()) {
-            sleepExample.createCriteria().andAccountSidEqualTo(sleep.getAccountSid()).andDeviceSidEqualTo(sleep.getDeviceSid()).andRecordDateEqualTo(sleep.getRecordDate());
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(sleep.getRecordDate());
+
+            calendar.set(Calendar.HOUR_OF_DAY, 0);
+            calendar.set(Calendar.MINUTE, 0);
+            calendar.set(Calendar.SECOND, 0);
+
+            Date date1 = calendar.getTime();
+            calendar.add(Calendar.DATE, 1);
+            calendar.add(Calendar.SECOND, -1);
+            Date date2 = calendar.getTime();
+            sleepExample.createCriteria().andAccountSidEqualTo(sleep.getAccountSid()).andDeviceSidEqualTo(sleep.getDeviceSid()).andRecordDateBetween(date1, date2);
             List<Sleep> sleeps = sleepMapper.selectByExample(sleepExample);
             if (sleeps.isEmpty()) {
                 sleep.setSid(UUID.randomUUID().toString().replaceAll("-", ""));

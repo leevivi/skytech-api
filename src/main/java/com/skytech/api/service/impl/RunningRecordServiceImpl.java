@@ -14,7 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
-import java.util.List;
 import java.util.UUID;
 
 @Service("runningRecordService")
@@ -32,10 +31,10 @@ public class RunningRecordServiceImpl extends GenericServiceImpl<RunningRecord, 
     }
 
     @Override
-    public Pagination<RunningRecord> findForPage(int page, int limit) {
+    public Pagination<RunningRecord> findForPage(String deviceSid, int page, int limit) {
         RunningRecordExample runningRecordExample = new RunningRecordExample();
         BaseRunningRecordExample.Criteria criteria = runningRecordExample.createCriteria();
-
+        criteria.andDeviceSidEqualTo(deviceSid);
         Pagination<RunningRecord> pagination = this.queryByPage(runningRecordExample, (page - 1) * limit, limit, "created_datetime desc");
 
         return pagination;

@@ -3,16 +3,16 @@ package com.skytech.api.service;
 import com.owthree.core.JsonMap;
 import com.owthree.core.Pagination;
 import com.owthree.core.service.GenericService;
-import com.skytech.api.model.Account;
 import com.skytech.api.model.EventMembers;
 
 import java.util.List;
+import java.util.Map;
 
 public interface EventMembersService extends GenericService<EventMembers, String> {
 
     Pagination<EventMembers> findForPage(int page, int limit);
 
-    List<Account> findForEvent(String eventSid);
+    List<Map<String, Object>> findForEvent(String eventSid);
 
     JsonMap save(EventMembers eventMembers);
 

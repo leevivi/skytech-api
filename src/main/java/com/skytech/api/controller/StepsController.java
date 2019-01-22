@@ -4,8 +4,8 @@ import com.alibaba.fastjson.JSON;
 import com.owthree.core.JsonMap;
 import com.owthree.core.Pagination;
 import com.owthree.core.utils.DateUtil;
-import com.skytech.api.model.HeartRate;
-import com.skytech.api.service.HeartRateService;
+import com.skytech.api.model.Steps;
+import com.skytech.api.service.StepsService;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
@@ -23,25 +23,25 @@ import java.util.Map;
 
 /**
  * @author 剑神卓凌昭
- * @date 2018-12-14 22:27:58
+ * @date 2019-01-06 14:22:51
  */
 @RestController
-public class HeartRateController {
+public class StepsController {
 
-    private final Logger LOGGER = LoggerFactory.getLogger(HeartRateController.class);
+    private final Logger LOGGER = LoggerFactory.getLogger(StepsController.class);
 
     @Autowired
-    private HeartRateService heartRateService;
+    private StepsService stepsService;
 
     @ApiOperation(value = "列表")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "page", value = "页码", required = true, dataType = "Integer"),
             @ApiImplicitParam(name = "limit", value = "每页数量", required = true, dataType = "Integer")
     })
-    @GetMapping(value = "/heartRate/listForPage")
+    @GetMapping(value = "/steps/listForPage")
     public Map<String, Object> listForPage(int page, int limit) {
 
-        Pagination<HeartRate> pagination = heartRateService.findForPage(page, limit);
+        Pagination<Steps> pagination = stepsService.findForPage(page, limit);
 
         Map<String, Object> data = new HashMap<>();
         data.put("code", 0);
@@ -52,55 +52,42 @@ public class HeartRateController {
         return data;
     }
 
-    @GetMapping(value = "/heartRate/report")
-    public Map<String, Object> report(HttpSession session, String deviceSid, String startDate, String endDate) {
-        Object accountSidObj = session.getAttribute("accountSid");
-
-        String accountSid = accountSidObj.toString();
-        List<HeartRate> heartRates = heartRateService.report(accountSid, deviceSid, DateUtil.parseDate(startDate), DateUtil.parseDate(endDate));
-
-        Map<String, Object> data = new HashMap<>();
-        data.put("heartRates", heartRates);
-
-        return JsonMap.of(true, "", data);
-    }
-
     @ApiOperation(value = "详情")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "sid", value = "sid", required = true, dataType = "String")
     })
-    @GetMapping(value = "/heartRate/listBySid")
+    @GetMapping(value = "/steps/listBySid")
     public JsonMap listBySid(String sid) {
-        HeartRate heartRate = heartRateService.selectByPrimaryKey(sid);
+        Steps steps = stepsService.selectByPrimaryKey(sid);
 
-        return JsonMap.of(true, "", heartRate);
+        return JsonMap.of(true, "", steps);
     }
 
     @ApiOperation(value = "新增")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "heartRate", value = "", required = true, dataType = "HeartRate")
+            @ApiImplicitParam(name = "steps", value = "", required = true, dataType = "Steps")
     })
-    @PostMapping(value = "/heartRate/save")
-    public JsonMap save(HttpSession session, HeartRate heartRate) {
+    @PostMapping(value = "/steps/save")
+    public JsonMap save(HttpSession session, Steps steps) {
         Object accountSidObj = session.getAttribute("accountSid");
 
         String accountSid = accountSidObj.toString();
-        heartRate.setAccountSid(accountSid);
+        steps.setAccountSid(accountSid);
 
-        LOGGER.info("新增心率" + JSON.toJSONString(heartRate));
-        return heartRateService.save(heartRate);
+        LOGGER.info("新增计步" + JSON.toJSONString(steps));
+        return stepsService.save(steps);
 
     }
 
     @ApiOperation(value = "修改")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "dataId", value = "dataId", required = true, dataType = "String"),
-            @ApiImplicitParam(name = "heartRate", value = "", required = true, dataType = "HeartRate")
+            @ApiImplicitParam(name = "steps", value = "", required = true, dataType = "Steps")
     })
-    @PostMapping(value = "/heartRate/update")
-    public JsonMap update(String dataId, HeartRate heartRate) {
+    @PostMapping(value = "/steps/update")
+    public JsonMap update(String dataId, Steps steps) {
 
-        return heartRateService.update(dataId, heartRate);
+        return stepsService.update(dataId, steps);
 
     }
 
@@ -108,10 +95,23 @@ public class HeartRateController {
     @ApiImplicitParams({
             @ApiImplicitParam(name = "sid", value = "sid", required = true, dataType = "String")
     })
-    @PostMapping(value = "/heartRate/delete")
+    @PostMapping(value = "/steps/delete")
     public JsonMap delete(String sid) {
 
-        return heartRateService.delete(sid);
+        return stepsService.delete(sid);
 
+    }
+
+    @GetMapping(value = "/steps/report")
+    public Map<String, Object> report(HttpSession session, String deviceSid, String startDate, String endDate) {
+        Object accountSidObj = session.getAttribute("accountSid");
+
+        String accountSid = accountSidObj.toString();
+        List<Steps> steps = stepsService.report(accountSid, deviceSid, DateUtil.parseDate(startDate), DateUtil.parseDate(endDate));
+
+        Map<String, Object> data = new HashMap<>();
+        data.put("steps", steps);
+
+        return JsonMap.of(true, "", data);
     }
 }

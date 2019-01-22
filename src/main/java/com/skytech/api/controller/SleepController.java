@@ -1,5 +1,6 @@
 package com.skytech.api.controller;
 
+import com.alibaba.fastjson.JSON;
 import com.owthree.core.JsonMap;
 import com.owthree.core.Pagination;
 import com.owthree.core.utils.DateUtil;
@@ -8,6 +9,8 @@ import com.skytech.api.service.SleepService;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -24,6 +27,8 @@ import java.util.Map;
  */
 @RestController
 public class SleepController {
+
+    private final Logger LOGGER = LoggerFactory.getLogger(SleepController.class);
 
     @Autowired
     private SleepService sleepService;
@@ -81,6 +86,8 @@ public class SleepController {
 
         String accountSid = accountSidObj.toString();
         sleep.setAccountSid(accountSid);
+
+        LOGGER.info("新增睡眠" + JSON.toJSONString(sleep));
         return sleepService.save(sleep);
 
     }
