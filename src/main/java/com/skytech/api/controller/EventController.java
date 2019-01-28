@@ -2,6 +2,7 @@ package com.skytech.api.controller;
 
 import com.skytech.api.core.JsonMap;
 import com.skytech.api.core.Pagination;
+import com.skytech.api.core.utils.DateUtil;
 import com.skytech.api.model.Event;
 import com.skytech.api.service.EventMembersService;
 import com.skytech.api.service.EventService;
@@ -15,9 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpSession;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author 剑神卓凌昭
@@ -70,9 +69,8 @@ public class EventController {
 
         String accountSid = accountSidObj.toString();
 
-        System.out.println(accountSid);
-
         Event event = eventService.selectByPrimaryKey(sid);
+
 
         boolean isMember = false;
 
@@ -88,6 +86,7 @@ public class EventController {
                     m.put("accountSid", accountSid);
                     m.put("accountName", members.get(i - 1).get("accountName"));
                     m.put("accountAvatar", members.get(i - 1).get("accountAvatar"));
+                    m.put("steps", members.get(i - 1).get("steps"));
                 }
 
             }
@@ -104,6 +103,26 @@ public class EventController {
         }
 
         data.put("mine", m);
+
+        Date startDate = event.getStartDate();
+        Date endDate = event.getEndDate();
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(endDate);
+        calendar.add(Calendar.DATE, 1);
+
+        endDate = calendar.getTime();
+
+        int daysNum = DateUtil.getDaysNum(startDate, endDate);
+
+        Date now = new Date();
+
+        if (now.getTime() <= startDate.getTime()) {
+            data.put("leftDays", daysNum);
+        } else {
+            daysNum = DateUtil.getDaysNum(now, endDate);
+            data.put("leftDays", daysNum >= 0 ? daysNum : 0);
+        }
 
         return JsonMap.of(true, "", data);
     }

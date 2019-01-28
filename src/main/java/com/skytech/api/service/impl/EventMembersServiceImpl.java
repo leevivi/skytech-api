@@ -7,7 +7,7 @@ import com.skytech.api.core.utils.UUIDUtil;
 import com.skytech.api.mapper.AccountMapper;
 import com.skytech.api.mapper.EventMapper;
 import com.skytech.api.mapper.EventMembersMapper;
-import com.skytech.api.mapper.RunningRecordMapper;
+import com.skytech.api.mapper.StepsMapper;
 import com.skytech.api.model.*;
 import com.skytech.api.model.base.BaseEventMembersExample;
 import com.skytech.api.service.EventMembersService;
@@ -30,7 +30,7 @@ public class EventMembersServiceImpl extends GenericServiceImpl<EventMembers, Ev
     private AccountMapper accountMapper;
 
     @Autowired
-    private RunningRecordMapper runningRecordMapper;
+    private StepsMapper stepsMapper;
 
     @Override
     protected EventMembersMapper getGenericMapper() {
@@ -108,15 +108,15 @@ public class EventMembersServiceImpl extends GenericServiceImpl<EventMembers, Ev
             m.put("accountName", eventMember.getAccountName());
             m.put("accountAvatar", account.getAvarta());
 
-
-            RunningRecordExample runningRecordExample = new RunningRecordExample();
-            runningRecordExample.createCriteria().andAccountSidEqualTo(accountSid);
+            StepsExample stepsExample = new StepsExample();
+            stepsExample.createCriteria().andAccountSidEqualTo(accountSid);
 
             Integer steps = 0;
 
-            List<RunningRecord> runningRecords = runningRecordMapper.selectByExample(runningRecordExample);
-            for (RunningRecord record : runningRecords) {
-                steps = steps + record.getSteps();
+            List<Steps> stepsList = stepsMapper.selectByExample(stepsExample);
+
+            for (Steps record : stepsList) {
+                steps = steps + record.getStepNum();
             }
             m.put("steps", steps);
 
