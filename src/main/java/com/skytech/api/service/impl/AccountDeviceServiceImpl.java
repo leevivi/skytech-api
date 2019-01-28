@@ -141,6 +141,9 @@ public class AccountDeviceServiceImpl extends GenericServiceImpl<AccountDevice, 
 
                 if (!flag) {
                     return JsonMap.of(false, "The device has been bound to other accounts");
+                } else {
+                    device = deviceMapper.selectByPrimaryKey(deviceSid);
+                    return JsonMap.of(true, "", device);
                 }
 
             }

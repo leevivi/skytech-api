@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.*;
 
 @Service("accountService")
@@ -112,11 +113,11 @@ public class AccountServiceImpl extends GenericServiceImpl<Account, AccountExamp
             RunningRecordExample runningRecordExample = new RunningRecordExample();
             runningRecordExample.createCriteria().andAccountSidEqualTo(accounts.get(0).getSid());
 
-            int distances = 0;
+            BigDecimal distances = new BigDecimal(0);
             int durations = 0;
             List<RunningRecord> runningRecords = runningRecordMapper.selectByExample(runningRecordExample);
             for (RunningRecord record : runningRecords) {
-                distances += record.getDistance();
+                distances = distances.add(record.getDistance());
                 durations += record.getDuration();
             }
             data.put("distances", distances);

@@ -10,7 +10,7 @@
         <result column="average_bpm" property="averageBpm" jdbcType="FLOAT" />
         <result column="max_bpm" property="maxBpm" jdbcType="FLOAT" />
         <result column="cal" property="cal" jdbcType="INTEGER" />
-        <result column="distance" property="distance" jdbcType="INTEGER" />
+        <result column="distance" property="distance" jdbcType="FLOAT" />
         <result column="start_datetime" property="startDatetime" jdbcType="TIMESTAMP" />
         <result column="created_datetime" property="createdDatetime" jdbcType="TIMESTAMP" />
         <result column="running_type" property="runningType" jdbcType="VARCHAR" />
@@ -143,7 +143,7 @@
         #{averageBpm,jdbcType=FLOAT},
         #{maxBpm,jdbcType=FLOAT},
         #{cal,jdbcType=INTEGER},
-        #{distance,jdbcType=INTEGER},
+        #{distance,jdbcType=FLOAT},
         #{startDatetime,jdbcType=TIMESTAMP},
         #{createdDatetime,jdbcType=TIMESTAMP},
         #{runningType,jdbcType=VARCHAR},
@@ -229,7 +229,7 @@
                 #{cal,jdbcType=INTEGER},
             </if>
             <if test="distance != null" >
-                #{distance,jdbcType=INTEGER},
+                #{distance,jdbcType=FLOAT},
             </if>
             <if test="startDatetime != null" >
                 #{startDatetime,jdbcType=TIMESTAMP},
@@ -287,7 +287,7 @@
             cal= #{cal,jdbcType=INTEGER},
             </if>
             <if test="distance != null" >
-            distance= #{distance,jdbcType=INTEGER},
+            distance= #{distance,jdbcType=FLOAT},
             </if>
             <if test="startDatetime != null" >
             start_datetime= #{startDatetime,jdbcType=TIMESTAMP},
@@ -321,7 +321,7 @@
         average_bpm= #{averageBpm,jdbcType=FLOAT},
         max_bpm= #{maxBpm,jdbcType=FLOAT},
         cal= #{cal,jdbcType=INTEGER},
-        distance= #{distance,jdbcType=INTEGER},
+        distance= #{distance,jdbcType=FLOAT},
         start_datetime= #{startDatetime,jdbcType=TIMESTAMP},
         created_datetime= #{createdDatetime,jdbcType=TIMESTAMP},
         running_type= #{runningType,jdbcType=VARCHAR},
@@ -359,7 +359,7 @@
                 cal= #{cal,jdbcType=INTEGER},
             </if>
             <if test="distance != null" >
-                distance= #{distance,jdbcType=INTEGER},
+                distance= #{distance,jdbcType=FLOAT},
             </if>
             <if test="startDatetime != null" >
                 start_datetime= #{startDatetime,jdbcType=TIMESTAMP},
@@ -393,7 +393,7 @@
         average_bpm= #{averageBpm,jdbcType=FLOAT},
         max_bpm= #{maxBpm,jdbcType=FLOAT},
         cal= #{cal,jdbcType=INTEGER},
-        distance= #{distance,jdbcType=INTEGER},
+        distance= #{distance,jdbcType=FLOAT},
         start_datetime= #{startDatetime,jdbcType=TIMESTAMP},
         created_datetime= #{createdDatetime,jdbcType=TIMESTAMP},
         running_type= #{runningType,jdbcType=VARCHAR},

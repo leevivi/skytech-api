@@ -13,8 +13,8 @@ import com.skytech.api.service.RunningRecordService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
-import java.util.UUID;
+import java.math.BigDecimal;
+import java.util.*;
 
 @Service("runningRecordService")
 public class RunningRecordServiceImpl extends GenericServiceImpl<RunningRecord, RunningRecordExample, String> implements RunningRecordService {
@@ -85,5 +85,24 @@ public class RunningRecordServiceImpl extends GenericServiceImpl<RunningRecord, 
             return JsonMap.of(false, "删除失败");
         }
         return JsonMap.of(true, "删除成功");
+    }
+
+    @Override
+    public JsonMap findNewest(String accountSid) {
+        Map<String, Object> data = new HashMap<>();
+        RunningRecordExample runningRecordExample = new RunningRecordExample();
+        runningRecordExample.createCriteria().andAccountSidEqualTo(accountSid);
+
+        BigDecimal distances = new BigDecimal(0);
+        int durations = 0;
+        List<RunningRecord> runningRecords = runningRecordMapper.selectByExample(runningRecordExample);
+        for (RunningRecord record : runningRecords) {
+            distances = distances.add(record.getDistance());
+            durations += record.getDuration();
+        }
+        data.put("distances", distances);
+        data.put("durations", durations);
+
+        return JsonMap.of(true, "", data);
     }
 }

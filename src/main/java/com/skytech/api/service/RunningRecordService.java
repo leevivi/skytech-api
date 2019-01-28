@@ -14,6 +14,8 @@ public interface RunningRecordService extends GenericService<RunningRecord, Stri
     JsonMap update(String runningRecordSid, RunningRecord runningRecord);
 
     JsonMap delete(String... runningRecordSids);
+
+    JsonMap findNewest(String accountSid);
 }
 
 

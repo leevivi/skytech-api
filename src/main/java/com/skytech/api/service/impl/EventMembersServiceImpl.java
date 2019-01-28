@@ -112,20 +112,20 @@ public class EventMembersServiceImpl extends GenericServiceImpl<EventMembers, Ev
             RunningRecordExample runningRecordExample = new RunningRecordExample();
             runningRecordExample.createCriteria().andAccountSidEqualTo(accountSid);
 
-            int distances = 0;
+            Integer steps = 0;
 
             List<RunningRecord> runningRecords = runningRecordMapper.selectByExample(runningRecordExample);
             for (RunningRecord record : runningRecords) {
-                distances += record.getDistance();
+                steps = steps + record.getSteps();
             }
-            m.put("distances", distances);
+            m.put("steps", steps);
 
             members.add(m);
         }
 
         Collections.sort(members, new Comparator<Map<String, Object>>() {
             public int compare(Map<String, Object> o1, Map<String, Object> o2) {
-                return new BigDecimal(o2.get("distances").toString()).compareTo(new BigDecimal(o1.get("distances").toString()));
+                return new BigDecimal(o2.get("steps").toString()).compareTo(new BigDecimal(o1.get("steps").toString()));
             }
         });
 

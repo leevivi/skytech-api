@@ -50,7 +50,8 @@ public class EventController {
         data.put("count", pagination.getTotalRowNumber());
         List<Event> dataList = pagination.getDataList();
         for (Event event : dataList) {
-            event.setMemberNums(10);
+            List<Map<String, Object>> members = eventMembersService.findForEvent(event.getSid());
+            event.setMemberNums(members.size());
             event.setDays(3);
         }
         data.put("data", dataList);

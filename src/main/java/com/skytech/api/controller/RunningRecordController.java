@@ -34,7 +34,7 @@ public class RunningRecordController {
     @GetMapping(value = "/runningRecord/listForPage")
     public Map<String, Object> listForPage(String deviceSid, int page, int limit) {
 
-        Pagination<RunningRecord> pagination = runningRecordService.findForPage(deviceSid,page, limit);
+        Pagination<RunningRecord> pagination = runningRecordService.findForPage(deviceSid, page, limit);
 
         Map<String, Object> data = new HashMap<>();
         data.put("code", 0);
@@ -90,6 +90,17 @@ public class RunningRecordController {
     public JsonMap delete(String sid) {
 
         return runningRecordService.delete(sid);
+
+    }
+
+
+    @GetMapping(value = "/runningRecord/getNewest")
+    public JsonMap getNewest(HttpSession session) {
+        Object accountSidObj = session.getAttribute("accountSid");
+
+        String accountSid = accountSidObj.toString();
+        return runningRecordService.findNewest(accountSid);
+
 
     }
 }

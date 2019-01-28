@@ -1,16 +1,16 @@
 package com.skytech.api.model.base;
 
-import com.skytech.api.core.model.BaseModel;
 import com.alibaba.fastjson.annotation.JSONField;
+import com.skytech.api.core.model.BaseModel;
+
 import java.math.BigDecimal;
 import java.util.Date;
 
 /**
-*
-* @author 剑神卓凌昭
-* @date   2019-01-06 20:38:17
-*/
-public class BaseRunningRecord extends BaseModel<String>{
+ * @author 剑神卓凌昭
+ * @date 2019-01-06 20:38:17
+ */
+public class BaseRunningRecord extends BaseModel<String> {
 
     private String accountSid;
 
@@ -26,12 +26,12 @@ public class BaseRunningRecord extends BaseModel<String>{
 
     private Integer cal;
 
-    private Integer distance;
+    private BigDecimal distance;
 
-   @JSONField(format="yyyy-MM-dd HH:mm:ss")
+    @JSONField(format = "yyyy-MM-dd HH:mm:ss")
     private Date startDatetime;
 
-   @JSONField(format="yyyy-MM-dd HH:mm:ss")
+    @JSONField(format = "yyyy-MM-dd HH:mm:ss")
     private Date createdDatetime;
 
     private String runningType;
@@ -42,9 +42,10 @@ public class BaseRunningRecord extends BaseModel<String>{
 
     private String heartRate;
 
-    public BaseRunningRecord() {}
+    public BaseRunningRecord() {
+    }
 
-    public BaseRunningRecord(String sid, String accountSid, String accountName, Integer steps, Integer duration, BigDecimal averageBpm, BigDecimal maxBpm, Integer cal, Integer distance, Date startDatetime, Date createdDatetime, String runningType, String deviceSid, Integer frequency,String heartRate) {
+    public BaseRunningRecord(String sid, String accountSid, String accountName, Integer steps, Integer duration, BigDecimal averageBpm, BigDecimal maxBpm, Integer cal, BigDecimal distance, Date startDatetime, Date createdDatetime, String runningType, String deviceSid, Integer frequency, String heartRate) {
         this.sid = sid;
         this.accountSid = accountSid;
         this.accountName = accountName;
@@ -70,6 +71,7 @@ public class BaseRunningRecord extends BaseModel<String>{
     public void setAccountSid(String accountSid) {
         this.accountSid = accountSid;
     }
+
     public String getAccountName() {
         return accountName;
     }
@@ -77,6 +79,7 @@ public class BaseRunningRecord extends BaseModel<String>{
     public void setAccountName(String accountName) {
         this.accountName = accountName;
     }
+
     public Integer getSteps() {
         return steps;
     }
@@ -84,6 +87,7 @@ public class BaseRunningRecord extends BaseModel<String>{
     public void setSteps(Integer steps) {
         this.steps = steps;
     }
+
     public Integer getDuration() {
         return duration;
     }
@@ -91,6 +95,7 @@ public class BaseRunningRecord extends BaseModel<String>{
     public void setDuration(Integer duration) {
         this.duration = duration;
     }
+
     public BigDecimal getAverageBpm() {
         return averageBpm;
     }
@@ -98,6 +103,7 @@ public class BaseRunningRecord extends BaseModel<String>{
     public void setAverageBpm(BigDecimal averageBpm) {
         this.averageBpm = averageBpm;
     }
+
     public BigDecimal getMaxBpm() {
         return maxBpm;
     }
@@ -105,6 +111,7 @@ public class BaseRunningRecord extends BaseModel<String>{
     public void setMaxBpm(BigDecimal maxBpm) {
         this.maxBpm = maxBpm;
     }
+
     public Integer getCal() {
         return cal;
     }
@@ -112,13 +119,15 @@ public class BaseRunningRecord extends BaseModel<String>{
     public void setCal(Integer cal) {
         this.cal = cal;
     }
-    public Integer getDistance() {
+
+    public BigDecimal getDistance() {
         return distance;
     }
 
-    public void setDistance(Integer distance) {
+    public void setDistance(BigDecimal distance) {
         this.distance = distance;
     }
+
     public Date getStartDatetime() {
         return startDatetime;
     }
@@ -126,6 +135,7 @@ public class BaseRunningRecord extends BaseModel<String>{
     public void setStartDatetime(Date startDatetime) {
         this.startDatetime = startDatetime;
     }
+
     public Date getCreatedDatetime() {
         return createdDatetime;
     }
@@ -133,6 +143,7 @@ public class BaseRunningRecord extends BaseModel<String>{
     public void setCreatedDatetime(Date createdDatetime) {
         this.createdDatetime = createdDatetime;
     }
+
     public String getRunningType() {
         return runningType;
     }
@@ -140,6 +151,7 @@ public class BaseRunningRecord extends BaseModel<String>{
     public void setRunningType(String runningType) {
         this.runningType = runningType;
     }
+
     public String getDeviceSid() {
         return deviceSid;
     }
@@ -147,6 +159,7 @@ public class BaseRunningRecord extends BaseModel<String>{
     public void setDeviceSid(String deviceSid) {
         this.deviceSid = deviceSid;
     }
+
     public Integer getFrequency() {
         return frequency;
     }
