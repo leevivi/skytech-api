@@ -207,8 +207,10 @@ public class AccountServiceImpl extends GenericServiceImpl<Account, AccountExamp
         OSSClient ossClient = new OSSClient(endpoint, accessKeyId, accessKeySecret);
 
 // 上传文件。<yourLocalFile>由本地文件路径加文件名包括后缀组成，例如/users/local/myfile.txt。
+        Random random = new Random();
+        long seed = random.nextLong();
         try {
-            ossClient.putObject("skytech-account", "avatar/" + accountSid, picFile.getInputStream());
+            ossClient.putObject("skytech-account", "avatar/" + accountSid + seed, picFile.getInputStream());
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -218,11 +220,11 @@ public class AccountServiceImpl extends GenericServiceImpl<Account, AccountExamp
         ossClient.shutdown();
 
         Account account = accountMapper.selectByPrimaryKey(accountSid);
-        account.setAvarta("https://skytech-account.oss-cn-hongkong.aliyuncs.com/avatar/" + accountSid);
+        account.setAvarta("https://skytech-account.oss-cn-hongkong.aliyuncs.com/avatar/" + accountSid + seed);
         accountMapper.updateByPrimaryKeySelective(account);
 
         Map<String, Object> data = new HashMap<>();
-        data.put("avatarUrl", "https://skytech-account.oss-cn-hongkong.aliyuncs.com/avatar/" + accountSid);
+        data.put("avatarUrl", "https://skytech-account.oss-cn-hongkong.aliyuncs.com/avatar/" + accountSid + seed);
 
         return JsonMap.of(true, "上传成功", data);
     }

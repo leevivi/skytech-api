@@ -19,6 +19,8 @@ public interface HeartRateService extends GenericService<HeartRate, String> {
     JsonMap delete(String... heartRateSids);
 
     List<HeartRate> report(String accountSid, String deviceSid, Date startDate, Date endDate);
+
+    Integer getNewest(String accountSid);
 }
 
 

@@ -53,8 +53,11 @@ public class AccountController {
             @ApiImplicitParam(name = "sid", value = "sid", required = true, dataType = "String")
     })
     @GetMapping(value = "/account/listBySid")
-    public JsonMap listBySid(String sid) {
-        Account account = accountService.selectByPrimaryKey(sid);
+    public JsonMap listBySid(HttpSession session) {
+        Object accountSidObj = session.getAttribute("accountSid");
+
+        String accountSid = accountSidObj.toString();
+        Account account = accountService.selectByPrimaryKey(accountSid);
 
         return JsonMap.of(true, "", account);
     }

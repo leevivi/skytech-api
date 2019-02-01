@@ -15,6 +15,7 @@
         <result column="step_target" property="stepTarget" jdbcType="INTEGER" />
         <result column="register_datetime" property="registerDatetime" jdbcType="TIMESTAMP" />
         <result column="updated_datetime" property="updatedDatetime" jdbcType="TIMESTAMP" />
+        <result column="lockintime" property="lockintime" jdbcType="TIMESTAMP" />
     </resultMap>
     <sql id="Example_Where_Clause" >
         <where >
@@ -76,7 +77,7 @@
         </where>
     </sql>
     <sql id="Base_Column_List" >
-        sid,first_name,last_name,email,password,avarta,gender,age,height,weight,step_target,register_datetime,updated_datetime
+        sid,first_name,last_name,email,password,avarta,gender,age,height,weight,step_target,register_datetime,updated_datetime,lockintime
     </sql>
     <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.skytech.api.model.AccountExample" >
         select
@@ -349,7 +350,10 @@
                 register_datetime= #{registerDatetime,jdbcType=TIMESTAMP},
             </if>
             <if test="updatedDatetime != null" >
-                updated_datetime= #{updatedDatetime,jdbcType=TIMESTAMP}
+                updated_datetime= #{updatedDatetime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="lockintime != null" >
+                lockintime= #{lockintime,jdbcType=TIMESTAMP}
             </if>
         </set>
         where sid = #{sid,jdbcType=VARCHAR}
@@ -369,7 +373,8 @@
         weight= #{weight,jdbcType=INTEGER},
         step_target= #{stepTarget,jdbcType=INTEGER},
         register_datetime= #{registerDatetime,jdbcType=TIMESTAMP},
-        updated_datetime= #{updatedDatetime,jdbcType=TIMESTAMP}
+        updated_datetime= #{updatedDatetime,jdbcType=TIMESTAMP},
+        lockintime= #{lockintime,jdbcType=TIMESTAMP}
         where sid = #{sid,jdbcType=VARCHAR}
     </update>
 </mapper>

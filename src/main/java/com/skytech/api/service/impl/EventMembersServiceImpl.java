@@ -108,8 +108,18 @@ public class EventMembersServiceImpl extends GenericServiceImpl<EventMembers, Ev
             m.put("accountName", eventMember.getAccountName());
             m.put("accountAvatar", account.getAvarta());
 
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(new Date());
+            calendar.set(Calendar.HOUR_OF_DAY, 0);
+            calendar.set(Calendar.MINUTE, 0);
+            calendar.set(Calendar.SECOND, 0);
+            Date startDate = calendar.getTime();
+
+            calendar.add(Calendar.DATE, 1);
+            Date endDate = calendar.getTime();
+
             StepsExample stepsExample = new StepsExample();
-            stepsExample.createCriteria().andAccountSidEqualTo(accountSid);
+            stepsExample.createCriteria().andAccountSidEqualTo(accountSid).andRecordDateBetween(startDate, endDate);
 
             Integer steps = 0;
 

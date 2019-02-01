@@ -120,4 +120,27 @@ public class StepsServiceImpl extends GenericServiceImpl<Steps, StepsExample, St
         List<Steps> steps = stepsMapper.selectByExample(stepsExample);
         return steps;
     }
+
+    @Override
+    public Integer getCurrentSteps(String accountSid) {
+        Integer steps = 0;
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(new Date());
+        calendar.set(Calendar.HOUR_OF_DAY, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        Date startDate = calendar.getTime();
+
+        calendar.add(Calendar.DATE, 1);
+        Date endDate = calendar.getTime();
+        StepsExample stepsExample = new StepsExample();
+        stepsExample.createCriteria().andAccountSidEqualTo(accountSid).andRecordDateBetween(startDate, endDate);
+
+        List<Steps> stepsList = stepsMapper.selectByExample(stepsExample);
+
+        for (Steps record : stepsList) {
+            steps = steps + record.getStepNum();
+        }
+        return steps;
+    }
 }

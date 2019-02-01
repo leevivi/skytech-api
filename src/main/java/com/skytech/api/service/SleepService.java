@@ -19,6 +19,8 @@ public interface SleepService extends GenericService<Sleep, String> {
     JsonMap delete(String... sleepSids);
 
     List<Sleep> report(String accountSid, String deviceSid, Date startDate, Date endDate);
+
+    Integer getCurrentSleep(String accountSid);
 }
 
 

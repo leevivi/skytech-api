@@ -128,4 +128,27 @@ public class HeartRateServiceImpl extends GenericServiceImpl<HeartRate, HeartRat
         List<HeartRate> heartRates = heartRateMapper.selectByExample(heartRateExample);
         return heartRates;
     }
+
+    @Override
+    public Integer getNewest(String accountSid) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(new Date());
+        calendar.set(Calendar.HOUR_OF_DAY, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        Date startDate = calendar.getTime();
+
+        calendar.add(Calendar.DATE, 1);
+        Date endDate = calendar.getTime();
+        HeartRateExample heartRateExample = new HeartRateExample();
+        heartRateExample.createCriteria().andAccountSidEqualTo(accountSid).andRecordDateBetween(startDate, endDate);
+        heartRateExample.setOrderByClause(" record_date desc");
+
+        List<HeartRate> heartRates = heartRateMapper.selectByExample(heartRateExample);
+        if (heartRates.isEmpty()) {
+            return 0;
+        } else {
+            return Integer.parseInt(heartRates.get(0).getData());
+        }
+    }
 }

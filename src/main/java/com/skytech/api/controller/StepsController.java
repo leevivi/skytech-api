@@ -114,4 +114,17 @@ public class StepsController {
 
         return JsonMap.of(true, "", data);
     }
+
+    @GetMapping(value = "/steps/getCurrentSteps")
+    public Map<String, Object> getCurrentSteps(HttpSession session) {
+        Object accountSidObj = session.getAttribute("accountSid");
+
+        String accountSid = accountSidObj.toString();
+        Integer steps = stepsService.getCurrentSteps(accountSid);
+
+        Map<String, Object> data = new HashMap<>();
+        data.put("steps", steps);
+
+        return JsonMap.of(true, "", data);
+    }
 }

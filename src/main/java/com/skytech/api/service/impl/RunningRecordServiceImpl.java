@@ -105,4 +105,31 @@ public class RunningRecordServiceImpl extends GenericServiceImpl<RunningRecord, 
 
         return JsonMap.of(true, "", data);
     }
+
+    @Override
+    public Map<String, Object> getCurrentData(String accountSid) {
+        Map<String, Object> data = new HashMap<>();
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(new Date());
+        calendar.set(Calendar.HOUR_OF_DAY, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        Date startDate = calendar.getTime();
+
+        calendar.add(Calendar.DATE, 1);
+        Date endDate = calendar.getTime();
+        RunningRecordExample runningRecordExample = new RunningRecordExample();
+        runningRecordExample.createCriteria().andAccountSidEqualTo(accountSid).andStartDatetimeBetween(startDate, endDate);
+
+        BigDecimal distances = new BigDecimal(0);
+        Integer cal = 0;
+        List<RunningRecord> runningRecords = runningRecordMapper.selectByExample(runningRecordExample);
+        for (RunningRecord record : runningRecords) {
+            distances = distances.add(record.getDistance());
+            cal += record.getCal();
+        }
+        data.put("distances", distances);
+        data.put("cal", cal);
+        return data;
+    }
 }

@@ -130,4 +130,29 @@ public class SleepServiceImpl extends GenericServiceImpl<Sleep, SleepExample, St
         List<Sleep> sleeps = sleepMapper.selectByExample(sleepExample);
         return sleeps;
     }
+
+    @Override
+    public Integer getCurrentSleep(String accountSid) {
+        Integer sleepMin = 0;
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(new Date());
+        calendar.set(Calendar.HOUR_OF_DAY, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        Date startDate = calendar.getTime();
+
+        calendar.add(Calendar.DATE, 1);
+        Date endDate = calendar.getTime();
+
+        SleepExample sleepExample = new SleepExample();
+        sleepExample.createCriteria().andAccountSidEqualTo(accountSid).andRecordDateBetween(startDate, endDate);
+
+        List<Sleep> sleeps = sleepMapper.selectByExample(sleepExample);
+
+        for (Sleep s : sleeps) {
+            sleepMin += Integer.parseInt(s.getData());
+        }
+
+        return sleepMin;
+    }
 }
