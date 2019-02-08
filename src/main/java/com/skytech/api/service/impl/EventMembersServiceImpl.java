@@ -119,7 +119,7 @@ public class EventMembersServiceImpl extends GenericServiceImpl<EventMembers, Ev
             Date endDate = calendar.getTime();
 
             StepsExample stepsExample = new StepsExample();
-            stepsExample.createCriteria().andAccountSidEqualTo(accountSid).andRecordDateBetween(startDate, endDate);
+            stepsExample.createCriteria().andAccountSidEqualTo(accountSid).andRecordDateBetween(startDate, endDate).andDeviceSidIsNotNull();
 
             Integer steps = 0;
 

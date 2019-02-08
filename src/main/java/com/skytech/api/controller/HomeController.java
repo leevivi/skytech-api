@@ -3,6 +3,7 @@ package com.skytech.api.controller;
 import com.skytech.api.core.JsonMap;
 import com.skytech.api.core.utils.DateUtil;
 import com.skytech.api.model.Account;
+import com.skytech.api.model.Distances;
 import com.skytech.api.service.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -39,6 +41,9 @@ public class HomeController {
     @Autowired
     private HeartRateService heartRateService;
 
+    @Autowired
+    private DistancesService distancesService;
+
 
     @GetMapping(value = "/home/getCurrentData")
     public Map<String, Object> report(HttpServletRequest request, HttpSession session) {
@@ -51,7 +56,7 @@ public class HomeController {
         Date lockintime = new Date();
 
         Integer steps = stepsService.getCurrentSteps(accountSid);
-        Map<String, Object> currentData = runningRecordService.getCurrentData(accountSid);
+        Map<String, Object> currentData = new HashMap<>();
 
         currentData.put("steps", steps);
 
@@ -69,6 +74,15 @@ public class HomeController {
             currentData.put("lockintime", DateUtil.formatStandardDatetime(new Date()));
         }
 
+        Distances distances = distancesService.getNewest(accountSid);
+
+        if (distances == null) {
+            currentData.put("distances", 0);
+            currentData.put("cal", 0);
+        } else {
+            currentData.put("distances", distances.getDistance());
+            currentData.put("cal", distances.getCal());
+        }
         account.setLockintime(lockintime);
         accountService.updateByPrimaryKeySelective(account);
         return JsonMap.of(true, "", currentData);

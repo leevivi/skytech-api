@@ -9,6 +9,7 @@ import com.skytech.api.service.StepsService;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -73,6 +74,10 @@ public class StepsController {
 
         String accountSid = accountSidObj.toString();
         steps.setAccountSid(accountSid);
+
+        if (StringUtils.isBlank(steps.getDeviceSid())) {
+            return JsonMap.of(false, "Device id can't be null");
+        }
 
         LOGGER.info("新增计步" + JSON.toJSONString(steps));
         return stepsService.save(steps);

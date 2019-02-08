@@ -134,7 +134,7 @@ public class StepsServiceImpl extends GenericServiceImpl<Steps, StepsExample, St
         calendar.add(Calendar.DATE, 1);
         Date endDate = calendar.getTime();
         StepsExample stepsExample = new StepsExample();
-        stepsExample.createCriteria().andAccountSidEqualTo(accountSid).andRecordDateBetween(startDate, endDate);
+        stepsExample.createCriteria().andAccountSidEqualTo(accountSid).andRecordDateBetween(startDate, endDate).andDeviceSidIsNotNull();
 
         List<Steps> stepsList = stepsMapper.selectByExample(stepsExample);
 
