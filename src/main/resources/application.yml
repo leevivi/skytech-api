@@ -40,6 +40,6 @@ server:
 logging:
   level:
     ROOT: INFO
-    com.skytech.api.mapper : debug
+    com.skytech.api.mapper : info
   path:
   file: logs/api.log

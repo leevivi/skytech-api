@@ -2,21 +2,23 @@ package com.skytech.api.controller;
 
 import com.skytech.api.core.JsonMap;
 import com.skytech.api.core.Pagination;
-import com.skytech.api.core.utils.DateUtil;
 import com.skytech.api.model.Event;
 import com.skytech.api.service.EventMembersService;
 import com.skytech.api.service.EventService;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
-import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpSession;
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author 剑神卓凌昭
@@ -24,6 +26,8 @@ import java.util.*;
  */
 @RestController
 public class EventController {
+
+    Logger LOGGER = LoggerFactory.getLogger(EventController.class);
 
     @Autowired
     private EventService eventService;
@@ -69,62 +73,9 @@ public class EventController {
 
         String accountSid = accountSidObj.toString();
 
-        Event event = eventService.selectByPrimaryKey(sid);
+        Map<String, Object> detail = eventMembersService.findForEventDetail(accountSid, sid);
 
-
-        boolean isMember = false;
-
-        List<Map<String, Object>> members = eventMembersService.findForEvent(sid);
-
-
-        Map<String, Object> m = new HashMap<>();
-        for (int i = 1; i <= members.size(); i++) {
-            if (StringUtils.equals(accountSid, members.get(i - 1).get("accountSid").toString())) {
-                isMember = true;
-                if (i > 5) {
-                    m.put("position", i);
-                    m.put("accountSid", accountSid);
-                    m.put("accountName", members.get(i - 1).get("accountName"));
-                    m.put("accountAvatar", members.get(i - 1).get("accountAvatar"));
-                    m.put("steps", members.get(i - 1).get("steps"));
-                }
-
-            }
-        }
-
-        event.setMemberNums(members.size());
-        Map<String, Object> data = new HashMap<>();
-        data.put("event", event);
-        data.put("isMember", isMember);
-        if (members.size() > 5) {
-            data.put("members", members.subList(0, 5));
-        } else {
-            data.put("members", members);
-        }
-
-        data.put("mine", m);
-
-        Date startDate = event.getStartDate();
-        Date endDate = event.getEndDate();
-
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(endDate);
-        calendar.add(Calendar.DATE, 1);
-
-        endDate = calendar.getTime();
-
-        int daysNum = DateUtil.getDaysNum(startDate, endDate);
-
-        Date now = new Date();
-
-        if (now.getTime() <= startDate.getTime()) {
-            data.put("leftDays", daysNum);
-        } else {
-            daysNum = DateUtil.getDaysNum(now, endDate);
-            data.put("leftDays", daysNum >= 0 ? daysNum : 0);
-        }
-
-        return JsonMap.of(true, "", data);
+        return JsonMap.of(true, "", detail);
     }
 
     @ApiOperation(value = "加入活动")

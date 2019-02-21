@@ -96,7 +96,7 @@ public class AccountServiceImpl extends GenericServiceImpl<Account, AccountExamp
         if (!accounts.isEmpty()) {
             data.put("account", accounts.get(0));
             AccountDeviceExample accountDeviceExample = new AccountDeviceExample();
-            accountDeviceExample.createCriteria().andAccountSidEqualTo(accounts.get(0).getSid());
+            accountDeviceExample.createCriteria().andAccountSidEqualTo(accounts.get(0).getSid()).andDelFlagEqualTo((byte) 0);
             List<AccountDevice> accountDevices = accountDeviceMapper.selectByExample(accountDeviceExample);
             List<String> macAddress = new ArrayList<>();
             List<String> devices = new ArrayList<>();

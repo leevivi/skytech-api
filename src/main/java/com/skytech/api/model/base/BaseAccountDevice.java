@@ -20,14 +20,17 @@ public class BaseAccountDevice extends BaseModel<String>{
 
     private Byte deviceStatus;
 
+    private Byte delFlag;
+
     public BaseAccountDevice() {}
 
-    public BaseAccountDevice(String sid, String accountSid, String deviceSid, Date createdDatetime, Byte deviceStatus) {
+    public BaseAccountDevice(String sid, String accountSid, String deviceSid, Date createdDatetime, Byte deviceStatus,Byte delFlag) {
         this.sid = sid;
         this.accountSid = accountSid;
         this.deviceSid = deviceSid;
         this.createdDatetime = createdDatetime;
         this.deviceStatus = deviceStatus;
+        this.delFlag = delFlag;
     }
 
     /********** get/set ***********/
@@ -60,6 +63,14 @@ public class BaseAccountDevice extends BaseModel<String>{
         this.deviceStatus = deviceStatus;
     }
 
+    public Byte getDelFlag() {
+        return delFlag;
+    }
+
+    public void setDelFlag(Byte delFlag) {
+        this.delFlag = delFlag;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -71,6 +82,7 @@ public class BaseAccountDevice extends BaseModel<String>{
         sb.append(", deviceSid=").append(deviceSid);
         sb.append(", createdDatetime=").append(createdDatetime);
         sb.append(", deviceStatus=").append(deviceStatus);
+        sb.append(", delFlag=").append(delFlag);
         sb.append("]");
         return sb.toString();
     }

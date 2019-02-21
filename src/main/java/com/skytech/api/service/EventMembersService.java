@@ -14,6 +14,8 @@ public interface EventMembersService extends GenericService<EventMembers, String
 
     List<Map<String, Object>> findForEvent(String eventSid);
 
+    Map<String, Object> findForEventDetail(String accountSid, String eventSid);
+
     JsonMap save(EventMembers eventMembers);
 
     JsonMap save(String accountSid, String eventSid, String accountName, String staffId);

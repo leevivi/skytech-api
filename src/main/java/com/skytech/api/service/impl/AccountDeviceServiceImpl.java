@@ -5,11 +5,9 @@ import com.skytech.api.core.Pagination;
 import com.skytech.api.core.service.impl.GenericServiceImpl;
 import com.skytech.api.core.utils.UUIDUtil;
 import com.skytech.api.mapper.AccountDeviceMapper;
+import com.skytech.api.mapper.AccountMapper;
 import com.skytech.api.mapper.DeviceMapper;
-import com.skytech.api.model.AccountDevice;
-import com.skytech.api.model.AccountDeviceExample;
-import com.skytech.api.model.Device;
-import com.skytech.api.model.DeviceExample;
+import com.skytech.api.model.*;
 import com.skytech.api.model.base.BaseAccountDeviceExample;
 import com.skytech.api.service.AccountDeviceService;
 import org.apache.commons.lang3.StringUtils;
@@ -28,6 +26,9 @@ public class AccountDeviceServiceImpl extends GenericServiceImpl<AccountDevice, 
 
     @Autowired
     private DeviceMapper deviceMapper;
+
+    @Autowired
+    private AccountMapper accountMapper;
 
     @Override
     protected AccountDeviceMapper getGenericMapper() {
@@ -111,11 +112,33 @@ public class AccountDeviceServiceImpl extends GenericServiceImpl<AccountDevice, 
 
             Device one = devices.get(0);
             deviceSid = one.getSid();
+            one.setDeviceId(device.getDeviceId());
             one.setCreatedDatetime(now);
             i = deviceMapper.updateByPrimaryKeySelective(one);
         }
 
         if (i > 0) {
+
+            Account account = accountMapper.selectByPrimaryKey(accountSid);
+
+            if (StringUtils.endsWithIgnoreCase(account.getEmail(), "skytech.com.hk")) {
+                AccountDeviceExample accountDeviceExample = new AccountDeviceExample();
+                accountDeviceExample.createCriteria().andAccountSidEqualTo(accountSid);
+                List<AccountDevice> accountDevices = this.selectByExample(accountDeviceExample);
+
+                if (!accountDevices.isEmpty()) { //已经绑定过设备的
+                    for (AccountDevice ad : accountDevices) {
+                        if (StringUtils.equals(ad.getDeviceSid(), deviceSid)) {
+                            ad.setDelFlag((byte) 0);
+                            accountDeviceMapper.updateByPrimaryKeySelective(ad);
+                            device = deviceMapper.selectByPrimaryKey(deviceSid);
+                            return JsonMap.of(true, "", device);
+                        }
+                    }
+                }
+            }
+
+
             AccountDeviceExample accountDeviceExample = new AccountDeviceExample();
             accountDeviceExample.createCriteria().andDeviceSidEqualTo(devices.get(0).getSid());
             List<AccountDevice> accountDevices = this.selectByExample(accountDeviceExample);
@@ -128,6 +151,7 @@ public class AccountDeviceServiceImpl extends GenericServiceImpl<AccountDevice, 
                 accountDevice.setDeviceSid(deviceSid);
                 accountDevice.setDeviceStatus((byte) 1);
                 accountDevice.setCreatedDatetime(now);
+                accountDevice.setDelFlag((byte) 0);
                 j = accountDeviceMapper.insertSelective(accountDevice);
             } else {
 
@@ -159,11 +183,37 @@ public class AccountDeviceServiceImpl extends GenericServiceImpl<AccountDevice, 
 
     @Override
     public JsonMap disConnect(String accountSid, Device device) {
-        AccountDeviceExample accountDeviceExample = new AccountDeviceExample();
-        accountDeviceExample.createCriteria().andAccountSidEqualTo(accountSid).andDeviceSidEqualTo(device.getSid());
-        int i = accountDeviceMapper.deleteByExample(accountDeviceExample);
-        if (i > 0) {
-            return JsonMap.of(true, "SUCCESS");
+        Account account = accountMapper.selectByPrimaryKey(accountSid);
+
+        if (StringUtils.endsWithIgnoreCase(account.getEmail(), "skytech.com.hk")) { //香港机场客户
+            AccountDeviceExample accountDeviceExample = new AccountDeviceExample();
+            accountDeviceExample.createCriteria().andAccountSidEqualTo(accountSid).andDeviceSidEqualTo(device.getSid());
+            List<AccountDevice> accountDevices = accountDeviceMapper.selectByExample(accountDeviceExample);
+            if (!accountDevices.isEmpty()) {
+                AccountDevice accountDevice = accountDevices.get(0);
+                accountDevice.setDelFlag((byte) 2); // 暂时解绑
+                int i = accountDeviceMapper.updateByPrimaryKeySelective(accountDevice);
+                if (i > 0) {
+                    return JsonMap.of(true, "SUCCESS");
+                }
+                return JsonMap.of(false, "FAILED");
+            }
+
+        } else {
+            AccountDeviceExample accountDeviceExample = new AccountDeviceExample();
+            accountDeviceExample.createCriteria().andAccountSidEqualTo(accountSid).andDeviceSidEqualTo(device.getSid());
+//            int i = accountDeviceMapper.deleteByExample(accountDeviceExample);
+            List<AccountDevice> accountDevices = accountDeviceMapper.selectByExample(accountDeviceExample);
+
+            if (!accountDevices.isEmpty()) {
+                AccountDevice accountDevice = accountDevices.get(0);
+                accountDevice.setDelFlag((byte) 1); // 真正解绑
+                int i = accountDeviceMapper.updateByPrimaryKeySelective(accountDevice);
+                if (i > 0) {
+                    return JsonMap.of(true, "SUCCESS");
+                }
+                return JsonMap.of(false, "FAILED");
+            }
         }
         return JsonMap.of(false, "FAILED");
     }
