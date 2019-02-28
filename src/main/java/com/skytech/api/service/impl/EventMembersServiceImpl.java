@@ -286,7 +286,7 @@ public class EventMembersServiceImpl extends GenericServiceImpl<EventMembers, Ev
         if (now.getTime() <= eventStartDate.getTime()) {
             data.put("leftDays", daysNum);
         } else {
-            daysNum = DateUtil.getDaysNum(now, eventEndDate);
+            daysNum = DateUtil.getDaysNum(now, eventEndDate)+1;
             data.put("leftDays", daysNum >= 0 ? daysNum : 0);
         }
 
