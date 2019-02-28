@@ -120,7 +120,7 @@ public class AccountDeviceServiceImpl extends GenericServiceImpl<AccountDevice, 
         if (i > 0) {
 
             Account account = accountMapper.selectByPrimaryKey(accountSid);
-
+            //查询账号是否绑定设备
             if (StringUtils.endsWithIgnoreCase(account.getEmail(), "skytech.com.hk")) {
                 AccountDeviceExample accountDeviceExample = new AccountDeviceExample();
                 accountDeviceExample.createCriteria().andAccountSidEqualTo(accountSid);
@@ -134,17 +134,18 @@ public class AccountDeviceServiceImpl extends GenericServiceImpl<AccountDevice, 
                             device = deviceMapper.selectByPrimaryKey(deviceSid);
                             return JsonMap.of(true, "", device);
                         }
+                        //如果账号连接新设备是否需要重新绑定新设备（是否允许一对多）
                     }
                 }
             }
 
-
+            //查询设备是否被绑定
             AccountDeviceExample accountDeviceExample = new AccountDeviceExample();
             accountDeviceExample.createCriteria().andDeviceSidEqualTo(devices.get(0).getSid());
             List<AccountDevice> accountDevices = this.selectByExample(accountDeviceExample);
 
             int j = 0;
-            if (accountDevices.isEmpty()) {
+            if (accountDevices.isEmpty()) { //设备未被绑定
                 AccountDevice accountDevice = new AccountDevice();
                 accountDevice.setSid(UUIDUtil.getUUID());
                 accountDevice.setAccountSid(accountSid);
@@ -153,7 +154,7 @@ public class AccountDeviceServiceImpl extends GenericServiceImpl<AccountDevice, 
                 accountDevice.setCreatedDatetime(now);
                 accountDevice.setDelFlag((byte) 0);
                 j = accountDeviceMapper.insertSelective(accountDevice);
-            } else {
+            } else {//设备已被其他账号绑定
 
                 boolean flag = false;
                 for (AccountDevice accountDevice : accountDevices) {

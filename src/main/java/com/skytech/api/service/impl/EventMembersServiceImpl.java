@@ -278,8 +278,8 @@ public class EventMembersServiceImpl extends GenericServiceImpl<EventMembers, Ev
         calendar.add(Calendar.DATE, 1);
 
         eventEndDate = calendar.getTime();
-
-        int daysNum = DateUtil.getDaysNum(eventStartDate, eventEndDate);
+        //剩余天数+1
+        int daysNum = DateUtil.getDaysNum(eventStartDate, eventEndDate)+1;
 
         Date now = new Date();
 

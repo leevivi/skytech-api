@@ -2,6 +2,7 @@ package com.skytech.api.model.base;
 
 import com.skytech.api.core.model.BaseModel;
 import com.alibaba.fastjson.annotation.JSONField;
+
 import java.util.Date;
 
 /**
@@ -144,4 +145,6 @@ public class BaseHeartRate extends BaseModel<String>{
         result = prime * result + ((getSid() == null) ? 0 : getSid().hashCode());
         return result;
     }
+
+
 }
