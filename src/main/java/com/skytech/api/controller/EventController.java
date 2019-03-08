@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -53,6 +54,11 @@ public class EventController {
         data.put("count", pagination.getTotalRowNumber());
         List<Event> dataList = pagination.getDataList();
         for (Event event : dataList) {
+            //机场活动下线处理
+            if ("1".equals(event.getSid())) {
+                dataList = new ArrayList<>();
+                continue;
+            }
             List<Map<String, Object>> members = eventMembersService.findForEvent(event.getSid());
             event.setMemberNums(members.size());
             event.setDays(3);
