@@ -115,6 +115,13 @@ public class StepsServiceImpl extends GenericServiceImpl<Steps, StepsExample, St
     @Override
     public List<Steps> report(String accountSid, String deviceSid, Date startDate, Date endDate) {
         StepsExample stepsExample = new StepsExample();
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(endDate);
+        calendar.set(Calendar.HOUR_OF_DAY, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        calendar.add(Calendar.DATE, 1);
+        endDate = calendar.getTime();
         stepsExample.createCriteria().andAccountSidEqualTo(accountSid).andDeviceSidEqualTo(deviceSid).andRecordDateBetween(startDate, endDate);
         stepsExample.setOrderByClause(" record_date asc");
         List<Steps> steps = stepsMapper.selectByExample(stepsExample);
