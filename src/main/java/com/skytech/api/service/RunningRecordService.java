@@ -19,6 +19,8 @@ public interface RunningRecordService extends GenericService<RunningRecord, Stri
 
     JsonMap findNewest(String accountSid);
 
+    int getNewest(String accountSid);
+
     Map<String, Object> getCurrentData(String accountSid);
 }
 

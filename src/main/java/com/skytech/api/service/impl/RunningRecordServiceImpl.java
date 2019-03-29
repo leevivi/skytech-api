@@ -48,7 +48,41 @@ public class RunningRecordServiceImpl extends GenericServiceImpl<RunningRecord, 
 //
 //        List<RunningRecord> runningRecords = runningRecordMapper.selectByExample(runningRecordExample);
 
+        /*ACTIVITY CALORIC  BURNED以心率中位数
+        计算，触发点是用户点击室内跑或者室外跑功能时。没有触发时该值为0.
+        Men use the following formula:
+        Calories Burned = [(Age x 0.2017) — (Weight x 0.09036) + (Heart Rate x 0.6309) — 55.0969] x Time / 4.184
+        Women use the following formula:
+        Calories Burned = [(Age x 0.074) — (Weight x 0.05741) + (Heart Rate x 0.4472) — 20.4022] x Time / 4.184
+        HR = Heart rate (in beats/minute)，取最大和最小心率的中位数
+        W = Weight (in 磅)
+        A = Age (in years)
+        T = Exercise duration time (in minute)
+        算出的单位是cal，要转化成 kcal*/
         runningRecord.setSid(UUID.randomUUID().toString().replaceAll("-", ""));
+        int cal = 0;
+        BigDecimal bpm = runningRecord.getAverageBpm();
+        //TODO 体重换成磅
+        double weight = account.getWeight()*2.2046226;
+        if(account.getAge()==null||account.getHeight()==null || account.getWeight()==null){
+            runningRecord.setCal(0);
+        }
+        else{
+            if(account.getGender()==1) {
+
+                cal = (int) ((account.getAge() * 0.2017 - weight * 0.09036 +
+                        (bpm.multiply(BigDecimal.valueOf(0.6309))).doubleValue() - 55.0969)
+                        * runningRecord.getDuration()/60/4.184
+                );
+            }
+            else if(account.getGender()==0){
+                cal = (int) ((account.getAge() * 0.074 - weight * 0.05741 +
+                        (bpm.multiply(BigDecimal.valueOf(0.4472))).doubleValue() - 20.4022)
+                        * runningRecord.getDuration()/60/4.184
+                );
+            }
+        }
+        runningRecord.setCal(cal/5);
         runningRecord.setCreatedDatetime(new Date());
         int i = runningRecordMapper.insertSelective(runningRecord);
         if (i > 0) {
@@ -131,5 +165,28 @@ public class RunningRecordServiceImpl extends GenericServiceImpl<RunningRecord, 
         data.put("distances", distances);
         data.put("cal", cal);
         return data;
+    }
+
+    @Override
+    public int getNewest(String accountSid) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(new Date());
+        calendar.set(Calendar.HOUR_OF_DAY, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        Date startDate = calendar.getTime();
+
+        calendar.add(Calendar.DATE, 1);
+        Date endDate = calendar.getTime();
+        RunningRecordExample runningRecordExample = new RunningRecordExample();
+        runningRecordExample.createCriteria().andAccountSidEqualTo(accountSid).andStartDatetimeBetween(startDate, endDate);
+        runningRecordExample.setOrderByClause(" created_datetime desc");
+
+        Integer cal = 0;
+        List<RunningRecord> runningRecords = runningRecordMapper.selectByExample(runningRecordExample);
+        if(!runningRecords.isEmpty()){
+            cal = runningRecords.get(0).getCal();
+        }
+        return cal;
     }
 }

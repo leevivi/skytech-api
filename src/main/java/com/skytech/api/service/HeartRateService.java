@@ -20,7 +20,8 @@ public interface HeartRateService extends GenericService<HeartRate, String> {
 
     List<HeartRate> report(String accountSid, String deviceSid, Date startDate, Date endDate);
 
-    Integer getNewest(String accountSid);
+    String getNewest(String accountSid);
+    String getRecent(String accountSid);
 }
 
 

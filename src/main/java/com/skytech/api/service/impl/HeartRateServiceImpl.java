@@ -3,6 +3,7 @@ package com.skytech.api.service.impl;
 import com.skytech.api.core.JsonMap;
 import com.skytech.api.core.Pagination;
 import com.skytech.api.core.service.impl.GenericServiceImpl;
+import com.skytech.api.core.utils.DateUtil;
 import com.skytech.api.mapper.AccountMapper;
 import com.skytech.api.mapper.HeartRateMapper;
 import com.skytech.api.model.Account;
@@ -130,7 +131,7 @@ public class HeartRateServiceImpl extends GenericServiceImpl<HeartRate, HeartRat
     }
 
     @Override
-    public Integer getNewest(String accountSid) {
+    public String getNewest(String accountSid) {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(new Date());
         calendar.set(Calendar.HOUR_OF_DAY, 0);
@@ -146,9 +147,25 @@ public class HeartRateServiceImpl extends GenericServiceImpl<HeartRate, HeartRat
 
         List<HeartRate> heartRates = heartRateMapper.selectByExample(heartRateExample);
         if (heartRates.isEmpty()) {
-            return 0;
+            return "0,0";
         } else {
-            return Integer.parseInt(heartRates.get(0).getData());
+            String heart = heartRates.get(0).getData()+","+heartRates.get(0).getRecordDate();
+            return heart;
+//            return Integer.parseInt(heartRates.get(0).getData());
         }
+    }
+
+    @Override
+    public String getRecent(String accountSid) {
+        HeartRateExample heartRateExample = new HeartRateExample();
+        heartRateExample.createCriteria().andAccountSidEqualTo(accountSid);
+        heartRateExample.setOrderByClause(" created_datetime desc");
+        List<HeartRate> heartRates = heartRateMapper.selectByExample(heartRateExample);
+        if(!heartRates.isEmpty()){
+            HeartRate heartRate = heartRates.get(0);
+            String heart = heartRate.getData()+","+ DateUtil.formatStandardDatetime(heartRate.getCreatedDatetime());
+            return heart;
+        }
+        return "0,0";
     }
 }
