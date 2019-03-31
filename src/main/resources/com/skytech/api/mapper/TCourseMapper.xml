@@ -9,7 +9,7 @@
     <result column="isCoupon" jdbcType="BIT" property="iscoupon" />
     <result column="upper" jdbcType="INTEGER" property="upper" />
     <result column="coverUrl" jdbcType="VARCHAR" property="coverurl" />
-    <result column="month" jdbcType="DATE" property="month" />
+    <result column="month" jdbcType="VARCHAR" property="month" />
     <result column="companyId" jdbcType="INTEGER" property="companyid" />
     <result column="storesId" jdbcType="INTEGER" property="storesid" />
     <result column="status" jdbcType="BIT" property="status" />
@@ -140,7 +140,7 @@
       updateTime, courseBody)
     values (#{id,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{dictid,jdbcType=INTEGER}, 
       #{userid,jdbcType=INTEGER}, #{iscoupon,jdbcType=BIT}, #{upper,jdbcType=INTEGER}, 
-      #{coverurl,jdbcType=VARCHAR}, #{month,jdbcType=DATE}, #{companyid,jdbcType=INTEGER}, 
+      #{coverurl,jdbcType=VARCHAR}, #{month,jdbcType=VARCHAR}, #{companyid,jdbcType=INTEGER}, 
       #{storesid,jdbcType=INTEGER}, #{status,jdbcType=BIT}, #{createtime,jdbcType=TIMESTAMP}, 
       #{updatetime,jdbcType=TIMESTAMP}, #{coursebody,jdbcType=LONGVARCHAR})
   </insert>
@@ -213,7 +213,7 @@
         #{coverurl,jdbcType=VARCHAR},
       </if>
       <if test="month != null">
-        #{month,jdbcType=DATE},
+        #{month,jdbcType=VARCHAR},
       </if>
       <if test="companyid != null">
         #{companyid,jdbcType=INTEGER},
@@ -266,7 +266,7 @@
         coverUrl = #{record.coverurl,jdbcType=VARCHAR},
       </if>
       <if test="record.month != null">
-        month = #{record.month,jdbcType=DATE},
+        month = #{record.month,jdbcType=VARCHAR},
       </if>
       <if test="record.companyid != null">
         companyId = #{record.companyid,jdbcType=INTEGER},
@@ -300,7 +300,7 @@
       isCoupon = #{record.iscoupon,jdbcType=BIT},
       upper = #{record.upper,jdbcType=INTEGER},
       coverUrl = #{record.coverurl,jdbcType=VARCHAR},
-      month = #{record.month,jdbcType=DATE},
+      month = #{record.month,jdbcType=VARCHAR},
       companyId = #{record.companyid,jdbcType=INTEGER},
       storesId = #{record.storesid,jdbcType=INTEGER},
       status = #{record.status,jdbcType=BIT},
@@ -320,7 +320,7 @@
       isCoupon = #{record.iscoupon,jdbcType=BIT},
       upper = #{record.upper,jdbcType=INTEGER},
       coverUrl = #{record.coverurl,jdbcType=VARCHAR},
-      month = #{record.month,jdbcType=DATE},
+      month = #{record.month,jdbcType=VARCHAR},
       companyId = #{record.companyid,jdbcType=INTEGER},
       storesId = #{record.storesid,jdbcType=INTEGER},
       status = #{record.status,jdbcType=BIT},
@@ -352,7 +352,7 @@
         coverUrl = #{coverurl,jdbcType=VARCHAR},
       </if>
       <if test="month != null">
-        month = #{month,jdbcType=DATE},
+        month = #{month,jdbcType=VARCHAR},
       </if>
       <if test="companyid != null">
         companyId = #{companyid,jdbcType=INTEGER},
@@ -383,7 +383,7 @@
       isCoupon = #{iscoupon,jdbcType=BIT},
       upper = #{upper,jdbcType=INTEGER},
       coverUrl = #{coverurl,jdbcType=VARCHAR},
-      month = #{month,jdbcType=DATE},
+      month = #{month,jdbcType=VARCHAR},
       companyId = #{companyid,jdbcType=INTEGER},
       storesId = #{storesid,jdbcType=INTEGER},
       status = #{status,jdbcType=BIT},
@@ -400,7 +400,7 @@
       isCoupon = #{iscoupon,jdbcType=BIT},
       upper = #{upper,jdbcType=INTEGER},
       coverUrl = #{coverurl,jdbcType=VARCHAR},
-      month = #{month,jdbcType=DATE},
+      month = #{month,jdbcType=VARCHAR},
       companyId = #{companyid,jdbcType=INTEGER},
       storesId = #{storesid,jdbcType=INTEGER},
       status = #{status,jdbcType=BIT},

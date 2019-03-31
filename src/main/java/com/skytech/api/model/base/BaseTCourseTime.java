@@ -10,10 +10,10 @@ public class BaseTCourseTime extends BaseModelOne<Integer>{
     private Integer courseid;
 
     private Integer weekid;
-    @JSONField(format="yyyy-MM-dd HH:mm:ss")
-    private Date startcoursetime;
-    @JSONField(format="yyyy-MM-dd HH:mm:ss")
-    private Date endcoursetime;
+
+    private String startcoursetime;
+
+    private String endcoursetime;
 
     private Integer classid;
     @JSONField(format="yyyy-MM-dd HH:mm:ss")
@@ -24,7 +24,7 @@ public class BaseTCourseTime extends BaseModelOne<Integer>{
     public BaseTCourseTime() {
     }
 
-    public BaseTCourseTime(Integer id, Integer courseid, Integer weekid, Date startcoursetime, Date endcoursetime, Integer classid, Date createtime, Date updatetime) {
+    public BaseTCourseTime(Integer id, Integer courseid, Integer weekid, String startcoursetime, String endcoursetime, Integer classid, Date createtime, Date updatetime) {
         this.id = id;
         this.courseid = courseid;
         this.weekid = weekid;
@@ -51,20 +51,20 @@ public class BaseTCourseTime extends BaseModelOne<Integer>{
         this.weekid = weekid;
     }
 
-    public Date getStartcoursetime() {
+    public String getStartcoursetime() {
         return startcoursetime;
     }
 
-    public void setStartcoursetime(Date startcoursetime) {
-        this.startcoursetime = startcoursetime;
+    public void setStartcoursetime(String startcoursetime) {
+        this.startcoursetime = startcoursetime == null ? null : startcoursetime.trim();
     }
 
-    public Date getEndcoursetime() {
+    public String getEndcoursetime() {
         return endcoursetime;
     }
 
-    public void setEndcoursetime(Date endcoursetime) {
-        this.endcoursetime = endcoursetime;
+    public void setEndcoursetime(String endcoursetime) {
+        this.endcoursetime = endcoursetime == null ? null : endcoursetime.trim();
     }
 
     public Integer getClassid() {

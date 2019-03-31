@@ -7,6 +7,7 @@ import java.util.Date;
 import java.util.List;
 
 public class BaseTCourseTimeExample extends BaseModelExample{
+
     protected List<Criteria> oredCriteria;
 
     public BaseTCourseTimeExample() {
@@ -278,52 +279,62 @@ public class BaseTCourseTimeExample extends BaseModelExample{
             return (Criteria) this;
         }
 
-        public Criteria andStartcoursetimeEqualTo(Date value) {
+        public Criteria andStartcoursetimeEqualTo(String value) {
             addCriterion("startCourseTime =", value, "startcoursetime");
             return (Criteria) this;
         }
 
-        public Criteria andStartcoursetimeNotEqualTo(Date value) {
+        public Criteria andStartcoursetimeNotEqualTo(String value) {
             addCriterion("startCourseTime <>", value, "startcoursetime");
             return (Criteria) this;
         }
 
-        public Criteria andStartcoursetimeGreaterThan(Date value) {
+        public Criteria andStartcoursetimeGreaterThan(String value) {
             addCriterion("startCourseTime >", value, "startcoursetime");
             return (Criteria) this;
         }
 
-        public Criteria andStartcoursetimeGreaterThanOrEqualTo(Date value) {
+        public Criteria andStartcoursetimeGreaterThanOrEqualTo(String value) {
             addCriterion("startCourseTime >=", value, "startcoursetime");
             return (Criteria) this;
         }
 
-        public Criteria andStartcoursetimeLessThan(Date value) {
+        public Criteria andStartcoursetimeLessThan(String value) {
             addCriterion("startCourseTime <", value, "startcoursetime");
             return (Criteria) this;
         }
 
-        public Criteria andStartcoursetimeLessThanOrEqualTo(Date value) {
+        public Criteria andStartcoursetimeLessThanOrEqualTo(String value) {
             addCriterion("startCourseTime <=", value, "startcoursetime");
             return (Criteria) this;
         }
 
-        public Criteria andStartcoursetimeIn(List<Date> values) {
+        public Criteria andStartcoursetimeLike(String value) {
+            addCriterion("startCourseTime like", value, "startcoursetime");
+            return (Criteria) this;
+        }
+
+        public Criteria andStartcoursetimeNotLike(String value) {
+            addCriterion("startCourseTime not like", value, "startcoursetime");
+            return (Criteria) this;
+        }
+
+        public Criteria andStartcoursetimeIn(List<String> values) {
             addCriterion("startCourseTime in", values, "startcoursetime");
             return (Criteria) this;
         }
 
-        public Criteria andStartcoursetimeNotIn(List<Date> values) {
+        public Criteria andStartcoursetimeNotIn(List<String> values) {
             addCriterion("startCourseTime not in", values, "startcoursetime");
             return (Criteria) this;
         }
 
-        public Criteria andStartcoursetimeBetween(Date value1, Date value2) {
+        public Criteria andStartcoursetimeBetween(String value1, String value2) {
             addCriterion("startCourseTime between", value1, value2, "startcoursetime");
             return (Criteria) this;
         }
 
-        public Criteria andStartcoursetimeNotBetween(Date value1, Date value2) {
+        public Criteria andStartcoursetimeNotBetween(String value1, String value2) {
             addCriterion("startCourseTime not between", value1, value2, "startcoursetime");
             return (Criteria) this;
         }
@@ -338,52 +349,62 @@ public class BaseTCourseTimeExample extends BaseModelExample{
             return (Criteria) this;
         }
 
-        public Criteria andEndcoursetimeEqualTo(Date value) {
+        public Criteria andEndcoursetimeEqualTo(String value) {
             addCriterion("endCourseTime =", value, "endcoursetime");
             return (Criteria) this;
         }
 
-        public Criteria andEndcoursetimeNotEqualTo(Date value) {
+        public Criteria andEndcoursetimeNotEqualTo(String value) {
             addCriterion("endCourseTime <>", value, "endcoursetime");
             return (Criteria) this;
         }
 
-        public Criteria andEndcoursetimeGreaterThan(Date value) {
+        public Criteria andEndcoursetimeGreaterThan(String value) {
             addCriterion("endCourseTime >", value, "endcoursetime");
             return (Criteria) this;
         }
 
-        public Criteria andEndcoursetimeGreaterThanOrEqualTo(Date value) {
+        public Criteria andEndcoursetimeGreaterThanOrEqualTo(String value) {
             addCriterion("endCourseTime >=", value, "endcoursetime");
             return (Criteria) this;
         }
 
-        public Criteria andEndcoursetimeLessThan(Date value) {
+        public Criteria andEndcoursetimeLessThan(String value) {
             addCriterion("endCourseTime <", value, "endcoursetime");
             return (Criteria) this;
         }
 
-        public Criteria andEndcoursetimeLessThanOrEqualTo(Date value) {
+        public Criteria andEndcoursetimeLessThanOrEqualTo(String value) {
             addCriterion("endCourseTime <=", value, "endcoursetime");
             return (Criteria) this;
         }
 
-        public Criteria andEndcoursetimeIn(List<Date> values) {
+        public Criteria andEndcoursetimeLike(String value) {
+            addCriterion("endCourseTime like", value, "endcoursetime");
+            return (Criteria) this;
+        }
+
+        public Criteria andEndcoursetimeNotLike(String value) {
+            addCriterion("endCourseTime not like", value, "endcoursetime");
+            return (Criteria) this;
+        }
+
+        public Criteria andEndcoursetimeIn(List<String> values) {
             addCriterion("endCourseTime in", values, "endcoursetime");
             return (Criteria) this;
         }
 
-        public Criteria andEndcoursetimeNotIn(List<Date> values) {
+        public Criteria andEndcoursetimeNotIn(List<String> values) {
             addCriterion("endCourseTime not in", values, "endcoursetime");
             return (Criteria) this;
         }
 
-        public Criteria andEndcoursetimeBetween(Date value1, Date value2) {
+        public Criteria andEndcoursetimeBetween(String value1, String value2) {
             addCriterion("endCourseTime between", value1, value2, "endcoursetime");
             return (Criteria) this;
         }
 
-        public Criteria andEndcoursetimeNotBetween(Date value1, Date value2) {
+        public Criteria andEndcoursetimeNotBetween(String value1, String value2) {
             addCriterion("endCourseTime not between", value1, value2, "endcoursetime");
             return (Criteria) this;
         }

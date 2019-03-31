@@ -4,7 +4,6 @@ import com.skytech.api.core.model.BaseModelExample;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
 
 public class BaseTCourseExample extends BaseModelExample{
@@ -88,32 +87,6 @@ public class BaseTCourseExample extends BaseModelExample{
                 throw new RuntimeException("Between values for " + property + " cannot be null");
             }
             criteria.add(new Criterion(condition, value1, value2));
-        }
-
-        protected void addCriterionForJDBCDate(String condition, Date value, String property) {
-            if (value == null) {
-                throw new RuntimeException("Value for " + property + " cannot be null");
-            }
-            addCriterion(condition, new java.sql.Date(value.getTime()), property);
-        }
-
-        protected void addCriterionForJDBCDate(String condition, List<Date> values, String property) {
-            if (values == null || values.size() == 0) {
-                throw new RuntimeException("Value list for " + property + " cannot be null or empty");
-            }
-            List<java.sql.Date> dateList = new ArrayList<java.sql.Date>();
-            Iterator<Date> iter = values.iterator();
-            while (iter.hasNext()) {
-                dateList.add(new java.sql.Date(iter.next().getTime()));
-            }
-            addCriterion(condition, dateList, property);
-        }
-
-        protected void addCriterionForJDBCDate(String condition, Date value1, Date value2, String property) {
-            if (value1 == null || value2 == null) {
-                throw new RuntimeException("Between values for " + property + " cannot be null");
-            }
-            addCriterion(condition, new java.sql.Date(value1.getTime()), new java.sql.Date(value2.getTime()), property);
         }
 
         public Criteria andIdIsNull() {
@@ -566,53 +539,63 @@ public class BaseTCourseExample extends BaseModelExample{
             return (Criteria) this;
         }
 
-        public Criteria andMonthEqualTo(Date value) {
-            addCriterionForJDBCDate("month =", value, "month");
+        public Criteria andMonthEqualTo(String value) {
+            addCriterion("month =", value, "month");
             return (Criteria) this;
         }
 
-        public Criteria andMonthNotEqualTo(Date value) {
-            addCriterionForJDBCDate("month <>", value, "month");
+        public Criteria andMonthNotEqualTo(String value) {
+            addCriterion("month <>", value, "month");
             return (Criteria) this;
         }
 
-        public Criteria andMonthGreaterThan(Date value) {
-            addCriterionForJDBCDate("month >", value, "month");
+        public Criteria andMonthGreaterThan(String value) {
+            addCriterion("month >", value, "month");
             return (Criteria) this;
         }
 
-        public Criteria andMonthGreaterThanOrEqualTo(Date value) {
-            addCriterionForJDBCDate("month >=", value, "month");
+        public Criteria andMonthGreaterThanOrEqualTo(String value) {
+            addCriterion("month >=", value, "month");
             return (Criteria) this;
         }
 
-        public Criteria andMonthLessThan(Date value) {
-            addCriterionForJDBCDate("month <", value, "month");
+        public Criteria andMonthLessThan(String value) {
+            addCriterion("month <", value, "month");
             return (Criteria) this;
         }
 
-        public Criteria andMonthLessThanOrEqualTo(Date value) {
-            addCriterionForJDBCDate("month <=", value, "month");
+        public Criteria andMonthLessThanOrEqualTo(String value) {
+            addCriterion("month <=", value, "month");
             return (Criteria) this;
         }
 
-        public Criteria andMonthIn(List<Date> values) {
-            addCriterionForJDBCDate("month in", values, "month");
+        public Criteria andMonthLike(String value) {
+            addCriterion("month like", value, "month");
             return (Criteria) this;
         }
 
-        public Criteria andMonthNotIn(List<Date> values) {
-            addCriterionForJDBCDate("month not in", values, "month");
+        public Criteria andMonthNotLike(String value) {
+            addCriterion("month not like", value, "month");
             return (Criteria) this;
         }
 
-        public Criteria andMonthBetween(Date value1, Date value2) {
-            addCriterionForJDBCDate("month between", value1, value2, "month");
+        public Criteria andMonthIn(List<String> values) {
+            addCriterion("month in", values, "month");
             return (Criteria) this;
         }
 
-        public Criteria andMonthNotBetween(Date value1, Date value2) {
-            addCriterionForJDBCDate("month not between", value1, value2, "month");
+        public Criteria andMonthNotIn(List<String> values) {
+            addCriterion("month not in", values, "month");
+            return (Criteria) this;
+        }
+
+        public Criteria andMonthBetween(String value1, String value2) {
+            addCriterion("month between", value1, value2, "month");
+            return (Criteria) this;
+        }
+
+        public Criteria andMonthNotBetween(String value1, String value2) {
+            addCriterion("month not between", value1, value2, "month");
             return (Criteria) this;
         }
 

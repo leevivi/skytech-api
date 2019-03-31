@@ -5,8 +5,8 @@
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="courseId" jdbcType="INTEGER" property="courseid" />
     <result column="weekId" jdbcType="INTEGER" property="weekid" />
-    <result column="startCourseTime" jdbcType="TIMESTAMP" property="startcoursetime" />
-    <result column="endCourseTime" jdbcType="TIMESTAMP" property="endcoursetime" />
+    <result column="startCourseTime" jdbcType="VARCHAR" property="startcoursetime" />
+    <result column="endCourseTime" jdbcType="VARCHAR" property="endcoursetime" />
     <result column="classId" jdbcType="INTEGER" property="classid" />
     <result column="createTime" jdbcType="TIMESTAMP" property="createtime" />
     <result column="updateTime" jdbcType="TIMESTAMP" property="updatetime" />
@@ -107,7 +107,7 @@
       startCourseTime, endCourseTime, classId, 
       createTime, updateTime)
     values (#{id,jdbcType=INTEGER}, #{courseid,jdbcType=INTEGER}, #{weekid,jdbcType=INTEGER}, 
-      #{startcoursetime,jdbcType=TIMESTAMP}, #{endcoursetime,jdbcType=TIMESTAMP}, #{classid,jdbcType=INTEGER}, 
+      #{startcoursetime,jdbcType=VARCHAR}, #{endcoursetime,jdbcType=VARCHAR}, #{classid,jdbcType=INTEGER}, 
       #{createtime,jdbcType=TIMESTAMP}, #{updatetime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.skytech.api.model.TCourseTime">
@@ -149,10 +149,10 @@
         #{weekid,jdbcType=INTEGER},
       </if>
       <if test="startcoursetime != null">
-        #{startcoursetime,jdbcType=TIMESTAMP},
+        #{startcoursetime,jdbcType=VARCHAR},
       </if>
       <if test="endcoursetime != null">
-        #{endcoursetime,jdbcType=TIMESTAMP},
+        #{endcoursetime,jdbcType=VARCHAR},
       </if>
       <if test="classid != null">
         #{classid,jdbcType=INTEGER},
@@ -184,10 +184,10 @@
         weekId = #{record.weekid,jdbcType=INTEGER},
       </if>
       <if test="record.startcoursetime != null">
-        startCourseTime = #{record.startcoursetime,jdbcType=TIMESTAMP},
+        startCourseTime = #{record.startcoursetime,jdbcType=VARCHAR},
       </if>
       <if test="record.endcoursetime != null">
-        endCourseTime = #{record.endcoursetime,jdbcType=TIMESTAMP},
+        endCourseTime = #{record.endcoursetime,jdbcType=VARCHAR},
       </if>
       <if test="record.classid != null">
         classId = #{record.classid,jdbcType=INTEGER},
@@ -208,8 +208,8 @@
     set id = #{record.id,jdbcType=INTEGER},
       courseId = #{record.courseid,jdbcType=INTEGER},
       weekId = #{record.weekid,jdbcType=INTEGER},
-      startCourseTime = #{record.startcoursetime,jdbcType=TIMESTAMP},
-      endCourseTime = #{record.endcoursetime,jdbcType=TIMESTAMP},
+      startCourseTime = #{record.startcoursetime,jdbcType=VARCHAR},
+      endCourseTime = #{record.endcoursetime,jdbcType=VARCHAR},
       classId = #{record.classid,jdbcType=INTEGER},
       createTime = #{record.createtime,jdbcType=TIMESTAMP},
       updateTime = #{record.updatetime,jdbcType=TIMESTAMP}
@@ -227,10 +227,10 @@
         weekId = #{weekid,jdbcType=INTEGER},
       </if>
       <if test="startcoursetime != null">
-        startCourseTime = #{startcoursetime,jdbcType=TIMESTAMP},
+        startCourseTime = #{startcoursetime,jdbcType=VARCHAR},
       </if>
       <if test="endcoursetime != null">
-        endCourseTime = #{endcoursetime,jdbcType=TIMESTAMP},
+        endCourseTime = #{endcoursetime,jdbcType=VARCHAR},
       </if>
       <if test="classid != null">
         classId = #{classid,jdbcType=INTEGER},
@@ -248,8 +248,8 @@
     update t_course_time
     set courseId = #{courseid,jdbcType=INTEGER},
       weekId = #{weekid,jdbcType=INTEGER},
-      startCourseTime = #{startcoursetime,jdbcType=TIMESTAMP},
-      endCourseTime = #{endcoursetime,jdbcType=TIMESTAMP},
+      startCourseTime = #{startcoursetime,jdbcType=VARCHAR},
+      endCourseTime = #{endcoursetime,jdbcType=VARCHAR},
       classId = #{classid,jdbcType=INTEGER},
       createTime = #{createtime,jdbcType=TIMESTAMP},
       updateTime = #{updatetime,jdbcType=TIMESTAMP}

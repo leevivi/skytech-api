@@ -18,8 +18,8 @@ public class BaseTCourse extends BaseModelOne<Integer>{
     private Integer upper;
 
     private String coverurl;
-    @JSONField(format="yyyy-MM")
-    private Date month;
+
+    private String month;
 
     private Integer companyid;
 
@@ -36,7 +36,7 @@ public class BaseTCourse extends BaseModelOne<Integer>{
     public BaseTCourse() {
     }
 
-    public BaseTCourse(Integer id, String title, Integer dictid, Integer userid, Boolean iscoupon, Integer upper, String coverurl, Date month, Integer companyid, Integer storesid, Boolean status, Date createtime, Date updatetime, String coursebody) {
+    public BaseTCourse(Integer id, String title, Integer dictid, Integer userid, Boolean iscoupon, Integer upper, String coverurl, String month, Integer companyid, Integer storesid, Boolean status, Date createtime, Date updatetime, String coursebody) {
         this.id = id;
         this.title = title;
         this.dictid = dictid;
@@ -101,12 +101,12 @@ public class BaseTCourse extends BaseModelOne<Integer>{
         this.coverurl = coverurl == null ? null : coverurl.trim();
     }
 
-    public Date getMonth() {
+    public String getMonth() {
         return month;
     }
 
-    public void setMonth(Date month) {
-        this.month = month;
+    public void setMonth(String month) {
+        this.month = month == null ? null : month.trim();
     }
 
     public Integer getCompanyid() {

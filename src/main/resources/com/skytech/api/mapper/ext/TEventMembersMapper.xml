@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.skytech.api.mapper.TEventMembersMapper">
+    <select id="selectByEventId" parameterType="java.lang.Integer" resultType="map" >
+
+        SELECT
+	em.account_name AS accountName,
+	a.sid AS accountSid,
+	a.avarta AS avarta,
+	sum(s.step_num) AS stepNum
+FROM
+	t_event_members em
+LEFT JOIN account a ON em.account_sid = a.sid
+LEFT JOIN steps s ON a.sid = s.account_sid
+WHERE
+	em.event_id = #{param1}
+AND s.device_sid IS NOT NULL
+GROUP BY
+	a.sid
+ORDER BY
+	stepNum DESC
+    </select>
+
+    <select id="selectJoinedNumByEventId" parameterType="java.lang.Integer" resultType="map" >
+
+        SELECT
+	em.account_name AS accountName,
+	a.sid AS accountSid,
+	a.avarta AS avarta,
+	sum(s.step_num) AS stepNum
+FROM
+	event_members em
+LEFT JOIN account a ON em.account_sid = a.sid
+LEFT JOIN steps s ON a.sid = s.account_sid
+WHERE
+	em.event_sid = #{param1}
+GROUP BY
+	a.sid
+ORDER BY
+	stepNum DESC
+        </select>
+</mapper>

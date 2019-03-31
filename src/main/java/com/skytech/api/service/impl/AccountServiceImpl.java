@@ -106,6 +106,7 @@ public class AccountServiceImpl extends GenericServiceImpl<Account, AccountExamp
 
                 macAddress.add(device.getBatch());
                 devices.add(deviceSid);
+                devices.add(device.getModel());
             }
             data.put("macAddress", macAddress);
             data.put("devices", devices);
