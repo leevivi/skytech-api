@@ -7,7 +7,6 @@ import java.util.Date;
 import java.util.List;
 
 public class BaseTEventMembersExample extends BaseModelExample{
-
     protected List<Criteria> oredCriteria;
 
     public BaseTEventMembersExample() {
@@ -479,143 +478,123 @@ public class BaseTEventMembersExample extends BaseModelExample{
             return (Criteria) this;
         }
 
-        public Criteria andBak1IsNull() {
-            addCriterion("bak1 is null");
+        public Criteria andCreatedTimeIsNull() {
+            addCriterion("created_time is null");
             return (Criteria) this;
         }
 
-        public Criteria andBak1IsNotNull() {
-            addCriterion("bak1 is not null");
+        public Criteria andCreatedTimeIsNotNull() {
+            addCriterion("created_time is not null");
             return (Criteria) this;
         }
 
-        public Criteria andBak1EqualTo(String value) {
-            addCriterion("bak1 =", value, "bak1");
+        public Criteria andCreatedTimeEqualTo(Date value) {
+            addCriterion("created_time =", value, "createdTime");
             return (Criteria) this;
         }
 
-        public Criteria andBak1NotEqualTo(String value) {
-            addCriterion("bak1 <>", value, "bak1");
+        public Criteria andCreatedTimeNotEqualTo(Date value) {
+            addCriterion("created_time <>", value, "createdTime");
             return (Criteria) this;
         }
 
-        public Criteria andBak1GreaterThan(String value) {
-            addCriterion("bak1 >", value, "bak1");
+        public Criteria andCreatedTimeGreaterThan(Date value) {
+            addCriterion("created_time >", value, "createdTime");
             return (Criteria) this;
         }
 
-        public Criteria andBak1GreaterThanOrEqualTo(String value) {
-            addCriterion("bak1 >=", value, "bak1");
+        public Criteria andCreatedTimeGreaterThanOrEqualTo(Date value) {
+            addCriterion("created_time >=", value, "createdTime");
             return (Criteria) this;
         }
 
-        public Criteria andBak1LessThan(String value) {
-            addCriterion("bak1 <", value, "bak1");
+        public Criteria andCreatedTimeLessThan(Date value) {
+            addCriterion("created_time <", value, "createdTime");
             return (Criteria) this;
         }
 
-        public Criteria andBak1LessThanOrEqualTo(String value) {
-            addCriterion("bak1 <=", value, "bak1");
+        public Criteria andCreatedTimeLessThanOrEqualTo(Date value) {
+            addCriterion("created_time <=", value, "createdTime");
             return (Criteria) this;
         }
 
-        public Criteria andBak1Like(String value) {
-            addCriterion("bak1 like", value, "bak1");
+        public Criteria andCreatedTimeIn(List<Date> values) {
+            addCriterion("created_time in", values, "createdTime");
             return (Criteria) this;
         }
 
-        public Criteria andBak1NotLike(String value) {
-            addCriterion("bak1 not like", value, "bak1");
+        public Criteria andCreatedTimeNotIn(List<Date> values) {
+            addCriterion("created_time not in", values, "createdTime");
             return (Criteria) this;
         }
 
-        public Criteria andBak1In(List<String> values) {
-            addCriterion("bak1 in", values, "bak1");
+        public Criteria andCreatedTimeBetween(Date value1, Date value2) {
+            addCriterion("created_time between", value1, value2, "createdTime");
             return (Criteria) this;
         }
 
-        public Criteria andBak1NotIn(List<String> values) {
-            addCriterion("bak1 not in", values, "bak1");
+        public Criteria andCreatedTimeNotBetween(Date value1, Date value2) {
+            addCriterion("created_time not between", value1, value2, "createdTime");
             return (Criteria) this;
         }
 
-        public Criteria andBak1Between(String value1, String value2) {
-            addCriterion("bak1 between", value1, value2, "bak1");
+        public Criteria andUpdatedTimeIsNull() {
+            addCriterion("updated_time is null");
             return (Criteria) this;
         }
 
-        public Criteria andBak1NotBetween(String value1, String value2) {
-            addCriterion("bak1 not between", value1, value2, "bak1");
+        public Criteria andUpdatedTimeIsNotNull() {
+            addCriterion("updated_time is not null");
             return (Criteria) this;
         }
 
-        public Criteria andBak2IsNull() {
-            addCriterion("bak2 is null");
+        public Criteria andUpdatedTimeEqualTo(Date value) {
+            addCriterion("updated_time =", value, "updatedTime");
             return (Criteria) this;
         }
 
-        public Criteria andBak2IsNotNull() {
-            addCriterion("bak2 is not null");
+        public Criteria andUpdatedTimeNotEqualTo(Date value) {
+            addCriterion("updated_time <>", value, "updatedTime");
             return (Criteria) this;
         }
 
-        public Criteria andBak2EqualTo(String value) {
-            addCriterion("bak2 =", value, "bak2");
+        public Criteria andUpdatedTimeGreaterThan(Date value) {
+            addCriterion("updated_time >", value, "updatedTime");
             return (Criteria) this;
         }
 
-        public Criteria andBak2NotEqualTo(String value) {
-            addCriterion("bak2 <>", value, "bak2");
+        public Criteria andUpdatedTimeGreaterThanOrEqualTo(Date value) {
+            addCriterion("updated_time >=", value, "updatedTime");
             return (Criteria) this;
         }
 
-        public Criteria andBak2GreaterThan(String value) {
-            addCriterion("bak2 >", value, "bak2");
+        public Criteria andUpdatedTimeLessThan(Date value) {
+            addCriterion("updated_time <", value, "updatedTime");
             return (Criteria) this;
         }
 
-        public Criteria andBak2GreaterThanOrEqualTo(String value) {
-            addCriterion("bak2 >=", value, "bak2");
+        public Criteria andUpdatedTimeLessThanOrEqualTo(Date value) {
+            addCriterion("updated_time <=", value, "updatedTime");
             return (Criteria) this;
         }
 
-        public Criteria andBak2LessThan(String value) {
-            addCriterion("bak2 <", value, "bak2");
+        public Criteria andUpdatedTimeIn(List<Date> values) {
+            addCriterion("updated_time in", values, "updatedTime");
             return (Criteria) this;
         }
 
-        public Criteria andBak2LessThanOrEqualTo(String value) {
-            addCriterion("bak2 <=", value, "bak2");
+        public Criteria andUpdatedTimeNotIn(List<Date> values) {
+            addCriterion("updated_time not in", values, "updatedTime");
             return (Criteria) this;
         }
 
-        public Criteria andBak2Like(String value) {
-            addCriterion("bak2 like", value, "bak2");
+        public Criteria andUpdatedTimeBetween(Date value1, Date value2) {
+            addCriterion("updated_time between", value1, value2, "updatedTime");
             return (Criteria) this;
         }
 
-        public Criteria andBak2NotLike(String value) {
-            addCriterion("bak2 not like", value, "bak2");
-            return (Criteria) this;
-        }
-
-        public Criteria andBak2In(List<String> values) {
-            addCriterion("bak2 in", values, "bak2");
-            return (Criteria) this;
-        }
-
-        public Criteria andBak2NotIn(List<String> values) {
-            addCriterion("bak2 not in", values, "bak2");
-            return (Criteria) this;
-        }
-
-        public Criteria andBak2Between(String value1, String value2) {
-            addCriterion("bak2 between", value1, value2, "bak2");
-            return (Criteria) this;
-        }
-
-        public Criteria andBak2NotBetween(String value1, String value2) {
-            addCriterion("bak2 not between", value1, value2, "bak2");
+        public Criteria andUpdatedTimeNotBetween(Date value1, Date value2) {
+            addCriterion("updated_time not between", value1, value2, "updatedTime");
             return (Criteria) this;
         }
 

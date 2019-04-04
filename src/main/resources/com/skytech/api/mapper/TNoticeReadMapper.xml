@@ -80,6 +80,9 @@
     <if test="orderByClause != null">
       order by ${orderByClause}
     </if>
+    <if test="pagination != null and pagination.begin >= 0" >
+      limit #{pagination.begin}, #{pagination.pageSize}
+    </if>
   </select>
   <select id="selectByPrimaryKey" parameterType="com.skytech.api.model.TNoticeReadKey" resultMap="BaseResultMap">
     select 

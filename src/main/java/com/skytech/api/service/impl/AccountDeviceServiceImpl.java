@@ -121,7 +121,7 @@ public class AccountDeviceServiceImpl extends GenericServiceImpl<AccountDevice, 
 
             Account account = accountMapper.selectByPrimaryKey(accountSid);
             //查询账号是否绑定设备
-            if (StringUtils.endsWithIgnoreCase(account.getEmail(), "skytech.com.hk")) {
+//            if (StringUtils.endsWithIgnoreCase(account.getEmail(), "skytech.com.hk")) {
                 AccountDeviceExample accountDeviceExample = new AccountDeviceExample();
                 accountDeviceExample.createCriteria().andAccountSidEqualTo(accountSid);
                 List<AccountDevice> accountDevices = this.selectByExample(accountDeviceExample);
@@ -137,15 +137,15 @@ public class AccountDeviceServiceImpl extends GenericServiceImpl<AccountDevice, 
                         //如果账号连接新设备是否需要重新绑定新设备（是否允许一对多）
                     }
                 }
-            }
+//            }
 
             //查询设备是否被绑定
-            AccountDeviceExample accountDeviceExample = new AccountDeviceExample();
-            accountDeviceExample.createCriteria().andDeviceSidEqualTo(devices.get(0).getSid());
-            List<AccountDevice> accountDevices = this.selectByExample(accountDeviceExample);
+            AccountDeviceExample accountDeviceExample1 = new AccountDeviceExample();
+            accountDeviceExample1.createCriteria().andDeviceSidEqualTo(devices.get(0).getSid());
+            List<AccountDevice> accountDevices1 = this.selectByExample(accountDeviceExample1);
 
             int j = 0;
-            if (accountDevices.isEmpty()) { //设备未被绑定
+            if (accountDevices1.isEmpty()) { //设备未被绑定
                 AccountDevice accountDevice = new AccountDevice();
                 accountDevice.setSid(UUIDUtil.getUUID());
                 accountDevice.setAccountSid(accountSid);

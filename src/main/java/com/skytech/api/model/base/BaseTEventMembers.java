@@ -16,10 +16,10 @@ public class BaseTEventMembers extends BaseModelOne<Integer>{
     private String accountName;
     @JSONField(format="yyyy-MM-dd HH:mm:ss")
     private Date joinedTime;
-
-    private String bak1;
-
-    private String bak2;
+    @JSONField(format="yyyy-MM-dd HH:mm:ss")
+    private Date createdTime;
+    @JSONField(format="yyyy-MM-dd HH:mm:ss")
+    private Date updatedTime;
 
     private String bak3;
 
@@ -30,15 +30,15 @@ public class BaseTEventMembers extends BaseModelOne<Integer>{
     public BaseTEventMembers() {
     }
 
-    public BaseTEventMembers(Integer id, Integer eventId, String eventName, String accountSid, String accountName, Date joinedTime, String bak1, String bak2, String bak3, String bak4, String bak5) {
+    public BaseTEventMembers(Integer id, Integer eventId, String eventName, String accountSid, String accountName, Date joinedTime, Date createdTime, Date updatedTime, String bak3, String bak4, String bak5) {
         this.id = id;
         this.eventId = eventId;
         this.eventName = eventName;
         this.accountSid = accountSid;
         this.accountName = accountName;
         this.joinedTime = joinedTime;
-        this.bak1 = bak1;
-        this.bak2 = bak2;
+        this.createdTime = createdTime;
+        this.updatedTime = updatedTime;
         this.bak3 = bak3;
         this.bak4 = bak4;
         this.bak5 = bak5;
@@ -84,20 +84,20 @@ public class BaseTEventMembers extends BaseModelOne<Integer>{
         this.joinedTime = joinedTime;
     }
 
-    public String getBak1() {
-        return bak1;
+    public Date getCreatedTime() {
+        return createdTime;
     }
 
-    public void setBak1(String bak1) {
-        this.bak1 = bak1 == null ? null : bak1.trim();
+    public void setCreatedTime(Date createdTime) {
+        this.createdTime = createdTime;
     }
 
-    public String getBak2() {
-        return bak2;
+    public Date getUpdatedTime() {
+        return updatedTime;
     }
 
-    public void setBak2(String bak2) {
-        this.bak2 = bak2 == null ? null : bak2.trim();
+    public void setUpdatedTime(Date updatedTime) {
+        this.updatedTime = updatedTime;
     }
 
     public String getBak3() {

@@ -9,10 +9,11 @@
     <result column="end_date" jdbcType="DATE" property="endDate" />
     <result column="event_pic" jdbcType="VARCHAR" property="eventPic" />
     <result column="detail_url" jdbcType="VARCHAR" property="detailUrl" />
-    <result column="color" jdbcType="VARCHAR" property="color" />
+    <result column="stores_id" jdbcType="INTEGER" property="storesId" />
+    <result column="comany_id" jdbcType="INTEGER" property="comanyId" />
+    <result column="event_upper" jdbcType="INTEGER" property="eventUpper" />
     <result column="created_time" jdbcType="TIMESTAMP" property="createdTime" />
     <result column="updated_time" jdbcType="TIMESTAMP" property="updatedTime" />
-    <result column="event_upper" jdbcType="VARCHAR" property="eventUpper" />
     <result column="bak1" jdbcType="VARCHAR" property="bak1" />
     <result column="bak2" jdbcType="VARCHAR" property="bak2" />
     <result column="bak3" jdbcType="VARCHAR" property="bak3" />
@@ -78,8 +79,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, event_name, event_info, start_date, end_date, event_pic, detail_url, color, created_time, 
-    updated_time, event_upper, bak1, bak2, bak3, bak4, bak5
+    id, event_name, event_info, start_date, end_date, event_pic, detail_url, stores_id, 
+    comany_id, event_upper, created_time, updated_time, bak1, bak2, bak3, bak4, bak5
   </sql>
   <select id="selectByExample" parameterType="com.skytech.api.model.TEventExample" resultMap="BaseResultMap">
     select
@@ -93,6 +94,9 @@
     </if>
     <if test="orderByClause != null">
       order by ${orderByClause}
+    </if>
+    <if test="pagination != null and pagination.begin >= 0" >
+      limit #{pagination.begin}, #{pagination.pageSize}
     </if>
   </select>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
@@ -114,16 +118,16 @@
   <insert id="insert" parameterType="com.skytech.api.model.TEvent">
     insert into t_event (id, event_name, event_info, 
       start_date, end_date, event_pic, 
-      detail_url, color, created_time, 
-      updated_time, event_upper, bak1, 
-      bak2, bak3, bak4, bak5
-      )
+      detail_url, stores_id, comany_id, 
+      event_upper, created_time, updated_time, 
+      bak1, bak2, bak3, bak4, 
+      bak5)
     values (#{id,jdbcType=INTEGER}, #{eventName,jdbcType=VARCHAR}, #{eventInfo,jdbcType=VARCHAR}, 
       #{startDate,jdbcType=DATE}, #{endDate,jdbcType=DATE}, #{eventPic,jdbcType=VARCHAR}, 
-      #{detailUrl,jdbcType=VARCHAR}, #{color,jdbcType=VARCHAR}, #{createdTime,jdbcType=TIMESTAMP}, 
-      #{updatedTime,jdbcType=TIMESTAMP}, #{eventUpper,jdbcType=VARCHAR}, #{bak1,jdbcType=VARCHAR}, 
-      #{bak2,jdbcType=VARCHAR}, #{bak3,jdbcType=VARCHAR}, #{bak4,jdbcType=VARCHAR}, #{bak5,jdbcType=VARCHAR}
-      )
+      #{detailUrl,jdbcType=VARCHAR}, #{storesId,jdbcType=INTEGER}, #{comanyId,jdbcType=INTEGER}, 
+      #{eventUpper,jdbcType=INTEGER}, #{createdTime,jdbcType=TIMESTAMP}, #{updatedTime,jdbcType=TIMESTAMP}, 
+      #{bak1,jdbcType=VARCHAR}, #{bak2,jdbcType=VARCHAR}, #{bak3,jdbcType=VARCHAR}, #{bak4,jdbcType=VARCHAR}, 
+      #{bak5,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.skytech.api.model.TEvent">
     insert into t_event
@@ -149,17 +153,20 @@
       <if test="detailUrl != null">
         detail_url,
       </if>
-      <if test="color != null">
-        color,
+      <if test="storesId != null">
+        stores_id,
+      </if>
+      <if test="comanyId != null">
+        comany_id,
+      </if>
+      <if test="eventUpper != null">
+        event_upper,
       </if>
       <if test="createdTime != null">
         created_time,
       </if>
       <if test="updatedTime != null">
         updated_time,
-      </if>
-      <if test="eventUpper != null">
-        event_upper,
       </if>
       <if test="bak1 != null">
         bak1,
@@ -199,17 +206,20 @@
       <if test="detailUrl != null">
         #{detailUrl,jdbcType=VARCHAR},
       </if>
-      <if test="color != null">
-        #{color,jdbcType=VARCHAR},
+      <if test="storesId != null">
+        #{storesId,jdbcType=INTEGER},
+      </if>
+      <if test="comanyId != null">
+        #{comanyId,jdbcType=INTEGER},
+      </if>
+      <if test="eventUpper != null">
+        #{eventUpper,jdbcType=INTEGER},
       </if>
       <if test="createdTime != null">
         #{createdTime,jdbcType=TIMESTAMP},
       </if>
       <if test="updatedTime != null">
         #{updatedTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="eventUpper != null">
-        #{eventUpper,jdbcType=VARCHAR},
       </if>
       <if test="bak1 != null">
         #{bak1,jdbcType=VARCHAR},
@@ -258,17 +268,20 @@
       <if test="record.detailUrl != null">
         detail_url = #{record.detailUrl,jdbcType=VARCHAR},
       </if>
-      <if test="record.color != null">
-        color = #{record.color,jdbcType=VARCHAR},
+      <if test="record.storesId != null">
+        stores_id = #{record.storesId,jdbcType=INTEGER},
+      </if>
+      <if test="record.comanyId != null">
+        comany_id = #{record.comanyId,jdbcType=INTEGER},
+      </if>
+      <if test="record.eventUpper != null">
+        event_upper = #{record.eventUpper,jdbcType=INTEGER},
       </if>
       <if test="record.createdTime != null">
         created_time = #{record.createdTime,jdbcType=TIMESTAMP},
       </if>
       <if test="record.updatedTime != null">
         updated_time = #{record.updatedTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="record.eventUpper != null">
-        event_upper = #{record.eventUpper,jdbcType=VARCHAR},
       </if>
       <if test="record.bak1 != null">
         bak1 = #{record.bak1,jdbcType=VARCHAR},
@@ -299,10 +312,11 @@
       end_date = #{record.endDate,jdbcType=DATE},
       event_pic = #{record.eventPic,jdbcType=VARCHAR},
       detail_url = #{record.detailUrl,jdbcType=VARCHAR},
-      color = #{record.color,jdbcType=VARCHAR},
+      stores_id = #{record.storesId,jdbcType=INTEGER},
+      comany_id = #{record.comanyId,jdbcType=INTEGER},
+      event_upper = #{record.eventUpper,jdbcType=INTEGER},
       created_time = #{record.createdTime,jdbcType=TIMESTAMP},
       updated_time = #{record.updatedTime,jdbcType=TIMESTAMP},
-      event_upper = #{record.eventUpper,jdbcType=VARCHAR},
       bak1 = #{record.bak1,jdbcType=VARCHAR},
       bak2 = #{record.bak2,jdbcType=VARCHAR},
       bak3 = #{record.bak3,jdbcType=VARCHAR},
@@ -333,17 +347,20 @@
       <if test="detailUrl != null">
         detail_url = #{detailUrl,jdbcType=VARCHAR},
       </if>
-      <if test="color != null">
-        color = #{color,jdbcType=VARCHAR},
+      <if test="storesId != null">
+        stores_id = #{storesId,jdbcType=INTEGER},
+      </if>
+      <if test="comanyId != null">
+        comany_id = #{comanyId,jdbcType=INTEGER},
+      </if>
+      <if test="eventUpper != null">
+        event_upper = #{eventUpper,jdbcType=INTEGER},
       </if>
       <if test="createdTime != null">
         created_time = #{createdTime,jdbcType=TIMESTAMP},
       </if>
       <if test="updatedTime != null">
         updated_time = #{updatedTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="eventUpper != null">
-        event_upper = #{eventUpper,jdbcType=VARCHAR},
       </if>
       <if test="bak1 != null">
         bak1 = #{bak1,jdbcType=VARCHAR},
@@ -371,10 +388,11 @@
       end_date = #{endDate,jdbcType=DATE},
       event_pic = #{eventPic,jdbcType=VARCHAR},
       detail_url = #{detailUrl,jdbcType=VARCHAR},
-      color = #{color,jdbcType=VARCHAR},
+      stores_id = #{storesId,jdbcType=INTEGER},
+      comany_id = #{comanyId,jdbcType=INTEGER},
+      event_upper = #{eventUpper,jdbcType=INTEGER},
       created_time = #{createdTime,jdbcType=TIMESTAMP},
       updated_time = #{updatedTime,jdbcType=TIMESTAMP},
-      event_upper = #{eventUpper,jdbcType=VARCHAR},
       bak1 = #{bak1,jdbcType=VARCHAR},
       bak2 = #{bak2,jdbcType=VARCHAR},
       bak3 = #{bak3,jdbcType=VARCHAR},

@@ -19,13 +19,15 @@ public class BaseTEvent extends BaseModelOne<Integer>{
 
     private String detailUrl;
 
-    private String color;
+    private Integer storesId;
+
+    private Integer comanyId;
+
+    private Integer eventUpper;
     @JSONField(format="yyyy-MM-dd HH:mm:ss")
     private Date createdTime;
     @JSONField(format="yyyy-MM-dd HH:mm:ss")
     private Date updatedTime;
-
-    private String eventUpper;
 
     private String bak1;
 
@@ -40,7 +42,7 @@ public class BaseTEvent extends BaseModelOne<Integer>{
     public BaseTEvent() {
     }
 
-    public BaseTEvent(Integer id, String eventName, String eventInfo, Date startDate, Date endDate, String eventPic, String detailUrl, String color, Date createdTime, Date updatedTime, String eventUpper, String bak1, String bak2, String bak3, String bak4, String bak5) {
+    public BaseTEvent(Integer id, String eventName, String eventInfo, Date startDate, Date endDate, String eventPic, String detailUrl, Integer storesId, Integer comanyId, Integer eventUpper, Date createdTime, Date updatedTime, String bak1, String bak2, String bak3, String bak4, String bak5) {
         this.id = id;
         this.eventName = eventName;
         this.eventInfo = eventInfo;
@@ -48,10 +50,11 @@ public class BaseTEvent extends BaseModelOne<Integer>{
         this.endDate = endDate;
         this.eventPic = eventPic;
         this.detailUrl = detailUrl;
-        this.color = color;
+        this.storesId = storesId;
+        this.comanyId = comanyId;
+        this.eventUpper = eventUpper;
         this.createdTime = createdTime;
         this.updatedTime = updatedTime;
-        this.eventUpper = eventUpper;
         this.bak1 = bak1;
         this.bak2 = bak2;
         this.bak3 = bak3;
@@ -107,12 +110,28 @@ public class BaseTEvent extends BaseModelOne<Integer>{
         this.detailUrl = detailUrl == null ? null : detailUrl.trim();
     }
 
-    public String getColor() {
-        return color;
+    public Integer getStoresId() {
+        return storesId;
     }
 
-    public void setColor(String color) {
-        this.color = color == null ? null : color.trim();
+    public void setStoresId(Integer storesId) {
+        this.storesId = storesId;
+    }
+
+    public Integer getComanyId() {
+        return comanyId;
+    }
+
+    public void setComanyId(Integer comanyId) {
+        this.comanyId = comanyId;
+    }
+
+    public Integer getEventUpper() {
+        return eventUpper;
+    }
+
+    public void setEventUpper(Integer eventUpper) {
+        this.eventUpper = eventUpper;
     }
 
     public Date getCreatedTime() {
@@ -129,14 +148,6 @@ public class BaseTEvent extends BaseModelOne<Integer>{
 
     public void setUpdatedTime(Date updatedTime) {
         this.updatedTime = updatedTime;
-    }
-
-    public String getEventUpper() {
-        return eventUpper;
-    }
-
-    public void setEventUpper(String eventUpper) {
-        this.eventUpper = eventUpper == null ? null : eventUpper.trim();
     }
 
     public String getBak1() {

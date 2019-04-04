@@ -16,6 +16,8 @@ public interface TEventMembersService extends GenericOneService<TEventMembers,In
 
     List<Map<String, Object>> findForEvent(int eventSid);
 
+    Integer countNum(int eventSid);
+
     Map<String, Object> findForEventDetail(String accountSid, int tEventId);
 
     JsonMap save(TEventMembers tEventMembers);

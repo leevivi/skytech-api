@@ -15,6 +15,7 @@ import com.skytech.api.model.TEventMembersExample;
 import com.skytech.api.model.base.BaseTEventMembersExample;
 import com.skytech.api.service.TEventMembersService;
 import com.skytech.api.service.TEventService;
+import io.swagger.models.auth.In;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -51,7 +52,15 @@ public class TEventMembersServiceImpl extends GenericOneServiceImpl<TEventMember
     @Override
     public List<Map<String, Object>> findForEvent(int eventId) {
 
-        List<Map<String, Object>> tEventMembers = tEventMembersMapper.selectJoinedNumByEventSid(eventId);
+       /* List<Map<String, Object>> tEventMembers = tEventMembersMapper.selectJoinedNumByEventSid(eventId);
+
+        return tEventMembers;*/
+       return null;
+    }
+
+    @Override
+    public Integer countNum(int eventId) {
+        Integer tEventMembers = tEventMembersMapper.selectJoinedNumByEventId(eventId);
 
         return tEventMembers;
     }
@@ -193,11 +202,11 @@ public class TEventMembersServiceImpl extends GenericOneServiceImpl<TEventMember
         }
 
         TEvent event = tEventMapper.selectByPrimaryKey(tEventId);
-         List<Map<String, Object>> tEventMembers = tEventMembersMapper.selectJoinedNumByEventSid(tEventId);
+         Integer tEventMembers = tEventMembersMapper.selectJoinedNumByEventId(tEventId);
        //TODO 活动成员表的活动人数上限改为int型，更新相关映射文件
-        /*if(tEventMembers.size()>=event.getEventUpper()){
+        if(tEventMembers >= event.getEventUpper()){
             return JsonMap.of(false, "活动人数已达上限");
-        }*/
+        }
         TEventMembers one = new TEventMembers();
         one.setAccountSid(accountSid);
         one.setAccountName(accountName);

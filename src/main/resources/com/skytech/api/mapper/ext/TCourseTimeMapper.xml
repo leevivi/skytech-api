@@ -1,4 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.skytech.api.mapper.TCourseTimeMapper">
+    <select id="selectCourseWeek" parameterType="java.lang.Integer" resultType="java.util.List" >
+
+        SELECT DISTINCT weekId FROM t_course_time WHERE courseId =#{param1}
+    </select>
 </mapper>

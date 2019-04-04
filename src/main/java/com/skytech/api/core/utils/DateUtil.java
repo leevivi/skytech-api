@@ -66,6 +66,16 @@ public final class DateUtil {
      * @return
      * @throws ParseException
      */
+    public static String formatmiddledatestr(Date date) {
+        return DateFormatUtils.format(date, MIDDLE_DATE_FORMAT_STR);
+    }
+    /**
+     * 日期时间格式(yyyyMMddHHmmssSSS)
+     *
+     * @param date
+     * @return
+     * @throws ParseException
+     */
     public static String formatPureLongDatetime(Date date) {
         return DateFormatUtils.format(date, PURE_LONG_DATE_TIME_FORMAT_STR);
     }

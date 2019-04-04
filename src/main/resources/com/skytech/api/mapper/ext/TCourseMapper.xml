@@ -1,4 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.skytech.api.mapper.TCourseMapper">
+    <select id="selectJoinedNumByEventSid" parameterType="java.lang.Integer" resultType="map" >
+
+        select em.account_name as accountName,a.sid as accountSid,a.avarta as avarta,sum(s.step_num) as stepNum from event_members em left join account a on em.account_sid= a.sid left join steps s on a.sid = s.account_sid where em.event_sid=#{param1} group by a.sid order by stepNum desc
+    </select>
+
+    <select id="selectCourseWeek" parameterType="map" resultType="java.util.List" >
+
+        SELECT DISTINCT
+	weekId
+FROM
+	t_course_time
+WHERE
+	courseId IN (
+		SELECT
+			id
+		FROM
+			t_course
+		WHERE
+			id = #{param1}
+		AND `month` = #{param2}
+	)
+</select>
 </mapper>

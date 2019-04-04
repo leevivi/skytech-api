@@ -2,9 +2,8 @@ package com.skytech.api.controller;
 
 import com.skytech.api.core.JsonMap;
 import com.skytech.api.core.Pagination;
-import com.skytech.api.mapper.TEventMapper;
-import com.skytech.api.model.Event;
-import com.skytech.api.model.TEvent;
+import com.skytech.api.mapper.*;
+import com.skytech.api.model.*;
 import com.skytech.api.service.EventMembersService;
 import com.skytech.api.service.EventService;
 import com.skytech.api.service.TEventMembersService;
@@ -36,9 +35,19 @@ public class TEventController {
     private TEventService tEventService;
     @Autowired
     private TEventMapper tEventMapper;
+    @Autowired
+    private OrgStoresMapper orgStoresMapper;
+    @Autowired
+    private OrgCompanyMapper orgCompanyMapper;
+    @Autowired
+    private TEventMembersMapper tEventMembersMapper;
 
     @Autowired
     private TEventMembersService tEventMembersService;
+    @Autowired
+    private AccountMapper accountMapper;
+    @Autowired
+    private TMemberMapper tMemberMapper;
 
     @ApiOperation(value = "列表")
     @ApiImplicitParams({
@@ -46,18 +55,37 @@ public class TEventController {
             @ApiImplicitParam(name = "limit", value = "每页数量", required = true, dataType = "Integer")
     })
     @GetMapping(value = "/tEvent/listForPage")
-    public Map<String, Object> listForPage(int page, int limit) {
+    public Map<String, Object> listForPage(HttpSession session,int page, int limit) {
+        Object accountSidObj = session.getAttribute("accountSid");
 
-        Pagination<TEvent> pagination = tEventService.findForPage(page, limit);
+        String accountSid = accountSidObj.toString();
+        Account account = accountMapper.selectByPrimaryKey(accountSid);
+        TMemberExample tMemberExample = new TMemberExample();
+        tMemberExample.createCriteria().andAppuserEqualTo(account.getEmail());
+        List<TMember> tMembers = tMemberMapper.selectByExample(tMemberExample);
+        int companyId = tMembers.get(0).getCompanyid();
+        int storesId = tMembers.get(0).getStoresid();
+        Boolean isJoined = false;
+
+        Pagination<TEvent> pagination = tEventService.findForPage(companyId,storesId,page, limit);
 
         Map<String, Object> data = new HashMap<>();
-        data.put("code", 0);
-        data.put("msg", "成功");
+        data.put("code", 2000);
+        data.put("message", "成功");
         data.put("count", pagination.getTotalRowNumber());
         List<TEvent> dataList = pagination.getDataList();
         for (TEvent tEvent : dataList) {
-            List<Map<String, Object>> members = tEventMembersService.findForEvent(tEvent.getId());
-            tEvent.setMemberNums(members.size());
+            Integer members = tEventMembersService.countNum(tEvent.getId());
+            tEvent.setMemberNums(members);
+            TEventMembersExample tEventMembersExample = new TEventMembersExample();
+            tEventMembersExample.createCriteria().andAccountSidEqualTo(accountSid).andEventIdEqualTo(tEvent.getId());
+            List<TEventMembers> tEventMembers = tEventMembersMapper.selectByExample(tEventMembersExample);
+            if(!tEventMembers.isEmpty()){
+                isJoined = true;
+            }
+            tEvent.setJoined(isJoined);
+            tEvent.setComanyName("");
+            tEvent.setStoresName("");
         }
         data.put("data", dataList);
 
@@ -68,10 +96,26 @@ public class TEventController {
     @ApiImplicitParams({
             @ApiImplicitParam(name = "eventId", value = "eventId", required = true, dataType = "int")
     })
-    @GetMapping(value = "/tEvent/listBySid")
-    public JsonMap listBySid(int eventId) {
+    @GetMapping(value = "/tEvent/listById")
+    public JsonMap listById(HttpSession session,int eventId) {
+        Object accountSidObj = session.getAttribute("accountSid");
 
+        String accountSid = accountSidObj.toString();
+        Boolean isJoined = false;
+        TEventMembersExample tEventMembersExample = new TEventMembersExample();
+        tEventMembersExample.createCriteria().andAccountSidEqualTo(accountSid).andEventIdEqualTo(eventId);
+        List<TEventMembers> tEventMembers = tEventMembersMapper.selectByExample(tEventMembersExample);
+        if(!tEventMembers.isEmpty()){
+            isJoined = true;
+        }
         TEvent tEvent = tEventMapper.selectByPrimaryKey(eventId);
+        OrgStores orgStores = orgStoresMapper.selectByPrimaryKey(tEvent.getStoresId());
+        OrgCompany orgCompany = orgCompanyMapper.selectByPrimaryKey(tEvent.getComanyId());
+        tEvent.setStoresName(orgStores.getStoresname());
+        tEvent.setComanyName(orgCompany.getCompanyname());
+        Integer members = tEventMembersService.countNum(tEvent.getId());
+        tEvent.setMemberNums(members);
+        tEvent.setJoined(isJoined);
         return JsonMap.of(true, "", tEvent);
     }
 

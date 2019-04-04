@@ -99,17 +99,19 @@ public class AccountServiceImpl extends GenericServiceImpl<Account, AccountExamp
             accountDeviceExample.createCriteria().andAccountSidEqualTo(accounts.get(0).getSid()).andDelFlagEqualTo((byte) 0);
             List<AccountDevice> accountDevices = accountDeviceMapper.selectByExample(accountDeviceExample);
             List<String> macAddress = new ArrayList<>();
-            List<String> devices = new ArrayList<>();
+            List<Object> devicess = new ArrayList<>();
+            Map<String, Object> devices = new HashMap<>();
             for (AccountDevice accountDevice : accountDevices) {
                 String deviceSid = accountDevice.getDeviceSid();
                 Device device = deviceMapper.selectByPrimaryKey(deviceSid);
 
                 macAddress.add(device.getBatch());
-                devices.add(deviceSid);
-                devices.add(device.getModel());
+                devices.put("deviceSid",deviceSid);
+                devices.put("deviceModel",device.getModel());
+                devicess.add(devices);
             }
             data.put("macAddress", macAddress);
-            data.put("devices", devices);
+            data.put("devices", devicess);
 
             RunningRecordExample runningRecordExample = new RunningRecordExample();
             runningRecordExample.createCriteria().andAccountSidEqualTo(accounts.get(0).getSid());

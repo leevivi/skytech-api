@@ -576,73 +576,183 @@ public class BaseTEventExample extends BaseModelExample{
             return (Criteria) this;
         }
 
-        public Criteria andColorIsNull() {
-            addCriterion("color is null");
+        public Criteria andStoresIdIsNull() {
+            addCriterion("stores_id is null");
             return (Criteria) this;
         }
 
-        public Criteria andColorIsNotNull() {
-            addCriterion("color is not null");
+        public Criteria andStoresIdIsNotNull() {
+            addCriterion("stores_id is not null");
             return (Criteria) this;
         }
 
-        public Criteria andColorEqualTo(String value) {
-            addCriterion("color =", value, "color");
+        public Criteria andStoresIdEqualTo(Integer value) {
+            addCriterion("stores_id =", value, "storesId");
             return (Criteria) this;
         }
 
-        public Criteria andColorNotEqualTo(String value) {
-            addCriterion("color <>", value, "color");
+        public Criteria andStoresIdNotEqualTo(Integer value) {
+            addCriterion("stores_id <>", value, "storesId");
             return (Criteria) this;
         }
 
-        public Criteria andColorGreaterThan(String value) {
-            addCriterion("color >", value, "color");
+        public Criteria andStoresIdGreaterThan(Integer value) {
+            addCriterion("stores_id >", value, "storesId");
             return (Criteria) this;
         }
 
-        public Criteria andColorGreaterThanOrEqualTo(String value) {
-            addCriterion("color >=", value, "color");
+        public Criteria andStoresIdGreaterThanOrEqualTo(Integer value) {
+            addCriterion("stores_id >=", value, "storesId");
             return (Criteria) this;
         }
 
-        public Criteria andColorLessThan(String value) {
-            addCriterion("color <", value, "color");
+        public Criteria andStoresIdLessThan(Integer value) {
+            addCriterion("stores_id <", value, "storesId");
             return (Criteria) this;
         }
 
-        public Criteria andColorLessThanOrEqualTo(String value) {
-            addCriterion("color <=", value, "color");
+        public Criteria andStoresIdLessThanOrEqualTo(Integer value) {
+            addCriterion("stores_id <=", value, "storesId");
             return (Criteria) this;
         }
 
-        public Criteria andColorLike(String value) {
-            addCriterion("color like", value, "color");
+        public Criteria andStoresIdIn(List<Integer> values) {
+            addCriterion("stores_id in", values, "storesId");
             return (Criteria) this;
         }
 
-        public Criteria andColorNotLike(String value) {
-            addCriterion("color not like", value, "color");
+        public Criteria andStoresIdNotIn(List<Integer> values) {
+            addCriterion("stores_id not in", values, "storesId");
             return (Criteria) this;
         }
 
-        public Criteria andColorIn(List<String> values) {
-            addCriterion("color in", values, "color");
+        public Criteria andStoresIdBetween(Integer value1, Integer value2) {
+            addCriterion("stores_id between", value1, value2, "storesId");
             return (Criteria) this;
         }
 
-        public Criteria andColorNotIn(List<String> values) {
-            addCriterion("color not in", values, "color");
+        public Criteria andStoresIdNotBetween(Integer value1, Integer value2) {
+            addCriterion("stores_id not between", value1, value2, "storesId");
             return (Criteria) this;
         }
 
-        public Criteria andColorBetween(String value1, String value2) {
-            addCriterion("color between", value1, value2, "color");
+        public Criteria andComanyIdIsNull() {
+            addCriterion("comany_id is null");
             return (Criteria) this;
         }
 
-        public Criteria andColorNotBetween(String value1, String value2) {
-            addCriterion("color not between", value1, value2, "color");
+        public Criteria andComanyIdIsNotNull() {
+            addCriterion("comany_id is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andComanyIdEqualTo(Integer value) {
+            addCriterion("comany_id =", value, "comanyId");
+            return (Criteria) this;
+        }
+
+        public Criteria andComanyIdNotEqualTo(Integer value) {
+            addCriterion("comany_id <>", value, "comanyId");
+            return (Criteria) this;
+        }
+
+        public Criteria andComanyIdGreaterThan(Integer value) {
+            addCriterion("comany_id >", value, "comanyId");
+            return (Criteria) this;
+        }
+
+        public Criteria andComanyIdGreaterThanOrEqualTo(Integer value) {
+            addCriterion("comany_id >=", value, "comanyId");
+            return (Criteria) this;
+        }
+
+        public Criteria andComanyIdLessThan(Integer value) {
+            addCriterion("comany_id <", value, "comanyId");
+            return (Criteria) this;
+        }
+
+        public Criteria andComanyIdLessThanOrEqualTo(Integer value) {
+            addCriterion("comany_id <=", value, "comanyId");
+            return (Criteria) this;
+        }
+
+        public Criteria andComanyIdIn(List<Integer> values) {
+            addCriterion("comany_id in", values, "comanyId");
+            return (Criteria) this;
+        }
+
+        public Criteria andComanyIdNotIn(List<Integer> values) {
+            addCriterion("comany_id not in", values, "comanyId");
+            return (Criteria) this;
+        }
+
+        public Criteria andComanyIdBetween(Integer value1, Integer value2) {
+            addCriterion("comany_id between", value1, value2, "comanyId");
+            return (Criteria) this;
+        }
+
+        public Criteria andComanyIdNotBetween(Integer value1, Integer value2) {
+            addCriterion("comany_id not between", value1, value2, "comanyId");
+            return (Criteria) this;
+        }
+
+        public Criteria andEventUpperIsNull() {
+            addCriterion("event_upper is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andEventUpperIsNotNull() {
+            addCriterion("event_upper is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andEventUpperEqualTo(Integer value) {
+            addCriterion("event_upper =", value, "eventUpper");
+            return (Criteria) this;
+        }
+
+        public Criteria andEventUpperNotEqualTo(Integer value) {
+            addCriterion("event_upper <>", value, "eventUpper");
+            return (Criteria) this;
+        }
+
+        public Criteria andEventUpperGreaterThan(Integer value) {
+            addCriterion("event_upper >", value, "eventUpper");
+            return (Criteria) this;
+        }
+
+        public Criteria andEventUpperGreaterThanOrEqualTo(Integer value) {
+            addCriterion("event_upper >=", value, "eventUpper");
+            return (Criteria) this;
+        }
+
+        public Criteria andEventUpperLessThan(Integer value) {
+            addCriterion("event_upper <", value, "eventUpper");
+            return (Criteria) this;
+        }
+
+        public Criteria andEventUpperLessThanOrEqualTo(Integer value) {
+            addCriterion("event_upper <=", value, "eventUpper");
+            return (Criteria) this;
+        }
+
+        public Criteria andEventUpperIn(List<Integer> values) {
+            addCriterion("event_upper in", values, "eventUpper");
+            return (Criteria) this;
+        }
+
+        public Criteria andEventUpperNotIn(List<Integer> values) {
+            addCriterion("event_upper not in", values, "eventUpper");
+            return (Criteria) this;
+        }
+
+        public Criteria andEventUpperBetween(Integer value1, Integer value2) {
+            addCriterion("event_upper between", value1, value2, "eventUpper");
+            return (Criteria) this;
+        }
+
+        public Criteria andEventUpperNotBetween(Integer value1, Integer value2) {
+            addCriterion("event_upper not between", value1, value2, "eventUpper");
             return (Criteria) this;
         }
 
@@ -763,76 +873,6 @@ public class BaseTEventExample extends BaseModelExample{
 
         public Criteria andUpdatedTimeNotBetween(Date value1, Date value2) {
             addCriterion("updated_time not between", value1, value2, "updatedTime");
-            return (Criteria) this;
-        }
-
-        public Criteria andEventUpperIsNull() {
-            addCriterion("event_upper is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andEventUpperIsNotNull() {
-            addCriterion("event_upper is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andEventUpperEqualTo(String value) {
-            addCriterion("event_upper =", value, "eventUpper");
-            return (Criteria) this;
-        }
-
-        public Criteria andEventUpperNotEqualTo(String value) {
-            addCriterion("event_upper <>", value, "eventUpper");
-            return (Criteria) this;
-        }
-
-        public Criteria andEventUpperGreaterThan(String value) {
-            addCriterion("event_upper >", value, "eventUpper");
-            return (Criteria) this;
-        }
-
-        public Criteria andEventUpperGreaterThanOrEqualTo(String value) {
-            addCriterion("event_upper >=", value, "eventUpper");
-            return (Criteria) this;
-        }
-
-        public Criteria andEventUpperLessThan(String value) {
-            addCriterion("event_upper <", value, "eventUpper");
-            return (Criteria) this;
-        }
-
-        public Criteria andEventUpperLessThanOrEqualTo(String value) {
-            addCriterion("event_upper <=", value, "eventUpper");
-            return (Criteria) this;
-        }
-
-        public Criteria andEventUpperLike(String value) {
-            addCriterion("event_upper like", value, "eventUpper");
-            return (Criteria) this;
-        }
-
-        public Criteria andEventUpperNotLike(String value) {
-            addCriterion("event_upper not like", value, "eventUpper");
-            return (Criteria) this;
-        }
-
-        public Criteria andEventUpperIn(List<String> values) {
-            addCriterion("event_upper in", values, "eventUpper");
-            return (Criteria) this;
-        }
-
-        public Criteria andEventUpperNotIn(List<String> values) {
-            addCriterion("event_upper not in", values, "eventUpper");
-            return (Criteria) this;
-        }
-
-        public Criteria andEventUpperBetween(String value1, String value2) {
-            addCriterion("event_upper between", value1, value2, "eventUpper");
-            return (Criteria) this;
-        }
-
-        public Criteria andEventUpperNotBetween(String value1, String value2) {
-            addCriterion("event_upper not between", value1, value2, "eventUpper");
             return (Criteria) this;
         }
 

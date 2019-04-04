@@ -49,8 +49,8 @@ public class EventController {
         Pagination<Event> pagination = eventService.findForPage(accountSid, page, limit);
 
         Map<String, Object> data = new HashMap<>();
-        data.put("code", 0);
-        data.put("msg", "成功");
+        data.put("code", 2000);
+        data.put("message", "成功");
         data.put("count", pagination.getTotalRowNumber());
         List<Event> dataList = pagination.getDataList();
         for (Event event : dataList) {

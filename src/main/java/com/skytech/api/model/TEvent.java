@@ -5,9 +5,13 @@ import com.skytech.api.model.base.BaseTEvent;
 import java.util.Date;
 
 public class TEvent extends BaseTEvent{
-    private int memberNums;
-
-    private int days;
+    int memberNums;
+    //公司名称
+    String comanyName;
+    //门店名称
+    String storesName;
+    //是否已经加入活动
+    Boolean joined;
 
     public int getMemberNums() {
         return memberNums;
@@ -17,11 +21,27 @@ public class TEvent extends BaseTEvent{
         this.memberNums = memberNums;
     }
 
-    public int getDays() {
-        return days;
+    public String getComanyName() {
+        return comanyName;
     }
 
-    public void setDays(int days) {
-        this.days = days;
+    public void setComanyName(String comanyName) {
+        this.comanyName = comanyName;
+    }
+
+    public String getStoresName() {
+        return storesName;
+    }
+
+    public void setStoresName(String storesName) {
+        this.storesName = storesName;
+    }
+
+    public Boolean getJoined() {
+        return joined;
+    }
+
+    public void setJoined(Boolean joined) {
+        this.joined = joined;
     }
 }
