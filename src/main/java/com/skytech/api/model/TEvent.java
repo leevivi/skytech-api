@@ -12,6 +12,17 @@ public class TEvent extends BaseTEvent{
     String storesName;
     //是否已经加入活动
     Boolean joined;
+    //活动状态
+    String Status;
+
+
+    public String getStatus() {
+        return Status;
+    }
+
+    public void setStatus(String status) {
+        Status = status;
+    }
 
     public int getMemberNums() {
         return memberNums;

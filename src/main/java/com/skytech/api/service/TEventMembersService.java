@@ -22,7 +22,7 @@ public interface TEventMembersService extends GenericOneService<TEventMembers,In
 
     JsonMap save(TEventMembers tEventMembers);
 
-    JsonMap save(String accountSid, int tEventId, String accountName);
+    JsonMap join(String accountSid, int tEventId, int memberId);
 
     JsonMap update(int eventMembersSid, TEventMembers tEventMembers);
 

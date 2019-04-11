@@ -5,4 +5,22 @@
 
       SELECT COUNT(event_id) FROM t_event_members WHERE event_id = #{param1}
 </select>
+
+    <select id="selectByEventId" parameterType="java.lang.String" resultType="map" >
+
+        SELECT
+        em.account_name AS accountName,
+        a.sid AS accountSid,
+        a.avarta AS avarta,
+        sum(s.step_num) AS stepNum
+        FROM
+        t_event_members em
+        LEFT JOIN account a ON em.account_sid = a.sid
+        LEFT JOIN steps s ON a.sid = s.account_sid
+        WHERE
+        em.event_id = #{param1}
+        AND s.device_sid IS NOT NULL
+        AND s.record_date <![CDATA[ >= ]]> #{param2} AND s.record_date <![CDATA[ <= ]]>#{param3} group by a.sid order by stepNum desc
+
+    </select>
 </mapper>

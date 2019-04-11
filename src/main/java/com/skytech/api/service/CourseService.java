@@ -32,7 +32,7 @@ public interface CourseService extends GenericOneService<TCourse,Integer> {
 
     JsonMap selectCoupon(int membersId, int courseId);
 
-    JsonMap selectCourse(int membersId, int courseId, int[] weekIds);
+    Map<String,Object> selectCourse(int membersId,int companyId,int storesId, int courseId, int[] weekIds);
 
     JsonMap selectWeek(int courseId);
 }

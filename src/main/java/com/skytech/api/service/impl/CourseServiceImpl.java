@@ -71,8 +71,20 @@ public class CourseServiceImpl extends GenericOneServiceImpl<TCourse,TCourseExam
 
     @Override
     public Map<String, Object> findForCourseDetail(int id) {
+        TCourseExample tCourseExample = new TCourseExample();
+        tCourseExample.createCriteria().andIdEqualTo(id);
+        List<TCourse> tCourses = tCourseMapper.selectByExample(tCourseExample);
+        if(tCourses.isEmpty()){
+            return JsonMap.of(false, "没有对应课程");
+        }
         Map<String, Object> data = new HashMap<>();
         TCourse tCourse = tCourseMapper.selectByPrimaryKey(id);
+        if(tCourse.getCoverurl()!=null){
+            tCourse.setCoverurl("http://47.244.189.240:8080/statics"+tCourse.getCoverurl());
+        }
+        else {
+            tCourse.setCoverurl(tCourse.getCoverurl());
+        }
         //课程已报名人数
         //课程已报名人数根据订单表来计算
         int joinedNum = tOrderMapper.selectJoinedCourseNum(id);
@@ -92,10 +104,10 @@ public class CourseServiceImpl extends GenericOneServiceImpl<TCourse,TCourseExam
         tCourseCouponExample.createCriteria().andCourseidEqualTo(id);
         List<TCourseCoupon> tCourseCoupons = tCourseCouponMapper.selectByExample(tCourseCouponExample);
         if(!tCourseCoupons.isEmpty()){
-            data.put("coupon", tCourseCoupons.get(0).getCouponnum());
+            tCourse.setCouponNum(tCourseCoupons.get(0).getCouponnum());
         }
         else {
-            data.put("coupon", 0);
+            tCourse.setCouponNum(0);
         }
         return data;
     }
@@ -113,10 +125,10 @@ public class CourseServiceImpl extends GenericOneServiceImpl<TCourse,TCourseExam
         //返回该课程当月开课星期安排
         String now = DateUtil.formatmiddledatestr(new Date());
         List<Integer> week = new ArrayList<>();
-//            week = tCourseTimeMapper.selectCourseWeek(tCourses.get(0).getId());
-
+//      week = tCourseTimeMapper.selectCourseWeek(tCourses.get(0).getId());
         TCourseExample tCourseExample = new TCourseExample();
-        tCourseExample.createCriteria().andMonthEqualTo(now).andIdEqualTo(courseId);
+        /*tCourseExample.createCriteria().andMonthEqualTo(now).andIdEqualTo(courseId);*/
+        tCourseExample.createCriteria().andIdEqualTo(courseId);
         List<TCourse> tCourses = tCourseMapper.selectByExample(tCourseExample);
         if(!tCourses.isEmpty()){
             TCourseTimeExample tCourseTimeExample = new TCourseTimeExample();
@@ -131,7 +143,8 @@ public class CourseServiceImpl extends GenericOneServiceImpl<TCourse,TCourseExam
     }
 
     @Override
-    public JsonMap selectCourse(int membersId, int courseId,int[] weekIds) {
+    public Map<String,Object> selectCourse(int membersId,int companyId,int storesId, int courseId,int[] weekIds) {
+        //查询课程是否存在
         TCourseExample tCourseExample = new TCourseExample();
         tCourseExample.createCriteria().andIdEqualTo(courseId);
         List<TCourse> tCourses = tCourseMapper.selectByExample(tCourseExample);
@@ -140,54 +153,52 @@ public class CourseServiceImpl extends GenericOneServiceImpl<TCourse,TCourseExam
         }
         HashMap<String,Object> data = new HashMap<>();
         List<Object> list = new ArrayList<>();
-        //筛选出用户可选的课程
-        for(int i = 0;i<weekIds.length;i++){
-            int weekId = weekIds[i];
+        //查询课程星期安排是否开课
+        for(int k = 0;k<weekIds.length;k++){
             TCourseTimeExample tCourseTimeExample = new TCourseTimeExample();
-            tCourseTimeExample.createCriteria().andWeekidEqualTo(weekId);
+            tCourseTimeExample.createCriteria().andWeekidEqualTo(weekIds[k]).andCourseidEqualTo(courseId);
             List<TCourseTime> tCourseTimes = tCourseTimeMapper.selectByExample(tCourseTimeExample);
-            for (TCourseTime tCourseTime :tCourseTimes) {
-                TOrderDetailExample tOrderDetailExample = new TOrderDetailExample();
-                tOrderDetailExample.createCriteria().andCoursetimeidEqualTo(tCourseTime.getId());
-                List<TOrderDetail> tOrderDetails = tOrderDetailMapper.selectByExample(tOrderDetailExample);
-                if(tOrderDetails.isEmpty()){
-                    SysBasicDict sysBasicDict = sysBasicDictMapper.selectByPrimaryKey(tCourseTime.getClassid());
-                    tCourseTime.setClassName(sysBasicDict.getName());
-                    tCourseTime.setJoined(false);
-                    list.add(tCourseTime);
-
-                }
-                else {
-                    SysBasicDict sysBasicDict = sysBasicDictMapper.selectByPrimaryKey(tCourseTime.getClassid());
-                    tCourseTime.setClassName(sysBasicDict.getName());
-                    tCourseTime.setJoined(true);
-                    list.add(tCourseTime);
-//                    data.put("TCourseTime",tCourseTime);
+            if(tCourseTimes.isEmpty()){
+                return JsonMap.of(false, "没有对应课程");
+            }else {
+                //筛选出用户可选的课程
+                int weekId = weekIds[k];
+                TCourseTimeExample tCourseTimeExample1 = new TCourseTimeExample();
+                tCourseTimeExample1.createCriteria().andWeekidEqualTo(weekId).andCourseidEqualTo(courseId);
+                List<TCourseTime> tCourseTimes1 = tCourseTimeMapper.selectByExample(tCourseTimeExample1);
+                for (TCourseTime tCourseTime :tCourseTimes1) {
+                    //通过课程时段id查找订单详情里面参加人数，大于课程人数上线则跳过
+                    TOrderDetailExample tOrderDetailExample = new TOrderDetailExample();
+                    tOrderDetailExample.createCriteria().andCoursetimeidEqualTo(tCourseTime.getId());
+                    int count = tOrderDetailMapper.countByExample(tOrderDetailExample);
+                    if(count>=tCourses.get(0).getUpper()){
+                        continue;
+                    }
+                    List<TOrderDetail> tOrderDetails = tOrderDetailMapper.selectByExample(tOrderDetailExample);
+                    if(tOrderDetails.isEmpty()){
+                        //会员没有加入该时段的课程-可选
+                        SysBasicDict sysBasicDict = sysBasicDictMapper.selectByPrimaryKey(tCourseTime.getClassid());
+                        tCourseTime.setClassName(sysBasicDict.getName());
+                        tCourseTime.setJoined(false);
+                        list.add(tCourseTime);
+                    }
+                    else {
+                        //会员已经加入该时段课程
+                        SysBasicDict sysBasicDict = sysBasicDictMapper.selectByPrimaryKey(tCourseTime.getClassid());
+                        tCourseTime.setClassName(sysBasicDict.getName());
+                        tCourseTime.setJoined(true);
+                        list.add(tCourseTime);
+                    }
                 }
             }
         }
         data.put("TCourseTime",list);
-        return JsonMap.of(true, "", data);
-        /*TOrderExample tOrderExample = new TOrderExample();
-        tOrderExample.createCriteria().andMemberidEqualTo(membersId).andCourseidEqualTo(courseId);
-        List<TOrder> tOrders = tOrderMapper.selectByExample(tOrderExample);
-        for (TOrder tOrder:tOrders) {
-            TOrderDetailExample tOrderDetailExample = new TOrderDetailExample();
-            tOrderDetailExample.createCriteria().andOrdernoEqualTo(tOrder.getOrderno());
-            List<TOrderDetail> tOrderDetails = tOrderDetailMapper.selectByExample(tOrderDetailExample);
-            for (TOrderDetail tOrderDetail :tOrderDetails) {
-                TCourseTimeExample tCourseTimeExample = new TCourseTimeExample();
-                tCourseTimeExample.createCriteria().andIdEqualTo(tOrderDetail.getCoursetimeid());
-                List<TCourseTime> tCourseTimes = tCourseTimeMapper.selectByExample(tCourseTimeExample);
-
-            }
-        }
-        return null;*/
+        return data;
     }
 
     @Override
     public JsonMap join(int membersId, int courseId,int[] couponIds, int[] tCourseTimeIds) {
-        //TODO 课程不需要券情况
+        //课程不需要券情况
         int amount = 0;
         Boolean isNeedCoupon = false;
         for(int i = 0; i<couponIds.length;i++){
@@ -197,15 +208,17 @@ public class CourseServiceImpl extends GenericOneServiceImpl<TCourse,TCourseExam
                 isNeedCoupon = true;
             }
         }
+        //查询课程是否存在
         TCourseExample tCourseExample = new TCourseExample();
         tCourseExample.createCriteria().andIdEqualTo(courseId);
         List<TCourse> tCourses = tCourseMapper.selectByExample(tCourseExample);
         if(tCourses.isEmpty()){
             return JsonMap.of(false, "没有对应课程");
         }
+        //查询课程星期安排是否开课
         for(int k = 0;k<tCourseTimeIds.length;k++){
           TCourseTimeExample tCourseTimeExample = new TCourseTimeExample();
-          tCourseTimeExample.createCriteria().andIdEqualTo(tCourseTimeIds[k]);
+          tCourseTimeExample.createCriteria().andIdEqualTo(tCourseTimeIds[k]).andCourseidEqualTo(courseId);
           List<TCourseTime> tCourseTimes = tCourseTimeMapper.selectByExample(tCourseTimeExample);
           if(tCourseTimes.isEmpty()){
               return JsonMap.of(false, "没有对应课程");
@@ -245,7 +258,7 @@ public class CourseServiceImpl extends GenericOneServiceImpl<TCourse,TCourseExam
         one.setQuantity(tCourseTimeIds.length);
         one.setAmount(amount);
         one.setMemberid(membersId);
-        one.setStatus(Boolean.valueOf("0"));
+        one.setStatus(0);
         one.setCompletedate(null);
         one.setCreatetime(new Date());
         int num = tOrderMapper.insertSelective(one);
@@ -300,6 +313,7 @@ public class CourseServiceImpl extends GenericOneServiceImpl<TCourse,TCourseExam
 
     @Override
     public JsonMap defaultCoupon(int membersId, int courseId, int courseNum) throws ParseException {
+        //查询课程是否存在
         TCourseExample tCourseExample = new TCourseExample();
         tCourseExample.createCriteria().andIdEqualTo(courseId);
         List<TCourse> tCourses = tCourseMapper.selectByExample(tCourseExample);
@@ -312,6 +326,7 @@ public class CourseServiceImpl extends GenericOneServiceImpl<TCourse,TCourseExam
         List<TCourseCoupon> tCourseCoupons = tCourseCouponMapper.selectByExample(tCourseCouponExample);
         int couponNum =0;
         Map<String, Object> data = new HashMap<>();
+        DefaultCoupon defaultCoupon = new DefaultCoupon();
         if(!tCourseCoupons.isEmpty()){
             //需要券最大数量
             couponNum = courseNum*tCourseCoupons.get(0).getCouponnum();
@@ -330,26 +345,25 @@ public class CourseServiceImpl extends GenericOneServiceImpl<TCourse,TCourseExam
 
                 if(sd1.equals(sd2)) {
                     //对应门店课程使用券
-
                     TCoupon tCoupons = tCouponMapper.selectByPrimaryKey(tCouponMember.getCouponid());
                     if (tCoupons.getStoresid().equals(tMember.getStoresid()) && tCoupons.getCompanyid().equals(tMember.getCompanyid())) {
-//                data.put("tCoupons", tCoupons);
                         list.add(tCoupons);
                     }
                 }
 
             }
-            if(list.size()<couponNum){
+            if(list.size()>couponNum){
                 data.put("defaultCouponNum",couponNum);
                 data.put("availableCoupon",tCouponMembers);
             }
             else{
-                data.put("defaultCouponNum",couponNum);
                 data.put("availableCoupon",tCouponMembers);
+                return JsonMap.of(true, "可用券数量不足",data);
             }
+        }else{
+            data.put("defaultCouponNum",0);
+//            data.put("availableCoupon",tCouponMembers);
         }
-        data.put("defaultCouponNum",couponNum);
-        data.put("availableCoupon",0);
         return JsonMap.of(true, "", data);
     }
 

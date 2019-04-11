@@ -1,6 +1,7 @@
 package com.skytech.api.model.base;
 
 import com.alibaba.fastjson.annotation.JSONField;
+import com.skytech.api.core.model.BaseModel;
 import com.skytech.api.core.model.BaseModelOne;
 
 import java.util.Date;
@@ -15,7 +16,11 @@ public class BaseTCourseTime extends BaseModelOne<Integer>{
 
     private String endcoursetime;
 
+    private Integer dictid;
+
     private Integer classid;
+    @JSONField(format="yyyy-MM-dd HH:mm:ss")
+    private Date coursedate;
     @JSONField(format="yyyy-MM-dd HH:mm:ss")
     private Date createtime;
     @JSONField(format="yyyy-MM-dd HH:mm:ss")
@@ -24,13 +29,15 @@ public class BaseTCourseTime extends BaseModelOne<Integer>{
     public BaseTCourseTime() {
     }
 
-    public BaseTCourseTime(Integer id, Integer courseid, Integer weekid, String startcoursetime, String endcoursetime, Integer classid, Date createtime, Date updatetime) {
+    public BaseTCourseTime(Integer id, Integer courseid, Integer weekid, String startcoursetime, String endcoursetime, Integer dictid, Integer classid, Date coursedate, Date createtime, Date updatetime) {
         this.id = id;
         this.courseid = courseid;
         this.weekid = weekid;
         this.startcoursetime = startcoursetime;
         this.endcoursetime = endcoursetime;
+        this.dictid = dictid;
         this.classid = classid;
+        this.coursedate = coursedate;
         this.createtime = createtime;
         this.updatetime = updatetime;
     }
@@ -67,12 +74,28 @@ public class BaseTCourseTime extends BaseModelOne<Integer>{
         this.endcoursetime = endcoursetime == null ? null : endcoursetime.trim();
     }
 
+    public Integer getDictid() {
+        return dictid;
+    }
+
+    public void setDictid(Integer dictid) {
+        this.dictid = dictid;
+    }
+
     public Integer getClassid() {
         return classid;
     }
 
     public void setClassid(Integer classid) {
         this.classid = classid;
+    }
+
+    public Date getCoursedate() {
+        return coursedate;
+    }
+
+    public void setCoursedate(Date coursedate) {
+        this.coursedate = coursedate;
     }
 
     public Date getCreatetime() {

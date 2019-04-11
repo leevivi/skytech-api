@@ -7,10 +7,10 @@
     <result column="event_name" jdbcType="VARCHAR" property="eventName" />
     <result column="account_sid" jdbcType="VARCHAR" property="accountSid" />
     <result column="account_name" jdbcType="VARCHAR" property="accountName" />
+    <result column="member_id" jdbcType="INTEGER" property="memberId" />
     <result column="joined_time" jdbcType="TIMESTAMP" property="joinedTime" />
     <result column="created_time" jdbcType="TIMESTAMP" property="createdTime" />
     <result column="updated_time" jdbcType="TIMESTAMP" property="updatedTime" />
-    <result column="bak3" jdbcType="VARCHAR" property="bak3" />
     <result column="bak4" jdbcType="VARCHAR" property="bak4" />
     <result column="bak5" jdbcType="VARCHAR" property="bak5" />
   </resultMap>
@@ -73,8 +73,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, event_id, event_name, account_sid, account_name, joined_time, created_time, updated_time, 
-    bak3, bak4, bak5
+    id, event_id, event_name, account_sid, account_name, member_id, joined_time, created_time, 
+    updated_time, bak4, bak5
   </sql>
   <select id="selectByExample" parameterType="com.skytech.api.model.TEventMembersExample" resultMap="BaseResultMap">
     select
@@ -111,12 +111,12 @@
   </delete>
   <insert id="insert" parameterType="com.skytech.api.model.TEventMembers">
     insert into t_event_members (id, event_id, event_name, 
-      account_sid, account_name, joined_time, 
-      created_time, updated_time, bak3, 
+      account_sid, account_name, member_id, 
+      joined_time, created_time, updated_time, 
       bak4, bak5)
     values (#{id,jdbcType=INTEGER}, #{eventId,jdbcType=INTEGER}, #{eventName,jdbcType=VARCHAR}, 
-      #{accountSid,jdbcType=VARCHAR}, #{accountName,jdbcType=VARCHAR}, #{joinedTime,jdbcType=TIMESTAMP}, 
-      #{createdTime,jdbcType=TIMESTAMP}, #{updatedTime,jdbcType=TIMESTAMP}, #{bak3,jdbcType=VARCHAR}, 
+      #{accountSid,jdbcType=VARCHAR}, #{accountName,jdbcType=VARCHAR}, #{memberId,jdbcType=INTEGER}, 
+      #{joinedTime,jdbcType=TIMESTAMP}, #{createdTime,jdbcType=TIMESTAMP}, #{updatedTime,jdbcType=TIMESTAMP}, 
       #{bak4,jdbcType=VARCHAR}, #{bak5,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.skytech.api.model.TEventMembers">
@@ -137,6 +137,9 @@
       <if test="accountName != null">
         account_name,
       </if>
+      <if test="memberId != null">
+        member_id,
+      </if>
       <if test="joinedTime != null">
         joined_time,
       </if>
@@ -145,9 +148,6 @@
       </if>
       <if test="updatedTime != null">
         updated_time,
-      </if>
-      <if test="bak3 != null">
-        bak3,
       </if>
       <if test="bak4 != null">
         bak4,
@@ -172,6 +172,9 @@
       <if test="accountName != null">
         #{accountName,jdbcType=VARCHAR},
       </if>
+      <if test="memberId != null">
+        #{memberId,jdbcType=INTEGER},
+      </if>
       <if test="joinedTime != null">
         #{joinedTime,jdbcType=TIMESTAMP},
       </if>
@@ -180,9 +183,6 @@
       </if>
       <if test="updatedTime != null">
         #{updatedTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="bak3 != null">
-        #{bak3,jdbcType=VARCHAR},
       </if>
       <if test="bak4 != null">
         #{bak4,jdbcType=VARCHAR},
@@ -216,6 +216,9 @@
       <if test="record.accountName != null">
         account_name = #{record.accountName,jdbcType=VARCHAR},
       </if>
+      <if test="record.memberId != null">
+        member_id = #{record.memberId,jdbcType=INTEGER},
+      </if>
       <if test="record.joinedTime != null">
         joined_time = #{record.joinedTime,jdbcType=TIMESTAMP},
       </if>
@@ -224,9 +227,6 @@
       </if>
       <if test="record.updatedTime != null">
         updated_time = #{record.updatedTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="record.bak3 != null">
-        bak3 = #{record.bak3,jdbcType=VARCHAR},
       </if>
       <if test="record.bak4 != null">
         bak4 = #{record.bak4,jdbcType=VARCHAR},
@@ -246,10 +246,10 @@
       event_name = #{record.eventName,jdbcType=VARCHAR},
       account_sid = #{record.accountSid,jdbcType=VARCHAR},
       account_name = #{record.accountName,jdbcType=VARCHAR},
+      member_id = #{record.memberId,jdbcType=INTEGER},
       joined_time = #{record.joinedTime,jdbcType=TIMESTAMP},
       created_time = #{record.createdTime,jdbcType=TIMESTAMP},
       updated_time = #{record.updatedTime,jdbcType=TIMESTAMP},
-      bak3 = #{record.bak3,jdbcType=VARCHAR},
       bak4 = #{record.bak4,jdbcType=VARCHAR},
       bak5 = #{record.bak5,jdbcType=VARCHAR}
     <if test="_parameter != null">
@@ -271,6 +271,9 @@
       <if test="accountName != null">
         account_name = #{accountName,jdbcType=VARCHAR},
       </if>
+      <if test="memberId != null">
+        member_id = #{memberId,jdbcType=INTEGER},
+      </if>
       <if test="joinedTime != null">
         joined_time = #{joinedTime,jdbcType=TIMESTAMP},
       </if>
@@ -279,9 +282,6 @@
       </if>
       <if test="updatedTime != null">
         updated_time = #{updatedTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="bak3 != null">
-        bak3 = #{bak3,jdbcType=VARCHAR},
       </if>
       <if test="bak4 != null">
         bak4 = #{bak4,jdbcType=VARCHAR},
@@ -298,10 +298,10 @@
       event_name = #{eventName,jdbcType=VARCHAR},
       account_sid = #{accountSid,jdbcType=VARCHAR},
       account_name = #{accountName,jdbcType=VARCHAR},
+      member_id = #{memberId,jdbcType=INTEGER},
       joined_time = #{joinedTime,jdbcType=TIMESTAMP},
       created_time = #{createdTime,jdbcType=TIMESTAMP},
       updated_time = #{updatedTime,jdbcType=TIMESTAMP},
-      bak3 = #{bak3,jdbcType=VARCHAR},
       bak4 = #{bak4,jdbcType=VARCHAR},
       bak5 = #{bak5,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}

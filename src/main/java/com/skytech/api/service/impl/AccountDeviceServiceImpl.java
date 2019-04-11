@@ -157,7 +157,7 @@ public class AccountDeviceServiceImpl extends GenericServiceImpl<AccountDevice, 
             } else {//设备已被其他账号绑定
 
                 boolean flag = false;
-                for (AccountDevice accountDevice : accountDevices) {
+                for (AccountDevice accountDevice : accountDevices1) {
                     String accountSid1 = accountDevice.getAccountSid();
                     if (StringUtils.equals(accountSid, accountSid1)) {
                         flag = true;

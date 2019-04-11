@@ -11,9 +11,9 @@ public class BaseTMemberMessage extends BaseModelOne<Integer>{
 
     private Integer messageid;
 
-    private Boolean status;
+    private Integer status;
 
-    private Byte type;
+    private Integer type;
     @JSONField(format="yyyy-MM-dd HH:mm:ss")
     private Date createtime;
     @JSONField(format="yyyy-MM-dd HH:mm:ss")
@@ -22,7 +22,7 @@ public class BaseTMemberMessage extends BaseModelOne<Integer>{
     public BaseTMemberMessage() {
     }
 
-    public BaseTMemberMessage(Integer id, Integer memberid, Integer messageid, Boolean status, Byte type, Date createtime, Date updatetime) {
+    public BaseTMemberMessage(Integer id, Integer memberid, Integer messageid, Integer status, Integer type, Date createtime, Date updatetime) {
         this.id = id;
         this.memberid = memberid;
         this.messageid = messageid;
@@ -48,19 +48,19 @@ public class BaseTMemberMessage extends BaseModelOne<Integer>{
         this.messageid = messageid;
     }
 
-    public Boolean getStatus() {
+    public Integer getStatus() {
         return status;
     }
 
-    public void setStatus(Boolean status) {
+    public void setStatus(Integer status) {
         this.status = status;
     }
 
-    public Byte getType() {
+    public Integer getType() {
         return type;
     }
 
-    public void setType(Byte type) {
+    public void setType(Integer type) {
         this.type = type;
     }
 

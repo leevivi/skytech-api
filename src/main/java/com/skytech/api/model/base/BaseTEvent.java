@@ -8,8 +8,6 @@ import java.util.Date;
 public class BaseTEvent extends BaseModelOne<Integer>{
 
     private String eventName;
-
-    private String eventInfo;
     @JSONField(format="yyyy-MM-dd HH:mm:ss")
     private Date startDate;
     @JSONField(format="yyyy-MM-dd HH:mm:ss")
@@ -24,6 +22,8 @@ public class BaseTEvent extends BaseModelOne<Integer>{
     private Integer comanyId;
 
     private Integer eventUpper;
+
+    private Integer eventStatus;
     @JSONField(format="yyyy-MM-dd HH:mm:ss")
     private Date createdTime;
     @JSONField(format="yyyy-MM-dd HH:mm:ss")
@@ -39,13 +39,14 @@ public class BaseTEvent extends BaseModelOne<Integer>{
 
     private String bak5;
 
+    private String eventInfo;
+
     public BaseTEvent() {
     }
 
-    public BaseTEvent(Integer id, String eventName, String eventInfo, Date startDate, Date endDate, String eventPic, String detailUrl, Integer storesId, Integer comanyId, Integer eventUpper, Date createdTime, Date updatedTime, String bak1, String bak2, String bak3, String bak4, String bak5) {
+    public BaseTEvent(Integer id, String eventName, Date startDate, Date endDate, String eventPic, String detailUrl, Integer storesId, Integer comanyId, Integer eventUpper, Integer eventStatus, Date createdTime, Date updatedTime, String bak1, String bak2, String bak3, String bak4, String bak5, String eventInfo) {
         this.id = id;
         this.eventName = eventName;
-        this.eventInfo = eventInfo;
         this.startDate = startDate;
         this.endDate = endDate;
         this.eventPic = eventPic;
@@ -53,6 +54,7 @@ public class BaseTEvent extends BaseModelOne<Integer>{
         this.storesId = storesId;
         this.comanyId = comanyId;
         this.eventUpper = eventUpper;
+        this.eventStatus = eventStatus;
         this.createdTime = createdTime;
         this.updatedTime = updatedTime;
         this.bak1 = bak1;
@@ -60,6 +62,7 @@ public class BaseTEvent extends BaseModelOne<Integer>{
         this.bak3 = bak3;
         this.bak4 = bak4;
         this.bak5 = bak5;
+        this.eventInfo = eventInfo;
     }
 
     public String getEventName() {
@@ -68,14 +71,6 @@ public class BaseTEvent extends BaseModelOne<Integer>{
 
     public void setEventName(String eventName) {
         this.eventName = eventName == null ? null : eventName.trim();
-    }
-
-    public String getEventInfo() {
-        return eventInfo;
-    }
-
-    public void setEventInfo(String eventInfo) {
-        this.eventInfo = eventInfo == null ? null : eventInfo.trim();
     }
 
     public Date getStartDate() {
@@ -134,6 +129,14 @@ public class BaseTEvent extends BaseModelOne<Integer>{
         this.eventUpper = eventUpper;
     }
 
+    public Integer getEventStatus() {
+        return eventStatus;
+    }
+
+    public void setEventStatus(Integer eventStatus) {
+        this.eventStatus = eventStatus;
+    }
+
     public Date getCreatedTime() {
         return createdTime;
     }
@@ -188,5 +191,13 @@ public class BaseTEvent extends BaseModelOne<Integer>{
 
     public void setBak5(String bak5) {
         this.bak5 = bak5 == null ? null : bak5.trim();
+    }
+
+    public String getEventInfo() {
+        return eventInfo;
+    }
+
+    public void setEventInfo(String eventInfo) {
+        this.eventInfo = eventInfo == null ? null : eventInfo.trim();
     }
 }

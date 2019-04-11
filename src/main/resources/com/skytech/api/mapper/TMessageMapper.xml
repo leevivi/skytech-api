@@ -6,15 +6,15 @@
     <result column="msgTheme" jdbcType="VARCHAR" property="msgtheme" />
     <result column="msgType" jdbcType="BIT" property="msgtype" />
     <result column="msgTime" jdbcType="TIMESTAMP" property="msgtime" />
+    <result column="memberType" jdbcType="BIT" property="membertype" />
+    <result column="msgBody" jdbcType="VARCHAR" property="msgbody" />
     <result column="msgCondition" jdbcType="OTHER" property="msgcondition" />
     <result column="msgUrl" jdbcType="VARCHAR" property="msgurl" />
     <result column="username" jdbcType="VARCHAR" property="username" />
+    <result column="type" jdbcType="BIT" property="type" />
     <result column="status" jdbcType="BIT" property="status" />
     <result column="createTime" jdbcType="TIMESTAMP" property="createtime" />
     <result column="updateTime" jdbcType="TIMESTAMP" property="updatetime" />
-  </resultMap>
-  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.skytech.api.model.TMessage">
-    <result column="msgBody" jdbcType="LONGVARCHAR" property="msgbody" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -75,31 +75,9 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, msgTheme, msgType, msgTime, msgCondition, msgUrl, username, status, createTime, 
-    updateTime
+    id, msgTheme, msgType, msgTime, memberType, msgBody, msgCondition, msgUrl, username, 
+    type, status, createTime, updateTime
   </sql>
-  <sql id="Blob_Column_List">
-    msgBody
-  </sql>
-  <select id="selectByExampleWithBLOBs" parameterType="com.skytech.api.model.TMessageExample" resultMap="ResultMapWithBLOBs">
-    select
-    <if test="distinct">
-      distinct
-    </if>
-    <include refid="Base_Column_List" />
-    ,
-    <include refid="Blob_Column_List" />
-    from t_message
-    <if test="_parameter != null">
-      <include refid="Example_Where_Clause" />
-    </if>
-    <if test="orderByClause != null">
-      order by ${orderByClause}
-    </if>
-    <if test="pagination != null and pagination.begin >= 0" >
-      limit #{pagination.begin}, #{pagination.pageSize}
-    </if>
-  </select>
   <select id="selectByExample" parameterType="com.skytech.api.model.TMessageExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
@@ -117,11 +95,9 @@
       limit #{pagination.begin}, #{pagination.pageSize}
     </if>
   </select>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    ,
-    <include refid="Blob_Column_List" />
     from t_message
     where id = #{id,jdbcType=INTEGER}
   </select>
@@ -137,13 +113,15 @@
   </delete>
   <insert id="insert" parameterType="com.skytech.api.model.TMessage">
     insert into t_message (id, msgTheme, msgType, 
-      msgTime, msgCondition, msgUrl, 
-      username, status, createTime, 
-      updateTime, msgBody)
+      msgTime, memberType, msgBody, 
+      msgCondition, msgUrl, username, 
+      type, status, createTime, 
+      updateTime)
     values (#{id,jdbcType=INTEGER}, #{msgtheme,jdbcType=VARCHAR}, #{msgtype,jdbcType=BIT}, 
-      #{msgtime,jdbcType=TIMESTAMP}, #{msgcondition,jdbcType=OTHER}, #{msgurl,jdbcType=VARCHAR}, 
-      #{username,jdbcType=VARCHAR}, #{status,jdbcType=BIT}, #{createtime,jdbcType=TIMESTAMP}, 
-      #{updatetime,jdbcType=TIMESTAMP}, #{msgbody,jdbcType=LONGVARCHAR})
+      #{msgtime,jdbcType=TIMESTAMP}, #{membertype,jdbcType=BIT}, #{msgbody,jdbcType=VARCHAR}, 
+      #{msgcondition,jdbcType=OTHER}, #{msgurl,jdbcType=VARCHAR}, #{username,jdbcType=VARCHAR}, 
+      #{type,jdbcType=BIT}, #{status,jdbcType=BIT}, #{createtime,jdbcType=TIMESTAMP}, 
+      #{updatetime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.skytech.api.model.TMessage">
     insert into t_message
@@ -160,6 +138,12 @@
       <if test="msgtime != null">
         msgTime,
       </if>
+      <if test="membertype != null">
+        memberType,
+      </if>
+      <if test="msgbody != null">
+        msgBody,
+      </if>
       <if test="msgcondition != null">
         msgCondition,
       </if>
@@ -169,6 +153,9 @@
       <if test="username != null">
         username,
       </if>
+      <if test="type != null">
+        type,
+      </if>
       <if test="status != null">
         status,
       </if>
@@ -177,9 +164,6 @@
       </if>
       <if test="updatetime != null">
         updateTime,
-      </if>
-      <if test="msgbody != null">
-        msgBody,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -195,6 +179,12 @@
       <if test="msgtime != null">
         #{msgtime,jdbcType=TIMESTAMP},
       </if>
+      <if test="membertype != null">
+        #{membertype,jdbcType=BIT},
+      </if>
+      <if test="msgbody != null">
+        #{msgbody,jdbcType=VARCHAR},
+      </if>
       <if test="msgcondition != null">
         #{msgcondition,jdbcType=OTHER},
       </if>
@@ -204,6 +194,9 @@
       <if test="username != null">
         #{username,jdbcType=VARCHAR},
       </if>
+      <if test="type != null">
+        #{type,jdbcType=BIT},
+      </if>
       <if test="status != null">
         #{status,jdbcType=BIT},
       </if>
@@ -212,9 +205,6 @@
       </if>
       <if test="updatetime != null">
         #{updatetime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="msgbody != null">
-        #{msgbody,jdbcType=LONGVARCHAR},
       </if>
     </trim>
   </insert>
@@ -239,6 +229,12 @@
       <if test="record.msgtime != null">
         msgTime = #{record.msgtime,jdbcType=TIMESTAMP},
       </if>
+      <if test="record.membertype != null">
+        memberType = #{record.membertype,jdbcType=BIT},
+      </if>
+      <if test="record.msgbody != null">
+        msgBody = #{record.msgbody,jdbcType=VARCHAR},
+      </if>
       <if test="record.msgcondition != null">
         msgCondition = #{record.msgcondition,jdbcType=OTHER},
       </if>
@@ -247,6 +243,9 @@
       </if>
       <if test="record.username != null">
         username = #{record.username,jdbcType=VARCHAR},
+      </if>
+      <if test="record.type != null">
+        type = #{record.type,jdbcType=BIT},
       </if>
       <if test="record.status != null">
         status = #{record.status,jdbcType=BIT},
@@ -257,27 +256,7 @@
       <if test="record.updatetime != null">
         updateTime = #{record.updatetime,jdbcType=TIMESTAMP},
       </if>
-      <if test="record.msgbody != null">
-        msgBody = #{record.msgbody,jdbcType=LONGVARCHAR},
-      </if>
     </set>
-    <if test="_parameter != null">
-      <include refid="Update_By_Example_Where_Clause" />
-    </if>
-  </update>
-  <update id="updateByExampleWithBLOBs" parameterType="map">
-    update t_message
-    set id = #{record.id,jdbcType=INTEGER},
-      msgTheme = #{record.msgtheme,jdbcType=VARCHAR},
-      msgType = #{record.msgtype,jdbcType=BIT},
-      msgTime = #{record.msgtime,jdbcType=TIMESTAMP},
-      msgCondition = #{record.msgcondition,jdbcType=OTHER},
-      msgUrl = #{record.msgurl,jdbcType=VARCHAR},
-      username = #{record.username,jdbcType=VARCHAR},
-      status = #{record.status,jdbcType=BIT},
-      createTime = #{record.createtime,jdbcType=TIMESTAMP},
-      updateTime = #{record.updatetime,jdbcType=TIMESTAMP},
-      msgBody = #{record.msgbody,jdbcType=LONGVARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -288,9 +267,12 @@
       msgTheme = #{record.msgtheme,jdbcType=VARCHAR},
       msgType = #{record.msgtype,jdbcType=BIT},
       msgTime = #{record.msgtime,jdbcType=TIMESTAMP},
+      memberType = #{record.membertype,jdbcType=BIT},
+      msgBody = #{record.msgbody,jdbcType=VARCHAR},
       msgCondition = #{record.msgcondition,jdbcType=OTHER},
       msgUrl = #{record.msgurl,jdbcType=VARCHAR},
       username = #{record.username,jdbcType=VARCHAR},
+      type = #{record.type,jdbcType=BIT},
       status = #{record.status,jdbcType=BIT},
       createTime = #{record.createtime,jdbcType=TIMESTAMP},
       updateTime = #{record.updatetime,jdbcType=TIMESTAMP}
@@ -310,6 +292,12 @@
       <if test="msgtime != null">
         msgTime = #{msgtime,jdbcType=TIMESTAMP},
       </if>
+      <if test="membertype != null">
+        memberType = #{membertype,jdbcType=BIT},
+      </if>
+      <if test="msgbody != null">
+        msgBody = #{msgbody,jdbcType=VARCHAR},
+      </if>
       <if test="msgcondition != null">
         msgCondition = #{msgcondition,jdbcType=OTHER},
       </if>
@@ -318,6 +306,9 @@
       </if>
       <if test="username != null">
         username = #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        type = #{type,jdbcType=BIT},
       </if>
       <if test="status != null">
         status = #{status,jdbcType=BIT},
@@ -328,24 +319,7 @@
       <if test="updatetime != null">
         updateTime = #{updatetime,jdbcType=TIMESTAMP},
       </if>
-      <if test="msgbody != null">
-        msgBody = #{msgbody,jdbcType=LONGVARCHAR},
-      </if>
     </set>
-    where id = #{id,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.skytech.api.model.TMessage">
-    update t_message
-    set msgTheme = #{msgtheme,jdbcType=VARCHAR},
-      msgType = #{msgtype,jdbcType=BIT},
-      msgTime = #{msgtime,jdbcType=TIMESTAMP},
-      msgCondition = #{msgcondition,jdbcType=OTHER},
-      msgUrl = #{msgurl,jdbcType=VARCHAR},
-      username = #{username,jdbcType=VARCHAR},
-      status = #{status,jdbcType=BIT},
-      createTime = #{createtime,jdbcType=TIMESTAMP},
-      updateTime = #{updatetime,jdbcType=TIMESTAMP},
-      msgBody = #{msgbody,jdbcType=LONGVARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.skytech.api.model.TMessage">
@@ -353,9 +327,12 @@
     set msgTheme = #{msgtheme,jdbcType=VARCHAR},
       msgType = #{msgtype,jdbcType=BIT},
       msgTime = #{msgtime,jdbcType=TIMESTAMP},
+      memberType = #{membertype,jdbcType=BIT},
+      msgBody = #{msgbody,jdbcType=VARCHAR},
       msgCondition = #{msgcondition,jdbcType=OTHER},
       msgUrl = #{msgurl,jdbcType=VARCHAR},
       username = #{username,jdbcType=VARCHAR},
+      type = #{type,jdbcType=BIT},
       status = #{status,jdbcType=BIT},
       createTime = #{createtime,jdbcType=TIMESTAMP},
       updateTime = #{updatetime,jdbcType=TIMESTAMP}

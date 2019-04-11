@@ -5,8 +5,8 @@
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="memberId" jdbcType="INTEGER" property="memberid" />
     <result column="messageId" jdbcType="INTEGER" property="messageid" />
-    <result column="status" jdbcType="BIT" property="status" />
-    <result column="type" jdbcType="TINYINT" property="type" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="type" jdbcType="INTEGER" property="type" />
     <result column="createTime" jdbcType="TIMESTAMP" property="createtime" />
     <result column="updateTime" jdbcType="TIMESTAMP" property="updatetime" />
   </resultMap>

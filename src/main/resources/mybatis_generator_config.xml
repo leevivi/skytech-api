@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+        <!DOCTYPE generatorConfiguration PUBLIC
+                "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+                "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd" >
+<generatorConfiguration>
+<!-- 本地数据库驱动程序jar包的全路径 -->
+<classPathEntry location="D:\software\repository\mysql\mysql-connector-java\5.1.6\mysql-connector-java-5.1.6.jar"/>
+<context id="context" targetRuntime="MyBatis3">
+    <commentGenerator>
+        <property name="suppressDate" value="true"/>
+        <!-- 是否去除自动生成的注释 true：是 ： false:否 -->
+        <property name="suppressAllComments" value="true"/>
+    </commentGenerator>
+    <!-- 数据库的相关配置 -->
+    <!--<jdbcConnection driverClass="com.mysql.jdbc.Driver" connectionURL="jdbc:mysql://rm-j6ch04m999899i6506o.mysql.rds.aliyuncs.com:3306/time2move?characterEncoding=utf-8" userId="time2move" password="1qaz2wsx!#@Q"/>
+    -->
+    <jdbcConnection driverClass="com.mysql.jdbc.Driver" connectionURL="jdbc:mysql://rm-j6ch04m999899i6506o.mysql.rds.aliyuncs.com:3306/time2move?characterEncoding=utf-8" userId="time2move" password="1qaz2wsx!#@Q"/>
+    <!-- 类型转换 -->
+    <!--<javaTypeResolver type="com.invitation.api.core.utils.MyJavaTypeResolver ">
+        &lt;!&ndash; 是否使用bigDecimal， false可自动转化以下类型（Long, Integer, Short, etc.） &ndash;&gt;
+        <property name="forceBigDecimals" value="false"/>
+    </javaTypeResolver>-->
+    <javaTypeResolver type="org.mybatis.generator.internal.types.JavaTypeResolverDefaultImpl">
+        <!--
+            true：使用BigDecimal对应DECIMAL和 NUMERIC数据类型
+            false：默认,
+                scale>0;length>18：使用BigDecimal;
+                scale=0;length[10,18]：使用Long；
+                scale=0;length[5,9]：使用Integer；
+                scale=0;length<5：使用Short；
+         -->
+        <property name="forceBigDecimals" value="false"/>
+    </javaTypeResolver>
+    <!-- 实体类生成的位置 -->
+    <javaModelGenerator targetPackage="com.skytech.api.model" targetProject="C:\Users\1\Desktop\code\skytechCode\">
+        <property name="enableSubPackages" value="false"/>
+        <property name="trimStrings" value="true"/>
+    </javaModelGenerator>
+    <!-- *Mapper.xml 文件的位置 -->
+    <sqlMapGenerator targetPackage="com.skytech.api.xml" targetProject="C:\Users\1\Desktop\code\skytechCode\">
+        <property name="enableSubPackages" value="false"/>
+    </sqlMapGenerator>
+    <!-- Mapper 接口文件的位置 -->
+    <javaClientGenerator targetPackage="com.skytech.api.mapper" targetProject="C:\Users\1\Desktop\code\skytechCode\" type="XMLMAPPER">
+        <property name="enableSubPackages" value="false"/>
+    </javaClientGenerator>
+
+    <table  tableName="%"
+            enableCountByExample="true"
+            enableDeleteByExample="true"
+            enableSelectByExample="true"
+            enableUpdateByExample="true"
+    />
+
+           <!-- selectByExampleQueryId="true"
+            selectByPrimaryKeyQueryId="true"
+            enableSelectByPrimaryKey="true"
+            enableDeleteByPrimaryKey="true"
+            enableUpdateByPrimaryKey="true"
+            enableInsert="true"-->
+    <table tableName="%">
+        <property name="enableCountByExample" value="true"/>
+        <property name="enableDeleteByExample" value="true"/>
+        <property name="enableSelectByExample" value="true"/>
+        <property name="enableUpdateByExample" value="true"/>
+        <property name="domainObjectName" value="Base%"/>
+    </table>
+    <table tableName="t_message" domainObjectName="TMessage"> <columnOverride column="msgBody" jdbcType="VARCHAR" /> </table>
+</context>
+</generatorConfiguration>

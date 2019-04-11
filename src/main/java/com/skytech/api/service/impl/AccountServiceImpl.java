@@ -4,6 +4,7 @@ import com.aliyun.oss.OSSClient;
 import com.skytech.api.core.JsonMap;
 import com.skytech.api.core.Pagination;
 import com.skytech.api.core.service.impl.GenericServiceImpl;
+import com.skytech.api.core.utils.CheckUtil;
 import com.skytech.api.core.utils.UUIDUtil;
 import com.skytech.api.mapper.AccountDeviceMapper;
 import com.skytech.api.mapper.AccountMapper;
@@ -53,6 +54,10 @@ public class AccountServiceImpl extends GenericServiceImpl<Account, AccountExamp
     @Override
     public Map<String, Object> register(String email, String password, String firstName, String lastName) {
         Map<String, Object> data = new HashMap<>();
+        if(!CheckUtil.checkEmail(email)){
+            return JsonMap.of(false, "邮箱不合法");
+        }
+
         AccountExample accountExample = new AccountExample();
         accountExample.createCriteria().andEmailEqualTo(email);
 
@@ -100,8 +105,9 @@ public class AccountServiceImpl extends GenericServiceImpl<Account, AccountExamp
             List<AccountDevice> accountDevices = accountDeviceMapper.selectByExample(accountDeviceExample);
             List<String> macAddress = new ArrayList<>();
             List<Object> devicess = new ArrayList<>();
-            Map<String, Object> devices = new HashMap<>();
+
             for (AccountDevice accountDevice : accountDevices) {
+                Map<String, Object> devices = new HashMap<>();
                 String deviceSid = accountDevice.getDeviceSid();
                 Device device = deviceMapper.selectByPrimaryKey(deviceSid);
 

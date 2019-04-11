@@ -6,12 +6,8 @@ import com.skytech.api.core.mapper.GenericOneMapper;
 import com.skytech.api.core.service.impl.GenericOneServiceImpl;
 import com.skytech.api.core.utils.DateUtil;
 import com.skytech.api.core.utils.UUIDUtil;
-import com.skytech.api.mapper.TEventMapper;
-import com.skytech.api.mapper.TEventMembersMapper;
-import com.skytech.api.model.EventMembersExample;
-import com.skytech.api.model.TEvent;
-import com.skytech.api.model.TEventMembers;
-import com.skytech.api.model.TEventMembersExample;
+import com.skytech.api.mapper.*;
+import com.skytech.api.model.*;
 import com.skytech.api.model.base.BaseTEventMembersExample;
 import com.skytech.api.service.TEventMembersService;
 import com.skytech.api.service.TEventService;
@@ -32,6 +28,12 @@ public class TEventMembersServiceImpl extends GenericOneServiceImpl<TEventMember
     private TEventMembersMapper tEventMembersMapper;
     @Autowired
     private TEventMapper tEventMapper;
+    @Autowired
+    private AccountMapper accountMapper;
+    @Autowired
+    private OrgStoresMapper orgStoresMapper;
+    @Autowired
+    private OrgCompanyMapper orgCompanyMapper;
 
     @Override
     protected GenericOneMapper<TEventMembers, TEventMembersExample, Integer> getGenericOneMapper() {
@@ -68,7 +70,7 @@ public class TEventMembersServiceImpl extends GenericOneServiceImpl<TEventMember
     @Override
     public Map<String, Object> findForEventDetail(String accountSid, int tEventId) {
         Map<String, Object> data = new HashMap<>();
-        TEvent event = tEventMapper.selectByPrimaryKey(tEventId);
+        TEvent tEvent = tEventMapper.selectByPrimaryKey(tEventId);
 
         TEventMembersExample example = new TEventMembersExample();
         example.createCriteria().andEventIdEqualTo(tEventId);
@@ -76,8 +78,20 @@ public class TEventMembersServiceImpl extends GenericOneServiceImpl<TEventMember
         int count = tEventMembersMapper.countByExample(example);
 
 //        List<Map<String, Object>> mapList = eventMembersMapper.selectJoinedNumByEventSid(eventSid);
-        event.setMemberNums(count);
-        data.put("event", event);
+        tEvent.setMemberNums(count);
+        OrgStores orgStores = orgStoresMapper.selectByPrimaryKey(tEvent.getStoresId());
+        OrgCompany orgCompany = orgCompanyMapper.selectByPrimaryKey(tEvent.getComanyId());
+        tEvent.setStoresName(orgStores.getStoresname());
+        tEvent.setComanyName(orgCompany.getCompanyname());
+        tEvent.setJoined(true);
+        if(tEvent.getEventStatus()==0){
+            tEvent.setStatus("Upcoming");
+        }else if(tEvent.getEventStatus()==1){
+            tEvent.setStatus("Ongoing");
+        }else if(tEvent.getEventStatus()==2){
+            tEvent.setStatus("Finished");
+        }
+        data.put("tEvent", tEvent);
 
 
         example = new TEventMembersExample();
@@ -94,16 +108,21 @@ public class TEventMembersServiceImpl extends GenericOneServiceImpl<TEventMember
         }
 
         Calendar calendar = Calendar.getInstance();
-        calendar.setTime(new Date());
+        calendar.setTime(isMemberList.get(0).getJoinedTime());
         calendar.set(Calendar.HOUR_OF_DAY, 0);
         calendar.set(Calendar.MINUTE, 0);
         calendar.set(Calendar.SECOND, 0);
         Date startDate = calendar.getTime();
 
-        calendar.add(Calendar.DATE, 1);
+        Calendar calendar1 = Calendar.getInstance();
+        calendar1.setTime(new Date());
+        calendar1.set(Calendar.HOUR_OF_DAY, 0);
+        calendar1.set(Calendar.MINUTE, 0);
+        calendar1.set(Calendar.SECOND, 0);
+        calendar1.add(Calendar.DATE, 1);
         Date endDate = calendar.getTime();
 
-        List<Map<String, Object>> tEventMembers = tEventMembersMapper.selectByEventSid(tEventId, DateUtil.formatStandardDatetime(startDate), DateUtil.formatStandardDatetime(endDate));
+        List<Map<String, Object>> tEventMembers = tEventMembersMapper.selectByEventId(String.valueOf(tEventId), DateUtil.formatStandardDatetime(startDate), DateUtil.formatStandardDatetime(endDate));
         List<Map<String, Object>> members = new ArrayList<>();
 
         Map<String, Object> mine = new HashMap<>();
@@ -181,8 +200,6 @@ public class TEventMembersServiceImpl extends GenericOneServiceImpl<TEventMember
 
         List<TEventMembers> tEventMemberss = tEventMembersMapper.selectByExample(tEventMembersExample);
 
-//        tEventMembers.setSid(UUID.randomUUID().toString().replaceAll("-", ""));
-//        eventMembers.setCreatedDatetime(new Date());
         int i = tEventMembersMapper.insertSelective(tEventMembers);
         if (i > 0) {
             return JsonMap.of(true, "保存成功");
@@ -192,7 +209,17 @@ public class TEventMembersServiceImpl extends GenericOneServiceImpl<TEventMember
     }
 
     @Override
-    public JsonMap save(String accountSid, int tEventId, String accountName) {
+    public JsonMap join(String accountSid, int tEventId, int memberId) {
+        Account account = accountMapper.selectByPrimaryKey(accountSid);
+        List<Integer> list = new ArrayList<>();
+        list.add(0);
+        list.add(1);
+        TEventExample tEventExample = new TEventExample();
+        tEventExample.createCriteria().andIdEqualTo(tEventId).andEventStatusIn(list);
+        List<TEvent> tEvents = tEventMapper.selectByExample(tEventExample);
+        if(tEvents.isEmpty()){
+            return JsonMap.of(false, "没有这项活动");
+        }
         TEventMembersExample eventMembersExample = new TEventMembersExample();
         eventMembersExample.createCriteria().andEventIdEqualTo(tEventId).andAccountSidEqualTo(accountSid);
         int count = tEventMembersMapper.countByExample(eventMembersExample);
@@ -201,18 +228,21 @@ public class TEventMembersServiceImpl extends GenericOneServiceImpl<TEventMember
             return JsonMap.of(false, "You had joined this event!");
         }
 
+
         TEvent event = tEventMapper.selectByPrimaryKey(tEventId);
-         Integer tEventMembers = tEventMembersMapper.selectJoinedNumByEventId(tEventId);
-       //TODO 活动成员表的活动人数上限改为int型，更新相关映射文件
+        Integer tEventMembers = tEventMembersMapper.selectJoinedNumByEventId(tEventId);
+
         if(tEventMembers >= event.getEventUpper()){
             return JsonMap.of(false, "活动人数已达上限");
         }
         TEventMembers one = new TEventMembers();
         one.setAccountSid(accountSid);
-        one.setAccountName(accountName);
+        one.setAccountName(account.getFirstName()+account.getLastName());
+        one.setMemberId(memberId);
         one.setEventId(tEventId);
         one.setEventName(event.getEventName());
         one.setJoinedTime(new Date());
+        one.setCreatedTime(new Date());
         int i = tEventMembersMapper.insertSelective(one);
 
         if (i > 0) {

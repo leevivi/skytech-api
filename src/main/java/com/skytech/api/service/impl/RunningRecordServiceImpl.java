@@ -82,7 +82,12 @@ public class RunningRecordServiceImpl extends GenericServiceImpl<RunningRecord, 
                 );
             }
         }
-        runningRecord.setCal(cal/5);
+        if(bpm.compareTo(BigDecimal.ZERO)==0){
+            runningRecord.setCal(0);
+        }
+        else{
+            runningRecord.setCal(cal/5);
+        }
         runningRecord.setCreatedDatetime(new Date());
         int i = runningRecordMapper.insertSelective(runningRecord);
         if (i > 0) {

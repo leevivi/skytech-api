@@ -99,12 +99,15 @@ public class HomeController {
         if(account.getAge()==null || account.getHeight()==null || account.getWeight()==null){
           BMR ="0";
         }
+        //(66 + (6.2 x 137磅)+ (12.7 x 64英寸 ) - (6.76 x 25)) x 1.55 = 2,409 calories/day
         else {
             if(account.getGender()==1){
-                 BMR = String.valueOf((int)((10*account.getWeight()+6.25*account.getHeight()-5*account.getAge()+5)/5));
+                //For men: 66 + (6.2 x weight) + (12.7 x height) - (6.76 x age)
+                 BMR = String.valueOf((int)((66+(6.2*account.getWeight()*2.2)+(12.7*account.getHeight()*0.39)-(6.76*account.getAge()))*1.55/5));
             }
             else if(account.getGender()==0){
-                BMR = String.valueOf((int)((10*account.getWeight()+6.25*account.getHeight()-5*account.getAge()-161)/5));
+                //For women: 655.1 + (4.35 x weight) + (4.7 x height) - (4.7 x age)
+                BMR = String.valueOf((int)(((655.1+(4.35*account.getWeight()*2.2)+(4.7*account.getHeight()*0.39)-(4.7*account.getAge()))*1.55/5)));
              }
         }
         currentData.put("BMR",BMR);

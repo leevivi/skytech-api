@@ -7,7 +7,7 @@ import java.util.Date;
 
 public class BaseSysBasicDict extends BaseModelOne<Integer>{
 
-    private Boolean type;
+    private Integer type;
 
     private String name;
 
@@ -15,7 +15,7 @@ public class BaseSysBasicDict extends BaseModelOne<Integer>{
 
     private Integer storesid;
 
-    private Boolean status;
+    private Integer status;
     @JSONField(format="yyyy-MM-dd HH:mm:ss")
     private Date createtime;
     @JSONField(format="yyyy-MM-dd HH:mm:ss")
@@ -24,7 +24,7 @@ public class BaseSysBasicDict extends BaseModelOne<Integer>{
     public BaseSysBasicDict() {
     }
 
-    public BaseSysBasicDict(Integer id, Boolean type, String name, Integer companyid, Integer storesid, Boolean status, Date createtime, Date updatetime) {
+    public BaseSysBasicDict(Integer id, Integer type, String name, Integer companyid, Integer storesid, Integer status, Date createtime, Date updatetime) {
         this.id = id;
         this.type = type;
         this.name = name;
@@ -35,11 +35,11 @@ public class BaseSysBasicDict extends BaseModelOne<Integer>{
         this.updatetime = updatetime;
     }
 
-    public Boolean getType() {
+    public Integer getType() {
         return type;
     }
 
-    public void setType(Boolean type) {
+    public void setType(Integer type) {
         this.type = type;
     }
 
@@ -67,11 +67,11 @@ public class BaseSysBasicDict extends BaseModelOne<Integer>{
         this.storesid = storesid;
     }
 
-    public Boolean getStatus() {
+    public Integer getStatus() {
         return status;
     }
 
-    public void setStatus(Boolean status) {
+    public void setStatus(Integer status) {
         this.status = status;
     }
 

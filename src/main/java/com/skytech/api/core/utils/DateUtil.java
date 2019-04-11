@@ -5,8 +5,10 @@ import org.apache.commons.lang3.time.DateFormatUtils;
 import org.apache.commons.lang3.time.DateUtils;
 
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 
 /**
  * 日期格式化
@@ -231,5 +233,54 @@ public final class DateUtil {
         } else {
             return -1;
         }
+    }
+
+    public static void main(String[] args) {
+        String headAndEndDateForMonth = getHeadAndEndDateForMonth("2015-05");
+        System.out.println(headAndEndDateForMonth);
+    }
+
+    //传一个字符串05:00/15:00，返回05:00AM或者03:00PM
+    public static String getTimeQuantum(String time){
+        String result = "";
+        GregorianCalendar ca = new GregorianCalendar();
+        System.out.println(ca.get(GregorianCalendar.AM_PM));
+        int hour = Integer.parseInt(time.split(":")[0]);
+        ca.set(hour,hour);
+        System.out.println(ca.get(GregorianCalendar.AM_PM));
+        int amOrPm = ca.get(GregorianCalendar.AM_PM);
+        if(amOrPm==0){
+            result = time+"AM";
+        }
+        else {
+
+        }
+        return "";
+    }
+
+
+
+
+//    通过有效时间补全当月日期2019-04-01-2019-04-30
+    public static String getHeadAndEndDateForMonth(String now){
+        int year = Integer.valueOf(now.split("-")[0]);
+        int month = Integer.valueOf(now.split("-")[1]);
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        String firstday, lastday;
+        // 获取前月的第一天
+        Calendar cale = null;
+        cale = Calendar.getInstance();
+        cale.set(Calendar.YEAR,year);
+        cale.set(Calendar.MONTH, month-1);
+        cale.set(Calendar.DAY_OF_MONTH, 1);
+        firstday = format.format(cale.getTime());
+        // 获取前月的最后一天
+        cale = Calendar.getInstance();
+        cale.set(Calendar.YEAR,year);
+        cale.set(Calendar.MONTH, month);
+        cale.set(Calendar.DAY_OF_MONTH, 0);
+        lastday = format.format(cale.getTime());
+//        System.out.println("本月第一天和最后一天分别是 ： " + firstday + " and " + lastday);
+        return firstday+"~"+lastday;
     }
 }

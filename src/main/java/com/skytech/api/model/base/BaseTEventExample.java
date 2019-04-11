@@ -246,76 +246,6 @@ public class BaseTEventExample extends BaseModelExample{
             return (Criteria) this;
         }
 
-        public Criteria andEventInfoIsNull() {
-            addCriterion("event_info is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andEventInfoIsNotNull() {
-            addCriterion("event_info is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andEventInfoEqualTo(String value) {
-            addCriterion("event_info =", value, "eventInfo");
-            return (Criteria) this;
-        }
-
-        public Criteria andEventInfoNotEqualTo(String value) {
-            addCriterion("event_info <>", value, "eventInfo");
-            return (Criteria) this;
-        }
-
-        public Criteria andEventInfoGreaterThan(String value) {
-            addCriterion("event_info >", value, "eventInfo");
-            return (Criteria) this;
-        }
-
-        public Criteria andEventInfoGreaterThanOrEqualTo(String value) {
-            addCriterion("event_info >=", value, "eventInfo");
-            return (Criteria) this;
-        }
-
-        public Criteria andEventInfoLessThan(String value) {
-            addCriterion("event_info <", value, "eventInfo");
-            return (Criteria) this;
-        }
-
-        public Criteria andEventInfoLessThanOrEqualTo(String value) {
-            addCriterion("event_info <=", value, "eventInfo");
-            return (Criteria) this;
-        }
-
-        public Criteria andEventInfoLike(String value) {
-            addCriterion("event_info like", value, "eventInfo");
-            return (Criteria) this;
-        }
-
-        public Criteria andEventInfoNotLike(String value) {
-            addCriterion("event_info not like", value, "eventInfo");
-            return (Criteria) this;
-        }
-
-        public Criteria andEventInfoIn(List<String> values) {
-            addCriterion("event_info in", values, "eventInfo");
-            return (Criteria) this;
-        }
-
-        public Criteria andEventInfoNotIn(List<String> values) {
-            addCriterion("event_info not in", values, "eventInfo");
-            return (Criteria) this;
-        }
-
-        public Criteria andEventInfoBetween(String value1, String value2) {
-            addCriterion("event_info between", value1, value2, "eventInfo");
-            return (Criteria) this;
-        }
-
-        public Criteria andEventInfoNotBetween(String value1, String value2) {
-            addCriterion("event_info not between", value1, value2, "eventInfo");
-            return (Criteria) this;
-        }
-
         public Criteria andStartDateIsNull() {
             addCriterion("start_date is null");
             return (Criteria) this;
@@ -753,6 +683,66 @@ public class BaseTEventExample extends BaseModelExample{
 
         public Criteria andEventUpperNotBetween(Integer value1, Integer value2) {
             addCriterion("event_upper not between", value1, value2, "eventUpper");
+            return (Criteria) this;
+        }
+
+        public Criteria andEventStatusIsNull() {
+            addCriterion("event_status is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andEventStatusIsNotNull() {
+            addCriterion("event_status is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andEventStatusEqualTo(Integer value) {
+            addCriterion("event_status =", value, "eventStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andEventStatusNotEqualTo(Integer value) {
+            addCriterion("event_status <>", value, "eventStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andEventStatusGreaterThan(Integer value) {
+            addCriterion("event_status >", value, "eventStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andEventStatusGreaterThanOrEqualTo(Integer value) {
+            addCriterion("event_status >=", value, "eventStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andEventStatusLessThan(Integer value) {
+            addCriterion("event_status <", value, "eventStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andEventStatusLessThanOrEqualTo(Integer value) {
+            addCriterion("event_status <=", value, "eventStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andEventStatusIn(List<Integer> values) {
+            addCriterion("event_status in", values, "eventStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andEventStatusNotIn(List<Integer> values) {
+            addCriterion("event_status not in", values, "eventStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andEventStatusBetween(Integer value1, Integer value2) {
+            addCriterion("event_status between", value1, value2, "eventStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andEventStatusNotBetween(Integer value1, Integer value2) {
+            addCriterion("event_status not between", value1, value2, "eventStatus");
             return (Criteria) this;
         }
 

@@ -3,11 +3,11 @@
 <mapper namespace="com.skytech.api.mapper.SysBasicDictMapper">
   <resultMap id="BaseResultMap" type="com.skytech.api.model.SysBasicDict">
     <id column="id" jdbcType="INTEGER" property="id" />
-    <result column="type" jdbcType="BIT" property="type" />
+    <result column="type" jdbcType="INTEGER" property="type" />
     <result column="name" jdbcType="VARCHAR" property="name" />
     <result column="companyId" jdbcType="INTEGER" property="companyid" />
     <result column="storesId" jdbcType="INTEGER" property="storesid" />
-    <result column="status" jdbcType="BIT" property="status" />
+    <result column="status" jdbcType="INTEGER" property="status" />
     <result column="createTime" jdbcType="TIMESTAMP" property="createtime" />
     <result column="updateTime" jdbcType="TIMESTAMP" property="updatetime" />
   </resultMap>

@@ -7,7 +7,9 @@
     <result column="weekId" jdbcType="INTEGER" property="weekid" />
     <result column="startCourseTime" jdbcType="VARCHAR" property="startcoursetime" />
     <result column="endCourseTime" jdbcType="VARCHAR" property="endcoursetime" />
+    <result column="dictId" jdbcType="INTEGER" property="dictid" />
     <result column="classId" jdbcType="INTEGER" property="classid" />
+    <result column="courseDate" jdbcType="DATE" property="coursedate" />
     <result column="createTime" jdbcType="TIMESTAMP" property="createtime" />
     <result column="updateTime" jdbcType="TIMESTAMP" property="updatetime" />
   </resultMap>
@@ -70,7 +72,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, courseId, weekId, startCourseTime, endCourseTime, classId, createTime, updateTime
+    id, courseId, weekId, startCourseTime, endCourseTime, dictId, classId, courseDate, 
+    createTime, updateTime
   </sql>
   <select id="selectByExample" parameterType="com.skytech.api.model.TCourseTimeExample" resultMap="BaseResultMap">
     select
@@ -84,9 +87,6 @@
     </if>
     <if test="orderByClause != null">
       order by ${orderByClause}
-    </if>
-    <if test="pagination != null and pagination.begin >= 0" >
-      limit #{pagination.begin}, #{pagination.pageSize}
     </if>
   </select>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
@@ -107,11 +107,13 @@
   </delete>
   <insert id="insert" parameterType="com.skytech.api.model.TCourseTime">
     insert into t_course_time (id, courseId, weekId, 
-      startCourseTime, endCourseTime, classId, 
-      createTime, updateTime)
+      startCourseTime, endCourseTime, dictId, 
+      classId, courseDate, createTime, 
+      updateTime)
     values (#{id,jdbcType=INTEGER}, #{courseid,jdbcType=INTEGER}, #{weekid,jdbcType=INTEGER}, 
-      #{startcoursetime,jdbcType=VARCHAR}, #{endcoursetime,jdbcType=VARCHAR}, #{classid,jdbcType=INTEGER}, 
-      #{createtime,jdbcType=TIMESTAMP}, #{updatetime,jdbcType=TIMESTAMP})
+      #{startcoursetime,jdbcType=VARCHAR}, #{endcoursetime,jdbcType=VARCHAR}, #{dictid,jdbcType=INTEGER}, 
+      #{classid,jdbcType=INTEGER}, #{coursedate,jdbcType=DATE}, #{createtime,jdbcType=TIMESTAMP}, 
+      #{updatetime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.skytech.api.model.TCourseTime">
     insert into t_course_time
@@ -131,8 +133,14 @@
       <if test="endcoursetime != null">
         endCourseTime,
       </if>
+      <if test="dictid != null">
+        dictId,
+      </if>
       <if test="classid != null">
         classId,
+      </if>
+      <if test="coursedate != null">
+        courseDate,
       </if>
       <if test="createtime != null">
         createTime,
@@ -157,8 +165,14 @@
       <if test="endcoursetime != null">
         #{endcoursetime,jdbcType=VARCHAR},
       </if>
+      <if test="dictid != null">
+        #{dictid,jdbcType=INTEGER},
+      </if>
       <if test="classid != null">
         #{classid,jdbcType=INTEGER},
+      </if>
+      <if test="coursedate != null">
+        #{coursedate,jdbcType=DATE},
       </if>
       <if test="createtime != null">
         #{createtime,jdbcType=TIMESTAMP},
@@ -192,8 +206,14 @@
       <if test="record.endcoursetime != null">
         endCourseTime = #{record.endcoursetime,jdbcType=VARCHAR},
       </if>
+      <if test="record.dictid != null">
+        dictId = #{record.dictid,jdbcType=INTEGER},
+      </if>
       <if test="record.classid != null">
         classId = #{record.classid,jdbcType=INTEGER},
+      </if>
+      <if test="record.coursedate != null">
+        courseDate = #{record.coursedate,jdbcType=DATE},
       </if>
       <if test="record.createtime != null">
         createTime = #{record.createtime,jdbcType=TIMESTAMP},
@@ -213,7 +233,9 @@
       weekId = #{record.weekid,jdbcType=INTEGER},
       startCourseTime = #{record.startcoursetime,jdbcType=VARCHAR},
       endCourseTime = #{record.endcoursetime,jdbcType=VARCHAR},
+      dictId = #{record.dictid,jdbcType=INTEGER},
       classId = #{record.classid,jdbcType=INTEGER},
+      courseDate = #{record.coursedate,jdbcType=DATE},
       createTime = #{record.createtime,jdbcType=TIMESTAMP},
       updateTime = #{record.updatetime,jdbcType=TIMESTAMP}
     <if test="_parameter != null">
@@ -235,8 +257,14 @@
       <if test="endcoursetime != null">
         endCourseTime = #{endcoursetime,jdbcType=VARCHAR},
       </if>
+      <if test="dictid != null">
+        dictId = #{dictid,jdbcType=INTEGER},
+      </if>
       <if test="classid != null">
         classId = #{classid,jdbcType=INTEGER},
+      </if>
+      <if test="coursedate != null">
+        courseDate = #{coursedate,jdbcType=DATE},
       </if>
       <if test="createtime != null">
         createTime = #{createtime,jdbcType=TIMESTAMP},
@@ -253,7 +281,9 @@
       weekId = #{weekid,jdbcType=INTEGER},
       startCourseTime = #{startcoursetime,jdbcType=VARCHAR},
       endCourseTime = #{endcoursetime,jdbcType=VARCHAR},
+      dictId = #{dictid,jdbcType=INTEGER},
       classId = #{classid,jdbcType=INTEGER},
+      courseDate = #{coursedate,jdbcType=DATE},
       createTime = #{createtime,jdbcType=TIMESTAMP},
       updateTime = #{updatetime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}

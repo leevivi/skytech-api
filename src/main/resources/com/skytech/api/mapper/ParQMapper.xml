@@ -1,0 +1,478 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.skytech.api.mapper.ParQMapper">
+  <resultMap id="BaseResultMap" type="com.skytech.api.model.ParQ">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="heart_condition" jdbcType="BIT" property="heartCondition" />
+    <result column="angina" jdbcType="BIT" property="angina" />
+    <result column="high_blood_pressure" jdbcType="BIT" property="highBloodPressure" />
+    <result column="asthma" jdbcType="BIT" property="asthma" />
+    <result column="diabetes" jdbcType="BIT" property="diabetes" />
+    <result column="back_problems" jdbcType="BIT" property="backProblems" />
+    <result column="sciatica" jdbcType="BIT" property="sciatica" />
+    <result column="joint_problems" jdbcType="BIT" property="jointProblems" />
+    <result column="smoker" jdbcType="BIT" property="smoker" />
+    <result column="pregnancy" jdbcType="BIT" property="pregnancy" />
+    <result column="hernia" jdbcType="BIT" property="hernia" />
+    <result column="recent_surgery" jdbcType="BIT" property="recentSurgery" />
+    <result column="fat_loss" jdbcType="BIT" property="fatLoss" />
+    <result column="building" jdbcType="BIT" property="building" />
+    <result column="toning" jdbcType="BIT" property="toning" />
+    <result column="other" jdbcType="BIT" property="other" />
+    <result column="specific_focus_areas" jdbcType="VARCHAR" property="specificFocusAreas" />
+    <result column="member_id" jdbcType="INTEGER" property="memberId" />
+    <result column="account_sid" jdbcType="VARCHAR" property="accountSid" />
+    <result column="created_time" jdbcType="TIMESTAMP" property="createdTime" />
+    <result column="updated_time" jdbcType="TIMESTAMP" property="updatedTime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, heart_condition, angina, high_blood_pressure, asthma, diabetes, back_problems, 
+    sciatica, joint_problems, smoker, pregnancy, hernia, recent_surgery, fat_loss, building, 
+    toning, other, specific_focus_areas, member_id, account_sid, created_time, updated_time
+  </sql>
+  <select id="selectByExample" parameterType="com.skytech.api.model.ParQExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from par_q
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from par_q
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from par_q
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.skytech.api.model.ParQExample">
+    delete from par_q
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.skytech.api.model.ParQ">
+    insert into par_q (id, heart_condition, angina, 
+      high_blood_pressure, asthma, diabetes, 
+      back_problems, sciatica, joint_problems, 
+      smoker, pregnancy, hernia, recent_surgery, 
+      fat_loss, building, toning, other, 
+      specific_focus_areas, member_id, account_sid, 
+      created_time, updated_time)
+    values (#{id,jdbcType=INTEGER}, #{heartCondition,jdbcType=BIT}, #{angina,jdbcType=BIT}, 
+      #{highBloodPressure,jdbcType=BIT}, #{asthma,jdbcType=BIT}, #{diabetes,jdbcType=BIT}, 
+      #{backProblems,jdbcType=BIT}, #{sciatica,jdbcType=BIT}, #{jointProblems,jdbcType=BIT}, 
+      #{smoker,jdbcType=BIT}, #{pregnancy,jdbcType=BIT}, #{hernia,jdbcType=BIT}, #{recentSurgery,jdbcType=BIT}, 
+      #{fatLoss,jdbcType=BIT}, #{building,jdbcType=BIT}, #{toning,jdbcType=BIT}, #{other,jdbcType=BIT}, 
+      #{specificFocusAreas,jdbcType=VARCHAR}, #{memberId,jdbcType=INTEGER}, #{accountSid,jdbcType=VARCHAR}, 
+      #{createdTime,jdbcType=TIMESTAMP}, #{updatedTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.skytech.api.model.ParQ">
+    insert into par_q
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="heartCondition != null">
+        heart_condition,
+      </if>
+      <if test="angina != null">
+        angina,
+      </if>
+      <if test="highBloodPressure != null">
+        high_blood_pressure,
+      </if>
+      <if test="asthma != null">
+        asthma,
+      </if>
+      <if test="diabetes != null">
+        diabetes,
+      </if>
+      <if test="backProblems != null">
+        back_problems,
+      </if>
+      <if test="sciatica != null">
+        sciatica,
+      </if>
+      <if test="jointProblems != null">
+        joint_problems,
+      </if>
+      <if test="smoker != null">
+        smoker,
+      </if>
+      <if test="pregnancy != null">
+        pregnancy,
+      </if>
+      <if test="hernia != null">
+        hernia,
+      </if>
+      <if test="recentSurgery != null">
+        recent_surgery,
+      </if>
+      <if test="fatLoss != null">
+        fat_loss,
+      </if>
+      <if test="building != null">
+        building,
+      </if>
+      <if test="toning != null">
+        toning,
+      </if>
+      <if test="other != null">
+        other,
+      </if>
+      <if test="specificFocusAreas != null">
+        specific_focus_areas,
+      </if>
+      <if test="memberId != null">
+        member_id,
+      </if>
+      <if test="accountSid != null">
+        account_sid,
+      </if>
+      <if test="createdTime != null">
+        created_time,
+      </if>
+      <if test="updatedTime != null">
+        updated_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="heartCondition != null">
+        #{heartCondition,jdbcType=BIT},
+      </if>
+      <if test="angina != null">
+        #{angina,jdbcType=BIT},
+      </if>
+      <if test="highBloodPressure != null">
+        #{highBloodPressure,jdbcType=BIT},
+      </if>
+      <if test="asthma != null">
+        #{asthma,jdbcType=BIT},
+      </if>
+      <if test="diabetes != null">
+        #{diabetes,jdbcType=BIT},
+      </if>
+      <if test="backProblems != null">
+        #{backProblems,jdbcType=BIT},
+      </if>
+      <if test="sciatica != null">
+        #{sciatica,jdbcType=BIT},
+      </if>
+      <if test="jointProblems != null">
+        #{jointProblems,jdbcType=BIT},
+      </if>
+      <if test="smoker != null">
+        #{smoker,jdbcType=BIT},
+      </if>
+      <if test="pregnancy != null">
+        #{pregnancy,jdbcType=BIT},
+      </if>
+      <if test="hernia != null">
+        #{hernia,jdbcType=BIT},
+      </if>
+      <if test="recentSurgery != null">
+        #{recentSurgery,jdbcType=BIT},
+      </if>
+      <if test="fatLoss != null">
+        #{fatLoss,jdbcType=BIT},
+      </if>
+      <if test="building != null">
+        #{building,jdbcType=BIT},
+      </if>
+      <if test="toning != null">
+        #{toning,jdbcType=BIT},
+      </if>
+      <if test="other != null">
+        #{other,jdbcType=BIT},
+      </if>
+      <if test="specificFocusAreas != null">
+        #{specificFocusAreas,jdbcType=VARCHAR},
+      </if>
+      <if test="memberId != null">
+        #{memberId,jdbcType=INTEGER},
+      </if>
+      <if test="accountSid != null">
+        #{accountSid,jdbcType=VARCHAR},
+      </if>
+      <if test="createdTime != null">
+        #{createdTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedTime != null">
+        #{updatedTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.skytech.api.model.ParQExample" resultType="java.lang.Integer">
+    select count(*) from par_q
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update par_q
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.heartCondition != null">
+        heart_condition = #{record.heartCondition,jdbcType=BIT},
+      </if>
+      <if test="record.angina != null">
+        angina = #{record.angina,jdbcType=BIT},
+      </if>
+      <if test="record.highBloodPressure != null">
+        high_blood_pressure = #{record.highBloodPressure,jdbcType=BIT},
+      </if>
+      <if test="record.asthma != null">
+        asthma = #{record.asthma,jdbcType=BIT},
+      </if>
+      <if test="record.diabetes != null">
+        diabetes = #{record.diabetes,jdbcType=BIT},
+      </if>
+      <if test="record.backProblems != null">
+        back_problems = #{record.backProblems,jdbcType=BIT},
+      </if>
+      <if test="record.sciatica != null">
+        sciatica = #{record.sciatica,jdbcType=BIT},
+      </if>
+      <if test="record.jointProblems != null">
+        joint_problems = #{record.jointProblems,jdbcType=BIT},
+      </if>
+      <if test="record.smoker != null">
+        smoker = #{record.smoker,jdbcType=BIT},
+      </if>
+      <if test="record.pregnancy != null">
+        pregnancy = #{record.pregnancy,jdbcType=BIT},
+      </if>
+      <if test="record.hernia != null">
+        hernia = #{record.hernia,jdbcType=BIT},
+      </if>
+      <if test="record.recentSurgery != null">
+        recent_surgery = #{record.recentSurgery,jdbcType=BIT},
+      </if>
+      <if test="record.fatLoss != null">
+        fat_loss = #{record.fatLoss,jdbcType=BIT},
+      </if>
+      <if test="record.building != null">
+        building = #{record.building,jdbcType=BIT},
+      </if>
+      <if test="record.toning != null">
+        toning = #{record.toning,jdbcType=BIT},
+      </if>
+      <if test="record.other != null">
+        other = #{record.other,jdbcType=BIT},
+      </if>
+      <if test="record.specificFocusAreas != null">
+        specific_focus_areas = #{record.specificFocusAreas,jdbcType=VARCHAR},
+      </if>
+      <if test="record.memberId != null">
+        member_id = #{record.memberId,jdbcType=INTEGER},
+      </if>
+      <if test="record.accountSid != null">
+        account_sid = #{record.accountSid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createdTime != null">
+        created_time = #{record.createdTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updatedTime != null">
+        updated_time = #{record.updatedTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update par_q
+    set id = #{record.id,jdbcType=INTEGER},
+      heart_condition = #{record.heartCondition,jdbcType=BIT},
+      angina = #{record.angina,jdbcType=BIT},
+      high_blood_pressure = #{record.highBloodPressure,jdbcType=BIT},
+      asthma = #{record.asthma,jdbcType=BIT},
+      diabetes = #{record.diabetes,jdbcType=BIT},
+      back_problems = #{record.backProblems,jdbcType=BIT},
+      sciatica = #{record.sciatica,jdbcType=BIT},
+      joint_problems = #{record.jointProblems,jdbcType=BIT},
+      smoker = #{record.smoker,jdbcType=BIT},
+      pregnancy = #{record.pregnancy,jdbcType=BIT},
+      hernia = #{record.hernia,jdbcType=BIT},
+      recent_surgery = #{record.recentSurgery,jdbcType=BIT},
+      fat_loss = #{record.fatLoss,jdbcType=BIT},
+      building = #{record.building,jdbcType=BIT},
+      toning = #{record.toning,jdbcType=BIT},
+      other = #{record.other,jdbcType=BIT},
+      specific_focus_areas = #{record.specificFocusAreas,jdbcType=VARCHAR},
+      member_id = #{record.memberId,jdbcType=INTEGER},
+      account_sid = #{record.accountSid,jdbcType=VARCHAR},
+      created_time = #{record.createdTime,jdbcType=TIMESTAMP},
+      updated_time = #{record.updatedTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.skytech.api.model.ParQ">
+    update par_q
+    <set>
+      <if test="heartCondition != null">
+        heart_condition = #{heartCondition,jdbcType=BIT},
+      </if>
+      <if test="angina != null">
+        angina = #{angina,jdbcType=BIT},
+      </if>
+      <if test="highBloodPressure != null">
+        high_blood_pressure = #{highBloodPressure,jdbcType=BIT},
+      </if>
+      <if test="asthma != null">
+        asthma = #{asthma,jdbcType=BIT},
+      </if>
+      <if test="diabetes != null">
+        diabetes = #{diabetes,jdbcType=BIT},
+      </if>
+      <if test="backProblems != null">
+        back_problems = #{backProblems,jdbcType=BIT},
+      </if>
+      <if test="sciatica != null">
+        sciatica = #{sciatica,jdbcType=BIT},
+      </if>
+      <if test="jointProblems != null">
+        joint_problems = #{jointProblems,jdbcType=BIT},
+      </if>
+      <if test="smoker != null">
+        smoker = #{smoker,jdbcType=BIT},
+      </if>
+      <if test="pregnancy != null">
+        pregnancy = #{pregnancy,jdbcType=BIT},
+      </if>
+      <if test="hernia != null">
+        hernia = #{hernia,jdbcType=BIT},
+      </if>
+      <if test="recentSurgery != null">
+        recent_surgery = #{recentSurgery,jdbcType=BIT},
+      </if>
+      <if test="fatLoss != null">
+        fat_loss = #{fatLoss,jdbcType=BIT},
+      </if>
+      <if test="building != null">
+        building = #{building,jdbcType=BIT},
+      </if>
+      <if test="toning != null">
+        toning = #{toning,jdbcType=BIT},
+      </if>
+      <if test="other != null">
+        other = #{other,jdbcType=BIT},
+      </if>
+      <if test="specificFocusAreas != null">
+        specific_focus_areas = #{specificFocusAreas,jdbcType=VARCHAR},
+      </if>
+      <if test="memberId != null">
+        member_id = #{memberId,jdbcType=INTEGER},
+      </if>
+      <if test="accountSid != null">
+        account_sid = #{accountSid,jdbcType=VARCHAR},
+      </if>
+      <if test="createdTime != null">
+        created_time = #{createdTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedTime != null">
+        updated_time = #{updatedTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.skytech.api.model.ParQ">
+    update par_q
+    set heart_condition = #{heartCondition,jdbcType=BIT},
+      angina = #{angina,jdbcType=BIT},
+      high_blood_pressure = #{highBloodPressure,jdbcType=BIT},
+      asthma = #{asthma,jdbcType=BIT},
+      diabetes = #{diabetes,jdbcType=BIT},
+      back_problems = #{backProblems,jdbcType=BIT},
+      sciatica = #{sciatica,jdbcType=BIT},
+      joint_problems = #{jointProblems,jdbcType=BIT},
+      smoker = #{smoker,jdbcType=BIT},
+      pregnancy = #{pregnancy,jdbcType=BIT},
+      hernia = #{hernia,jdbcType=BIT},
+      recent_surgery = #{recentSurgery,jdbcType=BIT},
+      fat_loss = #{fatLoss,jdbcType=BIT},
+      building = #{building,jdbcType=BIT},
+      toning = #{toning,jdbcType=BIT},
+      other = #{other,jdbcType=BIT},
+      specific_focus_areas = #{specificFocusAreas,jdbcType=VARCHAR},
+      member_id = #{memberId,jdbcType=INTEGER},
+      account_sid = #{accountSid,jdbcType=VARCHAR},
+      created_time = #{createdTime,jdbcType=TIMESTAMP},
+      updated_time = #{updatedTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

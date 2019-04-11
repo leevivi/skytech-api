@@ -7,6 +7,7 @@ import java.util.Date;
 import java.util.List;
 
 public class BaseTEventMembersExample extends BaseModelExample{
+
     protected List<Criteria> oredCriteria;
 
     public BaseTEventMembersExample() {
@@ -418,6 +419,66 @@ public class BaseTEventMembersExample extends BaseModelExample{
             return (Criteria) this;
         }
 
+        public Criteria andMemberIdIsNull() {
+            addCriterion("member_id is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andMemberIdIsNotNull() {
+            addCriterion("member_id is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andMemberIdEqualTo(Integer value) {
+            addCriterion("member_id =", value, "memberId");
+            return (Criteria) this;
+        }
+
+        public Criteria andMemberIdNotEqualTo(Integer value) {
+            addCriterion("member_id <>", value, "memberId");
+            return (Criteria) this;
+        }
+
+        public Criteria andMemberIdGreaterThan(Integer value) {
+            addCriterion("member_id >", value, "memberId");
+            return (Criteria) this;
+        }
+
+        public Criteria andMemberIdGreaterThanOrEqualTo(Integer value) {
+            addCriterion("member_id >=", value, "memberId");
+            return (Criteria) this;
+        }
+
+        public Criteria andMemberIdLessThan(Integer value) {
+            addCriterion("member_id <", value, "memberId");
+            return (Criteria) this;
+        }
+
+        public Criteria andMemberIdLessThanOrEqualTo(Integer value) {
+            addCriterion("member_id <=", value, "memberId");
+            return (Criteria) this;
+        }
+
+        public Criteria andMemberIdIn(List<Integer> values) {
+            addCriterion("member_id in", values, "memberId");
+            return (Criteria) this;
+        }
+
+        public Criteria andMemberIdNotIn(List<Integer> values) {
+            addCriterion("member_id not in", values, "memberId");
+            return (Criteria) this;
+        }
+
+        public Criteria andMemberIdBetween(Integer value1, Integer value2) {
+            addCriterion("member_id between", value1, value2, "memberId");
+            return (Criteria) this;
+        }
+
+        public Criteria andMemberIdNotBetween(Integer value1, Integer value2) {
+            addCriterion("member_id not between", value1, value2, "memberId");
+            return (Criteria) this;
+        }
+
         public Criteria andJoinedTimeIsNull() {
             addCriterion("joined_time is null");
             return (Criteria) this;
@@ -595,76 +656,6 @@ public class BaseTEventMembersExample extends BaseModelExample{
 
         public Criteria andUpdatedTimeNotBetween(Date value1, Date value2) {
             addCriterion("updated_time not between", value1, value2, "updatedTime");
-            return (Criteria) this;
-        }
-
-        public Criteria andBak3IsNull() {
-            addCriterion("bak3 is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andBak3IsNotNull() {
-            addCriterion("bak3 is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andBak3EqualTo(String value) {
-            addCriterion("bak3 =", value, "bak3");
-            return (Criteria) this;
-        }
-
-        public Criteria andBak3NotEqualTo(String value) {
-            addCriterion("bak3 <>", value, "bak3");
-            return (Criteria) this;
-        }
-
-        public Criteria andBak3GreaterThan(String value) {
-            addCriterion("bak3 >", value, "bak3");
-            return (Criteria) this;
-        }
-
-        public Criteria andBak3GreaterThanOrEqualTo(String value) {
-            addCriterion("bak3 >=", value, "bak3");
-            return (Criteria) this;
-        }
-
-        public Criteria andBak3LessThan(String value) {
-            addCriterion("bak3 <", value, "bak3");
-            return (Criteria) this;
-        }
-
-        public Criteria andBak3LessThanOrEqualTo(String value) {
-            addCriterion("bak3 <=", value, "bak3");
-            return (Criteria) this;
-        }
-
-        public Criteria andBak3Like(String value) {
-            addCriterion("bak3 like", value, "bak3");
-            return (Criteria) this;
-        }
-
-        public Criteria andBak3NotLike(String value) {
-            addCriterion("bak3 not like", value, "bak3");
-            return (Criteria) this;
-        }
-
-        public Criteria andBak3In(List<String> values) {
-            addCriterion("bak3 in", values, "bak3");
-            return (Criteria) this;
-        }
-
-        public Criteria andBak3NotIn(List<String> values) {
-            addCriterion("bak3 not in", values, "bak3");
-            return (Criteria) this;
-        }
-
-        public Criteria andBak3Between(String value1, String value2) {
-            addCriterion("bak3 between", value1, value2, "bak3");
-            return (Criteria) this;
-        }
-
-        public Criteria andBak3NotBetween(String value1, String value2) {
-            addCriterion("bak3 not between", value1, value2, "bak3");
             return (Criteria) this;
         }
 

@@ -15,7 +15,6 @@ public class BaseTMessageExample extends BaseModelExample{
     }
 
 
-
     public List<Criteria> getOredCriteria() {
         return oredCriteria;
     }
@@ -230,52 +229,52 @@ public class BaseTMessageExample extends BaseModelExample{
             return (Criteria) this;
         }
 
-        public Criteria andMsgtypeEqualTo(Boolean value) {
+        public Criteria andMsgtypeEqualTo(Integer value) {
             addCriterion("msgType =", value, "msgtype");
             return (Criteria) this;
         }
 
-        public Criteria andMsgtypeNotEqualTo(Boolean value) {
+        public Criteria andMsgtypeNotEqualTo(Integer value) {
             addCriterion("msgType <>", value, "msgtype");
             return (Criteria) this;
         }
 
-        public Criteria andMsgtypeGreaterThan(Boolean value) {
+        public Criteria andMsgtypeGreaterThan(Integer value) {
             addCriterion("msgType >", value, "msgtype");
             return (Criteria) this;
         }
 
-        public Criteria andMsgtypeGreaterThanOrEqualTo(Boolean value) {
+        public Criteria andMsgtypeGreaterThanOrEqualTo(Integer value) {
             addCriterion("msgType >=", value, "msgtype");
             return (Criteria) this;
         }
 
-        public Criteria andMsgtypeLessThan(Boolean value) {
+        public Criteria andMsgtypeLessThan(Integer value) {
             addCriterion("msgType <", value, "msgtype");
             return (Criteria) this;
         }
 
-        public Criteria andMsgtypeLessThanOrEqualTo(Boolean value) {
+        public Criteria andMsgtypeLessThanOrEqualTo(Integer value) {
             addCriterion("msgType <=", value, "msgtype");
             return (Criteria) this;
         }
 
-        public Criteria andMsgtypeIn(List<Boolean> values) {
+        public Criteria andMsgtypeIn(List<Integer> values) {
             addCriterion("msgType in", values, "msgtype");
             return (Criteria) this;
         }
 
-        public Criteria andMsgtypeNotIn(List<Boolean> values) {
+        public Criteria andMsgtypeNotIn(List<Integer> values) {
             addCriterion("msgType not in", values, "msgtype");
             return (Criteria) this;
         }
 
-        public Criteria andMsgtypeBetween(Boolean value1, Boolean value2) {
+        public Criteria andMsgtypeBetween(Integer value1, Integer value2) {
             addCriterion("msgType between", value1, value2, "msgtype");
             return (Criteria) this;
         }
 
-        public Criteria andMsgtypeNotBetween(Boolean value1, Boolean value2) {
+        public Criteria andMsgtypeNotBetween(Integer value1, Integer value2) {
             addCriterion("msgType not between", value1, value2, "msgtype");
             return (Criteria) this;
         }
@@ -337,6 +336,136 @@ public class BaseTMessageExample extends BaseModelExample{
 
         public Criteria andMsgtimeNotBetween(Date value1, Date value2) {
             addCriterion("msgTime not between", value1, value2, "msgtime");
+            return (Criteria) this;
+        }
+
+        public Criteria andMembertypeIsNull() {
+            addCriterion("memberType is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andMembertypeIsNotNull() {
+            addCriterion("memberType is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andMembertypeEqualTo(Integer value) {
+            addCriterion("memberType =", value, "membertype");
+            return (Criteria) this;
+        }
+
+        public Criteria andMembertypeNotEqualTo(Integer value) {
+            addCriterion("memberType <>", value, "membertype");
+            return (Criteria) this;
+        }
+
+        public Criteria andMembertypeGreaterThan(Integer value) {
+            addCriterion("memberType >", value, "membertype");
+            return (Criteria) this;
+        }
+
+        public Criteria andMembertypeGreaterThanOrEqualTo(Integer value) {
+            addCriterion("memberType >=", value, "membertype");
+            return (Criteria) this;
+        }
+
+        public Criteria andMembertypeLessThan(Integer value) {
+            addCriterion("memberType <", value, "membertype");
+            return (Criteria) this;
+        }
+
+        public Criteria andMembertypeLessThanOrEqualTo(Integer value) {
+            addCriterion("memberType <=", value, "membertype");
+            return (Criteria) this;
+        }
+
+        public Criteria andMembertypeIn(List<Integer> values) {
+            addCriterion("memberType in", values, "membertype");
+            return (Criteria) this;
+        }
+
+        public Criteria andMembertypeNotIn(List<Integer> values) {
+            addCriterion("memberType not in", values, "membertype");
+            return (Criteria) this;
+        }
+
+        public Criteria andMembertypeBetween(Integer value1, Integer value2) {
+            addCriterion("memberType between", value1, value2, "membertype");
+            return (Criteria) this;
+        }
+
+        public Criteria andMembertypeNotBetween(Integer value1, Integer value2) {
+            addCriterion("memberType not between", value1, value2, "membertype");
+            return (Criteria) this;
+        }
+
+        public Criteria andMsgbodyIsNull() {
+            addCriterion("msgBody is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andMsgbodyIsNotNull() {
+            addCriterion("msgBody is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andMsgbodyEqualTo(String value) {
+            addCriterion("msgBody =", value, "msgbody");
+            return (Criteria) this;
+        }
+
+        public Criteria andMsgbodyNotEqualTo(String value) {
+            addCriterion("msgBody <>", value, "msgbody");
+            return (Criteria) this;
+        }
+
+        public Criteria andMsgbodyGreaterThan(String value) {
+            addCriterion("msgBody >", value, "msgbody");
+            return (Criteria) this;
+        }
+
+        public Criteria andMsgbodyGreaterThanOrEqualTo(String value) {
+            addCriterion("msgBody >=", value, "msgbody");
+            return (Criteria) this;
+        }
+
+        public Criteria andMsgbodyLessThan(String value) {
+            addCriterion("msgBody <", value, "msgbody");
+            return (Criteria) this;
+        }
+
+        public Criteria andMsgbodyLessThanOrEqualTo(String value) {
+            addCriterion("msgBody <=", value, "msgbody");
+            return (Criteria) this;
+        }
+
+        public Criteria andMsgbodyLike(String value) {
+            addCriterion("msgBody like", value, "msgbody");
+            return (Criteria) this;
+        }
+
+        public Criteria andMsgbodyNotLike(String value) {
+            addCriterion("msgBody not like", value, "msgbody");
+            return (Criteria) this;
+        }
+
+        public Criteria andMsgbodyIn(List<String> values) {
+            addCriterion("msgBody in", values, "msgbody");
+            return (Criteria) this;
+        }
+
+        public Criteria andMsgbodyNotIn(List<String> values) {
+            addCriterion("msgBody not in", values, "msgbody");
+            return (Criteria) this;
+        }
+
+        public Criteria andMsgbodyBetween(String value1, String value2) {
+            addCriterion("msgBody between", value1, value2, "msgbody");
+            return (Criteria) this;
+        }
+
+        public Criteria andMsgbodyNotBetween(String value1, String value2) {
+            addCriterion("msgBody not between", value1, value2, "msgbody");
             return (Criteria) this;
         }
 
@@ -540,6 +669,66 @@ public class BaseTMessageExample extends BaseModelExample{
             return (Criteria) this;
         }
 
+        public Criteria andTypeIsNull() {
+            addCriterion("type is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeIsNotNull() {
+            addCriterion("type is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeEqualTo(Integer value) {
+            addCriterion("type =", value, "type");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeNotEqualTo(Integer value) {
+            addCriterion("type <>", value, "type");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeGreaterThan(Integer value) {
+            addCriterion("type >", value, "type");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeGreaterThanOrEqualTo(Integer value) {
+            addCriterion("type >=", value, "type");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeLessThan(Integer value) {
+            addCriterion("type <", value, "type");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeLessThanOrEqualTo(Integer value) {
+            addCriterion("type <=", value, "type");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeIn(List<Integer> values) {
+            addCriterion("type in", values, "type");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeNotIn(List<Integer> values) {
+            addCriterion("type not in", values, "type");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeBetween(Integer value1, Integer value2) {
+            addCriterion("type between", value1, value2, "type");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeNotBetween(Integer value1, Integer value2) {
+            addCriterion("type not between", value1, value2, "type");
+            return (Criteria) this;
+        }
+
         public Criteria andStatusIsNull() {
             addCriterion("status is null");
             return (Criteria) this;
@@ -550,52 +739,52 @@ public class BaseTMessageExample extends BaseModelExample{
             return (Criteria) this;
         }
 
-        public Criteria andStatusEqualTo(Boolean value) {
+        public Criteria andStatusEqualTo(Integer value) {
             addCriterion("status =", value, "status");
             return (Criteria) this;
         }
 
-        public Criteria andStatusNotEqualTo(Boolean value) {
+        public Criteria andStatusNotEqualTo(Integer value) {
             addCriterion("status <>", value, "status");
             return (Criteria) this;
         }
 
-        public Criteria andStatusGreaterThan(Boolean value) {
+        public Criteria andStatusGreaterThan(Integer value) {
             addCriterion("status >", value, "status");
             return (Criteria) this;
         }
 
-        public Criteria andStatusGreaterThanOrEqualTo(Boolean value) {
+        public Criteria andStatusGreaterThanOrEqualTo(Integer value) {
             addCriterion("status >=", value, "status");
             return (Criteria) this;
         }
 
-        public Criteria andStatusLessThan(Boolean value) {
+        public Criteria andStatusLessThan(Integer value) {
             addCriterion("status <", value, "status");
             return (Criteria) this;
         }
 
-        public Criteria andStatusLessThanOrEqualTo(Boolean value) {
+        public Criteria andStatusLessThanOrEqualTo(Integer value) {
             addCriterion("status <=", value, "status");
             return (Criteria) this;
         }
 
-        public Criteria andStatusIn(List<Boolean> values) {
+        public Criteria andStatusIn(List<Integer> values) {
             addCriterion("status in", values, "status");
             return (Criteria) this;
         }
 
-        public Criteria andStatusNotIn(List<Boolean> values) {
+        public Criteria andStatusNotIn(List<Integer> values) {
             addCriterion("status not in", values, "status");
             return (Criteria) this;
         }
 
-        public Criteria andStatusBetween(Boolean value1, Boolean value2) {
+        public Criteria andStatusBetween(Integer value1, Integer value2) {
             addCriterion("status between", value1, value2, "status");
             return (Criteria) this;
         }
 
-        public Criteria andStatusNotBetween(Boolean value1, Boolean value2) {
+        public Criteria andStatusNotBetween(Integer value1, Integer value2) {
             addCriterion("status not between", value1, value2, "status");
             return (Criteria) this;
         }

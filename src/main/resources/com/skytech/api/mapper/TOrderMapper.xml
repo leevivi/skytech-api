@@ -9,7 +9,9 @@
     <result column="quantity" jdbcType="INTEGER" property="quantity" />
     <result column="amount" jdbcType="INTEGER" property="amount" />
     <result column="memberId" jdbcType="INTEGER" property="memberid" />
-    <result column="status" jdbcType="BIT" property="status" />
+    <result column="companyId" jdbcType="INTEGER" property="companyid" />
+    <result column="storesId" jdbcType="INTEGER" property="storesid" />
+    <result column="status" jdbcType="INTEGER" property="status" />
     <result column="completeDate" jdbcType="TIMESTAMP" property="completedate" />
     <result column="createTime" jdbcType="TIMESTAMP" property="createtime" />
     <result column="updateTime" jdbcType="TIMESTAMP" property="updatetime" />
@@ -73,8 +75,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, orderNo, courseId, orderTime, quantity, amount, memberId, status, completeDate, 
-    createTime, updateTime
+    id, orderNo, courseId, orderTime, quantity, amount, memberId, companyId, storesId, 
+    status, completeDate, createTime, updateTime
   </sql>
   <select id="selectByExample" parameterType="com.skytech.api.model.TOrderExample" resultMap="BaseResultMap">
     select
@@ -112,12 +114,14 @@
   <insert id="insert" parameterType="com.skytech.api.model.TOrder">
     insert into t_order (id, orderNo, courseId, 
       orderTime, quantity, amount, 
-      memberId, status, completeDate, 
-      createTime, updateTime)
+      memberId, companyId, storesId, 
+      status, completeDate, createTime, 
+      updateTime)
     values (#{id,jdbcType=INTEGER}, #{orderno,jdbcType=VARCHAR}, #{courseid,jdbcType=INTEGER}, 
       #{ordertime,jdbcType=TIMESTAMP}, #{quantity,jdbcType=INTEGER}, #{amount,jdbcType=INTEGER}, 
-      #{memberid,jdbcType=INTEGER}, #{status,jdbcType=BIT}, #{completedate,jdbcType=TIMESTAMP}, 
-      #{createtime,jdbcType=TIMESTAMP}, #{updatetime,jdbcType=TIMESTAMP})
+      #{memberid,jdbcType=INTEGER}, #{companyid,jdbcType=INTEGER}, #{storesid,jdbcType=INTEGER}, 
+      #{status,jdbcType=BIT}, #{completedate,jdbcType=TIMESTAMP}, #{createtime,jdbcType=TIMESTAMP}, 
+      #{updatetime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.skytech.api.model.TOrder">
     insert into t_order
@@ -142,6 +146,12 @@
       </if>
       <if test="memberid != null">
         memberId,
+      </if>
+      <if test="companyid != null">
+        companyId,
+      </if>
+      <if test="storesid != null">
+        storesId,
       </if>
       <if test="status != null">
         status,
@@ -177,6 +187,12 @@
       </if>
       <if test="memberid != null">
         #{memberid,jdbcType=INTEGER},
+      </if>
+      <if test="companyid != null">
+        #{companyid,jdbcType=INTEGER},
+      </if>
+      <if test="storesid != null">
+        #{storesid,jdbcType=INTEGER},
       </if>
       <if test="status != null">
         #{status,jdbcType=BIT},
@@ -222,6 +238,12 @@
       <if test="record.memberid != null">
         memberId = #{record.memberid,jdbcType=INTEGER},
       </if>
+      <if test="record.companyid != null">
+        companyId = #{record.companyid,jdbcType=INTEGER},
+      </if>
+      <if test="record.storesid != null">
+        storesId = #{record.storesid,jdbcType=INTEGER},
+      </if>
       <if test="record.status != null">
         status = #{record.status,jdbcType=BIT},
       </if>
@@ -248,6 +270,8 @@
       quantity = #{record.quantity,jdbcType=INTEGER},
       amount = #{record.amount,jdbcType=INTEGER},
       memberId = #{record.memberid,jdbcType=INTEGER},
+      companyId = #{record.companyid,jdbcType=INTEGER},
+      storesId = #{record.storesid,jdbcType=INTEGER},
       status = #{record.status,jdbcType=BIT},
       completeDate = #{record.completedate,jdbcType=TIMESTAMP},
       createTime = #{record.createtime,jdbcType=TIMESTAMP},
@@ -277,6 +301,12 @@
       <if test="memberid != null">
         memberId = #{memberid,jdbcType=INTEGER},
       </if>
+      <if test="companyid != null">
+        companyId = #{companyid,jdbcType=INTEGER},
+      </if>
+      <if test="storesid != null">
+        storesId = #{storesid,jdbcType=INTEGER},
+      </if>
       <if test="status != null">
         status = #{status,jdbcType=BIT},
       </if>
@@ -300,6 +330,8 @@
       quantity = #{quantity,jdbcType=INTEGER},
       amount = #{amount,jdbcType=INTEGER},
       memberId = #{memberid,jdbcType=INTEGER},
+      companyId = #{companyid,jdbcType=INTEGER},
+      storesId = #{storesid,jdbcType=INTEGER},
       status = #{status,jdbcType=BIT},
       completeDate = #{completedate,jdbcType=TIMESTAMP},
       createTime = #{createtime,jdbcType=TIMESTAMP},

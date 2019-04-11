@@ -9,7 +9,7 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Param;
 
 public interface TEventMembersMapper extends GenericOneMapper<TEventMembers,TEventMembersExample,Integer>{
-    List<Map<String, Object>> selectByEventSid(@Param("eventId") int eventId, @Param("startDate") String startDate, @Param("endDate") String endDate);
+    List<Map<String, Object>> selectByEventId(@Param("eventId") String eventId, @Param("startDate") String startDate, @Param("endDate") String endDate);
 
     Integer selectJoinedNumByEventId(@Param("eventId") int eventId);
 

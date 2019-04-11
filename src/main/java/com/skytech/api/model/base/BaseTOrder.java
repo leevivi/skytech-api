@@ -19,7 +19,11 @@ public class BaseTOrder extends BaseModelOne<Integer>{
 
     private Integer memberid;
 
-    private Boolean status;
+    private Integer companyid;
+
+    private Integer storesid;
+
+    private Integer status;
     @JSONField(format="yyyy-MM-dd HH:mm:ss")
     private Date completedate;
     @JSONField(format="yyyy-MM-dd HH:mm:ss")
@@ -30,7 +34,7 @@ public class BaseTOrder extends BaseModelOne<Integer>{
     public BaseTOrder() {
     }
 
-    public BaseTOrder(Integer id, String orderno, Integer courseid, Date ordertime, Integer quantity, Integer amount, Integer memberid, Boolean status, Date completedate, Date createtime, Date updatetime) {
+    public BaseTOrder(Integer id, String orderno, Integer courseid, Date ordertime, Integer quantity, Integer amount, Integer memberid, Integer companyid, Integer storesid, Integer status, Date completedate, Date createtime, Date updatetime) {
         this.id = id;
         this.orderno = orderno;
         this.courseid = courseid;
@@ -38,6 +42,8 @@ public class BaseTOrder extends BaseModelOne<Integer>{
         this.quantity = quantity;
         this.amount = amount;
         this.memberid = memberid;
+        this.companyid = companyid;
+        this.storesid = storesid;
         this.status = status;
         this.completedate = completedate;
         this.createtime = createtime;
@@ -92,11 +98,27 @@ public class BaseTOrder extends BaseModelOne<Integer>{
         this.memberid = memberid;
     }
 
-    public Boolean getStatus() {
+    public Integer getCompanyid() {
+        return companyid;
+    }
+
+    public void setCompanyid(Integer companyid) {
+        this.companyid = companyid;
+    }
+
+    public Integer getStoresid() {
+        return storesid;
+    }
+
+    public void setStoresid(Integer storesid) {
+        this.storesid = storesid;
+    }
+
+    public Integer getStatus() {
         return status;
     }
 
-    public void setStatus(Boolean status) {
+    public void setStatus(Integer status) {
         this.status = status;
     }
 

@@ -14,14 +14,14 @@ public class BaseTEventMembers extends BaseModelOne<Integer>{
     private String accountSid;
 
     private String accountName;
-    @JSONField(format="yyyy-MM-dd HH:mm:ss")
+
+    private Integer memberId;
+
     private Date joinedTime;
     @JSONField(format="yyyy-MM-dd HH:mm:ss")
     private Date createdTime;
     @JSONField(format="yyyy-MM-dd HH:mm:ss")
     private Date updatedTime;
-
-    private String bak3;
 
     private String bak4;
 
@@ -30,16 +30,16 @@ public class BaseTEventMembers extends BaseModelOne<Integer>{
     public BaseTEventMembers() {
     }
 
-    public BaseTEventMembers(Integer id, Integer eventId, String eventName, String accountSid, String accountName, Date joinedTime, Date createdTime, Date updatedTime, String bak3, String bak4, String bak5) {
+    public BaseTEventMembers(Integer id, Integer eventId, String eventName, String accountSid, String accountName, Integer memberId, Date joinedTime, Date createdTime, Date updatedTime, String bak4, String bak5) {
         this.id = id;
         this.eventId = eventId;
         this.eventName = eventName;
         this.accountSid = accountSid;
         this.accountName = accountName;
+        this.memberId = memberId;
         this.joinedTime = joinedTime;
         this.createdTime = createdTime;
         this.updatedTime = updatedTime;
-        this.bak3 = bak3;
         this.bak4 = bak4;
         this.bak5 = bak5;
     }
@@ -76,6 +76,14 @@ public class BaseTEventMembers extends BaseModelOne<Integer>{
         this.accountName = accountName == null ? null : accountName.trim();
     }
 
+    public Integer getMemberId() {
+        return memberId;
+    }
+
+    public void setMemberId(Integer memberId) {
+        this.memberId = memberId;
+    }
+
     public Date getJoinedTime() {
         return joinedTime;
     }
@@ -98,14 +106,6 @@ public class BaseTEventMembers extends BaseModelOne<Integer>{
 
     public void setUpdatedTime(Date updatedTime) {
         this.updatedTime = updatedTime;
-    }
-
-    public String getBak3() {
-        return bak3;
-    }
-
-    public void setBak3(String bak3) {
-        this.bak3 = bak3 == null ? null : bak3.trim();
     }
 
     public String getBak4() {
