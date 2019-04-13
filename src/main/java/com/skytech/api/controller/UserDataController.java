@@ -101,6 +101,18 @@ public class UserDataController {
         userDataForNull.setDataUnit(physiologicalIndexList.get(i).getDataUnit());
         userDataForNull.setUpToStandard(0);
         list.add(userDataForNull);
+        Collections.sort(list, new Comparator<UserDataForNull>() {
+            @Override
+            public int compare(UserDataForNull o1, UserDataForNull o2) {
+                if(o1.getDataSortNum() > o2.getDataSortNum()){
+                    return 1;
+                }
+                if(o1.getDataSortNum() == o2.getDataSortNum()){
+                    return 0;
+                }
+                return -1;
+            }
+        });
     }
 
     /**
@@ -110,15 +122,27 @@ public class UserDataController {
      */
     public void addUserData(List<UserDataForNull> list, UserData ud) {
         UserDataForNull userDataForNull = new UserDataForNull();
-        userDataForNull.setDataSortNum(ud.getUserdataId());
-        userDataForNull.setUserdataId(ud.getId());
+        userDataForNull.setUserdataId(ud.getUserdataId());
         PhysiologicalIndex physiologicalIndex = physiologicalIndexMapper.selectByPrimaryKey(ud.getUserdataId());
+        userDataForNull.setDataSortNum(physiologicalIndex.getSortNum());
         userDataForNull.setDataName(physiologicalIndex.getTagName());
         userDataForNull.setDataActual(ud.getDataActual());
         userDataForNull.setDataGoal(ud.getDataGoal());
         userDataForNull.setDataUnit(physiologicalIndex.getDataUnit());
         userDataForNull.setUpToStandard(ud.getUpToStandard());
         list.add(userDataForNull);
+        Collections.sort(list, new Comparator<UserDataForNull>() {
+            @Override
+            public int compare(UserDataForNull o1, UserDataForNull o2) {
+                if(o1.getDataSortNum() > o2.getDataSortNum()){
+                    return 1;
+                }
+                if(o1.getDataSortNum() == o2.getDataSortNum()){
+                    return 0;
+                }
+                return -1;
+            }
+        });
     }
 
     @ApiOperation(value = "新增")

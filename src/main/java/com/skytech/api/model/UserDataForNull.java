@@ -5,7 +5,7 @@ import java.math.BigDecimal;
 /**
  * Created by 1 on 2019/4/10.
  */
-public class UserDataForNull {
+public class UserDataForNull{
     //数据id
     Integer userdataId;
     //数据序号
@@ -77,4 +77,6 @@ public class UserDataForNull {
     public void setUpToStandard(Integer upToStandard) {
         this.upToStandard = upToStandard;
     }
+
+
 }
