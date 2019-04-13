@@ -80,7 +80,7 @@ public class MessageController {
                 }
             }
         }catch (Exception e){
-            return JsonMap.of(true, "",data);
+            return JsonMap.of(true, "",new ArrayList<>());
         }
 
         return JsonMap.of(true, "",list);

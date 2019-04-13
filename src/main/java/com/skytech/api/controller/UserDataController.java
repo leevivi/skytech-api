@@ -1,7 +1,9 @@
 package com.skytech.api.controller;
 
+import com.alibaba.fastjson.JSON;
 import com.skytech.api.core.JsonMap;
 import com.skytech.api.core.utils.CheckUtil;
+import com.skytech.api.core.utils.JsonXMLUtil;
 import com.skytech.api.mapper.PhysiologicalIndexMapper;
 import com.skytech.api.mapper.UserDataMapper;
 import com.skytech.api.model.*;
@@ -65,8 +67,8 @@ public class UserDataController {
                     for (UserData ud :userDataList) {
                         for(int k = 0;k<physiologicalIndexList.size();k++){
                             if(ud.getUserdataId()==physiologicalIndexList.get(k).getId()){
-                                list.get(ud.getUserdataId()-1).setDataActualValue(ud.getDataActual());
-                                list.get(ud.getUserdataId()-1).setDataGoalValue(ud.getDataGoal());
+                                list.get(ud.getUserdataId()-1).setDataActual(ud.getDataActual());
+                                list.get(ud.getUserdataId()-1).setDataGoal(ud.getDataGoal());
                             }
                         }
                     }
@@ -92,12 +94,12 @@ public class UserDataController {
     public void addNullUserData(List<UserDataForNull> list, List<PhysiologicalIndex> physiologicalIndexList, int i) {
         UserDataForNull userDataForNull = new UserDataForNull();
         userDataForNull.setDataSortNum(physiologicalIndexList.get(i).getSortNum());
-        userDataForNull.setDataId(physiologicalIndexList.get(i).getId());
+        userDataForNull.setUserdataId(physiologicalIndexList.get(i).getId());
         userDataForNull.setDataName(physiologicalIndexList.get(i).getTagName());
-        userDataForNull.setDataActualValue(new BigDecimal(0));
-        userDataForNull.setDataGoalValue(new BigDecimal(0));
+        userDataForNull.setDataActual(new BigDecimal(0));
+        userDataForNull.setDataGoal(new BigDecimal(0));
         userDataForNull.setDataUnit(physiologicalIndexList.get(i).getDataUnit());
-        userDataForNull.setUpToStandard(false);
+        userDataForNull.setUpToStandard(0);
         list.add(userDataForNull);
     }
 
@@ -109,11 +111,11 @@ public class UserDataController {
     public void addUserData(List<UserDataForNull> list, UserData ud) {
         UserDataForNull userDataForNull = new UserDataForNull();
         userDataForNull.setDataSortNum(ud.getUserdataId());
-        userDataForNull.setDataId(ud.getId());
+        userDataForNull.setUserdataId(ud.getId());
         PhysiologicalIndex physiologicalIndex = physiologicalIndexMapper.selectByPrimaryKey(ud.getUserdataId());
         userDataForNull.setDataName(physiologicalIndex.getTagName());
-        userDataForNull.setDataActualValue(ud.getDataActual());
-        userDataForNull.setDataGoalValue(ud.getDataGoal());
+        userDataForNull.setDataActual(ud.getDataActual());
+        userDataForNull.setDataGoal(ud.getDataGoal());
         userDataForNull.setDataUnit(physiologicalIndex.getDataUnit());
         userDataForNull.setUpToStandard(ud.getUpToStandard());
         list.add(userDataForNull);
@@ -125,9 +127,10 @@ public class UserDataController {
 
     })
     @PostMapping(value = "/userData/save")
-    public JsonMap save(HttpSession session,@RequestBody UserData userData) throws Exception {
+    public JsonMap save(HttpSession session,@RequestBody List<UserData> userDataForList) throws Exception {
+        System.out.println(userDataForList);
 
-        return userDataService.save(session,userData);
+        return userDataService.save(session,userDataForList);
 
     }
 

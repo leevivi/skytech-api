@@ -349,52 +349,52 @@ public class BaseTCourseExample extends BaseModelExample{
             return (Criteria) this;
         }
 
-        public Criteria andIscouponEqualTo(Boolean value) {
+        public Criteria andIscouponEqualTo(Integer value) {
             addCriterion("isCoupon =", value, "iscoupon");
             return (Criteria) this;
         }
 
-        public Criteria andIscouponNotEqualTo(Boolean value) {
+        public Criteria andIscouponNotEqualTo(Integer value) {
             addCriterion("isCoupon <>", value, "iscoupon");
             return (Criteria) this;
         }
 
-        public Criteria andIscouponGreaterThan(Boolean value) {
+        public Criteria andIscouponGreaterThan(Integer value) {
             addCriterion("isCoupon >", value, "iscoupon");
             return (Criteria) this;
         }
 
-        public Criteria andIscouponGreaterThanOrEqualTo(Boolean value) {
+        public Criteria andIscouponGreaterThanOrEqualTo(Integer value) {
             addCriterion("isCoupon >=", value, "iscoupon");
             return (Criteria) this;
         }
 
-        public Criteria andIscouponLessThan(Boolean value) {
+        public Criteria andIscouponLessThan(Integer value) {
             addCriterion("isCoupon <", value, "iscoupon");
             return (Criteria) this;
         }
 
-        public Criteria andIscouponLessThanOrEqualTo(Boolean value) {
+        public Criteria andIscouponLessThanOrEqualTo(Integer value) {
             addCriterion("isCoupon <=", value, "iscoupon");
             return (Criteria) this;
         }
 
-        public Criteria andIscouponIn(List<Boolean> values) {
+        public Criteria andIscouponIn(List<Integer> values) {
             addCriterion("isCoupon in", values, "iscoupon");
             return (Criteria) this;
         }
 
-        public Criteria andIscouponNotIn(List<Boolean> values) {
+        public Criteria andIscouponNotIn(List<Integer> values) {
             addCriterion("isCoupon not in", values, "iscoupon");
             return (Criteria) this;
         }
 
-        public Criteria andIscouponBetween(Boolean value1, Boolean value2) {
+        public Criteria andIscouponBetween(Integer value1, Integer value2) {
             addCriterion("isCoupon between", value1, value2, "iscoupon");
             return (Criteria) this;
         }
 
-        public Criteria andIscouponNotBetween(Boolean value1, Boolean value2) {
+        public Criteria andIscouponNotBetween(Integer value1, Integer value2) {
             addCriterion("isCoupon not between", value1, value2, "iscoupon");
             return (Criteria) this;
         }
@@ -526,6 +526,76 @@ public class BaseTCourseExample extends BaseModelExample{
 
         public Criteria andCoverurlNotBetween(String value1, String value2) {
             addCriterion("coverUrl not between", value1, value2, "coverurl");
+            return (Criteria) this;
+        }
+
+        public Criteria andCoursebodyIsNull() {
+            addCriterion("courseBody is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCoursebodyIsNotNull() {
+            addCriterion("courseBody is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCoursebodyEqualTo(String value) {
+            addCriterion("courseBody =", value, "coursebody");
+            return (Criteria) this;
+        }
+
+        public Criteria andCoursebodyNotEqualTo(String value) {
+            addCriterion("courseBody <>", value, "coursebody");
+            return (Criteria) this;
+        }
+
+        public Criteria andCoursebodyGreaterThan(String value) {
+            addCriterion("courseBody >", value, "coursebody");
+            return (Criteria) this;
+        }
+
+        public Criteria andCoursebodyGreaterThanOrEqualTo(String value) {
+            addCriterion("courseBody >=", value, "coursebody");
+            return (Criteria) this;
+        }
+
+        public Criteria andCoursebodyLessThan(String value) {
+            addCriterion("courseBody <", value, "coursebody");
+            return (Criteria) this;
+        }
+
+        public Criteria andCoursebodyLessThanOrEqualTo(String value) {
+            addCriterion("courseBody <=", value, "coursebody");
+            return (Criteria) this;
+        }
+
+        public Criteria andCoursebodyLike(String value) {
+            addCriterion("courseBody like", value, "coursebody");
+            return (Criteria) this;
+        }
+
+        public Criteria andCoursebodyNotLike(String value) {
+            addCriterion("courseBody not like", value, "coursebody");
+            return (Criteria) this;
+        }
+
+        public Criteria andCoursebodyIn(List<String> values) {
+            addCriterion("courseBody in", values, "coursebody");
+            return (Criteria) this;
+        }
+
+        public Criteria andCoursebodyNotIn(List<String> values) {
+            addCriterion("courseBody not in", values, "coursebody");
+            return (Criteria) this;
+        }
+
+        public Criteria andCoursebodyBetween(String value1, String value2) {
+            addCriterion("courseBody between", value1, value2, "coursebody");
+            return (Criteria) this;
+        }
+
+        public Criteria andCoursebodyNotBetween(String value1, String value2) {
+            addCriterion("courseBody not between", value1, value2, "coursebody");
             return (Criteria) this;
         }
 
@@ -729,52 +799,52 @@ public class BaseTCourseExample extends BaseModelExample{
             return (Criteria) this;
         }
 
-        public Criteria andStatusEqualTo(Boolean value) {
+        public Criteria andStatusEqualTo(Integer value) {
             addCriterion("status =", value, "status");
             return (Criteria) this;
         }
 
-        public Criteria andStatusNotEqualTo(Boolean value) {
+        public Criteria andStatusNotEqualTo(Integer value) {
             addCriterion("status <>", value, "status");
             return (Criteria) this;
         }
 
-        public Criteria andStatusGreaterThan(Boolean value) {
+        public Criteria andStatusGreaterThan(Integer value) {
             addCriterion("status >", value, "status");
             return (Criteria) this;
         }
 
-        public Criteria andStatusGreaterThanOrEqualTo(Boolean value) {
+        public Criteria andStatusGreaterThanOrEqualTo(Integer value) {
             addCriterion("status >=", value, "status");
             return (Criteria) this;
         }
 
-        public Criteria andStatusLessThan(Boolean value) {
+        public Criteria andStatusLessThan(Integer value) {
             addCriterion("status <", value, "status");
             return (Criteria) this;
         }
 
-        public Criteria andStatusLessThanOrEqualTo(Boolean value) {
+        public Criteria andStatusLessThanOrEqualTo(Integer value) {
             addCriterion("status <=", value, "status");
             return (Criteria) this;
         }
 
-        public Criteria andStatusIn(List<Boolean> values) {
+        public Criteria andStatusIn(List<Integer> values) {
             addCriterion("status in", values, "status");
             return (Criteria) this;
         }
 
-        public Criteria andStatusNotIn(List<Boolean> values) {
+        public Criteria andStatusNotIn(List<Integer> values) {
             addCriterion("status not in", values, "status");
             return (Criteria) this;
         }
 
-        public Criteria andStatusBetween(Boolean value1, Boolean value2) {
+        public Criteria andStatusBetween(Integer value1, Integer value2) {
             addCriterion("status between", value1, value2, "status");
             return (Criteria) this;
         }
 
-        public Criteria andStatusNotBetween(Boolean value1, Boolean value2) {
+        public Criteria andStatusNotBetween(Integer value1, Integer value2) {
             addCriterion("status not between", value1, value2, "status");
             return (Criteria) this;
         }

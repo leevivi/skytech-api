@@ -4,6 +4,7 @@
   <resultMap id="BaseResultMap" type="com.skytech.api.model.TEvent">
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="event_name" jdbcType="VARCHAR" property="eventName" />
+    <result column="event_info" jdbcType="VARCHAR" property="eventInfo" />
     <result column="start_date" jdbcType="DATE" property="startDate" />
     <result column="end_date" jdbcType="DATE" property="endDate" />
     <result column="event_pic" jdbcType="VARCHAR" property="eventPic" />
@@ -19,9 +20,6 @@
     <result column="bak3" jdbcType="VARCHAR" property="bak3" />
     <result column="bak4" jdbcType="VARCHAR" property="bak4" />
     <result column="bak5" jdbcType="VARCHAR" property="bak5" />
-  </resultMap>
-  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.skytech.api.model.TEvent">
-    <result column="event_info" jdbcType="LONGVARCHAR" property="eventInfo" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -82,28 +80,10 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, event_name, start_date, end_date, event_pic, detail_url, stores_id, comany_id, 
-    event_upper, event_status, created_time, updated_time, bak1, bak2, bak3, bak4, bak5
+    id, event_name, event_info, start_date, end_date, event_pic, detail_url, stores_id, 
+    comany_id, event_upper, event_status, created_time, updated_time, bak1, bak2, bak3, 
+    bak4, bak5
   </sql>
-  <sql id="Blob_Column_List">
-    event_info
-  </sql>
-  <select id="selectByExampleWithBLOBs" parameterType="com.skytech.api.model.TEventExample" resultMap="ResultMapWithBLOBs">
-    select
-    <if test="distinct">
-      distinct
-    </if>
-    <include refid="Base_Column_List" />
-    ,
-    <include refid="Blob_Column_List" />
-    from t_event
-    <if test="_parameter != null">
-      <include refid="Example_Where_Clause" />
-    </if>
-    <if test="orderByClause != null">
-      order by ${orderByClause}
-    </if>
-  </select>
   <select id="selectByExample" parameterType="com.skytech.api.model.TEventExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
@@ -121,11 +101,9 @@
       limit #{pagination.begin}, #{pagination.pageSize}
     </if>
   </select>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    ,
-    <include refid="Blob_Column_List" />
     from t_event
     where id = #{id,jdbcType=INTEGER}
   </select>
@@ -140,18 +118,18 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.skytech.api.model.TEvent">
-    insert into t_event (id, event_name, start_date, 
-      end_date, event_pic, detail_url, 
-      stores_id, comany_id, event_upper, 
-      event_status, created_time, updated_time, 
-      bak1, bak2, bak3, bak4, 
-      bak5, event_info)
-    values (#{id,jdbcType=INTEGER}, #{eventName,jdbcType=VARCHAR}, #{startDate,jdbcType=DATE}, 
-      #{endDate,jdbcType=DATE}, #{eventPic,jdbcType=VARCHAR}, #{detailUrl,jdbcType=VARCHAR}, 
-      #{storesId,jdbcType=INTEGER}, #{comanyId,jdbcType=INTEGER}, #{eventUpper,jdbcType=INTEGER}, 
-      #{eventStatus,jdbcType=INTEGER}, #{createdTime,jdbcType=TIMESTAMP}, #{updatedTime,jdbcType=TIMESTAMP}, 
-      #{bak1,jdbcType=VARCHAR}, #{bak2,jdbcType=VARCHAR}, #{bak3,jdbcType=VARCHAR}, #{bak4,jdbcType=VARCHAR}, 
-      #{bak5,jdbcType=VARCHAR}, #{eventInfo,jdbcType=LONGVARCHAR})
+    insert into t_event (id, event_name, event_info, 
+      start_date, end_date, event_pic, 
+      detail_url, stores_id, comany_id, 
+      event_upper, event_status, created_time, 
+      updated_time, bak1, bak2, 
+      bak3, bak4, bak5)
+    values (#{id,jdbcType=INTEGER}, #{eventName,jdbcType=VARCHAR}, #{eventInfo,jdbcType=VARCHAR}, 
+      #{startDate,jdbcType=DATE}, #{endDate,jdbcType=DATE}, #{eventPic,jdbcType=VARCHAR}, 
+      #{detailUrl,jdbcType=VARCHAR}, #{storesId,jdbcType=INTEGER}, #{comanyId,jdbcType=INTEGER}, 
+      #{eventUpper,jdbcType=INTEGER}, #{eventStatus,jdbcType=INTEGER}, #{createdTime,jdbcType=TIMESTAMP}, 
+      #{updatedTime,jdbcType=TIMESTAMP}, #{bak1,jdbcType=VARCHAR}, #{bak2,jdbcType=VARCHAR}, 
+      #{bak3,jdbcType=VARCHAR}, #{bak4,jdbcType=VARCHAR}, #{bak5,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.skytech.api.model.TEvent">
     insert into t_event
@@ -161,6 +139,9 @@
       </if>
       <if test="eventName != null">
         event_name,
+      </if>
+      <if test="eventInfo != null">
+        event_info,
       </if>
       <if test="startDate != null">
         start_date,
@@ -207,9 +188,6 @@
       <if test="bak5 != null">
         bak5,
       </if>
-      <if test="eventInfo != null">
-        event_info,
-      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -217,6 +195,9 @@
       </if>
       <if test="eventName != null">
         #{eventName,jdbcType=VARCHAR},
+      </if>
+      <if test="eventInfo != null">
+        #{eventInfo,jdbcType=VARCHAR},
       </if>
       <if test="startDate != null">
         #{startDate,jdbcType=DATE},
@@ -263,9 +244,6 @@
       <if test="bak5 != null">
         #{bak5,jdbcType=VARCHAR},
       </if>
-      <if test="eventInfo != null">
-        #{eventInfo,jdbcType=LONGVARCHAR},
-      </if>
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.skytech.api.model.TEventExample" resultType="java.lang.Integer">
@@ -282,6 +260,9 @@
       </if>
       <if test="record.eventName != null">
         event_name = #{record.eventName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.eventInfo != null">
+        event_info = #{record.eventInfo,jdbcType=VARCHAR},
       </if>
       <if test="record.startDate != null">
         start_date = #{record.startDate,jdbcType=DATE},
@@ -328,34 +309,7 @@
       <if test="record.bak5 != null">
         bak5 = #{record.bak5,jdbcType=VARCHAR},
       </if>
-      <if test="record.eventInfo != null">
-        event_info = #{record.eventInfo,jdbcType=LONGVARCHAR},
-      </if>
     </set>
-    <if test="_parameter != null">
-      <include refid="Update_By_Example_Where_Clause" />
-    </if>
-  </update>
-  <update id="updateByExampleWithBLOBs" parameterType="map">
-    update t_event
-    set id = #{record.id,jdbcType=INTEGER},
-      event_name = #{record.eventName,jdbcType=VARCHAR},
-      start_date = #{record.startDate,jdbcType=DATE},
-      end_date = #{record.endDate,jdbcType=DATE},
-      event_pic = #{record.eventPic,jdbcType=VARCHAR},
-      detail_url = #{record.detailUrl,jdbcType=VARCHAR},
-      stores_id = #{record.storesId,jdbcType=INTEGER},
-      comany_id = #{record.comanyId,jdbcType=INTEGER},
-      event_upper = #{record.eventUpper,jdbcType=INTEGER},
-      event_status = #{record.eventStatus,jdbcType=INTEGER},
-      created_time = #{record.createdTime,jdbcType=TIMESTAMP},
-      updated_time = #{record.updatedTime,jdbcType=TIMESTAMP},
-      bak1 = #{record.bak1,jdbcType=VARCHAR},
-      bak2 = #{record.bak2,jdbcType=VARCHAR},
-      bak3 = #{record.bak3,jdbcType=VARCHAR},
-      bak4 = #{record.bak4,jdbcType=VARCHAR},
-      bak5 = #{record.bak5,jdbcType=VARCHAR},
-      event_info = #{record.eventInfo,jdbcType=LONGVARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -364,6 +318,7 @@
     update t_event
     set id = #{record.id,jdbcType=INTEGER},
       event_name = #{record.eventName,jdbcType=VARCHAR},
+      event_info = #{record.eventInfo,jdbcType=VARCHAR},
       start_date = #{record.startDate,jdbcType=DATE},
       end_date = #{record.endDate,jdbcType=DATE},
       event_pic = #{record.eventPic,jdbcType=VARCHAR},
@@ -388,6 +343,9 @@
     <set>
       <if test="eventName != null">
         event_name = #{eventName,jdbcType=VARCHAR},
+      </if>
+      <if test="eventInfo != null">
+        event_info = #{eventInfo,jdbcType=VARCHAR},
       </if>
       <if test="startDate != null">
         start_date = #{startDate,jdbcType=DATE},
@@ -434,36 +392,13 @@
       <if test="bak5 != null">
         bak5 = #{bak5,jdbcType=VARCHAR},
       </if>
-      <if test="eventInfo != null">
-        event_info = #{eventInfo,jdbcType=LONGVARCHAR},
-      </if>
     </set>
-    where id = #{id,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.skytech.api.model.TEvent">
-    update t_event
-    set event_name = #{eventName,jdbcType=VARCHAR},
-      start_date = #{startDate,jdbcType=DATE},
-      end_date = #{endDate,jdbcType=DATE},
-      event_pic = #{eventPic,jdbcType=VARCHAR},
-      detail_url = #{detailUrl,jdbcType=VARCHAR},
-      stores_id = #{storesId,jdbcType=INTEGER},
-      comany_id = #{comanyId,jdbcType=INTEGER},
-      event_upper = #{eventUpper,jdbcType=INTEGER},
-      event_status = #{eventStatus,jdbcType=INTEGER},
-      created_time = #{createdTime,jdbcType=TIMESTAMP},
-      updated_time = #{updatedTime,jdbcType=TIMESTAMP},
-      bak1 = #{bak1,jdbcType=VARCHAR},
-      bak2 = #{bak2,jdbcType=VARCHAR},
-      bak3 = #{bak3,jdbcType=VARCHAR},
-      bak4 = #{bak4,jdbcType=VARCHAR},
-      bak5 = #{bak5,jdbcType=VARCHAR},
-      event_info = #{eventInfo,jdbcType=LONGVARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.skytech.api.model.TEvent">
     update t_event
     set event_name = #{eventName,jdbcType=VARCHAR},
+      event_info = #{eventInfo,jdbcType=VARCHAR},
       start_date = #{startDate,jdbcType=DATE},
       end_date = #{endDate,jdbcType=DATE},
       event_pic = #{eventPic,jdbcType=VARCHAR},

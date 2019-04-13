@@ -18,11 +18,11 @@ public interface CourseService extends GenericOneService<TCourse,Integer> {
 
     List<Map<String, Object>> findForCourse(int courseId);
 
-    Map<String, Object> findForCourseDetail(int id);
+    JsonMap findForCourseDetail(int id);
 
     JsonMap save(TCourse tCourse);
 
-    JsonMap join(int membersId,int courseId,int[] couponIds,int[] tCourseTimeIds);
+    JsonMap join(int membersId,int companyId,int storesId,int courseId,int[] couponIds,int[] tCourseTimeIds);
 
     JsonMap update(String eventSid, TCourse tCourse);
 

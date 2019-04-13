@@ -13,11 +13,18 @@ import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.core.annotation.Order;
+import org.springframework.jdbc.datasource.DataSourceTransactionManager;
+import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.transaction.annotation.TransactionManagementConfigurer;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -28,8 +35,11 @@ import java.util.Map;
 /**
  * Created by LiWei on 2019/3/29.
  */
+@EnableTransactionManagement
 @RestController
-public class CourseController {
+public class CourseController{
+    /*@Resource(name = "join")
+    private PlatformTransactionManager join;*/
     Logger LOGGER = LoggerFactory.getLogger(CourseController.class);
     @Autowired
     private CourseService courseService;
@@ -64,7 +74,7 @@ public class CourseController {
         List<Pagination<TCourse>> paginationList = new ArrayList<>();
         memberInfoData = checkMembers(memberInfoData, accountSid);
         List<MemberInfo> memberList= new ArrayList<>();
-        data = checkMembers(data, accountSid);
+//        data = checkMembers(data, accountSid);
         int memberId = 0;
         int companyId = 0;
         int storesId = 0;
@@ -77,7 +87,7 @@ public class CourseController {
                 paginationList.add(pagination);
             }
         }catch (Exception e){
-            return JsonMap.of(true, "",data);
+            return JsonMap.of(true, "",new ArrayList<>());
         }
         int count = 0;
         data.put("code", "2000");
@@ -94,8 +104,12 @@ public class CourseController {
                 }
 //            OrgStores orgStores = orgStoresMapper.selectByPrimaryKey(tCourse.getStoresid());
 //            tCourse.setStoresName(orgStores.getStoresname());
-                SysUser sysUser = sysUserMapper.selectByPrimaryKey(tCourse.getUserid());
-                tCourse.setTeacherName(sysUser.getNickname());
+                if(tCourse.getUserid()==null){
+                    tCourse.setTeacherName("");
+                }else {
+                    SysUser sysUser = sysUserMapper.selectByPrimaryKey(tCourse.getUserid());
+                    tCourse.setTeacherName(sysUser.getNickname());
+                }
                 Integer joinedNum = tOrderMapper.selectJoinedCourseNum(tCourse.getId());
                 //返回用户是否已经加入该课程状态
                 TOrderExample tOrderExample = new TOrderExample();
@@ -121,9 +135,8 @@ public class CourseController {
     @GetMapping(value = "/course/listById")
     public JsonMap listById(int id) {
 
-        Map<String, Object> detail = courseService.findForCourseDetail(id);
+        return courseService.findForCourseDetail(id);
 
-        return JsonMap.of(true, "", detail);
     }
 
     @ApiOperation(value = "选择星期")
@@ -170,7 +183,7 @@ public class CourseController {
 
             }
         }catch (Exception e){
-            return JsonMap.of(true, "",data);
+            return JsonMap.of(true, "",new ArrayList<>());
         }
         return JsonMap.of(true, "",list);
 
@@ -182,6 +195,8 @@ public class CourseController {
             @ApiImplicitParam(name = "couponIds", value = "couponIds", required = true, dataType = "int"),
             @ApiImplicitParam(name = "tCourseTimeIds", value = "tCourseTimeIds", required = true, dataType = "int"),
     })
+    /*@Bean(name = "join")*/
+    @Transactional
     @PostMapping(value = "/course/join")
     public JsonMap join(HttpSession session, int courseId,int[] couponIds, int[] tCourseTimeIds) {
         Map<String, Object> data = new HashMap<>();
@@ -194,18 +209,22 @@ public class CourseController {
         List<MemberInfo> memberList = new ArrayList<>();
         TCourse tCourse = tCourseMapper.selectByPrimaryKey(courseId);
         int memberId = 0;
-        try {
+        int companyId = 0;
+        int storesId = 0;
+//        try {
             memberList = (List<MemberInfo>) memberInfoData.get("memberInfoList");
             for (MemberInfo memberInfo :memberList) {
                 memberId = memberInfo.getMemberId();
+                companyId = memberInfo.getCompanyId();
+                storesId = memberInfo.getStoresId();
                 TMember tMember = tMemberMapper.selectByPrimaryKey(memberId);
                 if(tCourse.getCompanyid()==tMember.getCompanyid()&&tCourse.getStoresid()==tMember.getStoresid()){
-                    return courseService.join(memberId, courseId,couponIds, tCourseTimeIds);
+                    return courseService.join(memberId,companyId,storesId, courseId,couponIds, tCourseTimeIds);
                 }
             }
-        }catch (Exception e){
-            return JsonMap.of(true, "",data);
-        }
+//        }catch (Exception e){
+//            return JsonMap.of(false, "",new ArrayList<>());
+//        }
 
         return JsonMap.of(false, "");
 
@@ -238,7 +257,7 @@ public class CourseController {
                 }
             }
         }catch (Exception e){
-            return JsonMap.of(true, "",data);
+            return JsonMap.of(true, "",new ArrayList<>());
         }
         return JsonMap.of(false, "");
 
@@ -281,6 +300,7 @@ public class CourseController {
         if(tMembers.isEmpty()||tMembers.get(0).getCompanyid()==null||tMembers.get(0).getStoresid()==null){
             List<TCourse> list = new ArrayList<>();
             data.put("data", list);
+            data.put("memberInfoList", list);
             return data;
         }
         for (TMember tMember :tMembers) {
@@ -294,4 +314,9 @@ public class CourseController {
         data.put("memberInfoList",memberInfoList);
         return data;
     }
+
+    /*@Override
+    public PlatformTransactionManager annotationDrivenTransactionManager() {
+        return join;
+    }*/
 }

@@ -81,7 +81,7 @@ public class MyVouchersServiceImpl extends GenericOneServiceImpl<TCouponMembers,
                     Vouchers vouchers = new Vouchers();
                     vouchers.setVouchersName(tCoupons.get(0).getCouponname());
                     vouchers.setAvailableClub("This stores use only");
-                    OrgStores orgStores = orgStoresMapper.selectByPrimaryKey(tCoupons.get(0).getStoresid());
+                    OrgStores orgStores = orgStoresMapper.selectByPrimaryKey(storesId);
                     myVouchers.setClubId(orgStores.getId());
                     myVouchers.setClubName(orgStores.getStoresname());
                     //通过有效时间补全当月日期2019-04-01-2019-04-30

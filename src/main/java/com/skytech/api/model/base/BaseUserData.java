@@ -18,7 +18,7 @@ public class BaseUserData extends BaseModelOne<Integer>{
 
     private BigDecimal dataGoal;
 
-    private Boolean upToStandard;
+    private Integer upToStandard;
     @JSONField(format="yyyy-MM-dd HH:mm:ss")
     private Date createdTime;
     @JSONField(format="yyyy-MM-dd HH:mm:ss")
@@ -27,7 +27,7 @@ public class BaseUserData extends BaseModelOne<Integer>{
     public BaseUserData() {
     }
 
-    public BaseUserData(Integer id, String accountSid, Integer memberId, Integer userdataId, BigDecimal dataActual, BigDecimal dataGoal, Boolean upToStandard, Date createdTime, Date updatedTime) {
+    public BaseUserData(Integer id, String accountSid, Integer memberId, Integer userdataId, BigDecimal dataActual, BigDecimal dataGoal, Integer upToStandard, Date createdTime, Date updatedTime) {
         this.id = id;
         this.accountSid = accountSid;
         this.memberId = memberId;
@@ -79,11 +79,11 @@ public class BaseUserData extends BaseModelOne<Integer>{
         this.dataGoal = dataGoal;
     }
 
-    public Boolean getUpToStandard() {
+    public Integer getUpToStandard() {
         return upToStandard;
     }
 
-    public void setUpToStandard(Boolean upToStandard) {
+    public void setUpToStandard(Integer upToStandard) {
         this.upToStandard = upToStandard;
     }
 

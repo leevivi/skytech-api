@@ -7,26 +7,42 @@ import java.math.BigDecimal;
  */
 public class UserDataForNull {
     //数据id
-    Integer dataId;
+    Integer userdataId;
     //数据序号
     Integer dataSortNum;
     //数据名称
     String dataName;
     //数据实际值
-    BigDecimal dataActualValue;
+    BigDecimal dataActual;
     //数据目标值
-    BigDecimal dataGoalValue;
+    BigDecimal dataGoal;
     //数据单位
     String dataUnit;
-    //是否达标
-    Boolean upToStandard;
+    //是否达标1达标0未达标
+    Integer upToStandard;
 
-    public Integer getDataId() {
-        return dataId;
+    public Integer getUserdataId() {
+        return userdataId;
     }
 
-    public void setDataId(Integer dataId) {
-        this.dataId = dataId;
+    public void setUserdataId(Integer userdataId) {
+        this.userdataId = userdataId;
+    }
+
+    public BigDecimal getDataActual() {
+        return dataActual;
+    }
+
+    public void setDataActual(BigDecimal dataActual) {
+        this.dataActual = dataActual;
+    }
+
+    public BigDecimal getDataGoal() {
+        return dataGoal;
+    }
+
+    public void setDataGoal(BigDecimal dataGoal) {
+        this.dataGoal = dataGoal;
     }
 
     public Integer getDataSortNum() {
@@ -45,21 +61,6 @@ public class UserDataForNull {
         this.dataName = dataName;
     }
 
-    public BigDecimal getDataActualValue() {
-        return dataActualValue;
-    }
-
-    public void setDataActualValue(BigDecimal dataActualValue) {
-        this.dataActualValue = dataActualValue;
-    }
-
-    public BigDecimal getDataGoalValue() {
-        return dataGoalValue;
-    }
-
-    public void setDataGoalValue(BigDecimal dataGoalValue) {
-        this.dataGoalValue = dataGoalValue;
-    }
 
     public String getDataUnit() {
         return dataUnit;
@@ -69,11 +70,11 @@ public class UserDataForNull {
         this.dataUnit = dataUnit;
     }
 
-    public Boolean getUpToStandard() {
+    public Integer getUpToStandard() {
         return upToStandard;
     }
 
-    public void setUpToStandard(Boolean upToStandard) {
+    public void setUpToStandard(Integer upToStandard) {
         this.upToStandard = upToStandard;
     }
 }

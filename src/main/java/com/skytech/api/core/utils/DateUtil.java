@@ -240,6 +240,12 @@ public final class DateUtil {
         System.out.println(headAndEndDateForMonth);
     }
 
+    /*public static Date stringToDate(String time){
+        Date result =
+        return result;
+    }*/
+
+
     //传一个字符串05:00/15:00，返回05:00AM或者03:00PM
     public static String getTimeQuantum(String time){
         String result = "";

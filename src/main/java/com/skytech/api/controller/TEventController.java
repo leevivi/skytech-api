@@ -76,7 +76,7 @@ public class TEventController {
                 paginationList.add(pagination);
             }
         } catch (Exception e) {
-            return JsonMap.of(true, "", data);
+            return JsonMap.of(true, "", new ArrayList<>());
         }
         data.put("code", "2000");
         data.put("message", "成功");
@@ -132,7 +132,17 @@ public class TEventController {
         TEventMembersExample tEventMembersExample = new TEventMembersExample();
         tEventMembersExample.createCriteria().andAccountSidEqualTo(accountSid).andEventIdEqualTo(eventId);
         List<TEventMembers> tEventMembers = tEventMembersMapper.selectByExample(tEventMembersExample);
-        TEvent tEvent = tEventMapper.selectByPrimaryKey(eventId);
+        TEventExample tEventExample = new TEventExample();
+        tEventExample.createCriteria().andIdEqualTo(eventId);
+        List<TEvent> tEvents = tEventMapper.selectByExample(tEventExample);
+        TEvent tEvent = new TEvent();
+        //活动id无效
+        if(tEvents.isEmpty()){
+            return JsonMap.of(true, "", data);
+        }
+        else {
+            tEvent = tEvents.get(0);
+        }
         if (!tEventMembers.isEmpty()) {
             isJoined = true;
             /*会员已经加入活动
@@ -147,35 +157,42 @@ public class TEventController {
                 return JsonMap.of(true, "", data);
             }
         }
-        if (tEvent.getEventPic() != null) {
-            tEvent.setEventPic("http://47.244.189.240:8080/statics" + tEvent.getEventPic());
-        } else {
-            tEvent.setEventPic(tEvent.getEventPic());
+        else{
+            if (tEvent.getEventPic() != null) {
+                tEvent.setEventPic("http://47.244.189.240:8080/statics" + tEvent.getEventPic());
+            } else {
+                tEvent.setEventPic(tEvent.getEventPic());
+            }
+            OrgStores orgStores = orgStoresMapper.selectByPrimaryKey(tEvent.getStoresId());
+            OrgCompany orgCompany = orgCompanyMapper.selectByPrimaryKey(tEvent.getComanyId());
+            tEvent.setStoresName(orgStores.getStoresname());
+            tEvent.setComanyName(orgCompany.getCompanyname());
+            Integer membersNum = tEventMembersService.countNum(tEvent.getId());
+            tEvent.setMemberNums(membersNum);
         }
-        OrgStores orgStores = orgStoresMapper.selectByPrimaryKey(tEvent.getStoresId());
-        OrgCompany orgCompany = orgCompanyMapper.selectByPrimaryKey(tEvent.getComanyId());
-        tEvent.setStoresName(orgStores.getStoresname());
-        tEvent.setComanyName(orgCompany.getCompanyname());
-        Integer membersNum = tEventMembersService.countNum(tEvent.getId());
+        if(!isJoined){
+            data.put("isMember",false);
+            tEvent.setJoined(isJoined);
+        }
+        else if(isJoined){
+            data.put("isMember",true);
+            tEvent.setJoined(true);
+        }
         if (tEvent.getEventStatus() == 0) {
             tEvent.setStatus("Upcoming");
-            data.put("isMember",true);
         }
         else if (tEvent.getEventStatus() == 1) {
             tEvent.setStatus("Ongoing");
-            data.put("isMember",false);
         }
         else if (tEvent.getEventStatus() == 2) {
             tEvent.setStatus("Finished");
-            data.put("isMember",false);
         }
-        tEvent.setMemberNums(membersNum);
-        tEvent.setJoined(isJoined);
+
         Mine mine = new Mine();
         List<Mine> members = new ArrayList<>();
-        data.put("tEvent",tEvent);
         data.put("mine",mine);
         data.put("members",members);
+        data.put("tEvent",tEvent);
 
         return JsonMap.of(true, "", data);
     }
@@ -275,7 +292,7 @@ public class TEventController {
                 list.addAll(tEventList);
             }
         }catch (Exception e){
-            return JsonMap.of(true, "",data);
+            return JsonMap.of(true, "",new ArrayList<>());
         }
         return JsonMap.of(true, "",list);
 
@@ -290,6 +307,7 @@ public class TEventController {
         if(tMembers.isEmpty()||tMembers.get(0).getCompanyid()==null||tMembers.get(0).getStoresid()==null){
             List<TCourse> list = new ArrayList<>();
             data.put("data", list);
+            data.put("memberInfoList", list);
             return data;
         }
         for (TMember tMember :tMembers) {

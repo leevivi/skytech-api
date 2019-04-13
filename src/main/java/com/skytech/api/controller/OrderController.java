@@ -9,6 +9,8 @@ import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -21,6 +23,7 @@ import java.util.Map;
 /**
  * Created by LiWei on 2019/4/7.
  */
+@EnableTransactionManagement
 @RestController
 public class OrderController {
 
@@ -45,6 +48,37 @@ public class OrderController {
         list = orderService.myOrder(accountSid, orderStatus);
 
         return JsonMap.of(true, "",list);
+
+    }
+
+    @ApiOperation(value = "退单")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "orderStatus", value = "orderStatus", required = true, dataType = "int")
+    })
+    @Transactional
+    @PostMapping(value = "/order/cancelConfirm")
+    public JsonMap cancelConfirm(HttpSession session, String orderNum) {
+        List<SelectCourseTime> list = new ArrayList<>();
+        Object accountSidObj = session.getAttribute("accountSid");
+
+        String accountSid = accountSidObj.toString();
+        list = orderService.cancelConfirm(accountSid, orderNum);
+        return JsonMap.of(true, "",list);
+
+    }
+
+    @ApiOperation(value = "退单确认")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "orderStatus", value = "orderStatus", required = true, dataType = "int")
+    })
+    @Transactional
+    @PostMapping(value = "/order/cancelOrder")
+    public JsonMap cancelOrder(HttpSession session, String orderNum,int[] tCourseTimeIds) {
+        Object accountSidObj = session.getAttribute("accountSid");
+
+        String accountSid = accountSidObj.toString();
+        return orderService.cancelOrder(accountSid, orderNum,tCourseTimeIds);
+
 
     }
 

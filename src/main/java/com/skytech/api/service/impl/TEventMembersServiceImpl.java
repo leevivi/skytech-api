@@ -84,6 +84,11 @@ public class TEventMembersServiceImpl extends GenericOneServiceImpl<TEventMember
         tEvent.setStoresName(orgStores.getStoresname());
         tEvent.setComanyName(orgCompany.getCompanyname());
         tEvent.setJoined(true);
+        if (tEvent.getEventPic() != null) {
+            tEvent.setEventPic("http://47.244.189.240:8080/statics" + tEvent.getEventPic());
+        } else {
+            tEvent.setEventPic(tEvent.getEventPic());
+        }
         if(tEvent.getEventStatus()==0){
             tEvent.setStatus("Upcoming");
         }else if(tEvent.getEventStatus()==1){
@@ -120,7 +125,7 @@ public class TEventMembersServiceImpl extends GenericOneServiceImpl<TEventMember
         calendar1.set(Calendar.MINUTE, 0);
         calendar1.set(Calendar.SECOND, 0);
         calendar1.add(Calendar.DATE, 1);
-        Date endDate = calendar.getTime();
+        Date endDate = calendar1.getTime();
 
         List<Map<String, Object>> tEventMembers = tEventMembersMapper.selectByEventId(String.valueOf(tEventId), DateUtil.formatStandardDatetime(startDate), DateUtil.formatStandardDatetime(endDate));
         List<Map<String, Object>> members = new ArrayList<>();

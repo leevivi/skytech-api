@@ -6,18 +6,16 @@
     <result column="title" jdbcType="VARCHAR" property="title" />
     <result column="dictId" jdbcType="INTEGER" property="dictid" />
     <result column="userId" jdbcType="INTEGER" property="userid" />
-    <result column="isCoupon" jdbcType="BIT" property="iscoupon" />
+    <result column="isCoupon" jdbcType="INTEGER" property="iscoupon" />
     <result column="upper" jdbcType="INTEGER" property="upper" />
     <result column="coverUrl" jdbcType="VARCHAR" property="coverurl" />
+    <result column="courseBody" jdbcType="VARCHAR" property="coursebody" />
     <result column="month" jdbcType="VARCHAR" property="month" />
     <result column="companyId" jdbcType="INTEGER" property="companyid" />
     <result column="storesId" jdbcType="INTEGER" property="storesid" />
-    <result column="status" jdbcType="BIT" property="status" />
+    <result column="status" jdbcType="INTEGER" property="status" />
     <result column="createTime" jdbcType="TIMESTAMP" property="createtime" />
     <result column="updateTime" jdbcType="TIMESTAMP" property="updatetime" />
-  </resultMap>
-  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.skytech.api.model.TCourse">
-    <result column="courseBody" jdbcType="LONGVARCHAR" property="coursebody" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -78,28 +76,9 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, title, dictId, userId, isCoupon, upper, coverUrl, month, companyId, storesId, 
-    status, createTime, updateTime
+    id, title, dictId, userId, isCoupon, upper, coverUrl, courseBody, month, companyId, 
+    storesId, status, createTime, updateTime
   </sql>
-  <sql id="Blob_Column_List">
-    courseBody
-  </sql>
-  <select id="selectByExampleWithBLOBs" parameterType="com.skytech.api.model.TCourseExample" resultMap="ResultMapWithBLOBs">
-    select
-    <if test="distinct">
-      distinct
-    </if>
-    <include refid="Base_Column_List" />
-    ,
-    <include refid="Blob_Column_List" />
-    from t_course
-    <if test="_parameter != null">
-      <include refid="Example_Where_Clause" />
-    </if>
-    <if test="orderByClause != null">
-      order by ${orderByClause}
-    </if>
-  </select>
   <select id="selectByExample" parameterType="com.skytech.api.model.TCourseExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
@@ -117,11 +96,9 @@
       limit #{pagination.begin}, #{pagination.pageSize}
     </if>
   </select>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    ,
-    <include refid="Blob_Column_List" />
     from t_course
     where id = #{id,jdbcType=INTEGER}
   </select>
@@ -138,14 +115,14 @@
   <insert id="insert" parameterType="com.skytech.api.model.TCourse">
     insert into t_course (id, title, dictId, 
       userId, isCoupon, upper, 
-      coverUrl, month, companyId, 
-      storesId, status, createTime, 
-      updateTime, courseBody)
+      coverUrl, courseBody, month, 
+      companyId, storesId, status, 
+      createTime, updateTime)
     values (#{id,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{dictid,jdbcType=INTEGER}, 
       #{userid,jdbcType=INTEGER}, #{iscoupon,jdbcType=BIT}, #{upper,jdbcType=INTEGER}, 
-      #{coverurl,jdbcType=VARCHAR}, #{month,jdbcType=VARCHAR}, #{companyid,jdbcType=INTEGER}, 
-      #{storesid,jdbcType=INTEGER}, #{status,jdbcType=BIT}, #{createtime,jdbcType=TIMESTAMP}, 
-      #{updatetime,jdbcType=TIMESTAMP}, #{coursebody,jdbcType=LONGVARCHAR})
+      #{coverurl,jdbcType=VARCHAR}, #{coursebody,jdbcType=VARCHAR}, #{month,jdbcType=VARCHAR}, 
+      #{companyid,jdbcType=INTEGER}, #{storesid,jdbcType=INTEGER}, #{status,jdbcType=BIT}, 
+      #{createtime,jdbcType=TIMESTAMP}, #{updatetime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.skytech.api.model.TCourse">
     insert into t_course
@@ -171,6 +148,9 @@
       <if test="coverurl != null">
         coverUrl,
       </if>
+      <if test="coursebody != null">
+        courseBody,
+      </if>
       <if test="month != null">
         month,
       </if>
@@ -188,9 +168,6 @@
       </if>
       <if test="updatetime != null">
         updateTime,
-      </if>
-      <if test="coursebody != null">
-        courseBody,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -215,6 +192,9 @@
       <if test="coverurl != null">
         #{coverurl,jdbcType=VARCHAR},
       </if>
+      <if test="coursebody != null">
+        #{coursebody,jdbcType=VARCHAR},
+      </if>
       <if test="month != null">
         #{month,jdbcType=VARCHAR},
       </if>
@@ -232,9 +212,6 @@
       </if>
       <if test="updatetime != null">
         #{updatetime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="coursebody != null">
-        #{coursebody,jdbcType=LONGVARCHAR},
       </if>
     </trim>
   </insert>
@@ -268,6 +245,9 @@
       <if test="record.coverurl != null">
         coverUrl = #{record.coverurl,jdbcType=VARCHAR},
       </if>
+      <if test="record.coursebody != null">
+        courseBody = #{record.coursebody,jdbcType=VARCHAR},
+      </if>
       <if test="record.month != null">
         month = #{record.month,jdbcType=VARCHAR},
       </if>
@@ -286,30 +266,7 @@
       <if test="record.updatetime != null">
         updateTime = #{record.updatetime,jdbcType=TIMESTAMP},
       </if>
-      <if test="record.coursebody != null">
-        courseBody = #{record.coursebody,jdbcType=LONGVARCHAR},
-      </if>
     </set>
-    <if test="_parameter != null">
-      <include refid="Update_By_Example_Where_Clause" />
-    </if>
-  </update>
-  <update id="updateByExampleWithBLOBs" parameterType="map">
-    update t_course
-    set id = #{record.id,jdbcType=INTEGER},
-      title = #{record.title,jdbcType=VARCHAR},
-      dictId = #{record.dictid,jdbcType=INTEGER},
-      userId = #{record.userid,jdbcType=INTEGER},
-      isCoupon = #{record.iscoupon,jdbcType=BIT},
-      upper = #{record.upper,jdbcType=INTEGER},
-      coverUrl = #{record.coverurl,jdbcType=VARCHAR},
-      month = #{record.month,jdbcType=VARCHAR},
-      companyId = #{record.companyid,jdbcType=INTEGER},
-      storesId = #{record.storesid,jdbcType=INTEGER},
-      status = #{record.status,jdbcType=BIT},
-      createTime = #{record.createtime,jdbcType=TIMESTAMP},
-      updateTime = #{record.updatetime,jdbcType=TIMESTAMP},
-      courseBody = #{record.coursebody,jdbcType=LONGVARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -323,6 +280,7 @@
       isCoupon = #{record.iscoupon,jdbcType=BIT},
       upper = #{record.upper,jdbcType=INTEGER},
       coverUrl = #{record.coverurl,jdbcType=VARCHAR},
+      courseBody = #{record.coursebody,jdbcType=VARCHAR},
       month = #{record.month,jdbcType=VARCHAR},
       companyId = #{record.companyid,jdbcType=INTEGER},
       storesId = #{record.storesid,jdbcType=INTEGER},
@@ -354,6 +312,9 @@
       <if test="coverurl != null">
         coverUrl = #{coverurl,jdbcType=VARCHAR},
       </if>
+      <if test="coursebody != null">
+        courseBody = #{coursebody,jdbcType=VARCHAR},
+      </if>
       <if test="month != null">
         month = #{month,jdbcType=VARCHAR},
       </if>
@@ -372,27 +333,7 @@
       <if test="updatetime != null">
         updateTime = #{updatetime,jdbcType=TIMESTAMP},
       </if>
-      <if test="coursebody != null">
-        courseBody = #{coursebody,jdbcType=LONGVARCHAR},
-      </if>
     </set>
-    where id = #{id,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.skytech.api.model.TCourse">
-    update t_course
-    set title = #{title,jdbcType=VARCHAR},
-      dictId = #{dictid,jdbcType=INTEGER},
-      userId = #{userid,jdbcType=INTEGER},
-      isCoupon = #{iscoupon,jdbcType=BIT},
-      upper = #{upper,jdbcType=INTEGER},
-      coverUrl = #{coverurl,jdbcType=VARCHAR},
-      month = #{month,jdbcType=VARCHAR},
-      companyId = #{companyid,jdbcType=INTEGER},
-      storesId = #{storesid,jdbcType=INTEGER},
-      status = #{status,jdbcType=BIT},
-      createTime = #{createtime,jdbcType=TIMESTAMP},
-      updateTime = #{updatetime,jdbcType=TIMESTAMP},
-      courseBody = #{coursebody,jdbcType=LONGVARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.skytech.api.model.TCourse">
@@ -403,6 +344,7 @@
       isCoupon = #{iscoupon,jdbcType=BIT},
       upper = #{upper,jdbcType=INTEGER},
       coverUrl = #{coverurl,jdbcType=VARCHAR},
+      courseBody = #{coursebody,jdbcType=VARCHAR},
       month = #{month,jdbcType=VARCHAR},
       companyId = #{companyid,jdbcType=INTEGER},
       storesId = #{storesid,jdbcType=INTEGER},

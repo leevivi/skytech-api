@@ -8,7 +8,7 @@
     <result column="userdata_id" jdbcType="INTEGER" property="userdataId" />
     <result column="data_actual" jdbcType="DECIMAL" property="dataActual" />
     <result column="data_goal" jdbcType="DECIMAL" property="dataGoal" />
-    <result column="up_to_standard" jdbcType="BIT" property="upToStandard" />
+    <result column="up_to_standard" jdbcType="INTEGER" property="upToStandard" />
     <result column="created_time" jdbcType="TIMESTAMP" property="createdTime" />
     <result column="updated_time" jdbcType="TIMESTAMP" property="updatedTime" />
   </resultMap>

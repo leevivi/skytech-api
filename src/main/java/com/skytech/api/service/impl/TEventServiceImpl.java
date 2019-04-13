@@ -39,9 +39,12 @@ public class TEventServiceImpl extends GenericOneServiceImpl<TEvent,TEventExampl
     }
     @Override
     public Pagination<TEvent> findForPage(int companyId, int storesId, int page, int limit) {
+        List<Integer> statusList = new ArrayList<>();
+        statusList.add(0);
+        statusList.add(1);
         TEventExample eventExample = new TEventExample();
         BaseTEventExample.Criteria criteria = eventExample.createCriteria();
-        criteria.andComanyIdEqualTo(companyId).andStoresIdEqualTo(storesId);
+        criteria.andComanyIdEqualTo(companyId).andStoresIdEqualTo(storesId).andEventStatusIn(statusList);
         Pagination<TEvent> pagination = this.queryByPage(eventExample, (page - 1) * limit, limit, "created_time desc");
 
         return pagination;

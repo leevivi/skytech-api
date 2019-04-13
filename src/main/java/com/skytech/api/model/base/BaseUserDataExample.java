@@ -470,52 +470,52 @@ public class BaseUserDataExample extends BaseModelExample{
             return (Criteria) this;
         }
 
-        public Criteria andUpToStandardEqualTo(Boolean value) {
+        public Criteria andUpToStandardEqualTo(Integer value) {
             addCriterion("up_to_standard =", value, "upToStandard");
             return (Criteria) this;
         }
 
-        public Criteria andUpToStandardNotEqualTo(Boolean value) {
+        public Criteria andUpToStandardNotEqualTo(Integer value) {
             addCriterion("up_to_standard <>", value, "upToStandard");
             return (Criteria) this;
         }
 
-        public Criteria andUpToStandardGreaterThan(Boolean value) {
+        public Criteria andUpToStandardGreaterThan(Integer value) {
             addCriterion("up_to_standard >", value, "upToStandard");
             return (Criteria) this;
         }
 
-        public Criteria andUpToStandardGreaterThanOrEqualTo(Boolean value) {
+        public Criteria andUpToStandardGreaterThanOrEqualTo(Integer value) {
             addCriterion("up_to_standard >=", value, "upToStandard");
             return (Criteria) this;
         }
 
-        public Criteria andUpToStandardLessThan(Boolean value) {
+        public Criteria andUpToStandardLessThan(Integer value) {
             addCriterion("up_to_standard <", value, "upToStandard");
             return (Criteria) this;
         }
 
-        public Criteria andUpToStandardLessThanOrEqualTo(Boolean value) {
+        public Criteria andUpToStandardLessThanOrEqualTo(Integer value) {
             addCriterion("up_to_standard <=", value, "upToStandard");
             return (Criteria) this;
         }
 
-        public Criteria andUpToStandardIn(List<Boolean> values) {
+        public Criteria andUpToStandardIn(List<Integer> values) {
             addCriterion("up_to_standard in", values, "upToStandard");
             return (Criteria) this;
         }
 
-        public Criteria andUpToStandardNotIn(List<Boolean> values) {
+        public Criteria andUpToStandardNotIn(List<Integer> values) {
             addCriterion("up_to_standard not in", values, "upToStandard");
             return (Criteria) this;
         }
 
-        public Criteria andUpToStandardBetween(Boolean value1, Boolean value2) {
+        public Criteria andUpToStandardBetween(Integer value1, Integer value2) {
             addCriterion("up_to_standard between", value1, value2, "upToStandard");
             return (Criteria) this;
         }
 
-        public Criteria andUpToStandardNotBetween(Boolean value1, Boolean value2) {
+        public Criteria andUpToStandardNotBetween(Integer value1, Integer value2) {
             addCriterion("up_to_standard not between", value1, value2, "upToStandard");
             return (Criteria) this;
         }
