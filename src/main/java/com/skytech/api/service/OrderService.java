@@ -15,7 +15,7 @@ import java.util.List;
 public interface OrderService extends GenericOneService<TOrder,Integer> {
     List<MyOrder> myOrder(String accountSid, int orderStatus);
 
-    JsonMap cancelOrder(String accountSid, String orderNum, int[] courserTimeIds);
+    JsonMap cancelOrder(String accountSid, String orderNum, int[] courserTimeIds)throws Exception;
 
     List<SelectCourseTime> cancelConfirm(String accountSid, String orderNum);
 }

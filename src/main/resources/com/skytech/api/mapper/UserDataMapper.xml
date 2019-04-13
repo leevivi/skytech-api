@@ -234,6 +234,9 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.skytech.api.model.UserData">
     update user_data
     <set>
+      <if test="id != null">
+        id = #{id,jdbcType=INTEGER},
+      </if>
       <if test="accountSid != null">
         account_sid = #{accountSid,jdbcType=VARCHAR},
       </if>

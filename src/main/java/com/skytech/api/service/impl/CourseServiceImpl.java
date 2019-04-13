@@ -211,10 +211,9 @@ public class CourseServiceImpl extends GenericOneServiceImpl<TCourse,TCourseExam
         return data;
     }
 
-    /*@Transactional(value = "join")*/
     @Transactional
     @Override
-    public JsonMap join(int membersId,int companyId,int storesId, int courseId,int[] couponIds, int[] tCourseTimeIds) {
+    public JsonMap join(int membersId,int companyId,int storesId, int courseId,int[] couponIds, int[] tCourseTimeIds) throws Exception{
         //课程不需要券情况
         int amount = 0;
         Boolean isNeedCoupon = false;
@@ -282,7 +281,6 @@ public class CourseServiceImpl extends GenericOneServiceImpl<TCourse,TCourseExam
                     }
                 }
         }
-//        try{
             TOrder one = new TOrder();
             //生成订单（用户课程）
             //订单编号规则：920190401 +11位随机数
@@ -299,7 +297,9 @@ public class CourseServiceImpl extends GenericOneServiceImpl<TCourse,TCourseExam
             one.setCompletedate(null);
             one.setCreatetime(new Date());
             int num = tOrderMapper.insertSelective(one);
-
+            if(num==0){
+                throw new Exception();
+            }
             //生成订单详情
             int tODNum = 0;
             for(int j = 0;j<tCourseTimeIds.length;j++){
@@ -310,7 +310,9 @@ public class CourseServiceImpl extends GenericOneServiceImpl<TCourse,TCourseExam
                 tOrderDetail.setCoursetimeid(tCourseTimeIds[j]);
                 tOrderDetail.setCreatetime(new Date());
                 tODNum = tOrderDetailMapper.insertSelective(tOrderDetail);
-
+                if(tODNum==0){
+                    throw new Exception();
+                }
             }
             int tCMNum = 1;
             if(isNeedCoupon){
@@ -324,14 +326,14 @@ public class CourseServiceImpl extends GenericOneServiceImpl<TCourse,TCourseExam
                     tCouponMembers.setStatus(1);
                     tCouponMembers.setUsedate(new Date());
                     tCMNum = tCouponMembersMapper.updateByPrimaryKeySelective(tCouponMembers);
+                    if(tCMNum==0){
+                        throw new Exception();
+                    }
                 }
             }
             if (num > 0 && tCMNum > 0 && tODNum > 0) {
                 return JsonMap.of(true, "加入成功");
             }
-//        }catch (Exception e){
-//            return JsonMap.of(false, "加入失败");
-//        }
         return JsonMap.of(false, "加入失败");
 
     }

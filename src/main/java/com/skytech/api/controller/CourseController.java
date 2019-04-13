@@ -121,6 +121,7 @@ public class CourseController{
                     tCourse.setJoined(false);
                 }
                 tCourse.setJoinedNum(joinedNum);
+                tCourse.setCoursebody("");
                 tCourseList.add(tCourse);
             }
         }
@@ -211,7 +212,6 @@ public class CourseController{
         int memberId = 0;
         int companyId = 0;
         int storesId = 0;
-//        try {
             memberList = (List<MemberInfo>) memberInfoData.get("memberInfoList");
             for (MemberInfo memberInfo :memberList) {
                 memberId = memberInfo.getMemberId();
@@ -219,13 +219,13 @@ public class CourseController{
                 storesId = memberInfo.getStoresId();
                 TMember tMember = tMemberMapper.selectByPrimaryKey(memberId);
                 if(tCourse.getCompanyid()==tMember.getCompanyid()&&tCourse.getStoresid()==tMember.getStoresid()){
-                    return courseService.join(memberId,companyId,storesId, courseId,couponIds, tCourseTimeIds);
+                    try {
+                        return courseService.join(memberId,companyId,storesId, courseId,couponIds, tCourseTimeIds);
+                    } catch (Exception e) {
+                        return JsonMap.of(false,"加入失败");
+                    }
                 }
             }
-//        }catch (Exception e){
-//            return JsonMap.of(false, "",new ArrayList<>());
-//        }
-
         return JsonMap.of(false, "");
 
     }

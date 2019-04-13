@@ -81,12 +81,11 @@ public class OrderServiceImpl extends GenericOneServiceImpl<TOrder,TOrderExample
 
     @Transactional
     @Override
-    public JsonMap cancelOrder(String accountSid, String orderNum, int[] courserTimeIds) {
+    public JsonMap cancelOrder(String accountSid, String orderNum, int[] courserTimeIds) throws Exception{
         Map<String, Object> memberInfoData = new HashMap<>();
         memberInfoData = checkMembers(memberInfoData, accountSid);
         List<MemberInfo> memberList = new ArrayList<>();
         int memberId = 0;
-//        try {
             int oNum = 0;
             int oDNum = 0;
             int oCMNum = 0;
@@ -94,7 +93,7 @@ public class OrderServiceImpl extends GenericOneServiceImpl<TOrder,TOrderExample
             for (MemberInfo memberInfo : memberList) {
                 memberId = memberInfo.getMemberId();
                 TOrderExample tOrderExample = new TOrderExample();
-                tOrderExample.createCriteria().andOrdernoEqualTo(orderNum).andMemberidEqualTo(memberId);
+                tOrderExample.createCriteria().andOrdernoEqualTo(orderNum);
                 List<TOrder> tOrders = tOrderMapper.selectByExample(tOrderExample);
                 //订单不存在
                 if(tOrders.isEmpty()){
@@ -190,9 +189,6 @@ public class OrderServiceImpl extends GenericOneServiceImpl<TOrder,TOrderExample
                     return JsonMap.of(false, "退单失败");
                 }
             }
-       /* }catch (Exception e){
-            return JsonMap.of(false, "退单失败");
-        }*/
 
         return JsonMap.of(true, "退单成功");
     }

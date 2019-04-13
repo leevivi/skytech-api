@@ -77,7 +77,11 @@ public class OrderController {
         Object accountSidObj = session.getAttribute("accountSid");
 
         String accountSid = accountSidObj.toString();
-        return orderService.cancelOrder(accountSid, orderNum,tCourseTimeIds);
+        try {
+            return orderService.cancelOrder(accountSid, orderNum,tCourseTimeIds);
+        } catch (Exception e) {
+            return JsonMap.of(false,"");
+        }
 
 
     }

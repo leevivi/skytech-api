@@ -22,7 +22,7 @@ public interface CourseService extends GenericOneService<TCourse,Integer> {
 
     JsonMap save(TCourse tCourse);
 
-    JsonMap join(int membersId,int companyId,int storesId,int courseId,int[] couponIds,int[] tCourseTimeIds);
+    JsonMap join(int membersId,int companyId,int storesId,int courseId,int[] couponIds,int[] tCourseTimeIds)throws Exception;
 
     JsonMap update(String eventSid, TCourse tCourse);
 

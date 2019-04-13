@@ -111,6 +111,7 @@ public class TEventController {
                 }
                 tEvent.setComanyName("");
                 tEvent.setStoresName("");
+                tEvent.setEventInfo("");
                 tEventList.add(tEvent);
             }
         }

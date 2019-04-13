@@ -44,18 +44,19 @@ public class UserDataServiceImpl extends GenericOneServiceImpl<UserData,UserData
             List<UserData> userDataList1 = userDataMapper.selectByExample(userDataExample);
             if(!userDataList1.isEmpty()){
                 //修改数据
-                for (UserData ud : userDataList1) {
-                    ud.setAccountSid(accountSid);
-                    ud.setId(userDataList1.get(0).getId());
-                    if(ud.getDataGoal().subtract(ud.getDataActual()).doubleValue()>0){
-                        ud.setUpToStandard(1);
+                UserData one = new UserData();
+                    one.setAccountSid(accountSid);
+                    one.setId(userDataList1.get(0).getId());
+                    if(userData.getDataGoal().subtract(userData.getDataActual()).doubleValue()>0){
+                        one.setUpToStandard(1);
                     }
-                    if(ud.getDataGoal().subtract(ud.getDataActual()).doubleValue()<=0){
-                        ud.setUpToStandard(0);
+                    if(userData.getDataGoal().subtract(userData.getDataActual()).doubleValue()<=0){
+                        one.setUpToStandard(0);
                     }
-                    ud.setUpdatedTime(new Date());
-                    i = userDataMapper.updateByPrimaryKeySelective(ud);
-                }
+                    one.setDataActual(userData.getDataActual());
+                    one.setDataGoal(userData.getDataGoal());
+                    one.setUpdatedTime(new Date());
+                    i = userDataMapper.updateByPrimaryKeySelective(one);
             }
             else {
                 //新增数据
@@ -65,7 +66,7 @@ public class UserDataServiceImpl extends GenericOneServiceImpl<UserData,UserData
 
             }
         }
-        if (i > 0 && j > 0) {
+        if (i > 0 || j > 0) {
             return JsonMap.of(true, "保存成功");
         } else {
             return JsonMap.of(false, "保存失败");
