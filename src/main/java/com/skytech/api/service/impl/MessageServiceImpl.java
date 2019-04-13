@@ -7,6 +7,7 @@ import com.skytech.api.core.utils.DateUtil;
 import com.skytech.api.mapper.TMemberMessageMapper;
 import com.skytech.api.mapper.TMessageMapper;
 import com.skytech.api.model.*;
+import com.skytech.api.model.base.BaseTMemberMessageExample;
 import com.skytech.api.model.base.BaseTMessageExample;
 import com.skytech.api.service.MessageService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,23 +22,23 @@ import java.util.Map;
  * Created by LiWei on 2019/4/7.
  */
 @Service("messageService")
-public class MessageServiceImpl extends GenericOneServiceImpl<TMessage,TMessageExample,Integer> implements MessageService {
+public class MessageServiceImpl extends GenericOneServiceImpl<TMemberMessage,TMemberMessageExample,Integer> implements MessageService {
 
     @Autowired
     private TMessageMapper tMessageMapper;
     @Autowired
     private TMemberMessageMapper tMemberMessageMapper;
     @Override
-    protected GenericOneMapper<TMessage, TMessageExample, Integer> getGenericOneMapper() {
-        return this.tMessageMapper;
+    protected GenericOneMapper<TMemberMessage, TMemberMessageExample, Integer> getGenericOneMapper() {
+        return this.tMemberMessageMapper;
     }
 
     @Override
-    public Pagination<TMessage> findForPage(int page, int limit) {
-        TMessageExample tMessageExample = new TMessageExample();
-        BaseTMessageExample.Criteria criteria = tMessageExample.createCriteria();
-
-        Pagination<TMessage> pagination = this.queryByPage(tMessageExample, (page - 1) * limit, limit, "created_datetime desc");
+    public Pagination<TMemberMessage> findForPage(int memberId,int messageType,int page, int limit) {
+        TMemberMessageExample tMessageExample = new TMemberMessageExample();
+        BaseTMemberMessageExample.Criteria criteria = tMessageExample.createCriteria();
+        criteria.andMemberidEqualTo(memberId).andTypeEqualTo(messageType);
+        Pagination<TMemberMessage> pagination = this.queryByPage(tMessageExample, (page - 1) * limit, limit, "createTime desc");
 
         return pagination;
     }

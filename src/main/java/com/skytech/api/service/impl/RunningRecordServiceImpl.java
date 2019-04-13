@@ -32,6 +32,9 @@ public class RunningRecordServiceImpl extends GenericServiceImpl<RunningRecord, 
 
     @Override
     public Pagination<RunningRecord> findForPage(String deviceSid, int page, int limit) {
+        if(deviceSid==null){
+            return null;
+        }
         RunningRecordExample runningRecordExample = new RunningRecordExample();
         BaseRunningRecordExample.Criteria criteria = runningRecordExample.createCriteria();
         criteria.andDeviceSidEqualTo(deviceSid);

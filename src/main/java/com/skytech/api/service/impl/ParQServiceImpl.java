@@ -38,6 +38,7 @@ public class ParQServiceImpl extends GenericOneServiceImpl<ParQ,ParQExample,Inte
         if(!parQS.isEmpty()){
             //修改数据
             parQ.setId(parQS.get(0).getId());
+            parQ.setUpdatedTime(new Date());
             int i = parQMapper.updateByPrimaryKeySelective(parQ);
             if (i > 0) {
                 return JsonMap.of(true, "保存成功");

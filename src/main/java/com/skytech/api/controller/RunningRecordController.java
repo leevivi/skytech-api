@@ -33,10 +33,17 @@ public class RunningRecordController {
     })
     @GetMapping(value = "/runningRecord/listForPage")
     public Map<String, Object> listForPage(String deviceSid, int page, int limit) {
+        Map<String, Object> data = new HashMap<>();
+        if(deviceSid==null){
+            data.put("code", "2000");
+            data.put("message", "成功");
+            data.put("data", null);
+            return data;
+        }
 
         Pagination<RunningRecord> pagination = runningRecordService.findForPage(deviceSid, page, limit);
 
-        Map<String, Object> data = new HashMap<>();
+
         data.put("code", 0);
         data.put("msg", "成功");
         data.put("count", pagination.getTotalRowNumber());
