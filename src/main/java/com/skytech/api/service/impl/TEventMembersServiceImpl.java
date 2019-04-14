@@ -113,14 +113,14 @@ public class TEventMembersServiceImpl extends GenericOneServiceImpl<TEventMember
         }
 
         Calendar calendar = Calendar.getInstance();
-        calendar.setTime(isMemberList.get(0).getJoinedTime());
+        calendar.setTime(tEvent.getStartDate());
         calendar.set(Calendar.HOUR_OF_DAY, 0);
         calendar.set(Calendar.MINUTE, 0);
         calendar.set(Calendar.SECOND, 0);
         Date startDate = calendar.getTime();
 
         Calendar calendar1 = Calendar.getInstance();
-        calendar1.setTime(new Date());
+        calendar1.setTime(tEvent.getEndDate());
         calendar1.set(Calendar.HOUR_OF_DAY, 0);
         calendar1.set(Calendar.MINUTE, 0);
         calendar1.set(Calendar.SECOND, 0);
@@ -146,6 +146,13 @@ public class TEventMembersServiceImpl extends GenericOneServiceImpl<TEventMember
             m.put("steps", eventMember.get("stepNum"));
 
             if (i <= 5) {
+                if (StringUtils.equals(userSid, accountSid)) {
+                    mine.put("accountSid", accountSid);
+                    mine.put("accountName", eventMember.get("accountName"));
+                    mine.put("accountAvatar", eventMember.get("avarta"));
+                    mine.put("position", i);
+                    mine.put("steps", eventMember.get("stepNum"));
+                }
                 members.add(m);
             } else {
                 if (StringUtils.equals(userSid, accountSid)) {

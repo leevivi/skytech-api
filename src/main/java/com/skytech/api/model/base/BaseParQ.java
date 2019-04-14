@@ -43,6 +43,8 @@ public class BaseParQ extends BaseModelOne<Integer>{
 
     private Integer memberId;
 
+    private String appuser;
+
     private String accountSid;
     @JSONField(format="yyyy-MM-dd HH:mm:ss")
     private Date createdTime;
@@ -52,7 +54,7 @@ public class BaseParQ extends BaseModelOne<Integer>{
     public BaseParQ() {
     }
 
-    public BaseParQ(Integer id, Integer heartCondition, Integer angina, Integer highBloodPressure, Integer asthma, Integer diabetes, Integer backProblems, Integer sciatica, Integer jointProblems, Integer smoker, Integer pregnancy, Integer hernia, Integer recentSurgery, Integer fatLoss, Integer building, Integer toning, Integer other, String specificFocusAreas, Integer memberId, String accountSid, Date createdTime, Date updatedTime) {
+    public BaseParQ(Integer id,Integer heartCondition, Integer angina, Integer highBloodPressure, Integer asthma, Integer diabetes, Integer backProblems, Integer sciatica, Integer jointProblems, Integer smoker, Integer pregnancy, Integer hernia, Integer recentSurgery, Integer fatLoss, Integer building, Integer toning, Integer other, String specificFocusAreas, Integer memberId, String appuser, String accountSid, Date createdTime, Date updatedTime) {
         this.id = id;
         this.heartCondition = heartCondition;
         this.angina = angina;
@@ -72,9 +74,18 @@ public class BaseParQ extends BaseModelOne<Integer>{
         this.other = other;
         this.specificFocusAreas = specificFocusAreas;
         this.memberId = memberId;
+        this.appuser = appuser;
         this.accountSid = accountSid;
         this.createdTime = createdTime;
         this.updatedTime = updatedTime;
+    }
+
+    public String getAppuser() {
+        return appuser;
+    }
+
+    public void setAppuser(String appuser) {
+        this.appuser = appuser;
     }
 
     public Integer getHeartCondition() {

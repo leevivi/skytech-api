@@ -3,7 +3,10 @@ package com.skytech.api.service.impl;
 import com.skytech.api.core.JsonMap;
 import com.skytech.api.core.mapper.GenericOneMapper;
 import com.skytech.api.core.service.impl.GenericOneServiceImpl;
+import com.skytech.api.mapper.AccountMapper;
 import com.skytech.api.mapper.ParQMapper;
+import com.skytech.api.model.Account;
+import com.skytech.api.model.AccountExample;
 import com.skytech.api.model.ParQ;
 import com.skytech.api.model.ParQExample;
 import com.skytech.api.service.ParQService;
@@ -22,6 +25,8 @@ public class ParQServiceImpl extends GenericOneServiceImpl<ParQ,ParQExample,Inte
 
     @Autowired
     private ParQMapper parQMapper;
+    @Autowired
+    private AccountMapper accountMapper;
     @Override
     protected GenericOneMapper<ParQ, ParQExample, Integer> getGenericOneMapper() {
         return this.parQMapper;
@@ -32,6 +37,7 @@ public class ParQServiceImpl extends GenericOneServiceImpl<ParQ,ParQExample,Inte
     public JsonMap save(HttpSession session,ParQ parQ) throws Exception {
         Object accountSidObj = session.getAttribute("accountSid");
         String accountSid = accountSidObj.toString();
+        Account account = accountMapper.selectByPrimaryKey(accountSid);
         ParQExample parQExample = new ParQExample();
         parQExample.createCriteria().andAccountSidEqualTo(accountSid);
         List<ParQ> parQS = parQMapper.selectByExample(parQExample);
@@ -50,6 +56,7 @@ public class ParQServiceImpl extends GenericOneServiceImpl<ParQ,ParQExample,Inte
             //新增数据
             parQ.setCreatedTime(new Date());
             parQ.setAccountSid(accountSid);
+            parQ.setAppuser(account.getEmail());
             int i = parQMapper.insertSelective(parQ);
             if (i > 0) {
                 return JsonMap.of(true, "保存成功");

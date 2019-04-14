@@ -1,17 +1,20 @@
 package com.skytech.api.model.base;
 
-import com.skytech.api.core.model.BaseCriteria;
 import com.skytech.api.core.model.BaseModelExample;
-import java.math.*;
-import java.util.*;
 
-public class BaseAccountExample extends BaseModelExample {
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.Iterator;
+import java.util.List;
 
-protected List<Criteria> oredCriteria;
+public class BaseAccountExample extends BaseModelExample{
+
+    protected List<Criteria> oredCriteria;
 
     public BaseAccountExample() {
         oredCriteria = new ArrayList<Criteria>();
     }
+
 
     public List<Criteria> getOredCriteria() {
         return oredCriteria;
@@ -40,13 +43,79 @@ protected List<Criteria> oredCriteria;
         return criteria;
     }
 
-    @Override
     public void clear() {
-        super.clear();
         oredCriteria.clear();
+        orderByClause = null;
+        distinct = false;
     }
 
-    protected abstract static class GeneratedCriteria extends BaseCriteria {
+    protected abstract static class GeneratedCriteria {
+        protected List<Criterion> criteria;
+
+        protected GeneratedCriteria() {
+            super();
+            criteria = new ArrayList<Criterion>();
+        }
+
+        public boolean isValid() {
+            return criteria.size() > 0;
+        }
+
+        public List<Criterion> getAllCriteria() {
+            return criteria;
+        }
+
+        public List<Criterion> getCriteria() {
+            return criteria;
+        }
+
+        protected void addCriterion(String condition) {
+            if (condition == null) {
+                throw new RuntimeException("Value for condition cannot be null");
+            }
+            criteria.add(new Criterion(condition));
+        }
+
+        protected void addCriterion(String condition, Object value, String property) {
+            if (value == null) {
+                throw new RuntimeException("Value for " + property + " cannot be null");
+            }
+            criteria.add(new Criterion(condition, value));
+        }
+
+        protected void addCriterion(String condition, Object value1, Object value2, String property) {
+            if (value1 == null || value2 == null) {
+                throw new RuntimeException("Between values for " + property + " cannot be null");
+            }
+            criteria.add(new Criterion(condition, value1, value2));
+        }
+
+        protected void addCriterionForJDBCDate(String condition, Date value, String property) {
+            if (value == null) {
+                throw new RuntimeException("Value for " + property + " cannot be null");
+            }
+            addCriterion(condition, new java.sql.Date(value.getTime()), property);
+        }
+
+        protected void addCriterionForJDBCDate(String condition, List<Date> values, String property) {
+            if (values == null || values.size() == 0) {
+                throw new RuntimeException("Value list for " + property + " cannot be null or empty");
+            }
+            List<java.sql.Date> dateList = new ArrayList<java.sql.Date>();
+            Iterator<Date> iter = values.iterator();
+            while (iter.hasNext()) {
+                dateList.add(new java.sql.Date(iter.next().getTime()));
+            }
+            addCriterion(condition, dateList, property);
+        }
+
+        protected void addCriterionForJDBCDate(String condition, Date value1, Date value2, String property) {
+            if (value1 == null || value2 == null) {
+                throw new RuntimeException("Between values for " + property + " cannot be null");
+            }
+            addCriterion(condition, new java.sql.Date(value1.getTime()), new java.sql.Date(value2.getTime()), property);
+        }
+
         public Criteria andSidIsNull() {
             addCriterion("sid is null");
             return (Criteria) this;
@@ -86,7 +155,6 @@ protected List<Criteria> oredCriteria;
             addCriterion("sid <=", value, "sid");
             return (Criteria) this;
         }
-
 
         public Criteria andSidLike(String value) {
             addCriterion("sid like", value, "sid");
@@ -158,7 +226,6 @@ protected List<Criteria> oredCriteria;
             return (Criteria) this;
         }
 
-
         public Criteria andFirstNameLike(String value) {
             addCriterion("first_name like", value, "firstName");
             return (Criteria) this;
@@ -228,7 +295,6 @@ protected List<Criteria> oredCriteria;
             addCriterion("last_name <=", value, "lastName");
             return (Criteria) this;
         }
-
 
         public Criteria andLastNameLike(String value) {
             addCriterion("last_name like", value, "lastName");
@@ -300,7 +366,6 @@ protected List<Criteria> oredCriteria;
             return (Criteria) this;
         }
 
-
         public Criteria andEmailLike(String value) {
             addCriterion("email like", value, "email");
             return (Criteria) this;
@@ -370,7 +435,6 @@ protected List<Criteria> oredCriteria;
             addCriterion("password <=", value, "password");
             return (Criteria) this;
         }
-
 
         public Criteria andPasswordLike(String value) {
             addCriterion("password like", value, "password");
@@ -442,7 +506,6 @@ protected List<Criteria> oredCriteria;
             return (Criteria) this;
         }
 
-
         public Criteria andAvartaLike(String value) {
             addCriterion("avarta like", value, "avarta");
             return (Criteria) this;
@@ -513,7 +576,6 @@ protected List<Criteria> oredCriteria;
             return (Criteria) this;
         }
 
-
         public Criteria andGenderIn(List<Byte> values) {
             addCriterion("gender in", values, "gender");
             return (Criteria) this;
@@ -574,7 +636,6 @@ protected List<Criteria> oredCriteria;
             return (Criteria) this;
         }
 
-
         public Criteria andAgeIn(List<Integer> values) {
             addCriterion("age in", values, "age");
             return (Criteria) this;
@@ -592,6 +653,66 @@ protected List<Criteria> oredCriteria;
 
         public Criteria andAgeNotBetween(Integer value1, Integer value2) {
             addCriterion("age not between", value1, value2, "age");
+            return (Criteria) this;
+        }
+
+        public Criteria andBirthdayIsNull() {
+            addCriterion("birthday is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andBirthdayIsNotNull() {
+            addCriterion("birthday is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andBirthdayEqualTo(Date value) {
+            addCriterionForJDBCDate("birthday =", value, "birthday");
+            return (Criteria) this;
+        }
+
+        public Criteria andBirthdayNotEqualTo(Date value) {
+            addCriterionForJDBCDate("birthday <>", value, "birthday");
+            return (Criteria) this;
+        }
+
+        public Criteria andBirthdayGreaterThan(Date value) {
+            addCriterionForJDBCDate("birthday >", value, "birthday");
+            return (Criteria) this;
+        }
+
+        public Criteria andBirthdayGreaterThanOrEqualTo(Date value) {
+            addCriterionForJDBCDate("birthday >=", value, "birthday");
+            return (Criteria) this;
+        }
+
+        public Criteria andBirthdayLessThan(Date value) {
+            addCriterionForJDBCDate("birthday <", value, "birthday");
+            return (Criteria) this;
+        }
+
+        public Criteria andBirthdayLessThanOrEqualTo(Date value) {
+            addCriterionForJDBCDate("birthday <=", value, "birthday");
+            return (Criteria) this;
+        }
+
+        public Criteria andBirthdayIn(List<Date> values) {
+            addCriterionForJDBCDate("birthday in", values, "birthday");
+            return (Criteria) this;
+        }
+
+        public Criteria andBirthdayNotIn(List<Date> values) {
+            addCriterionForJDBCDate("birthday not in", values, "birthday");
+            return (Criteria) this;
+        }
+
+        public Criteria andBirthdayBetween(Date value1, Date value2) {
+            addCriterionForJDBCDate("birthday between", value1, value2, "birthday");
+            return (Criteria) this;
+        }
+
+        public Criteria andBirthdayNotBetween(Date value1, Date value2) {
+            addCriterionForJDBCDate("birthday not between", value1, value2, "birthday");
             return (Criteria) this;
         }
 
@@ -634,7 +755,6 @@ protected List<Criteria> oredCriteria;
             addCriterion("height <=", value, "height");
             return (Criteria) this;
         }
-
 
         public Criteria andHeightIn(List<Integer> values) {
             addCriterion("height in", values, "height");
@@ -696,7 +816,6 @@ protected List<Criteria> oredCriteria;
             return (Criteria) this;
         }
 
-
         public Criteria andWeightIn(List<Integer> values) {
             addCriterion("weight in", values, "weight");
             return (Criteria) this;
@@ -714,6 +833,66 @@ protected List<Criteria> oredCriteria;
 
         public Criteria andWeightNotBetween(Integer value1, Integer value2) {
             addCriterion("weight not between", value1, value2, "weight");
+            return (Criteria) this;
+        }
+
+        public Criteria andWhrIsNull() {
+            addCriterion("WHR is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andWhrIsNotNull() {
+            addCriterion("WHR is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andWhrEqualTo(Double value) {
+            addCriterion("WHR =", value, "whr");
+            return (Criteria) this;
+        }
+
+        public Criteria andWhrNotEqualTo(Double value) {
+            addCriterion("WHR <>", value, "whr");
+            return (Criteria) this;
+        }
+
+        public Criteria andWhrGreaterThan(Double value) {
+            addCriterion("WHR >", value, "whr");
+            return (Criteria) this;
+        }
+
+        public Criteria andWhrGreaterThanOrEqualTo(Double value) {
+            addCriterion("WHR >=", value, "whr");
+            return (Criteria) this;
+        }
+
+        public Criteria andWhrLessThan(Double value) {
+            addCriterion("WHR <", value, "whr");
+            return (Criteria) this;
+        }
+
+        public Criteria andWhrLessThanOrEqualTo(Double value) {
+            addCriterion("WHR <=", value, "whr");
+            return (Criteria) this;
+        }
+
+        public Criteria andWhrIn(List<Double> values) {
+            addCriterion("WHR in", values, "whr");
+            return (Criteria) this;
+        }
+
+        public Criteria andWhrNotIn(List<Double> values) {
+            addCriterion("WHR not in", values, "whr");
+            return (Criteria) this;
+        }
+
+        public Criteria andWhrBetween(Double value1, Double value2) {
+            addCriterion("WHR between", value1, value2, "whr");
+            return (Criteria) this;
+        }
+
+        public Criteria andWhrNotBetween(Double value1, Double value2) {
+            addCriterion("WHR not between", value1, value2, "whr");
             return (Criteria) this;
         }
 
@@ -757,7 +936,6 @@ protected List<Criteria> oredCriteria;
             return (Criteria) this;
         }
 
-
         public Criteria andStepTargetIn(List<Integer> values) {
             addCriterion("step_target in", values, "stepTarget");
             return (Criteria) this;
@@ -775,6 +953,66 @@ protected List<Criteria> oredCriteria;
 
         public Criteria andStepTargetNotBetween(Integer value1, Integer value2) {
             addCriterion("step_target not between", value1, value2, "stepTarget");
+            return (Criteria) this;
+        }
+
+        public Criteria andSleepTimeIsNull() {
+            addCriterion("sleep_time is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andSleepTimeIsNotNull() {
+            addCriterion("sleep_time is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andSleepTimeEqualTo(Integer value) {
+            addCriterion("sleep_time =", value, "sleepTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andSleepTimeNotEqualTo(Integer value) {
+            addCriterion("sleep_time <>", value, "sleepTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andSleepTimeGreaterThan(Integer value) {
+            addCriterion("sleep_time >", value, "sleepTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andSleepTimeGreaterThanOrEqualTo(Integer value) {
+            addCriterion("sleep_time >=", value, "sleepTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andSleepTimeLessThan(Integer value) {
+            addCriterion("sleep_time <", value, "sleepTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andSleepTimeLessThanOrEqualTo(Integer value) {
+            addCriterion("sleep_time <=", value, "sleepTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andSleepTimeIn(List<Integer> values) {
+            addCriterion("sleep_time in", values, "sleepTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andSleepTimeNotIn(List<Integer> values) {
+            addCriterion("sleep_time not in", values, "sleepTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andSleepTimeBetween(Integer value1, Integer value2) {
+            addCriterion("sleep_time between", value1, value2, "sleepTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andSleepTimeNotBetween(Integer value1, Integer value2) {
+            addCriterion("sleep_time not between", value1, value2, "sleepTime");
             return (Criteria) this;
         }
 
@@ -817,7 +1055,6 @@ protected List<Criteria> oredCriteria;
             addCriterion("register_datetime <=", value, "registerDatetime");
             return (Criteria) this;
         }
-
 
         public Criteria andRegisterDatetimeIn(List<Date> values) {
             addCriterion("register_datetime in", values, "registerDatetime");
@@ -879,7 +1116,6 @@ protected List<Criteria> oredCriteria;
             return (Criteria) this;
         }
 
-
         public Criteria andUpdatedDatetimeIn(List<Date> values) {
             addCriterion("updated_datetime in", values, "updatedDatetime");
             return (Criteria) this;
@@ -900,11 +1136,157 @@ protected List<Criteria> oredCriteria;
             return (Criteria) this;
         }
 
+        public Criteria andLockintimeIsNull() {
+            addCriterion("lockintime is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andLockintimeIsNotNull() {
+            addCriterion("lockintime is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andLockintimeEqualTo(Date value) {
+            addCriterion("lockintime =", value, "lockintime");
+            return (Criteria) this;
+        }
+
+        public Criteria andLockintimeNotEqualTo(Date value) {
+            addCriterion("lockintime <>", value, "lockintime");
+            return (Criteria) this;
+        }
+
+        public Criteria andLockintimeGreaterThan(Date value) {
+            addCriterion("lockintime >", value, "lockintime");
+            return (Criteria) this;
+        }
+
+        public Criteria andLockintimeGreaterThanOrEqualTo(Date value) {
+            addCriterion("lockintime >=", value, "lockintime");
+            return (Criteria) this;
+        }
+
+        public Criteria andLockintimeLessThan(Date value) {
+            addCriterion("lockintime <", value, "lockintime");
+            return (Criteria) this;
+        }
+
+        public Criteria andLockintimeLessThanOrEqualTo(Date value) {
+            addCriterion("lockintime <=", value, "lockintime");
+            return (Criteria) this;
+        }
+
+        public Criteria andLockintimeIn(List<Date> values) {
+            addCriterion("lockintime in", values, "lockintime");
+            return (Criteria) this;
+        }
+
+        public Criteria andLockintimeNotIn(List<Date> values) {
+            addCriterion("lockintime not in", values, "lockintime");
+            return (Criteria) this;
+        }
+
+        public Criteria andLockintimeBetween(Date value1, Date value2) {
+            addCriterion("lockintime between", value1, value2, "lockintime");
+            return (Criteria) this;
+        }
+
+        public Criteria andLockintimeNotBetween(Date value1, Date value2) {
+            addCriterion("lockintime not between", value1, value2, "lockintime");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {
+
         protected Criteria() {
             super();
+        }
+    }
+
+    public static class Criterion {
+        private String condition;
+
+        private Object value;
+
+        private Object secondValue;
+
+        private boolean noValue;
+
+        private boolean singleValue;
+
+        private boolean betweenValue;
+
+        private boolean listValue;
+
+        private String typeHandler;
+
+        public String getCondition() {
+            return condition;
+        }
+
+        public Object getValue() {
+            return value;
+        }
+
+        public Object getSecondValue() {
+            return secondValue;
+        }
+
+        public boolean isNoValue() {
+            return noValue;
+        }
+
+        public boolean isSingleValue() {
+            return singleValue;
+        }
+
+        public boolean isBetweenValue() {
+            return betweenValue;
+        }
+
+        public boolean isListValue() {
+            return listValue;
+        }
+
+        public String getTypeHandler() {
+            return typeHandler;
+        }
+
+        protected Criterion(String condition) {
+            super();
+            this.condition = condition;
+            this.typeHandler = null;
+            this.noValue = true;
+        }
+
+        protected Criterion(String condition, Object value, String typeHandler) {
+            super();
+            this.condition = condition;
+            this.value = value;
+            this.typeHandler = typeHandler;
+            if (value instanceof List<?>) {
+                this.listValue = true;
+            } else {
+                this.singleValue = true;
+            }
+        }
+
+        protected Criterion(String condition, Object value) {
+            this(condition, value, null);
+        }
+
+        protected Criterion(String condition, Object value, Object secondValue, String typeHandler) {
+            super();
+            this.condition = condition;
+            this.value = value;
+            this.secondValue = secondValue;
+            this.typeHandler = typeHandler;
+            this.betweenValue = true;
+        }
+
+        protected Criterion(String condition, Object value, Object secondValue) {
+            this(condition, value, secondValue, null);
         }
     }
 }

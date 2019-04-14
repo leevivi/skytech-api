@@ -316,6 +316,66 @@ public class BaseTMemberExample extends BaseModelExample{
             return (Criteria) this;
         }
 
+        public Criteria andCouponnumberIsNull() {
+            addCriterion("couponNumber is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCouponnumberIsNotNull() {
+            addCriterion("couponNumber is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCouponnumberEqualTo(Integer value) {
+            addCriterion("couponNumber =", value, "couponnumber");
+            return (Criteria) this;
+        }
+
+        public Criteria andCouponnumberNotEqualTo(Integer value) {
+            addCriterion("couponNumber <>", value, "couponnumber");
+            return (Criteria) this;
+        }
+
+        public Criteria andCouponnumberGreaterThan(Integer value) {
+            addCriterion("couponNumber >", value, "couponnumber");
+            return (Criteria) this;
+        }
+
+        public Criteria andCouponnumberGreaterThanOrEqualTo(Integer value) {
+            addCriterion("couponNumber >=", value, "couponnumber");
+            return (Criteria) this;
+        }
+
+        public Criteria andCouponnumberLessThan(Integer value) {
+            addCriterion("couponNumber <", value, "couponnumber");
+            return (Criteria) this;
+        }
+
+        public Criteria andCouponnumberLessThanOrEqualTo(Integer value) {
+            addCriterion("couponNumber <=", value, "couponnumber");
+            return (Criteria) this;
+        }
+
+        public Criteria andCouponnumberIn(List<Integer> values) {
+            addCriterion("couponNumber in", values, "couponnumber");
+            return (Criteria) this;
+        }
+
+        public Criteria andCouponnumberNotIn(List<Integer> values) {
+            addCriterion("couponNumber not in", values, "couponnumber");
+            return (Criteria) this;
+        }
+
+        public Criteria andCouponnumberBetween(Integer value1, Integer value2) {
+            addCriterion("couponNumber between", value1, value2, "couponnumber");
+            return (Criteria) this;
+        }
+
+        public Criteria andCouponnumberNotBetween(Integer value1, Integer value2) {
+            addCriterion("couponNumber not between", value1, value2, "couponnumber");
+            return (Criteria) this;
+        }
+
         public Criteria andAppuserIsNull() {
             addCriterion("appUser is null");
             return (Criteria) this;
@@ -396,53 +456,113 @@ public class BaseTMemberExample extends BaseModelExample{
             return (Criteria) this;
         }
 
-        public Criteria andSexEqualTo(Boolean value) {
+        public Criteria andSexEqualTo(Byte value) {
             addCriterion("sex =", value, "sex");
             return (Criteria) this;
         }
 
-        public Criteria andSexNotEqualTo(Boolean value) {
+        public Criteria andSexNotEqualTo(Byte value) {
             addCriterion("sex <>", value, "sex");
             return (Criteria) this;
         }
 
-        public Criteria andSexGreaterThan(Boolean value) {
+        public Criteria andSexGreaterThan(Byte value) {
             addCriterion("sex >", value, "sex");
             return (Criteria) this;
         }
 
-        public Criteria andSexGreaterThanOrEqualTo(Boolean value) {
+        public Criteria andSexGreaterThanOrEqualTo(Byte value) {
             addCriterion("sex >=", value, "sex");
             return (Criteria) this;
         }
 
-        public Criteria andSexLessThan(Boolean value) {
+        public Criteria andSexLessThan(Byte value) {
             addCriterion("sex <", value, "sex");
             return (Criteria) this;
         }
 
-        public Criteria andSexLessThanOrEqualTo(Boolean value) {
+        public Criteria andSexLessThanOrEqualTo(Byte value) {
             addCriterion("sex <=", value, "sex");
             return (Criteria) this;
         }
 
-        public Criteria andSexIn(List<Boolean> values) {
+        public Criteria andSexIn(List<Byte> values) {
             addCriterion("sex in", values, "sex");
             return (Criteria) this;
         }
 
-        public Criteria andSexNotIn(List<Boolean> values) {
+        public Criteria andSexNotIn(List<Byte> values) {
             addCriterion("sex not in", values, "sex");
             return (Criteria) this;
         }
 
-        public Criteria andSexBetween(Boolean value1, Boolean value2) {
+        public Criteria andSexBetween(Byte value1, Byte value2) {
             addCriterion("sex between", value1, value2, "sex");
             return (Criteria) this;
         }
 
-        public Criteria andSexNotBetween(Boolean value1, Boolean value2) {
+        public Criteria andSexNotBetween(Byte value1, Byte value2) {
             addCriterion("sex not between", value1, value2, "sex");
+            return (Criteria) this;
+        }
+
+        public Criteria andBirthdayIsNull() {
+            addCriterion("birthday is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andBirthdayIsNotNull() {
+            addCriterion("birthday is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andBirthdayEqualTo(Date value) {
+            addCriterionForJDBCDate("birthday =", value, "birthday");
+            return (Criteria) this;
+        }
+
+        public Criteria andBirthdayNotEqualTo(Date value) {
+            addCriterionForJDBCDate("birthday <>", value, "birthday");
+            return (Criteria) this;
+        }
+
+        public Criteria andBirthdayGreaterThan(Date value) {
+            addCriterionForJDBCDate("birthday >", value, "birthday");
+            return (Criteria) this;
+        }
+
+        public Criteria andBirthdayGreaterThanOrEqualTo(Date value) {
+            addCriterionForJDBCDate("birthday >=", value, "birthday");
+            return (Criteria) this;
+        }
+
+        public Criteria andBirthdayLessThan(Date value) {
+            addCriterionForJDBCDate("birthday <", value, "birthday");
+            return (Criteria) this;
+        }
+
+        public Criteria andBirthdayLessThanOrEqualTo(Date value) {
+            addCriterionForJDBCDate("birthday <=", value, "birthday");
+            return (Criteria) this;
+        }
+
+        public Criteria andBirthdayIn(List<Date> values) {
+            addCriterionForJDBCDate("birthday in", values, "birthday");
+            return (Criteria) this;
+        }
+
+        public Criteria andBirthdayNotIn(List<Date> values) {
+            addCriterionForJDBCDate("birthday not in", values, "birthday");
+            return (Criteria) this;
+        }
+
+        public Criteria andBirthdayBetween(Date value1, Date value2) {
+            addCriterionForJDBCDate("birthday between", value1, value2, "birthday");
+            return (Criteria) this;
+        }
+
+        public Criteria andBirthdayNotBetween(Date value1, Date value2) {
+            addCriterionForJDBCDate("birthday not between", value1, value2, "birthday");
             return (Criteria) this;
         }
 
@@ -696,52 +816,52 @@ public class BaseTMemberExample extends BaseModelExample{
             return (Criteria) this;
         }
 
-        public Criteria andIsoverdueEqualTo(Boolean value) {
+        public Criteria andIsoverdueEqualTo(Integer value) {
             addCriterion("isOverdue =", value, "isoverdue");
             return (Criteria) this;
         }
 
-        public Criteria andIsoverdueNotEqualTo(Boolean value) {
+        public Criteria andIsoverdueNotEqualTo(Integer value) {
             addCriterion("isOverdue <>", value, "isoverdue");
             return (Criteria) this;
         }
 
-        public Criteria andIsoverdueGreaterThan(Boolean value) {
+        public Criteria andIsoverdueGreaterThan(Integer value) {
             addCriterion("isOverdue >", value, "isoverdue");
             return (Criteria) this;
         }
 
-        public Criteria andIsoverdueGreaterThanOrEqualTo(Boolean value) {
+        public Criteria andIsoverdueGreaterThanOrEqualTo(Integer value) {
             addCriterion("isOverdue >=", value, "isoverdue");
             return (Criteria) this;
         }
 
-        public Criteria andIsoverdueLessThan(Boolean value) {
+        public Criteria andIsoverdueLessThan(Integer value) {
             addCriterion("isOverdue <", value, "isoverdue");
             return (Criteria) this;
         }
 
-        public Criteria andIsoverdueLessThanOrEqualTo(Boolean value) {
+        public Criteria andIsoverdueLessThanOrEqualTo(Integer value) {
             addCriterion("isOverdue <=", value, "isoverdue");
             return (Criteria) this;
         }
 
-        public Criteria andIsoverdueIn(List<Boolean> values) {
+        public Criteria andIsoverdueIn(List<Integer> values) {
             addCriterion("isOverdue in", values, "isoverdue");
             return (Criteria) this;
         }
 
-        public Criteria andIsoverdueNotIn(List<Boolean> values) {
+        public Criteria andIsoverdueNotIn(List<Integer> values) {
             addCriterion("isOverdue not in", values, "isoverdue");
             return (Criteria) this;
         }
 
-        public Criteria andIsoverdueBetween(Boolean value1, Boolean value2) {
+        public Criteria andIsoverdueBetween(Integer value1, Integer value2) {
             addCriterion("isOverdue between", value1, value2, "isoverdue");
             return (Criteria) this;
         }
 
-        public Criteria andIsoverdueNotBetween(Boolean value1, Boolean value2) {
+        public Criteria andIsoverdueNotBetween(Integer value1, Integer value2) {
             addCriterion("isOverdue not between", value1, value2, "isoverdue");
             return (Criteria) this;
         }

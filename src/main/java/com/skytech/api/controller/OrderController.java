@@ -90,7 +90,7 @@ public class OrderController {
         List<Object> memberInfoList = new ArrayList<>();
         Account account = accountMapper.selectByPrimaryKey(accountSid);
         TMemberExample tMemberExample = new TMemberExample();
-        tMemberExample.createCriteria().andAppuserEqualTo(account.getEmail());
+        tMemberExample.createCriteria().andAppuserEqualTo(account.getEmail()).andIsoverdueEqualTo(0);
         List<TMember> tMembers = tMemberMapper.selectByExample(tMemberExample);
         if(tMembers.isEmpty()||tMembers.get(0).getCompanyid()==null||tMembers.get(0).getStoresid()==null){
             List<TOrder> list = new ArrayList<>();

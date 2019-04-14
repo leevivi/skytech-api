@@ -26,8 +26,17 @@ public class MyOrder {
     String orderCourseCouponNum;
     //订单状态
     String orderStatus;
+    Integer orderStatusForInt;
     //课程所有时段
     List<String> allCourseTime;
+
+    public Integer getOrderStatusForInt() {
+        return orderStatusForInt;
+    }
+
+    public void setOrderStatusForInt(Integer orderStatusForInt) {
+        this.orderStatusForInt = orderStatusForInt;
+    }
 
     public String getOrderNum() {
         return orderNum;

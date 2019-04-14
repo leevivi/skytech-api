@@ -8,6 +8,7 @@
     <result column="userdata_id" jdbcType="INTEGER" property="userdataId" />
     <result column="data_actual" jdbcType="DECIMAL" property="dataActual" />
     <result column="data_goal" jdbcType="DECIMAL" property="dataGoal" />
+    <result column="appUser" jdbcType="VARCHAR" property="appuser" />
     <result column="up_to_standard" jdbcType="INTEGER" property="upToStandard" />
     <result column="created_time" jdbcType="TIMESTAMP" property="createdTime" />
     <result column="updated_time" jdbcType="TIMESTAMP" property="updatedTime" />
@@ -71,7 +72,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, account_sid, member_id, userdata_id, data_actual, data_goal, up_to_standard, 
+    id, account_sid, member_id, userdata_id, data_actual, data_goal, appUser, up_to_standard, 
     created_time, updated_time
   </sql>
   <select id="selectByExample" parameterType="com.skytech.api.model.UserDataExample" resultMap="BaseResultMap">
@@ -86,6 +87,9 @@
     </if>
     <if test="orderByClause != null">
       order by ${orderByClause}
+    </if>
+    <if test="pagination != null and pagination.begin >= 0" >
+      limit #{pagination.begin}, #{pagination.pageSize}
     </if>
   </select>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
@@ -107,12 +111,12 @@
   <insert id="insert" parameterType="com.skytech.api.model.UserData">
     insert into user_data (id, account_sid, member_id, 
       userdata_id, data_actual, data_goal, 
-      up_to_standard, created_time, updated_time
-      )
+      appUser, up_to_standard, created_time, 
+      updated_time)
     values (#{id,jdbcType=INTEGER}, #{accountSid,jdbcType=VARCHAR}, #{memberId,jdbcType=INTEGER}, 
       #{userdataId,jdbcType=INTEGER}, #{dataActual,jdbcType=DECIMAL}, #{dataGoal,jdbcType=DECIMAL}, 
-      #{upToStandard,jdbcType=BIT}, #{createdTime,jdbcType=TIMESTAMP}, #{updatedTime,jdbcType=TIMESTAMP}
-      )
+      #{appuser,jdbcType=VARCHAR}, #{upToStandard,jdbcType=BIT}, #{createdTime,jdbcType=TIMESTAMP}, 
+      #{updatedTime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.skytech.api.model.UserData">
     insert into user_data
@@ -134,6 +138,9 @@
       </if>
       <if test="dataGoal != null">
         data_goal,
+      </if>
+      <if test="appuser != null">
+        appUser,
       </if>
       <if test="upToStandard != null">
         up_to_standard,
@@ -163,6 +170,9 @@
       </if>
       <if test="dataGoal != null">
         #{dataGoal,jdbcType=DECIMAL},
+      </if>
+      <if test="appuser != null">
+        #{appuser,jdbcType=VARCHAR},
       </if>
       <if test="upToStandard != null">
         #{upToStandard,jdbcType=BIT},
@@ -202,6 +212,9 @@
       <if test="record.dataGoal != null">
         data_goal = #{record.dataGoal,jdbcType=DECIMAL},
       </if>
+      <if test="record.appuser != null">
+        appUser = #{record.appuser,jdbcType=VARCHAR},
+      </if>
       <if test="record.upToStandard != null">
         up_to_standard = #{record.upToStandard,jdbcType=BIT},
       </if>
@@ -224,6 +237,7 @@
       userdata_id = #{record.userdataId,jdbcType=INTEGER},
       data_actual = #{record.dataActual,jdbcType=DECIMAL},
       data_goal = #{record.dataGoal,jdbcType=DECIMAL},
+      appUser = #{record.appuser,jdbcType=VARCHAR},
       up_to_standard = #{record.upToStandard,jdbcType=BIT},
       created_time = #{record.createdTime,jdbcType=TIMESTAMP},
       updated_time = #{record.updatedTime,jdbcType=TIMESTAMP}
@@ -234,9 +248,6 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.skytech.api.model.UserData">
     update user_data
     <set>
-      <if test="id != null">
-        id = #{id,jdbcType=INTEGER},
-      </if>
       <if test="accountSid != null">
         account_sid = #{accountSid,jdbcType=VARCHAR},
       </if>
@@ -251,6 +262,9 @@
       </if>
       <if test="dataGoal != null">
         data_goal = #{dataGoal,jdbcType=DECIMAL},
+      </if>
+      <if test="appuser != null">
+        appUser = #{appuser,jdbcType=VARCHAR},
       </if>
       <if test="upToStandard != null">
         up_to_standard = #{upToStandard,jdbcType=BIT},
@@ -271,6 +285,7 @@
       userdata_id = #{userdataId,jdbcType=INTEGER},
       data_actual = #{dataActual,jdbcType=DECIMAL},
       data_goal = #{dataGoal,jdbcType=DECIMAL},
+      appUser = #{appuser,jdbcType=VARCHAR},
       up_to_standard = #{upToStandard,jdbcType=BIT},
       created_time = #{createdTime,jdbcType=TIMESTAMP},
       updated_time = #{updatedTime,jdbcType=TIMESTAMP}

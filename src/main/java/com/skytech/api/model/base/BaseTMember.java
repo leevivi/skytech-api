@@ -11,9 +11,13 @@ public class BaseTMember extends BaseModelOne<Integer>{
 
     private String contact;
 
+    private Integer couponnumber;
+
     private String appuser;
 
-    private Boolean sex;
+    private Byte sex;
+    @JSONField(format="yyyy-MM-dd HH:mm:ss")
+    private Date birthday;
 
     private Integer age;
 
@@ -23,7 +27,7 @@ public class BaseTMember extends BaseModelOne<Integer>{
     @JSONField(format="yyyy-MM-dd HH:mm:ss")
     private Date expirationdate;
 
-    private Boolean isoverdue;
+    private Integer isoverdue;
 
     private Integer storesid;
 
@@ -38,12 +42,14 @@ public class BaseTMember extends BaseModelOne<Integer>{
     public BaseTMember() {
     }
 
-    public BaseTMember(Integer id, String lastname, String contact, String appuser, Boolean sex, Integer age, Boolean dictid, Date initiationdate, Date expirationdate, Boolean isoverdue, Integer storesid, Integer companyid, Integer userid, Date createtime, Date updatetime) {
+    public BaseTMember(Integer id, String lastname, String contact, Integer couponnumber, String appuser, Byte sex, Date birthday, Integer age, Boolean dictid, Date initiationdate, Date expirationdate, Integer isoverdue, Integer storesid, Integer companyid, Integer userid, Date createtime, Date updatetime) {
         this.id = id;
         this.lastname = lastname;
         this.contact = contact;
+        this.couponnumber = couponnumber;
         this.appuser = appuser;
         this.sex = sex;
+        this.birthday = birthday;
         this.age = age;
         this.dictid = dictid;
         this.initiationdate = initiationdate;
@@ -72,6 +78,14 @@ public class BaseTMember extends BaseModelOne<Integer>{
         this.contact = contact == null ? null : contact.trim();
     }
 
+    public Integer getCouponnumber() {
+        return couponnumber;
+    }
+
+    public void setCouponnumber(Integer couponnumber) {
+        this.couponnumber = couponnumber;
+    }
+
     public String getAppuser() {
         return appuser;
     }
@@ -80,12 +94,20 @@ public class BaseTMember extends BaseModelOne<Integer>{
         this.appuser = appuser == null ? null : appuser.trim();
     }
 
-    public Boolean getSex() {
+    public Byte getSex() {
         return sex;
     }
 
-    public void setSex(Boolean sex) {
+    public void setSex(Byte sex) {
         this.sex = sex;
+    }
+
+    public Date getBirthday() {
+        return birthday;
+    }
+
+    public void setBirthday(Date birthday) {
+        this.birthday = birthday;
     }
 
     public Integer getAge() {
@@ -120,11 +142,11 @@ public class BaseTMember extends BaseModelOne<Integer>{
         this.expirationdate = expirationdate;
     }
 
-    public Boolean getIsoverdue() {
+    public Integer getIsoverdue() {
         return isoverdue;
     }
 
-    public void setIsoverdue(Boolean isoverdue) {
+    public void setIsoverdue(Integer isoverdue) {
         this.isoverdue = isoverdue;
     }
 

@@ -5,13 +5,15 @@
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="lastName" jdbcType="VARCHAR" property="lastname" />
     <result column="contact" jdbcType="VARCHAR" property="contact" />
+    <result column="couponNumber" jdbcType="INTEGER" property="couponnumber" />
     <result column="appUser" jdbcType="VARCHAR" property="appuser" />
-    <result column="sex" jdbcType="BIT" property="sex" />
+    <result column="sex" jdbcType="INTEGER" property="sex" />
+    <result column="birthday" jdbcType="DATE" property="birthday" />
     <result column="age" jdbcType="INTEGER" property="age" />
     <result column="dictId" jdbcType="BIT" property="dictid" />
     <result column="initiationDate" jdbcType="DATE" property="initiationdate" />
     <result column="expirationDate" jdbcType="DATE" property="expirationdate" />
-    <result column="isOverdue" jdbcType="BIT" property="isoverdue" />
+    <result column="isOverdue" jdbcType="INTEGER" property="isoverdue" />
     <result column="storesId" jdbcType="INTEGER" property="storesid" />
     <result column="companyId" jdbcType="INTEGER" property="companyid" />
     <result column="userId" jdbcType="INTEGER" property="userid" />
@@ -77,8 +79,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, lastName, contact, appUser, sex, age, dictId, initiationDate, expirationDate, 
-    isOverdue, storesId, companyId, userId, createTime, updateTime
+    id, lastName, contact, couponNumber, appUser, sex, birthday, age, dictId, initiationDate, 
+    expirationDate, isOverdue, storesId, companyId, userId, createTime, updateTime
   </sql>
   <select id="selectByExample" parameterType="com.skytech.api.model.TMemberExample" resultMap="BaseResultMap">
     select
@@ -115,15 +117,17 @@
   </delete>
   <insert id="insert" parameterType="com.skytech.api.model.TMember">
     insert into t_member (id, lastName, contact, 
-      appUser, sex, age, dictId, 
-      initiationDate, expirationDate, isOverdue, 
-      storesId, companyId, userId, 
-      createTime, updateTime)
+      couponNumber, appUser, sex, 
+      birthday, age, dictId, initiationDate, 
+      expirationDate, isOverdue, storesId, 
+      companyId, userId, createTime, 
+      updateTime)
     values (#{id,jdbcType=INTEGER}, #{lastname,jdbcType=VARCHAR}, #{contact,jdbcType=VARCHAR}, 
-      #{appuser,jdbcType=VARCHAR}, #{sex,jdbcType=BIT}, #{age,jdbcType=INTEGER}, #{dictid,jdbcType=BIT}, 
-      #{initiationdate,jdbcType=DATE}, #{expirationdate,jdbcType=DATE}, #{isoverdue,jdbcType=BIT}, 
-      #{storesid,jdbcType=INTEGER}, #{companyid,jdbcType=INTEGER}, #{userid,jdbcType=INTEGER}, 
-      #{createtime,jdbcType=TIMESTAMP}, #{updatetime,jdbcType=TIMESTAMP})
+      #{couponnumber,jdbcType=INTEGER}, #{appuser,jdbcType=VARCHAR}, #{sex,jdbcType=BIT}, 
+      #{birthday,jdbcType=DATE}, #{age,jdbcType=INTEGER}, #{dictid,jdbcType=BIT}, #{initiationdate,jdbcType=DATE}, 
+      #{expirationdate,jdbcType=DATE}, #{isoverdue,jdbcType=BIT}, #{storesid,jdbcType=INTEGER}, 
+      #{companyid,jdbcType=INTEGER}, #{userid,jdbcType=INTEGER}, #{createtime,jdbcType=TIMESTAMP}, 
+      #{updatetime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.skytech.api.model.TMember">
     insert into t_member
@@ -137,11 +141,17 @@
       <if test="contact != null">
         contact,
       </if>
+      <if test="couponnumber != null">
+        couponNumber,
+      </if>
       <if test="appuser != null">
         appUser,
       </if>
       <if test="sex != null">
         sex,
+      </if>
+      <if test="birthday != null">
+        birthday,
       </if>
       <if test="age != null">
         age,
@@ -184,11 +194,17 @@
       <if test="contact != null">
         #{contact,jdbcType=VARCHAR},
       </if>
+      <if test="couponnumber != null">
+        #{couponnumber,jdbcType=INTEGER},
+      </if>
       <if test="appuser != null">
         #{appuser,jdbcType=VARCHAR},
       </if>
       <if test="sex != null">
         #{sex,jdbcType=BIT},
+      </if>
+      <if test="birthday != null">
+        #{birthday,jdbcType=DATE},
       </if>
       <if test="age != null">
         #{age,jdbcType=INTEGER},
@@ -240,11 +256,17 @@
       <if test="record.contact != null">
         contact = #{record.contact,jdbcType=VARCHAR},
       </if>
+      <if test="record.couponnumber != null">
+        couponNumber = #{record.couponnumber,jdbcType=INTEGER},
+      </if>
       <if test="record.appuser != null">
         appUser = #{record.appuser,jdbcType=VARCHAR},
       </if>
       <if test="record.sex != null">
         sex = #{record.sex,jdbcType=BIT},
+      </if>
+      <if test="record.birthday != null">
+        birthday = #{record.birthday,jdbcType=DATE},
       </if>
       <if test="record.age != null">
         age = #{record.age,jdbcType=INTEGER},
@@ -286,8 +308,10 @@
     set id = #{record.id,jdbcType=INTEGER},
       lastName = #{record.lastname,jdbcType=VARCHAR},
       contact = #{record.contact,jdbcType=VARCHAR},
+      couponNumber = #{record.couponnumber,jdbcType=INTEGER},
       appUser = #{record.appuser,jdbcType=VARCHAR},
       sex = #{record.sex,jdbcType=BIT},
+      birthday = #{record.birthday,jdbcType=DATE},
       age = #{record.age,jdbcType=INTEGER},
       dictId = #{record.dictid,jdbcType=BIT},
       initiationDate = #{record.initiationdate,jdbcType=DATE},
@@ -311,11 +335,17 @@
       <if test="contact != null">
         contact = #{contact,jdbcType=VARCHAR},
       </if>
+      <if test="couponnumber != null">
+        couponNumber = #{couponnumber,jdbcType=INTEGER},
+      </if>
       <if test="appuser != null">
         appUser = #{appuser,jdbcType=VARCHAR},
       </if>
       <if test="sex != null">
         sex = #{sex,jdbcType=BIT},
+      </if>
+      <if test="birthday != null">
+        birthday = #{birthday,jdbcType=DATE},
       </if>
       <if test="age != null">
         age = #{age,jdbcType=INTEGER},
@@ -354,8 +384,10 @@
     update t_member
     set lastName = #{lastname,jdbcType=VARCHAR},
       contact = #{contact,jdbcType=VARCHAR},
+      couponNumber = #{couponnumber,jdbcType=INTEGER},
       appUser = #{appuser,jdbcType=VARCHAR},
       sex = #{sex,jdbcType=BIT},
+      birthday = #{birthday,jdbcType=DATE},
       age = #{age,jdbcType=INTEGER},
       dictId = #{dictid,jdbcType=BIT},
       initiationDate = #{initiationdate,jdbcType=DATE},

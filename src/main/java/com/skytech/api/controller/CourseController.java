@@ -294,7 +294,7 @@ public class CourseController{
     public Map<String,Object> checkMembers(Map<String, Object> data, String accountSid) {
         Account account = accountMapper.selectByPrimaryKey(accountSid);
         TMemberExample tMemberExample = new TMemberExample();
-        tMemberExample.createCriteria().andAppuserEqualTo(account.getEmail());
+        tMemberExample.createCriteria().andAppuserEqualTo(account.getEmail()).andIsoverdueEqualTo(0);
         List<TMember> tMembers = tMemberMapper.selectByExample(tMemberExample);
         List<Object> memberInfoList = new ArrayList<>();
         if(tMembers.isEmpty()||tMembers.get(0).getCompanyid()==null||tMembers.get(0).getStoresid()==null){

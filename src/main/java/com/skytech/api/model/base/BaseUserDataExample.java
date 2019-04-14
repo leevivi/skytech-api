@@ -460,6 +460,76 @@ public class BaseUserDataExample extends BaseModelExample{
             return (Criteria) this;
         }
 
+        public Criteria andAppuserIsNull() {
+            addCriterion("appUser is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andAppuserIsNotNull() {
+            addCriterion("appUser is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andAppuserEqualTo(String value) {
+            addCriterion("appUser =", value, "appuser");
+            return (Criteria) this;
+        }
+
+        public Criteria andAppuserNotEqualTo(String value) {
+            addCriterion("appUser <>", value, "appuser");
+            return (Criteria) this;
+        }
+
+        public Criteria andAppuserGreaterThan(String value) {
+            addCriterion("appUser >", value, "appuser");
+            return (Criteria) this;
+        }
+
+        public Criteria andAppuserGreaterThanOrEqualTo(String value) {
+            addCriterion("appUser >=", value, "appuser");
+            return (Criteria) this;
+        }
+
+        public Criteria andAppuserLessThan(String value) {
+            addCriterion("appUser <", value, "appuser");
+            return (Criteria) this;
+        }
+
+        public Criteria andAppuserLessThanOrEqualTo(String value) {
+            addCriterion("appUser <=", value, "appuser");
+            return (Criteria) this;
+        }
+
+        public Criteria andAppuserLike(String value) {
+            addCriterion("appUser like", value, "appuser");
+            return (Criteria) this;
+        }
+
+        public Criteria andAppuserNotLike(String value) {
+            addCriterion("appUser not like", value, "appuser");
+            return (Criteria) this;
+        }
+
+        public Criteria andAppuserIn(List<String> values) {
+            addCriterion("appUser in", values, "appuser");
+            return (Criteria) this;
+        }
+
+        public Criteria andAppuserNotIn(List<String> values) {
+            addCriterion("appUser not in", values, "appuser");
+            return (Criteria) this;
+        }
+
+        public Criteria andAppuserBetween(String value1, String value2) {
+            addCriterion("appUser between", value1, value2, "appuser");
+            return (Criteria) this;
+        }
+
+        public Criteria andAppuserNotBetween(String value1, String value2) {
+            addCriterion("appUser not between", value1, value2, "appuser");
+            return (Criteria) this;
+        }
+
         public Criteria andUpToStandardIsNull() {
             addCriterion("up_to_standard is null");
             return (Criteria) this;

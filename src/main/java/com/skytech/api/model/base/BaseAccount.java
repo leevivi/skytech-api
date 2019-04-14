@@ -5,11 +5,7 @@ import com.skytech.api.core.model.BaseModel;
 
 import java.util.Date;
 
-/**
- * @author 剑神卓凌昭
- * @date 2018-12-01 23:22:09
- */
-public class BaseAccount extends BaseModel<String> {
+public class BaseAccount extends BaseModel<String>{
 
     private String firstName;
 
@@ -24,26 +20,29 @@ public class BaseAccount extends BaseModel<String> {
     private Byte gender;
 
     private Integer age;
+    @JSONField(format="yyyy-MM-dd HH:mm:ss")
+    private Date birthday;
 
     private Integer height;
 
     private Integer weight;
 
+    private Double whr;
+
     private Integer stepTarget;
 
-    @JSONField(format = "yyyy-MM-dd HH:mm:ss")
+    private Integer sleepTime;
+    @JSONField(format="yyyy-MM-dd HH:mm:ss")
     private Date registerDatetime;
-
-    @JSONField(format = "yyyy-MM-dd HH:mm:ss")
+    @JSONField(format="yyyy-MM-dd HH:mm:ss")
     private Date updatedDatetime;
-
-    @JSONField(format = "yyyy-MM-dd HH:mm:ss")
+    @JSONField(format="yyyy-MM-dd HH:mm:ss")
     private Date lockintime;
 
     public BaseAccount() {
     }
 
-    public BaseAccount(String sid, String firstName, String lastName, String email, String password, String avarta, Byte gender, Integer age, Integer height, Integer weight, Integer stepTarget, Date registerDatetime, Date updatedDatetime,Date lockintime) {
+    public BaseAccount(String sid, String firstName, String lastName, String email, String password, String avarta, Byte gender, Integer age, Date birthday, Integer height, Integer weight, Double whr, Integer stepTarget, Integer sleepTime, Date registerDatetime, Date updatedDatetime, Date lockintime) {
         this.sid = sid;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -52,21 +51,23 @@ public class BaseAccount extends BaseModel<String> {
         this.avarta = avarta;
         this.gender = gender;
         this.age = age;
+        this.birthday = birthday;
         this.height = height;
         this.weight = weight;
+        this.whr = whr;
         this.stepTarget = stepTarget;
+        this.sleepTime = sleepTime;
         this.registerDatetime = registerDatetime;
         this.updatedDatetime = updatedDatetime;
         this.lockintime = lockintime;
     }
 
-    /********** get/set ***********/
     public String getFirstName() {
         return firstName;
     }
 
     public void setFirstName(String firstName) {
-        this.firstName = firstName;
+        this.firstName = firstName == null ? null : firstName.trim();
     }
 
     public String getLastName() {
@@ -74,7 +75,7 @@ public class BaseAccount extends BaseModel<String> {
     }
 
     public void setLastName(String lastName) {
-        this.lastName = lastName;
+        this.lastName = lastName == null ? null : lastName.trim();
     }
 
     public String getEmail() {
@@ -82,7 +83,7 @@ public class BaseAccount extends BaseModel<String> {
     }
 
     public void setEmail(String email) {
-        this.email = email;
+        this.email = email == null ? null : email.trim();
     }
 
     public String getPassword() {
@@ -90,7 +91,7 @@ public class BaseAccount extends BaseModel<String> {
     }
 
     public void setPassword(String password) {
-        this.password = password;
+        this.password = password == null ? null : password.trim();
     }
 
     public String getAvarta() {
@@ -98,7 +99,7 @@ public class BaseAccount extends BaseModel<String> {
     }
 
     public void setAvarta(String avarta) {
-        this.avarta = avarta;
+        this.avarta = avarta == null ? null : avarta.trim();
     }
 
     public Byte getGender() {
@@ -117,6 +118,14 @@ public class BaseAccount extends BaseModel<String> {
         this.age = age;
     }
 
+    public Date getBirthday() {
+        return birthday;
+    }
+
+    public void setBirthday(Date birthday) {
+        this.birthday = birthday;
+    }
+
     public Integer getHeight() {
         return height;
     }
@@ -133,12 +142,28 @@ public class BaseAccount extends BaseModel<String> {
         this.weight = weight;
     }
 
+    public Double getWhr() {
+        return whr;
+    }
+
+    public void setWhr(Double whr) {
+        this.whr = whr;
+    }
+
     public Integer getStepTarget() {
         return stepTarget;
     }
 
     public void setStepTarget(Integer stepTarget) {
         this.stepTarget = stepTarget;
+    }
+
+    public Integer getSleepTime() {
+        return sleepTime;
+    }
+
+    public void setSleepTime(Integer sleepTime) {
+        this.sleepTime = sleepTime;
     }
 
     public Date getRegisterDatetime() {
@@ -163,52 +188,5 @@ public class BaseAccount extends BaseModel<String> {
 
     public void setLockintime(Date lockintime) {
         this.lockintime = lockintime;
-    }
-
-    @Override
-    public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append(getClass().getSimpleName());
-        sb.append(" [");
-        sb.append("Hash = ").append(hashCode());
-        sb.append(", sid=").append(sid);
-        sb.append(", firstName=").append(firstName);
-        sb.append(", lastName=").append(lastName);
-        sb.append(", email=").append(email);
-        sb.append(", password=").append(password);
-        sb.append(", avarta=").append(avarta);
-        sb.append(", gender=").append(gender);
-        sb.append(", age=").append(age);
-        sb.append(", height=").append(height);
-        sb.append(", weight=").append(weight);
-        sb.append(", stepTarget=").append(stepTarget);
-        sb.append(", registerDatetime=").append(registerDatetime);
-        sb.append(", updatedDatetime=").append(updatedDatetime);
-        sb.append(", lockintime=").append(lockintime);
-        sb.append("]");
-        return sb.toString();
-    }
-
-    @Override
-    public boolean equals(Object that) {
-        if (this == that) {
-            return true;
-        }
-        if (that == null) {
-            return false;
-        }
-        if (getClass() != that.getClass()) {
-            return false;
-        }
-        BaseAccount other = (BaseAccount) that;
-        return (this.getSid() == null ? other.getSid() == null : this.getSid().equals(other.getSid()));
-    }
-
-    @Override
-    public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + ((getSid() == null) ? 0 : getSid().hashCode());
-        return result;
     }
 }

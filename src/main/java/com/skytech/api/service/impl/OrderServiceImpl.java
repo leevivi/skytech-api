@@ -267,12 +267,15 @@ public class OrderServiceImpl extends GenericOneServiceImpl<TOrder,TOrderExample
             int status = tOrder.getStatus();
             if (status == 0) {
                 myOrder.setOrderStatus("ongoing");
+                myOrder.setOrderStatusForInt(0);
             }
             if (status == 1) {
                 myOrder.setOrderStatus("finished");
+                myOrder.setOrderStatusForInt(1);
             }
             if (status == 2) {
                 myOrder.setOrderStatus("invalid");
+                myOrder.setOrderStatusForInt(2);
             }
             TOrderDetailExample tOrderDetailExample = new TOrderDetailExample();
             tOrderDetailExample.createCriteria().andOrdernoEqualTo(tOrder.getOrderno());
@@ -301,7 +304,7 @@ public class OrderServiceImpl extends GenericOneServiceImpl<TOrder,TOrderExample
         List<Object> memberInfoList = new ArrayList<>();
         Account account = accountMapper.selectByPrimaryKey(accountSid);
         TMemberExample tMemberExample = new TMemberExample();
-        tMemberExample.createCriteria().andAppuserEqualTo(account.getEmail());
+        tMemberExample.createCriteria().andAppuserEqualTo(account.getEmail()).andIsoverdueEqualTo(0);
         List<TMember> tMembers = tMemberMapper.selectByExample(tMemberExample);
         if(tMembers.isEmpty()||tMembers.get(0).getCompanyid()==null||tMembers.get(0).getStoresid()==null){
             List<TCourse> list = new ArrayList<>();

@@ -1,380 +1,403 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.skytech.api.mapper.AccountMapper" >
-    <resultMap id="BaseResultMap" type="com.skytech.api.model.Account" >
-        <id column="sid" property="sid" jdbcType="VARCHAR" />
-        <result column="first_name" property="firstName" jdbcType="VARCHAR" />
-        <result column="last_name" property="lastName" jdbcType="VARCHAR" />
-        <result column="email" property="email" jdbcType="VARCHAR" />
-        <result column="password" property="password" jdbcType="VARCHAR" />
-        <result column="avarta" property="avarta" jdbcType="VARCHAR" />
-        <result column="gender" property="gender" jdbcType="TINYINT" />
-        <result column="age" property="age" jdbcType="INTEGER" />
-        <result column="height" property="height" jdbcType="INTEGER" />
-        <result column="weight" property="weight" jdbcType="INTEGER" />
-        <result column="step_target" property="stepTarget" jdbcType="INTEGER" />
-        <result column="register_datetime" property="registerDatetime" jdbcType="TIMESTAMP" />
-        <result column="updated_datetime" property="updatedDatetime" jdbcType="TIMESTAMP" />
-        <result column="lockintime" property="lockintime" jdbcType="TIMESTAMP" />
-    </resultMap>
-    <sql id="Example_Where_Clause" >
-        <where >
-            <foreach collection="oredCriteria" item="criteria" separator="or" >
-                <if test="criteria.valid" >
-                    <trim prefix="(" suffix=")" prefixOverrides="and" >
-                        <foreach collection="criteria.criteria" item="criterion" >
-                            <choose >
-                                <when test="criterion.noValue" >
-                                    and ${criterion.condition}
-                                </when>
-                                <when test="criterion.singleValue" >
-                                    and ${criterion.condition} #{criterion.value}
-                                </when>
-                                <when test="criterion.betweenValue" >
-                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
-                                </when>
-                                <when test="criterion.listValue" >
-                                    and ${criterion.condition}
-                                    <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
-                                    #{listItem}
-                                    </foreach>
-                                </when>
-                            </choose>
-                        </foreach>
-                    </trim>
-                </if>
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.skytech.api.mapper.AccountMapper">
+  <resultMap id="BaseResultMap" type="com.skytech.api.model.Account">
+    <id column="sid" jdbcType="VARCHAR" property="sid" />
+    <result column="first_name" jdbcType="VARCHAR" property="firstName" />
+    <result column="last_name" jdbcType="VARCHAR" property="lastName" />
+    <result column="email" jdbcType="VARCHAR" property="email" />
+    <result column="password" jdbcType="VARCHAR" property="password" />
+    <result column="avarta" jdbcType="VARCHAR" property="avarta" />
+    <result column="gender" jdbcType="TINYINT" property="gender" />
+    <result column="age" jdbcType="INTEGER" property="age" />
+    <result column="birthday" jdbcType="DATE" property="birthday" />
+    <result column="height" jdbcType="INTEGER" property="height" />
+    <result column="weight" jdbcType="INTEGER" property="weight" />
+    <result column="WHR" jdbcType="DOUBLE" property="whr" />
+    <result column="step_target" jdbcType="INTEGER" property="stepTarget" />
+    <result column="sleep_time" jdbcType="INTEGER" property="sleepTime" />
+    <result column="register_datetime" jdbcType="TIMESTAMP" property="registerDatetime" />
+    <result column="updated_datetime" jdbcType="TIMESTAMP" property="updatedDatetime" />
+    <result column="lockintime" jdbcType="TIMESTAMP" property="lockintime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
             </foreach>
-        </where>
-    </sql>
-
-    <sql id="Update_By_Example_Where_Clause" >
-        <where >
-            <foreach collection="example.oredCriteria" item="criteria" separator="or" >
-                <if test="criteria.valid" >
-                    <trim prefix="(" suffix=")" prefixOverrides="and" >
-                        <foreach collection="criteria.criteria" item="criterion" >
-                            <choose >
-                                <when test="criterion.noValue" >
-                                    and ${criterion.condition}
-                                </when>
-                                <when test="criterion.singleValue" >
-                                    and ${criterion.condition} #{criterion.value}
-                                </when>
-                                <when test="criterion.betweenValue" >
-                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
-                                </when>
-                                <when test="criterion.listValue" >
-                                    and ${criterion.condition}
-                                    <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
-                                    #{listItem}
-                                    </foreach>
-                                </when>
-                            </choose>
-                        </foreach>
-                    </trim>
-                </if>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
             </foreach>
-        </where>
-    </sql>
-    <sql id="Base_Column_List" >
-        sid,first_name,last_name,email,password,avarta,gender,age,height,weight,step_target,register_datetime,updated_datetime,lockintime
-    </sql>
-    <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.skytech.api.model.AccountExample" >
-        select
-        <if test="distinct" >
-            distinct
+          </trim>
         </if>
-        <include refid="Base_Column_List" />
-        from account
-        <if test="_parameter != null" >
-            <include refid="Example_Where_Clause" />
-        </if>
-        <if test="orderByClause != null" >
-            order by ${orderByClause}
-        </if>
-        <if test="pagination != null and pagination.begin >= 0" >
-            limit #{pagination.begin}, #{pagination.pageSize}
-        </if>
-    </select>
-
-    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
-        select
-        <include refid="Base_Column_List" />
-        from account
-        where sid = #{sid,jdbcType=VARCHAR}
-    </select>
-    <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
-        delete from account
-        where sid = #{sid,jdbcType=VARCHAR}
-    </delete>
-
-    <delete id="deleteByExample" parameterType="com.skytech.api.model.AccountExample" >
-        delete from account
-        <if test="_parameter != null" >
-            <include refid="Example_Where_Clause" />
-        </if>
-    </delete>
-
-    <insert id="insert" parameterType="com.skytech.api.model.Account" >
-        insert into account (
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    sid, first_name, last_name, email, password, avarta, gender, age, birthday, height, 
+    weight, WHR, step_target, sleep_time, register_datetime, updated_datetime, lockintime
+  </sql>
+  <select id="selectByExample" parameterType="com.skytech.api.model.AccountExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from account
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+    <if test="pagination != null and pagination.begin >= 0" >
+      limit #{pagination.begin}, #{pagination.pageSize}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from account
+    where sid = #{sid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from account
+    where sid = #{sid,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.skytech.api.model.AccountExample">
+    delete from account
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.skytech.api.model.Account">
+    insert into account (sid, first_name, last_name, 
+      email, password, avarta, 
+      gender, age, birthday, height, 
+      weight, WHR, step_target, 
+      sleep_time, register_datetime, updated_datetime, 
+      lockintime)
+    values (#{sid,jdbcType=VARCHAR}, #{firstName,jdbcType=VARCHAR}, #{lastName,jdbcType=VARCHAR}, 
+      #{email,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, #{avarta,jdbcType=VARCHAR}, 
+      #{gender,jdbcType=BIT}, #{age,jdbcType=INTEGER}, #{birthday,jdbcType=DATE}, #{height,jdbcType=INTEGER}, 
+      #{weight,jdbcType=INTEGER}, #{whr,jdbcType=DOUBLE}, #{stepTarget,jdbcType=INTEGER}, 
+      #{sleepTime,jdbcType=BIT}, #{registerDatetime,jdbcType=TIMESTAMP}, #{updatedDatetime,jdbcType=TIMESTAMP}, 
+      #{lockintime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.skytech.api.model.Account">
+    insert into account
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="sid != null">
         sid,
+      </if>
+      <if test="firstName != null">
         first_name,
+      </if>
+      <if test="lastName != null">
         last_name,
+      </if>
+      <if test="email != null">
         email,
+      </if>
+      <if test="password != null">
         password,
+      </if>
+      <if test="avarta != null">
         avarta,
+      </if>
+      <if test="gender != null">
         gender,
+      </if>
+      <if test="age != null">
         age,
+      </if>
+      <if test="birthday != null">
+        birthday,
+      </if>
+      <if test="height != null">
         height,
+      </if>
+      <if test="weight != null">
         weight,
+      </if>
+      <if test="whr != null">
+        WHR,
+      </if>
+      <if test="stepTarget != null">
         step_target,
+      </if>
+      <if test="sleepTime != null">
+        sleep_time,
+      </if>
+      <if test="registerDatetime != null">
         register_datetime,
-        updated_datetime
-        )
-        values (
+      </if>
+      <if test="updatedDatetime != null">
+        updated_datetime,
+      </if>
+      <if test="lockintime != null">
+        lockintime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="sid != null">
         #{sid,jdbcType=VARCHAR},
+      </if>
+      <if test="firstName != null">
         #{firstName,jdbcType=VARCHAR},
+      </if>
+      <if test="lastName != null">
         #{lastName,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null">
         #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
         #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="avarta != null">
         #{avarta,jdbcType=VARCHAR},
-        #{gender,jdbcType=TINYINT},
+      </if>
+      <if test="gender != null">
+        #{gender,jdbcType=BIT},
+      </if>
+      <if test="age != null">
         #{age,jdbcType=INTEGER},
+      </if>
+      <if test="birthday != null">
+        #{birthday,jdbcType=DATE},
+      </if>
+      <if test="height != null">
         #{height,jdbcType=INTEGER},
+      </if>
+      <if test="weight != null">
         #{weight,jdbcType=INTEGER},
+      </if>
+      <if test="whr != null">
+        #{whr,jdbcType=DOUBLE},
+      </if>
+      <if test="stepTarget != null">
         #{stepTarget,jdbcType=INTEGER},
+      </if>
+      <if test="sleepTime != null">
+        #{sleepTime,jdbcType=BIT},
+      </if>
+      <if test="registerDatetime != null">
         #{registerDatetime,jdbcType=TIMESTAMP},
-        #{updatedDatetime,jdbcType=TIMESTAMP}
-        )
-    </insert>
-
-    <insert id="insertSelective" parameterType="com.skytech.api.model.Account" >
-        insert into account
-        <trim prefix="(" suffix=")" suffixOverrides="," >
-            <if test="sid != null" >
-            sid,
-            </if>
-            <if test="firstName != null" >
-            first_name,
-            </if>
-            <if test="lastName != null" >
-            last_name,
-            </if>
-            <if test="email != null" >
-            email,
-            </if>
-            <if test="password != null" >
-            password,
-            </if>
-            <if test="avarta != null" >
-            avarta,
-            </if>
-            <if test="gender != null" >
-            gender,
-            </if>
-            <if test="age != null" >
-            age,
-            </if>
-            <if test="height != null" >
-            height,
-            </if>
-            <if test="weight != null" >
-            weight,
-            </if>
-            <if test="stepTarget != null" >
-            step_target,
-            </if>
-            <if test="registerDatetime != null" >
-            register_datetime,
-            </if>
-            <if test="updatedDatetime != null" >
-            updated_datetime
-            </if>
-        </trim>
-        <trim prefix="values (" suffix=")" suffixOverrides="," >
-
-            <if test="sid != null" >
-                #{sid,jdbcType=VARCHAR},
-            </if>
-            <if test="firstName != null" >
-                #{firstName,jdbcType=VARCHAR},
-            </if>
-            <if test="lastName != null" >
-                #{lastName,jdbcType=VARCHAR},
-            </if>
-            <if test="email != null" >
-                #{email,jdbcType=VARCHAR},
-            </if>
-            <if test="password != null" >
-                #{password,jdbcType=VARCHAR},
-            </if>
-            <if test="avarta != null" >
-                #{avarta,jdbcType=VARCHAR},
-            </if>
-            <if test="gender != null" >
-                #{gender,jdbcType=TINYINT},
-            </if>
-            <if test="age != null" >
-                #{age,jdbcType=INTEGER},
-            </if>
-            <if test="height != null" >
-                #{height,jdbcType=INTEGER},
-            </if>
-            <if test="weight != null" >
-                #{weight,jdbcType=INTEGER},
-            </if>
-            <if test="stepTarget != null" >
-                #{stepTarget,jdbcType=INTEGER},
-            </if>
-            <if test="registerDatetime != null" >
-                #{registerDatetime,jdbcType=TIMESTAMP},
-            </if>
-            <if test="updatedDatetime != null" >
-                #{updatedDatetime,jdbcType=TIMESTAMP}
-            </if>
-        </trim>
-    </insert>
-
-    <select id="countByExample" parameterType="com.skytech.api.model.AccountExample" resultType="java.lang.Integer" >
-        select count(*) from account
-        <if test="_parameter != null" >
-            <include refid="Example_Where_Clause" />
-        </if>
-    </select>
-
-    <update id="updateByExampleSelective" parameterType="map" >
-        update account
-        <set >
-            <if test="sid != null" >
-            sid= #{sid,jdbcType=VARCHAR},
-            </if>
-            <if test="firstName != null" >
-            first_name= #{firstName,jdbcType=VARCHAR},
-            </if>
-            <if test="lastName != null" >
-            last_name= #{lastName,jdbcType=VARCHAR},
-            </if>
-            <if test="email != null" >
-            email= #{email,jdbcType=VARCHAR},
-            </if>
-            <if test="password != null" >
-            password= #{password,jdbcType=VARCHAR},
-            </if>
-            <if test="avarta != null" >
-            avarta= #{avarta,jdbcType=VARCHAR},
-            </if>
-            <if test="gender != null" >
-            gender= #{gender,jdbcType=TINYINT},
-            </if>
-            <if test="age != null" >
-            age= #{age,jdbcType=INTEGER},
-            </if>
-            <if test="height != null" >
-            height= #{height,jdbcType=INTEGER},
-            </if>
-            <if test="weight != null" >
-            weight= #{weight,jdbcType=INTEGER},
-            </if>
-            <if test="stepTarget != null" >
-            step_target= #{stepTarget,jdbcType=INTEGER},
-            </if>
-            <if test="registerDatetime != null" >
-            register_datetime= #{registerDatetime,jdbcType=TIMESTAMP},
-            </if>
-            <if test="updatedDatetime != null" >
-            updated_datetime= #{updatedDatetime,jdbcType=TIMESTAMP}
-            </if>
-        </set>
-        <if test="_parameter != null" >
-            <include refid="Update_By_Example_Where_Clause" />
-        </if>
-    </update>
-
-    <update id="updateByExample" parameterType="map" >
-        update account
-        set
-        sid= #{sid,jdbcType=VARCHAR},
-        first_name= #{firstName,jdbcType=VARCHAR},
-        last_name= #{lastName,jdbcType=VARCHAR},
-        email= #{email,jdbcType=VARCHAR},
-        password= #{password,jdbcType=VARCHAR},
-        avarta= #{avarta,jdbcType=VARCHAR},
-        gender= #{gender,jdbcType=TINYINT},
-        age= #{age,jdbcType=INTEGER},
-        height= #{height,jdbcType=INTEGER},
-        weight= #{weight,jdbcType=INTEGER},
-        step_target= #{stepTarget,jdbcType=INTEGER},
-        register_datetime= #{registerDatetime,jdbcType=TIMESTAMP},
-        updated_datetime= #{updatedDatetime,jdbcType=TIMESTAMP}
-        <if test="_parameter != null" >
-            <include refid="Update_By_Example_Where_Clause" />
-        </if>
-    </update>
-    <update id="updateByPrimaryKeySelective" parameterType="com.skytech.api.model.Account" >
-        update account
-        <set >
-            <if test="sid != null" >
-                sid= #{sid,jdbcType=VARCHAR},
-            </if>
-            <if test="firstName != null" >
-                first_name= #{firstName,jdbcType=VARCHAR},
-            </if>
-            <if test="lastName != null" >
-                last_name= #{lastName,jdbcType=VARCHAR},
-            </if>
-            <if test="email != null" >
-                email= #{email,jdbcType=VARCHAR},
-            </if>
-            <if test="password != null" >
-                password= #{password,jdbcType=VARCHAR},
-            </if>
-            <if test="avarta != null" >
-                avarta= #{avarta,jdbcType=VARCHAR},
-            </if>
-            <if test="gender != null" >
-                gender= #{gender,jdbcType=TINYINT},
-            </if>
-            <if test="age != null" >
-                age= #{age,jdbcType=INTEGER},
-            </if>
-            <if test="height != null" >
-                height= #{height,jdbcType=INTEGER},
-            </if>
-            <if test="weight != null" >
-                weight= #{weight,jdbcType=INTEGER},
-            </if>
-            <if test="stepTarget != null" >
-                step_target= #{stepTarget,jdbcType=INTEGER},
-            </if>
-            <if test="registerDatetime != null" >
-                register_datetime= #{registerDatetime,jdbcType=TIMESTAMP},
-            </if>
-            <if test="updatedDatetime != null" >
-                updated_datetime= #{updatedDatetime,jdbcType=TIMESTAMP},
-            </if>
-            <if test="lockintime != null" >
-                lockintime= #{lockintime,jdbcType=TIMESTAMP}
-            </if>
-        </set>
-        where sid = #{sid,jdbcType=VARCHAR}
-    </update>
-    <update id="updateByPrimaryKey" parameterType="com.skytech.api.model.Account" >
-        update account
-        set
-        sid= #{sid,jdbcType=VARCHAR},
-        first_name= #{firstName,jdbcType=VARCHAR},
-        last_name= #{lastName,jdbcType=VARCHAR},
-        email= #{email,jdbcType=VARCHAR},
-        password= #{password,jdbcType=VARCHAR},
-        avarta= #{avarta,jdbcType=VARCHAR},
-        gender= #{gender,jdbcType=TINYINT},
-        age= #{age,jdbcType=INTEGER},
-        height= #{height,jdbcType=INTEGER},
-        weight= #{weight,jdbcType=INTEGER},
-        step_target= #{stepTarget,jdbcType=INTEGER},
-        register_datetime= #{registerDatetime,jdbcType=TIMESTAMP},
-        updated_datetime= #{updatedDatetime,jdbcType=TIMESTAMP},
-        lockintime= #{lockintime,jdbcType=TIMESTAMP}
-        where sid = #{sid,jdbcType=VARCHAR}
-    </update>
+      </if>
+      <if test="updatedDatetime != null">
+        #{updatedDatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lockintime != null">
+        #{lockintime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.skytech.api.model.AccountExample" resultType="java.lang.Integer">
+    select count(*) from account
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update account
+    <set>
+      <if test="record.sid != null">
+        sid = #{record.sid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.firstName != null">
+        first_name = #{record.firstName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.lastName != null">
+        last_name = #{record.lastName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.email != null">
+        email = #{record.email,jdbcType=VARCHAR},
+      </if>
+      <if test="record.password != null">
+        password = #{record.password,jdbcType=VARCHAR},
+      </if>
+      <if test="record.avarta != null">
+        avarta = #{record.avarta,jdbcType=VARCHAR},
+      </if>
+      <if test="record.gender != null">
+        gender = #{record.gender,jdbcType=BIT},
+      </if>
+      <if test="record.age != null">
+        age = #{record.age,jdbcType=INTEGER},
+      </if>
+      <if test="record.birthday != null">
+        birthday = #{record.birthday,jdbcType=DATE},
+      </if>
+      <if test="record.height != null">
+        height = #{record.height,jdbcType=INTEGER},
+      </if>
+      <if test="record.weight != null">
+        weight = #{record.weight,jdbcType=INTEGER},
+      </if>
+      <if test="record.whr != null">
+        WHR = #{record.whr,jdbcType=DOUBLE},
+      </if>
+      <if test="record.stepTarget != null">
+        step_target = #{record.stepTarget,jdbcType=INTEGER},
+      </if>
+      <if test="record.sleepTime != null">
+        sleep_time = #{record.sleepTime,jdbcType=BIT},
+      </if>
+      <if test="record.registerDatetime != null">
+        register_datetime = #{record.registerDatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updatedDatetime != null">
+        updated_datetime = #{record.updatedDatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.lockintime != null">
+        lockintime = #{record.lockintime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update account
+    set sid = #{record.sid,jdbcType=VARCHAR},
+      first_name = #{record.firstName,jdbcType=VARCHAR},
+      last_name = #{record.lastName,jdbcType=VARCHAR},
+      email = #{record.email,jdbcType=VARCHAR},
+      password = #{record.password,jdbcType=VARCHAR},
+      avarta = #{record.avarta,jdbcType=VARCHAR},
+      gender = #{record.gender,jdbcType=BIT},
+      age = #{record.age,jdbcType=INTEGER},
+      birthday = #{record.birthday,jdbcType=DATE},
+      height = #{record.height,jdbcType=INTEGER},
+      weight = #{record.weight,jdbcType=INTEGER},
+      WHR = #{record.whr,jdbcType=DOUBLE},
+      step_target = #{record.stepTarget,jdbcType=INTEGER},
+      sleep_time = #{record.sleepTime,jdbcType=BIT},
+      register_datetime = #{record.registerDatetime,jdbcType=TIMESTAMP},
+      updated_datetime = #{record.updatedDatetime,jdbcType=TIMESTAMP},
+      lockintime = #{record.lockintime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.skytech.api.model.Account">
+    update account
+    <set>
+      <if test="firstName != null">
+        first_name = #{firstName,jdbcType=VARCHAR},
+      </if>
+      <if test="lastName != null">
+        last_name = #{lastName,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null">
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+        password = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="avarta != null">
+        avarta = #{avarta,jdbcType=VARCHAR},
+      </if>
+      <if test="gender != null">
+        gender = #{gender,jdbcType=BIT},
+      </if>
+      <if test="age != null">
+        age = #{age,jdbcType=INTEGER},
+      </if>
+      <if test="birthday != null">
+        birthday = #{birthday,jdbcType=DATE},
+      </if>
+      <if test="height != null">
+        height = #{height,jdbcType=INTEGER},
+      </if>
+      <if test="weight != null">
+        weight = #{weight,jdbcType=INTEGER},
+      </if>
+      <if test="whr != null">
+        WHR = #{whr,jdbcType=DOUBLE},
+      </if>
+      <if test="stepTarget != null">
+        step_target = #{stepTarget,jdbcType=INTEGER},
+      </if>
+      <if test="sleepTime != null">
+        sleep_time = #{sleepTime,jdbcType=BIT},
+      </if>
+      <if test="registerDatetime != null">
+        register_datetime = #{registerDatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedDatetime != null">
+        updated_datetime = #{updatedDatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lockintime != null">
+        lockintime = #{lockintime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where sid = #{sid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.skytech.api.model.Account">
+    update account
+    set first_name = #{firstName,jdbcType=VARCHAR},
+      last_name = #{lastName,jdbcType=VARCHAR},
+      email = #{email,jdbcType=VARCHAR},
+      password = #{password,jdbcType=VARCHAR},
+      avarta = #{avarta,jdbcType=VARCHAR},
+      gender = #{gender,jdbcType=BIT},
+      age = #{age,jdbcType=INTEGER},
+      birthday = #{birthday,jdbcType=DATE},
+      height = #{height,jdbcType=INTEGER},
+      weight = #{weight,jdbcType=INTEGER},
+      WHR = #{whr,jdbcType=DOUBLE},
+      step_target = #{stepTarget,jdbcType=INTEGER},
+      sleep_time = #{sleepTime,jdbcType=BIT},
+      register_datetime = #{registerDatetime,jdbcType=TIMESTAMP},
+      updated_datetime = #{updatedDatetime,jdbcType=TIMESTAMP},
+      lockintime = #{lockintime,jdbcType=TIMESTAMP}
+    where sid = #{sid,jdbcType=VARCHAR}
+  </update>
 </mapper>

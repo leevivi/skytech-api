@@ -2,6 +2,7 @@ package com.skytech.api.controller;
 
 import com.skytech.api.core.JsonMap;
 import com.skytech.api.core.Pagination;
+import com.skytech.api.core.utils.UUIDUtil;
 import com.skytech.api.mapper.AccountMapper;
 import com.skytech.api.mapper.TMemberMapper;
 import com.skytech.api.mapper.TMemberMessageMapper;
@@ -19,10 +20,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpSession;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by LiWei on 2019/4/7.
@@ -86,6 +84,7 @@ public class MessageController {
                     myMessage.setMessageBody(tMessage.getMsgbody());
                     //2019-04-08 12:00:00-Apir 8,2019 12:00:00
                     myMessage.setMessageTime(tMessage.getMsgtime());
+                    myMessage.setMessageUrl(tMessage.getMsgurl());
                     list.add(myMessage);
                 }
             }
@@ -119,6 +118,19 @@ public class MessageController {
                 if(data.size()!=0){
                     MyMessageList = (List<MyMessage>) data.get("MyMessage");
                     list.addAll(MyMessageList);
+                    UUIDUtil.removeDuplicateHashSet(list);
+                    Collections.sort(list, new Comparator<MyMessage>() {
+                        @Override
+                        public int compare(MyMessage o1, MyMessage o2) {
+                            if(o1.getMessageTime().before(o2.getMessageTime())){
+                                return 1;
+                            }
+                            if(o1.getMessageTime().equals(o2.getMessageTime())){
+                                return 0;
+                            }
+                            return -1;
+                        }
+                    });
                 }
             }
         }catch (Exception e){
@@ -133,7 +145,7 @@ public class MessageController {
         List<Object> memberInfoList = new ArrayList<>();
         Account account = accountMapper.selectByPrimaryKey(accountSid);
         TMemberExample tMemberExample = new TMemberExample();
-        tMemberExample.createCriteria().andAppuserEqualTo(account.getEmail());
+        tMemberExample.createCriteria().andAppuserEqualTo(account.getEmail()).andIsoverdueEqualTo(0);
         List<TMember> tMembers = tMemberMapper.selectByExample(tMemberExample);
         if(tMembers.isEmpty()||tMembers.get(0).getCompanyid()==null||tMembers.get(0).getStoresid()==null){
             List<TCourse> list = new ArrayList<>();

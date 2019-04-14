@@ -4,7 +4,8 @@
                 "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd" >
 <generatorConfiguration>
 <!-- 本地数据库驱动程序jar包的全路径 -->
-<classPathEntry location="F:\repository\mysql\mysql-connector-java\5.1.6\mysql-connector-java-5.1.6.jar"/>
+<!--<classPathEntry location="F:\repository\mysql\mysql-connector-java\5.1.6\mysql-connector-java-5.1.6.jar"/>-->
+<classPathEntry location="D:\software\repository\mysql\mysql-connector-java\5.1.6\mysql-connector-java-5.1.6.jar"/>
 <context id="context" targetRuntime="MyBatis3">
     <commentGenerator>
         <property name="suppressDate" value="true"/>
@@ -32,16 +33,18 @@
         <property name="forceBigDecimals" value="false"/>
     </javaTypeResolver>
     <!-- 实体类生成的位置 -->
-    <javaModelGenerator targetPackage="com.skytech.api.model" targetProject="C:\Users\LiWei\Desktop\code\skytechCode">
+    <!--C:\Users\1\Desktop\code\skytechCode\-->
+    <!--C:\Users\LiWei\Desktop\code\skytechCode\-->
+    <javaModelGenerator targetPackage="com.skytech.api.model" targetProject="C:\Users\1\Desktop\code\skytechCode\">
         <property name="enableSubPackages" value="false"/>
         <property name="trimStrings" value="true"/>
     </javaModelGenerator>
     <!-- *Mapper.xml 文件的位置 -->
-    <sqlMapGenerator targetPackage="com.skytech.api.xml" targetProject="C:\Users\LiWei\Desktop\code\skytechCode\">
+    <sqlMapGenerator targetPackage="com.skytech.api.xml" targetProject="C:\Users\1\Desktop\code\skytechCode\">
         <property name="enableSubPackages" value="false"/>
     </sqlMapGenerator>
     <!-- Mapper 接口文件的位置 -->
-    <javaClientGenerator targetPackage="com.skytech.api.mapper" targetProject="C:\Users\LiWei\Desktop\code\skytechCode\" type="XMLMAPPER">
+    <javaClientGenerator targetPackage="com.skytech.api.mapper" targetProject="C:\Users\1\Desktop\code\skytechCode\" type="XMLMAPPER">
         <property name="enableSubPackages" value="false"/>
     </javaClientGenerator>
 

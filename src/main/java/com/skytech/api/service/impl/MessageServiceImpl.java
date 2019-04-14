@@ -13,10 +13,7 @@ import com.skytech.api.service.MessageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by LiWei on 2019/4/7.
@@ -61,7 +58,9 @@ public class MessageServiceImpl extends GenericOneServiceImpl<TMemberMessage,TMe
                     myMessage.setMessageBody(tMessage.getMsgbody());
                     //2019-04-08 12:00:00-Apir 8,2019 12:00:00
                     myMessage.setMessageTime(tMessage.getMsgtime());
+                    myMessage.setMessageUrl(tMessage.getMsgurl());
                     list.add(myMessage);
+
                 }
             }
             data.put("MyMessage",list);

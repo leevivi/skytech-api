@@ -68,6 +68,9 @@ public class MyVouchersServiceImpl extends GenericOneServiceImpl<TCouponMembers,
                 memberId = memberInfo.getMemberId();
                 companyId = memberInfo.getCompanyId();
                 storesId = memberInfo.getStoresId();
+                OrgStores orgStores = orgStoresMapper.selectByPrimaryKey(storesId);
+                myVouchers.setClubId(orgStores.getId());
+                myVouchers.setClubName(orgStores.getStoresname());
                 List<Vouchers> list = new ArrayList<>();
                 String now = DateUtil.formatmiddledatestr(new Date());
                 TCouponMembersExample tCouponMembersExample = new TCouponMembersExample();
@@ -81,9 +84,7 @@ public class MyVouchersServiceImpl extends GenericOneServiceImpl<TCouponMembers,
                     Vouchers vouchers = new Vouchers();
                     vouchers.setVouchersName(tCoupons.get(0).getCouponname());
                     vouchers.setAvailableClub("This stores use only");
-                    OrgStores orgStores = orgStoresMapper.selectByPrimaryKey(storesId);
-                    myVouchers.setClubId(orgStores.getId());
-                    myVouchers.setClubName(orgStores.getStoresname());
+
                     //通过有效时间补全当月日期2019-04-01-2019-04-30
                     vouchers.setValidityTime(DateUtil.getHeadAndEndDateForMonth(tcm.getValidityperiod()));
                     list.add(vouchers);
@@ -104,7 +105,7 @@ public class MyVouchersServiceImpl extends GenericOneServiceImpl<TCouponMembers,
         List<Object> memberInfoList = new ArrayList<>();
         Account account = accountMapper.selectByPrimaryKey(accountSid);
         TMemberExample tMemberExample = new TMemberExample();
-        tMemberExample.createCriteria().andAppuserEqualTo(account.getEmail());
+        tMemberExample.createCriteria().andAppuserEqualTo(account.getEmail()).andIsoverdueEqualTo(0);
         List<TMember> tMembers = tMemberMapper.selectByExample(tMemberExample);
         if(tMembers.isEmpty()||tMembers.get(0).getCompanyid()==null||tMembers.get(0).getStoresid()==null){
             List<TCourse> list = new ArrayList<>();

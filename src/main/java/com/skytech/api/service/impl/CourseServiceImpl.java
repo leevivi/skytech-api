@@ -191,16 +191,26 @@ public class CourseServiceImpl extends GenericOneServiceImpl<TCourse,TCourseExam
                         }
                         else {
                             //会员没有加入该时段的课程-可选
-                            SysBasicDict sysBasicDict = sysBasicDictMapper.selectByPrimaryKey(tCourseTime.getClassid());
-                            tCourseTime.setClassName(sysBasicDict.getName());
+                            if(tCourseTime.getClassid()==null){
+                                tCourseTime.setClassName("");
+                            }
+                            else {
+                                SysBasicDict sysBasicDict = sysBasicDictMapper.selectByPrimaryKey(tCourseTime.getClassid());
+                                tCourseTime.setClassName(sysBasicDict.getName());
+                            }
                             tCourseTime.setJoined(false);
                             list.add(tCourseTime);
                         }
                     }
                     else {
                         //会员没有加入该时段的课程-可选
-                        SysBasicDict sysBasicDict = sysBasicDictMapper.selectByPrimaryKey(tCourseTime.getClassid());
-                        tCourseTime.setClassName(sysBasicDict.getName());
+                        if(tCourseTime.getClassid()==null){
+                            tCourseTime.setClassName("");
+                        }
+                        else {
+                            SysBasicDict sysBasicDict = sysBasicDictMapper.selectByPrimaryKey(tCourseTime.getClassid());
+                            tCourseTime.setClassName(sysBasicDict.getName());
+                        }
                         tCourseTime.setJoined(false);
                         list.add(tCourseTime);
                     }

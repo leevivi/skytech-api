@@ -5,11 +5,9 @@ import com.skytech.api.core.JsonMap;
 import com.skytech.api.core.Pagination;
 import com.skytech.api.core.service.impl.GenericServiceImpl;
 import com.skytech.api.core.utils.CheckUtil;
+import com.skytech.api.core.utils.DateUtil;
 import com.skytech.api.core.utils.UUIDUtil;
-import com.skytech.api.mapper.AccountDeviceMapper;
-import com.skytech.api.mapper.AccountMapper;
-import com.skytech.api.mapper.DeviceMapper;
-import com.skytech.api.mapper.RunningRecordMapper;
+import com.skytech.api.mapper.*;
 import com.skytech.api.model.*;
 import com.skytech.api.model.base.BaseAccountExample;
 import com.skytech.api.service.AccountService;
@@ -35,6 +33,8 @@ public class AccountServiceImpl extends GenericServiceImpl<Account, AccountExamp
 
     @Autowired
     private RunningRecordMapper runningRecordMapper;
+    @Autowired
+    private TMemberMapper tMemberMapper;
 
     @Override
     protected AccountMapper getGenericMapper() {
@@ -99,7 +99,11 @@ public class AccountServiceImpl extends GenericServiceImpl<Account, AccountExamp
 
         Map<String, Object> data = new HashMap<>();
         if (!accounts.isEmpty()) {
-            data.put("account", accounts.get(0));
+            Account account = accounts.get(0);
+            if(account.getBirthday()==null){
+                account.setBirthday(new Date(0));
+            }
+            data.put("account", account);
             AccountDeviceExample accountDeviceExample = new AccountDeviceExample();
             accountDeviceExample.createCriteria().andAccountSidEqualTo(accounts.get(0).getSid()).andDelFlagEqualTo((byte) 0);
             List<AccountDevice> accountDevices = accountDeviceMapper.selectByExample(accountDeviceExample);
@@ -188,16 +192,30 @@ public class AccountServiceImpl extends GenericServiceImpl<Account, AccountExamp
         Account one = accountMapper.selectByPrimaryKey(accountSid);
         one.setStepTarget(account.getStepTarget());
         one.setAge(account.getAge());
+        one.setBirthday(account.getBirthday());
         one.setGender(account.getGender());
         one.setHeight(account.getHeight());
         one.setWeight(account.getWeight());
+        one.setWhr(account.getWhr());
+        one.setSleepTime(account.getSleepTime());
         one.setFirstName(account.getFirstName());
         one.setLastName(account.getLastName());
         one.setUpdatedDatetime(new Date());
 
+        TMemberExample tMemberExample = new TMemberExample();
+        tMemberExample.createCriteria().andAppuserEqualTo(one.getEmail());
+        List<TMember> tMembers = tMemberMapper.selectByExample(tMemberExample);
+        int j = 0;
+        if(!tMembers.isEmpty()){
+            for (TMember tMember :tMembers) {
+                tMember.setBirthday(account.getBirthday());
+                tMember.setSex(account.getGender());
+                j = tMemberMapper.updateByPrimaryKeySelective(tMember);
+            }
+        }
         int i = accountMapper.updateByPrimaryKeySelective(one);
 
-        if (i > 0) {
+        if (i > 0 && j > 0) {
 
             return JsonMap.of(true, "保存成功");
         }

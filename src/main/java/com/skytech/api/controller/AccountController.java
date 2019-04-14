@@ -2,6 +2,7 @@ package com.skytech.api.controller;
 
 import com.skytech.api.core.JsonMap;
 import com.skytech.api.core.Pagination;
+import com.skytech.api.core.utils.DateUtil;
 import com.skytech.api.model.Account;
 import com.skytech.api.service.AccountService;
 import io.swagger.annotations.ApiImplicitParam;
@@ -16,6 +17,8 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpSession;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -55,9 +58,18 @@ public class AccountController {
     @GetMapping(value = "/account/listBySid")
     public JsonMap listBySid(HttpSession session) {
         Object accountSidObj = session.getAttribute("accountSid");
-
         String accountSid = accountSidObj.toString();
         Account account = accountService.selectByPrimaryKey(accountSid);
+        if(account.getBirthday()==null){
+            account.setBirthday(new Date(0));
+        }
+        /*if(account.getBirthday()==null && account.getAge()==null){
+            account.setBirthday(new Date());
+            account.setAge(DateUtil.getAgeByBirthday(new Date()));
+        }
+        else if(account.getBirthday()==null && account.getAge()!=null){
+            account.setAge(DateUtil.getAgeByBirthday(account.getBirthday()));
+        }*/
 
         return JsonMap.of(true, "", account);
     }

@@ -3,24 +3,25 @@
 <mapper namespace="com.skytech.api.mapper.ParQMapper">
   <resultMap id="BaseResultMap" type="com.skytech.api.model.ParQ">
     <id column="id" jdbcType="INTEGER" property="id" />
-    <result column="heart_condition" jdbcType="BIT" property="heartCondition" />
-    <result column="angina" jdbcType="BIT" property="angina" />
-    <result column="high_blood_pressure" jdbcType="BIT" property="highBloodPressure" />
-    <result column="asthma" jdbcType="BIT" property="asthma" />
-    <result column="diabetes" jdbcType="BIT" property="diabetes" />
-    <result column="back_problems" jdbcType="BIT" property="backProblems" />
-    <result column="sciatica" jdbcType="BIT" property="sciatica" />
-    <result column="joint_problems" jdbcType="BIT" property="jointProblems" />
-    <result column="smoker" jdbcType="BIT" property="smoker" />
-    <result column="pregnancy" jdbcType="BIT" property="pregnancy" />
-    <result column="hernia" jdbcType="BIT" property="hernia" />
-    <result column="recent_surgery" jdbcType="BIT" property="recentSurgery" />
-    <result column="fat_loss" jdbcType="BIT" property="fatLoss" />
-    <result column="building" jdbcType="BIT" property="building" />
-    <result column="toning" jdbcType="BIT" property="toning" />
-    <result column="other" jdbcType="BIT" property="other" />
+    <result column="heart_condition" jdbcType="INTEGER" property="heartCondition" />
+    <result column="angina" jdbcType="INTEGER" property="angina" />
+    <result column="high_blood_pressure" jdbcType="INTEGER" property="highBloodPressure" />
+    <result column="asthma" jdbcType="INTEGER" property="asthma" />
+    <result column="diabetes" jdbcType="INTEGER" property="diabetes" />
+    <result column="back_problems" jdbcType="INTEGER" property="backProblems" />
+    <result column="sciatica" jdbcType="INTEGER" property="sciatica" />
+    <result column="joint_problems" jdbcType="INTEGER" property="jointProblems" />
+    <result column="smoker" jdbcType="INTEGER" property="smoker" />
+    <result column="pregnancy" jdbcType="INTEGER" property="pregnancy" />
+    <result column="hernia" jdbcType="INTEGER" property="hernia" />
+    <result column="recent_surgery" jdbcType="INTEGER" property="recentSurgery" />
+    <result column="fat_loss" jdbcType="INTEGER" property="fatLoss" />
+    <result column="building" jdbcType="INTEGER" property="building" />
+    <result column="toning" jdbcType="INTEGER" property="toning" />
+    <result column="other" jdbcType="INTEGER" property="other" />
     <result column="specific_focus_areas" jdbcType="VARCHAR" property="specificFocusAreas" />
     <result column="member_id" jdbcType="INTEGER" property="memberId" />
+    <result column="appUser" jdbcType="VARCHAR" property="appuser" />
     <result column="account_sid" jdbcType="VARCHAR" property="accountSid" />
     <result column="created_time" jdbcType="TIMESTAMP" property="createdTime" />
     <result column="updated_time" jdbcType="TIMESTAMP" property="updatedTime" />
@@ -86,7 +87,8 @@
   <sql id="Base_Column_List">
     id, heart_condition, angina, high_blood_pressure, asthma, diabetes, back_problems, 
     sciatica, joint_problems, smoker, pregnancy, hernia, recent_surgery, fat_loss, building, 
-    toning, other, specific_focus_areas, member_id, account_sid, created_time, updated_time
+    toning, other, specific_focus_areas, member_id, appUser, account_sid, created_time, 
+    updated_time
   </sql>
   <select id="selectByExample" parameterType="com.skytech.api.model.ParQExample" resultMap="BaseResultMap">
     select
@@ -100,6 +102,9 @@
     </if>
     <if test="orderByClause != null">
       order by ${orderByClause}
+    </if>
+    <if test="pagination != null and pagination.begin >= 0" >
+      limit #{pagination.begin}, #{pagination.pageSize}
     </if>
   </select>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
@@ -124,15 +129,17 @@
       back_problems, sciatica, joint_problems, 
       smoker, pregnancy, hernia, recent_surgery, 
       fat_loss, building, toning, other, 
-      specific_focus_areas, member_id, account_sid, 
-      created_time, updated_time)
+      specific_focus_areas, member_id, appUser, 
+      account_sid, created_time, updated_time
+      )
     values (#{id,jdbcType=INTEGER}, #{heartCondition,jdbcType=BIT}, #{angina,jdbcType=BIT}, 
       #{highBloodPressure,jdbcType=BIT}, #{asthma,jdbcType=BIT}, #{diabetes,jdbcType=BIT}, 
       #{backProblems,jdbcType=BIT}, #{sciatica,jdbcType=BIT}, #{jointProblems,jdbcType=BIT}, 
       #{smoker,jdbcType=BIT}, #{pregnancy,jdbcType=BIT}, #{hernia,jdbcType=BIT}, #{recentSurgery,jdbcType=BIT}, 
       #{fatLoss,jdbcType=BIT}, #{building,jdbcType=BIT}, #{toning,jdbcType=BIT}, #{other,jdbcType=BIT}, 
-      #{specificFocusAreas,jdbcType=VARCHAR}, #{memberId,jdbcType=INTEGER}, #{accountSid,jdbcType=VARCHAR}, 
-      #{createdTime,jdbcType=TIMESTAMP}, #{updatedTime,jdbcType=TIMESTAMP})
+      #{specificFocusAreas,jdbcType=VARCHAR}, #{memberId,jdbcType=INTEGER}, #{appuser,jdbcType=VARCHAR}, 
+      #{accountSid,jdbcType=VARCHAR}, #{createdTime,jdbcType=TIMESTAMP}, #{updatedTime,jdbcType=TIMESTAMP}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.skytech.api.model.ParQ">
     insert into par_q
@@ -193,6 +200,9 @@
       </if>
       <if test="memberId != null">
         member_id,
+      </if>
+      <if test="appuser != null">
+        appUser,
       </if>
       <if test="accountSid != null">
         account_sid,
@@ -261,6 +271,9 @@
       </if>
       <if test="memberId != null">
         #{memberId,jdbcType=INTEGER},
+      </if>
+      <if test="appuser != null">
+        #{appuser,jdbcType=VARCHAR},
       </if>
       <if test="accountSid != null">
         #{accountSid,jdbcType=VARCHAR},
@@ -339,6 +352,9 @@
       <if test="record.memberId != null">
         member_id = #{record.memberId,jdbcType=INTEGER},
       </if>
+      <if test="record.appuser != null">
+        appUser = #{record.appuser,jdbcType=VARCHAR},
+      </if>
       <if test="record.accountSid != null">
         account_sid = #{record.accountSid,jdbcType=VARCHAR},
       </if>
@@ -374,6 +390,7 @@
       other = #{record.other,jdbcType=BIT},
       specific_focus_areas = #{record.specificFocusAreas,jdbcType=VARCHAR},
       member_id = #{record.memberId,jdbcType=INTEGER},
+      appUser = #{record.appuser,jdbcType=VARCHAR},
       account_sid = #{record.accountSid,jdbcType=VARCHAR},
       created_time = #{record.createdTime,jdbcType=TIMESTAMP},
       updated_time = #{record.updatedTime,jdbcType=TIMESTAMP}
@@ -438,6 +455,9 @@
       <if test="memberId != null">
         member_id = #{memberId,jdbcType=INTEGER},
       </if>
+      <if test="appuser != null">
+        appUser = #{appuser,jdbcType=VARCHAR},
+      </if>
       <if test="accountSid != null">
         account_sid = #{accountSid,jdbcType=VARCHAR},
       </if>
@@ -470,6 +490,7 @@
       other = #{other,jdbcType=BIT},
       specific_focus_areas = #{specificFocusAreas,jdbcType=VARCHAR},
       member_id = #{memberId,jdbcType=INTEGER},
+      appUser = #{appuser,jdbcType=VARCHAR},
       account_sid = #{accountSid,jdbcType=VARCHAR},
       created_time = #{createdTime,jdbcType=TIMESTAMP},
       updated_time = #{updatedTime,jdbcType=TIMESTAMP}

@@ -153,6 +153,14 @@ public class TEventController {
             * 活动状态为2时，具体返回数据排名页
             * */
             //活动进行中和活动已结束都可以看到排名
+            if (tEvent.getEventStatus() == 0) {
+                tEvent.setStatus("Upcoming");
+                if (tEvent.getEventPic() != null) {
+                    tEvent.setEventPic("http://47.244.189.240:8080/statics" + tEvent.getEventPic());
+                } else {
+                    tEvent.setEventPic(tEvent.getEventPic());
+                }
+            }
             if (tEvent.getEventStatus() == 1 || tEvent.getEventStatus() == 2) {
                 data = tEventMembersService.findForEventDetail(accountSid, eventId);
                 return JsonMap.of(true, "", data);
@@ -303,7 +311,7 @@ public class TEventController {
         List<Object> memberInfoList = new ArrayList<>();
         Account account = accountMapper.selectByPrimaryKey(accountSid);
         TMemberExample tMemberExample = new TMemberExample();
-        tMemberExample.createCriteria().andAppuserEqualTo(account.getEmail());
+        tMemberExample.createCriteria().andAppuserEqualTo(account.getEmail()).andIsoverdueEqualTo(0);
         List<TMember> tMembers = tMemberMapper.selectByExample(tMemberExample);
         if(tMembers.isEmpty()||tMembers.get(0).getCompanyid()==null||tMembers.get(0).getStoresid()==null){
             List<TCourse> list = new ArrayList<>();

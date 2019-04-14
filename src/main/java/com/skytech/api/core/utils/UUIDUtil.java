@@ -2,10 +2,7 @@ package com.skytech.api.core.utils;/**
  * Created by Administrator on 2018/7/11.
  */
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * uuid生成工具
@@ -27,6 +24,12 @@ public class UUIDUtil {
         }
         return val;
     }
+
+    /**
+     * 把list里的对象遍历一遍，用list.contain()，如果不存在就放入到另外一个list集合中
+     * @param list
+     * @return
+     */
     public static List removeDuplicate(List list){
         List listTemp = new ArrayList();
         for(int i=0;i<list.size();i++){
@@ -36,6 +39,25 @@ public class UUIDUtil {
         }
         return listTemp;
     }
+    // 删除ArrayList中重复元素，保持顺序
+    public static void removeDuplicateWithOrder(List list) {
+        Set set = new HashSet();
+        List newList = new ArrayList();
+        for (Iterator iter = list.iterator(); iter.hasNext();) {
+            Object element = iter.next();
+            if (set.add(element))
+                newList.add(element);
+        }
+        list.clear();
+        list.addAll(newList);
+        System.out.println( " remove duplicate " + list);
+    }
 
+    public static List removeDuplicateHashSet(List list) {
+        HashSet h = new HashSet(list);
+        list.clear();
+        list.addAll(h);
+        return list;
+    }
 
 }
