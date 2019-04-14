@@ -191,7 +191,11 @@ public class AccountServiceImpl extends GenericServiceImpl<Account, AccountExamp
     public JsonMap saveProfile(String accountSid, Account account, MultipartFile picFile) {
         Account one = accountMapper.selectByPrimaryKey(accountSid);
         one.setStepTarget(account.getStepTarget());
-        one.setAge(account.getAge());
+        if(account.getBirthday()!=null){
+            one.setAge(DateUtil.getAgeByBirthday(account.getBirthday()));
+        }else {
+            one.setAge(account.getAge());
+        }
         one.setBirthday(account.getBirthday());
         one.setGender(account.getGender());
         one.setHeight(account.getHeight());
@@ -210,6 +214,7 @@ public class AccountServiceImpl extends GenericServiceImpl<Account, AccountExamp
             for (TMember tMember :tMembers) {
                 tMember.setBirthday(account.getBirthday());
                 tMember.setSex(account.getGender());
+                tMember.setUpdatetime(new Date());
                 j = tMemberMapper.updateByPrimaryKeySelective(tMember);
             }
         }
