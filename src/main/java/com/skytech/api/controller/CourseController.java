@@ -98,7 +98,7 @@ public class CourseController{
             count += pagination.getTotalRowNumber();
             for (TCourse tCourse : dataList) {
                 if (tCourse.getCoverurl() != null) {
-                    tCourse.setCoverurl("http://47.244.189.240:8080/statics" + tCourse.getCoverurl());
+                    tCourse.setCoverurl("http://47.244.99.59:8080/statics" + tCourse.getCoverurl());
                 } else {
                     tCourse.setCoverurl(tCourse.getCoverurl());
                 }

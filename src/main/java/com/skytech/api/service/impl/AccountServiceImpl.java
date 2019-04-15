@@ -220,7 +220,7 @@ public class AccountServiceImpl extends GenericServiceImpl<Account, AccountExamp
         }
         int i = accountMapper.updateByPrimaryKeySelective(one);
 
-        if (i > 0 && j > 0) {
+        if (i > 0 || j > 0) {
 
             return JsonMap.of(true, "保存成功");
         }

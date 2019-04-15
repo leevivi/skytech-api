@@ -85,7 +85,7 @@ public class TEventMembersServiceImpl extends GenericOneServiceImpl<TEventMember
         tEvent.setComanyName(orgCompany.getCompanyname());
         tEvent.setJoined(true);
         if (tEvent.getEventPic() != null) {
-            tEvent.setEventPic("http://47.244.189.240:8080/statics" + tEvent.getEventPic());
+            tEvent.setEventPic("http://47.244.99.59:8080/statics" + tEvent.getEventPic());
         } else {
             tEvent.setEventPic(tEvent.getEventPic());
         }

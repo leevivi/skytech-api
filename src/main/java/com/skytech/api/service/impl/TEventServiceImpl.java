@@ -68,7 +68,7 @@ public class TEventServiceImpl extends GenericOneServiceImpl<TEvent,TEventExampl
                 myActivity.setActivityId(tEvent.getId());
                 myActivity.setActivityName(tEvent.getEventName());
                 if(tEvent.getEventPic()!=null){
-                    myActivity.setActivityPic("http://47.244.189.240:8080/statics"+tEvent.getEventPic());
+                    myActivity.setActivityPic("http://47.244.99.59:8080/statics"+tEvent.getEventPic());
                 }
                 else {
                     myActivity.setActivityPic(tEvent.getEventPic());

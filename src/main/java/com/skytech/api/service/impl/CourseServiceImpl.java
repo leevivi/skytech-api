@@ -83,7 +83,7 @@ public class CourseServiceImpl extends GenericOneServiceImpl<TCourse,TCourseExam
         Map<String, Object> data = new HashMap<>();
         TCourse tCourse = tCourseMapper.selectByPrimaryKey(id);
         if(tCourse.getCoverurl()!=null){
-            tCourse.setCoverurl("http://47.244.189.240:8080/statics"+tCourse.getCoverurl());
+            tCourse.setCoverurl("http://47.244.99.59:8080/statics"+tCourse.getCoverurl());
         }
         else {
             tCourse.setCoverurl(tCourse.getCoverurl());

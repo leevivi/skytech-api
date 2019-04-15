@@ -89,7 +89,7 @@ public class TEventController {
                 Integer members = tEventMembersService.countNum(tEvent.getId());
                 tEvent.setMemberNums(members);
                 if (tEvent.getEventPic() != null) {
-                    tEvent.setEventPic("http://47.244.189.240:8080/statics" + tEvent.getEventPic());
+                    tEvent.setEventPic("http://47.244.99.59:8080/statics" + tEvent.getEventPic());
                 } else {
                     tEvent.setEventPic(tEvent.getEventPic());
                 }
@@ -156,7 +156,7 @@ public class TEventController {
             if (tEvent.getEventStatus() == 0) {
                 tEvent.setStatus("Upcoming");
                 if (tEvent.getEventPic() != null) {
-                    tEvent.setEventPic("http://47.244.189.240:8080/statics" + tEvent.getEventPic());
+                    tEvent.setEventPic("http://47.244.99.59:8080/statics" + tEvent.getEventPic());
                 } else {
                     tEvent.setEventPic(tEvent.getEventPic());
                 }
@@ -168,7 +168,7 @@ public class TEventController {
         }
         else{
             if (tEvent.getEventPic() != null) {
-                tEvent.setEventPic("http://47.244.189.240:8080/statics" + tEvent.getEventPic());
+                tEvent.setEventPic("http://47.244.99.59:8080/statics" + tEvent.getEventPic());
             } else {
                 tEvent.setEventPic(tEvent.getEventPic());
             }
