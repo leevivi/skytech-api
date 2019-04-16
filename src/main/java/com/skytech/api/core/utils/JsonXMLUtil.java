@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Created by 1 on 2019/4/12.
+ * Created by leeyahweh on 2019/4/12.
  */
 public class JsonXMLUtil {
     private static final String  JSON_ARRAY_STR = "[{\"studentName\":\"lily\",\"studentAge\":12},{\"studentName\":\"lucy\",\"studentAge\":15}]";

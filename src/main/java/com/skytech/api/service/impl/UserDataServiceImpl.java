@@ -82,7 +82,12 @@ public class UserDataServiceImpl extends GenericOneServiceImpl<UserData,UserData
                         }
 
                     }
-
+                UserData ud = userDataList1.get(0);
+                boolean a = ud.getDataActual().compareTo(BigDecimal.ZERO) == 0;
+                boolean b = ud.getDataGoal().compareTo(BigDecimal.ZERO) == 0;
+                if(a && b){
+                    one.setUpToStandard(0);
+                }
                     one.setDataActual(userData.getDataActual());
                     one.setDataGoal(userData.getDataGoal());
                     one.setUpdatedTime(new Date());

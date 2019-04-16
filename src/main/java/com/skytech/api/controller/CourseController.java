@@ -2,6 +2,7 @@ package com.skytech.api.controller;
 
 import com.skytech.api.core.JsonMap;
 import com.skytech.api.core.Pagination;
+import com.skytech.api.core.utils.picUtil;
 import com.skytech.api.mapper.*;
 import com.skytech.api.model.*;
 import com.skytech.api.service.CourseService;
@@ -98,7 +99,7 @@ public class CourseController{
             count += pagination.getTotalRowNumber();
             for (TCourse tCourse : dataList) {
                 if (tCourse.getCoverurl() != null) {
-                    tCourse.setCoverurl("http://47.244.99.59:8080/statics" + tCourse.getCoverurl());
+                    tCourse.setCoverurl(picUtil.getUrl() + tCourse.getCoverurl());
                 } else {
                     tCourse.setCoverurl(tCourse.getCoverurl());
                 }

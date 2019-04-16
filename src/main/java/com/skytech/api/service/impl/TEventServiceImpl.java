@@ -5,6 +5,7 @@ import com.skytech.api.core.Pagination;
 import com.skytech.api.core.mapper.GenericOneMapper;
 import com.skytech.api.core.service.impl.GenericOneServiceImpl;
 import com.skytech.api.core.utils.DateUtil;
+import com.skytech.api.core.utils.picUtil;
 import com.skytech.api.mapper.AccountMapper;
 import com.skytech.api.mapper.TEventMapper;
 import com.skytech.api.mapper.TEventMembersMapper;
@@ -68,7 +69,7 @@ public class TEventServiceImpl extends GenericOneServiceImpl<TEvent,TEventExampl
                 myActivity.setActivityId(tEvent.getId());
                 myActivity.setActivityName(tEvent.getEventName());
                 if(tEvent.getEventPic()!=null){
-                    myActivity.setActivityPic("http://47.244.99.59:8080/statics"+tEvent.getEventPic());
+                    myActivity.setActivityPic(picUtil.getUrl()+tEvent.getEventPic());
                 }
                 else {
                     myActivity.setActivityPic(tEvent.getEventPic());

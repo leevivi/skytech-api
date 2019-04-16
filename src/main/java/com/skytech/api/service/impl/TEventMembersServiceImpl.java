@@ -6,6 +6,7 @@ import com.skytech.api.core.mapper.GenericOneMapper;
 import com.skytech.api.core.service.impl.GenericOneServiceImpl;
 import com.skytech.api.core.utils.DateUtil;
 import com.skytech.api.core.utils.UUIDUtil;
+import com.skytech.api.core.utils.picUtil;
 import com.skytech.api.mapper.*;
 import com.skytech.api.model.*;
 import com.skytech.api.model.base.BaseTEventMembersExample;
@@ -85,7 +86,7 @@ public class TEventMembersServiceImpl extends GenericOneServiceImpl<TEventMember
         tEvent.setComanyName(orgCompany.getCompanyname());
         tEvent.setJoined(true);
         if (tEvent.getEventPic() != null) {
-            tEvent.setEventPic("http://47.244.99.59:8080/statics" + tEvent.getEventPic());
+            tEvent.setEventPic(picUtil.getUrl() + tEvent.getEventPic());
         } else {
             tEvent.setEventPic(tEvent.getEventPic());
         }

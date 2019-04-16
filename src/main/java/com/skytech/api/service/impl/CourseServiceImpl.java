@@ -6,6 +6,7 @@ import com.skytech.api.core.mapper.GenericOneMapper;
 import com.skytech.api.core.service.impl.GenericOneServiceImpl;
 import com.skytech.api.core.utils.DateUtil;
 import com.skytech.api.core.utils.UUIDUtil;
+import com.skytech.api.core.utils.picUtil;
 import com.skytech.api.mapper.*;
 import com.skytech.api.model.*;
 import com.skytech.api.model.base.BaseTCourse;
@@ -83,7 +84,7 @@ public class CourseServiceImpl extends GenericOneServiceImpl<TCourse,TCourseExam
         Map<String, Object> data = new HashMap<>();
         TCourse tCourse = tCourseMapper.selectByPrimaryKey(id);
         if(tCourse.getCoverurl()!=null){
-            tCourse.setCoverurl("http://47.244.99.59:8080/statics"+tCourse.getCoverurl());
+            tCourse.setCoverurl(picUtil.getUrl()+tCourse.getCoverurl());
         }
         else {
             tCourse.setCoverurl(tCourse.getCoverurl());

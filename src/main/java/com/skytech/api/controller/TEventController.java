@@ -2,6 +2,7 @@ package com.skytech.api.controller;
 
 import com.skytech.api.core.JsonMap;
 import com.skytech.api.core.Pagination;
+import com.skytech.api.core.utils.picUtil;
 import com.skytech.api.mapper.*;
 import com.skytech.api.model.*;
 import com.skytech.api.service.EventMembersService;
@@ -89,7 +90,7 @@ public class TEventController {
                 Integer members = tEventMembersService.countNum(tEvent.getId());
                 tEvent.setMemberNums(members);
                 if (tEvent.getEventPic() != null) {
-                    tEvent.setEventPic("http://47.244.99.59:8080/statics" + tEvent.getEventPic());
+                    tEvent.setEventPic(picUtil.getUrl() + tEvent.getEventPic());
                 } else {
                     tEvent.setEventPic(tEvent.getEventPic());
                 }
@@ -156,7 +157,7 @@ public class TEventController {
             if (tEvent.getEventStatus() == 0) {
                 tEvent.setStatus("Upcoming");
                 if (tEvent.getEventPic() != null) {
-                    tEvent.setEventPic("http://47.244.99.59:8080/statics" + tEvent.getEventPic());
+                    tEvent.setEventPic(picUtil.getUrl() + tEvent.getEventPic());
                 } else {
                     tEvent.setEventPic(tEvent.getEventPic());
                 }
@@ -168,7 +169,7 @@ public class TEventController {
         }
         else{
             if (tEvent.getEventPic() != null) {
-                tEvent.setEventPic("http://47.244.99.59:8080/statics" + tEvent.getEventPic());
+                tEvent.setEventPic(picUtil.getUrl() + tEvent.getEventPic());
             } else {
                 tEvent.setEventPic(tEvent.getEventPic());
             }

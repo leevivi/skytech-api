@@ -7,7 +7,7 @@ import java.util.*;
 /**
  * uuid生成工具
  *
- * @author :付意伟
+ * @author :leeyahweh
  * @date 2018-07-11 16:06
  */
 public class UUIDUtil {
