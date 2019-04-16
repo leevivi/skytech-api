@@ -243,10 +243,12 @@ public class TEventMembersServiceImpl extends GenericOneServiceImpl<TEventMember
 
         TEvent event = tEventMapper.selectByPrimaryKey(tEventId);
         Integer tEventMembers = tEventMembersMapper.selectJoinedNumByEventId(tEventId);
-
-        if(tEventMembers >= event.getEventUpper()){
-            return JsonMap.of(false, "活动人数已达上限");
+        if(event.getEventUpper()!=null){
+            if(tEventMembers >= event.getEventUpper()){
+                return JsonMap.of(false, "活动人数已达上限");
+            }
         }
+
         TEventMembers one = new TEventMembers();
         one.setAccountSid(accountSid);
         one.setAccountName(account.getFirstName()+account.getLastName());

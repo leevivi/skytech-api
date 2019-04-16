@@ -63,12 +63,24 @@ public class UserDataServiceImpl extends GenericOneServiceImpl<UserData,UserData
                     }
                     else {
                         //用户目标改动
-                        if(userData.getDataGoal().subtract(userData.getDataActual()).doubleValue()>0){
-                            one.setUpToStandard(1);
+                        if(userData.getDataActual().equals(userDataList1.get(0).getDataActual())){
+                            //用户实际值没有改动
+                            if(userData.getDataGoal().subtract(userData.getDataActual()).doubleValue()>0){
+                                one.setUpToStandard(0);
+                            }
+                            if(userData.getDataGoal().subtract(userData.getDataActual()).doubleValue()<=0){
+                                one.setUpToStandard(1);
+                            }
+                        }else {
+                            //用户实际值改动
+                            if(userData.getDataGoal().subtract(userData.getDataActual()).doubleValue()>0){
+                                one.setUpToStandard(1);
+                            }
+                            if(userData.getDataGoal().subtract(userData.getDataActual()).doubleValue()<=0){
+                                one.setUpToStandard(0);
+                            }
                         }
-                        if(userData.getDataGoal().subtract(userData.getDataActual()).doubleValue()<=0){
-                            one.setUpToStandard(0);
-                        }
+
                     }
 
                     one.setDataActual(userData.getDataActual());
@@ -80,6 +92,7 @@ public class UserDataServiceImpl extends GenericOneServiceImpl<UserData,UserData
                 //新增数据
                 userData.setAccountSid(accountSid);
                 userData.setAppuser(account.getEmail());
+                userData.setUpToStandard(0);
                 userData.setCreatedTime(new Date());
                 j = userDataMapper.insertSelective(userData);
 
