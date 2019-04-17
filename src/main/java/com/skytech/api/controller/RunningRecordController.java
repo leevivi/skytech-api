@@ -7,6 +7,8 @@ import com.skytech.api.service.RunningRecordService;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -22,7 +24,7 @@ import java.util.Map;
  */
 @RestController
 public class RunningRecordController {
-
+    private final Logger LOGGER = LoggerFactory.getLogger(RunningRecordController.class);
     @Autowired
     private RunningRecordService runningRecordService;
 
@@ -69,6 +71,7 @@ public class RunningRecordController {
     })
     @PostMapping(value = "/runningRecord/save")
     public JsonMap save(HttpSession session, RunningRecord runningRecord) {
+        LOGGER.info("RunningRecord",runningRecord);
         Object accountSidObj = session.getAttribute("accountSid");
 
         String accountSid = accountSidObj.toString();

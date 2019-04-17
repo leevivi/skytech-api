@@ -66,13 +66,12 @@ public class RunningRecordServiceImpl extends GenericServiceImpl<RunningRecord, 
         int cal = 0;
         BigDecimal bpm = runningRecord.getAverageBpm();
         //TODO 体重换成磅
-        double weight = account.getWeight()*2.2046226;
         if(account.getAge()==null||account.getHeight()==null || account.getWeight()==null){
             runningRecord.setCal(0);
         }
         else{
+            double weight = account.getWeight()*2.2046226;
             if(account.getGender()==1) {
-
                 cal = (int) ((account.getAge() * 0.2017 - weight * 0.09036 +
                         (bpm.multiply(BigDecimal.valueOf(0.6309))).doubleValue() - 55.0969)
                         * runningRecord.getDuration()/60/4.184

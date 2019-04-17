@@ -284,6 +284,7 @@ public class CourseServiceImpl extends GenericOneServiceImpl<TCourse,TCourseExam
                     tCourseCouponExample.createCriteria().andCourseidEqualTo(courseId);
                     List<TCourseCoupon> tCourseCoupons = tCourseCouponMapper.selectByExample(tCourseCouponExample);
                     if(!tCourseCoupons.isEmpty()){
+                        amount = tCourseCoupons.get(0).getCouponnum();
                         couponNumNeed = tCourseCoupons.get(0).getCouponnum() * tCourseTimeIds.length;
                         //用户可用券不足支付选择课程所需券
                         if(tCouponMembersList.size()<couponNumNeed){
