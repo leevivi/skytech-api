@@ -103,11 +103,13 @@ public class HomeController {
         else {
             if(account.getGender()==1){
                 //For men: 66 + (6.2 x weight) + (12.7 x height) - (6.76 x age)
-                 BMR = String.valueOf((int)((66+(6.2*account.getWeight()*2.2)+(12.7*account.getHeight()*0.39)-(6.76*account.getAge()))*1.55/5));
+//                 BMR = String.valueOf((int)((66+(6.2*account.getWeight()*2.2)+(12.7*account.getHeight()*0.39)-(6.76*account.getAge()))*1.55/5));
+                 BMR = String.valueOf((int)(66+(6.2*account.getWeight()*2.2)+(12.7*account.getHeight()*0.39)-(6.76*account.getAge())));
             }
             else if(account.getGender()==0){
                 //For women: 655.1 + (4.35 x weight) + (4.7 x height) - (4.7 x age)
-                BMR = String.valueOf((int)(((655.1+(4.35*account.getWeight()*2.2)+(4.7*account.getHeight()*0.39)-(4.7*account.getAge()))*1.55/5)));
+//                BMR = String.valueOf((int)(((655.1+(4.35*account.getWeight()*2.2)+(4.7*account.getHeight()*0.39)-(4.7*account.getAge()))*1.55/5)));
+                BMR = String.valueOf((int)(655.1+(4.35*account.getWeight()*2.2)+(4.7*account.getHeight()*0.39)-(4.7*account.getAge())));
              }
         }
         currentData.put("BMR",BMR);

@@ -3,9 +3,9 @@ spring:
     name: api
   datasource:
     name: skytech
-    url: jdbc:mysql://rm-j6ch04m999899i6506o.mysql.rds.aliyuncs.com:3306/time2move?characterEncoding=utf-8&serverTimezone=Asia/Shanghai
-    username: time2move
-    password: 1qaz2wsx!#@Q
+    url: jdbc:mysql://rm-j6c4h5730u6ivt82xmo.mysql.rds.aliyuncs.com:3306/skytech?characterEncoding=utf-8&serverTimezone=Asia/Shanghai
+    username: skytech
+    password: 1957Forget
   # 使用druid数据源
     type: com.alibaba.druid.pool.DruidDataSource
     driver-class-name: com.mysql.jdbc.Driver
