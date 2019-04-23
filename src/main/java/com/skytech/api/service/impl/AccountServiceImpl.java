@@ -115,12 +115,11 @@ public class AccountServiceImpl extends GenericServiceImpl<Account, AccountExamp
                 String deviceSid = accountDevice.getDeviceSid();
                 Device device = deviceMapper.selectByPrimaryKey(deviceSid);
 
-                macAddress.add(device.getBatch());
                 devices.put("deviceSid",deviceSid);
                 devices.put("deviceModel",device.getModel());
+                devices.put("macAddress", device.getBatch());
                 devicess.add(devices);
             }
-            data.put("macAddress", macAddress);
             data.put("devices", devicess);
 
             RunningRecordExample runningRecordExample = new RunningRecordExample();

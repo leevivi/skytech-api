@@ -9,8 +9,8 @@ public class picUtil {
     public static final String TEST_SERVER_URL = "http://47.244.189.240:9091/statics";
     public static final String FORMAL_SERVER_URL = "http://47.244.99.59:8080/statics";
     public static String getUrl(){
-//        return TEST_SERVER_URL;
-        return FORMAL_SERVER_URL;
+        return TEST_SERVER_URL;
+//        return FORMAL_SERVER_URL;
     }
 
     public static void main(String[] args){
