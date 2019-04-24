@@ -74,7 +74,7 @@ public class MyVouchersServiceImpl extends GenericOneServiceImpl<TCouponMembers,
                 List<Vouchers> list = new ArrayList<>();
                 String now = DateUtil.formatmiddledatestr(new Date());
                 TCouponMembersExample tCouponMembersExample = new TCouponMembersExample();
-                tCouponMembersExample.createCriteria().andMemberidEqualTo(memberId).andValidityperiodGreaterThanOrEqualTo(now);
+                tCouponMembersExample.createCriteria().andMemberidEqualTo(memberId).andValidityperiodGreaterThanOrEqualTo(now).andStatusEqualTo(0);
                 List<TCouponMembers> tCouponMembers = tCouponMembersMapper.selectByExample(tCouponMembersExample);
                 for (TCouponMembers tcm :tCouponMembers) {
                     TCouponExample tCouponExample = new TCouponExample();
