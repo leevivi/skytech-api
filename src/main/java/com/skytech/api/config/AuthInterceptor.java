@@ -1,6 +1,7 @@
 package com.skytech.api.config;
 
 import com.alibaba.fastjson.JSON;
+import com.skytech.api.core.utils.GsonUtils;
 import com.skytech.api.model.Account;
 import com.skytech.api.service.AccountService;
 import org.apache.commons.io.IOUtils;
@@ -17,6 +18,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -39,13 +41,15 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
         String uri = request.getRequestURI();
 
         LOGGER.info("----------begin AuthInterceptor-------------");
-
+        LOGGER.info("recordTime={}" + new Date());
         LOGGER.info("uri={}", uri);
 
         long startTime = System.currentTimeMillis();
 
         request.setAttribute("startTime", startTime);
-
+        String method = request.getMethod();
+        String url = request.getRequestURL().toString();
+        String params = GsonUtils.ModuleTojosn(request.getParameterMap());
         Cookie[] cookies = request.getCookies();
         if (null != cookies) {
             for (Cookie cookie : cookies) {
@@ -53,6 +57,7 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
                         + cookie.toString());
             }
         }
+        LOGGER.info("url={}:uri={}:method={}:params={}" + url + " ; " + uri + " ; " + method + " ; "+  params);
         LOGGER.info("-----------end AuthInterceptor------------");
 
         if (StringUtils.contains(uri, "account/register") || StringUtils.contains(uri, "account/login")) {
