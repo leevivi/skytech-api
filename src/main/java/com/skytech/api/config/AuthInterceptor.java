@@ -53,8 +53,9 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
         Cookie[] cookies = request.getCookies();
         if (null != cookies) {
             for (Cookie cookie : cookies) {
-                LOGGER.info("{}:{}:domain={}:path={}:toString={}" + cookie.getName() + " ; " + cookie.getValue() + " ; " + cookie.getDomain() + " ; " + cookie.getPath() + " ; "
-                        + cookie.toString());
+                LOGGER.info("{}:{}:domain={}:path={}:toString={}"
+                        + cookie.getName() + " ; " + cookie.getValue() + " ; " + cookie.getDomain() + " ; "
+                        + cookie.getPath() + " ; " + cookie.toString());
             }
         }
         LOGGER.info("url={}:uri={}:method={}:params={}" + url + " ; " + uri + " ; " + method + " ; "+  params);
