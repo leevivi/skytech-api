@@ -235,7 +235,7 @@ public class CourseServiceImpl extends GenericOneServiceImpl<TCourse,TCourseExam
                 isNeedCoupon = true;
             }
         }
-
+        TMember member = tMemberMapper.selectByPrimaryKey(membersId);
         int couponNumNeed = 0;
         //查询课程是否存在
         TCourseExample tCourseExample = new TCourseExample();
@@ -272,10 +272,14 @@ public class CourseServiceImpl extends GenericOneServiceImpl<TCourse,TCourseExam
         }
 
         if(isNeedCoupon){
-                TCouponMembersExample tCouponMembersExample = new TCouponMembersExample();
-                tCouponMembersExample.createCriteria().andMemberidEqualTo(membersId).andStatusEqualTo(0);
-                List<TCouponMembers> tCouponMembersList = tCouponMembersMapper.selectByExample(tCouponMembersExample);
+//                TCouponMembersExample tCouponMembersExample = new TCouponMembersExample();
+//                tCouponMembersExample.createCriteria().andMemberidEqualTo(membersId).andStatusEqualTo(0);
+//                List<TCouponMembers> tCouponMembersList = tCouponMembersMapper.selectByExample(tCouponMembersExample);
                 //用户可用券为0
+            // TODO 获取用户门店劵和公司通用劵
+            List<TCouponMembers> tCouponMembersList = tCouponMembersMapper.findByValidityPeriodUnion(
+                    tCourses.get(0).getMonth(), membersId, member.getAppuser(), tCourses.get(0).getCompanyid(),
+                    tCourses.get(0).getStoresid());
                 if(tCouponMembersList.isEmpty()){
                     return JsonMap.of(false, "可用券数量不足");
                 }
@@ -314,6 +318,7 @@ public class CourseServiceImpl extends GenericOneServiceImpl<TCourse,TCourseExam
             }
             //生成订单详情
             int tODNum = 0;
+            int tCMNum = 1;
             for(int j = 0;j<tCourseTimeIds.length;j++){
                 TOrderDetail tOrderDetail = new TOrderDetail();
                 tOrderDetail.setOrderno(one.getOrderno());
@@ -325,24 +330,41 @@ public class CourseServiceImpl extends GenericOneServiceImpl<TCourse,TCourseExam
                 if(tODNum==0){
                     throw new Exception();
                 }
-            }
-            int tCMNum = 1;
+//            }
+
             if(isNeedCoupon){
-                tCMNum = 0;
-                //清除相应券数量-修改券使用状态
-                for(int i =0;i<couponIds.length;i++){
+                // 获取保存的数据
+                TOrderDetailExample example = new TOrderDetailExample();
+                example.createCriteria().andOrdernoEqualTo(one.getOrderno());
+                List<TOrderDetail> list = tOrderDetailMapper.selectByExample(example);
+                int companyAmount=0,storesAmount=0;
+                for (int i = j * amount; i < j+1*amount; i++) {
+                    tCMNum = 0;
+                    //清除相应券数量-修改券使用状态
                     TCouponMembersExample tCouponMembersExample = new TCouponMembersExample();
                     tCouponMembersExample.createCriteria().andIdEqualTo(couponIds[i]).andStatusEqualTo(0);
                     TCouponMembers tCouponMembers = tCouponMembersMapper.selectByPrimaryKey(couponIds[i]);
+                    // TODO 新增字段，订单详情ID
                     tCouponMembers.setOrderno(one.getOrderno());
                     tCouponMembers.setStatus(1);
+                    tCouponMembers.setOrderdetailid(list.get(j).getId());
                     tCouponMembers.setUsedate(new Date());
                     tCMNum = tCouponMembersMapper.updateByPrimaryKeySelective(tCouponMembers);
                     if(tCMNum==0){
                         throw new Exception();
                     }
+                    if(tCouponMembers.getCouponid().equals(1)) storesAmount++;
+                    if(tCouponMembers.getCouponid().equals(2)) companyAmount++;
+                }
+                tOrderDetail = list.get(j);
+                tOrderDetail.setStoresamount(storesAmount);
+                tOrderDetail.setCompanyamount(companyAmount);
+                int i = tOrderDetailMapper.updateByPrimaryKeySelective(tOrderDetail);
+                if(i == 0) {
+                    throw new Exception();
                 }
             }
+    }
             if (num > 0 && tCMNum > 0 && tODNum > 0) {
                 return JsonMap.of(true, "加入成功");
             }
@@ -382,32 +404,39 @@ public class CourseServiceImpl extends GenericOneServiceImpl<TCourse,TCourseExam
         int couponNum =0;
         Map<String, Object> data = new HashMap<>();
         DefaultCoupon defaultCoupon = new DefaultCoupon();
+        TMember tMember = tMemberMapper.selectByPrimaryKey(membersId);
         if(!tCourseCoupons.isEmpty()){
             //需要券最大数量
             couponNum = courseNum*tCourseCoupons.get(0).getCouponnum();
-            TMember tMember = tMemberMapper.selectByPrimaryKey(membersId);
+
             //查询出用户可用的券（有效期内）
-            TCouponMembersExample tCouponMembersExample = new TCouponMembersExample();
-            tCouponMembersExample.createCriteria().andMemberidEqualTo(membersId).andStatusEqualTo(0);
-            List<TCouponMembers> tCouponMembers = tCouponMembersMapper.selectByExample(tCouponMembersExample);
+            // TODO 获取用户门店劵和公司通用劵
+            List<TCouponMembers> tCouponMembers = tCouponMembersMapper.findByValidityPeriodUnion(
+                    tCourses.get(0).getMonth(), membersId, tMember.getAppuser(), tCourses.get(0).getCompanyid(),
+                    tCourses.get(0).getStoresid());
+//            TCouponMembersExample tCouponMembersExample = new TCouponMembersExample();
+//
+//            tCouponMembersExample.createCriteria().andMemberidEqualTo(membersId).andStatusEqualTo(0);
+//
+//            List<TCouponMembers> tCouponMembers = tCouponMembersMapper.selectByExample(tCouponMembersExample);
 
-            List<Object> list = new ArrayList<>();
-            for (TCouponMembers tCouponMember : tCouponMembers) {
-                //有效期内
-                Date sd1=df.parse(tCouponMember.getValidityperiod());
-                String now = DateUtil.formatmiddledatestr(new Date());
-                Date sd2=df.parse(now);
-
-                if(sd1.equals(sd2)) {
-                    //对应门店课程使用券
-                    TCoupon tCoupons = tCouponMapper.selectByPrimaryKey(tCouponMember.getCouponid());
-//                    if (tCoupons.getStoresid().equals(tMember.getStoresid()) && tCoupons.getCompanyid().equals(tMember.getCompanyid())) {
-                        list.add(tCoupons);
-//                    }
-                }
-
-            }
-            if(list.size()>couponNum){
+//            List<Object> list = new ArrayList<>();
+//            for (TCouponMembers tCouponMember : tCouponMembers) {
+//                //有效期内
+//                Date sd1=df.parse(tCouponMember.getValidityperiod());
+//                String now = DateUtil.formatmiddledatestr(new Date());
+//                Date sd2=df.parse(now);
+//
+//                if(sd1.equals(sd2)) {
+//                    //对应门店课程使用券
+//                    TCoupon tCoupons = tCouponMapper.selectByPrimaryKey(tCouponMember.getCouponid());
+////                    if (tCoupons.getStoresid().equals(tMember.getStoresid()) && tCoupons.getCompanyid().equals(tMember.getCompanyid())) {
+//                        list.add(tCoupons);
+////                    }
+//                }
+//
+//            }
+            if(tCouponMembers.size()>couponNum){
                 data.put("defaultCouponNum",couponNum);
                 data.put("availableCoupon",tCouponMembers);
             }
@@ -416,9 +445,14 @@ public class CourseServiceImpl extends GenericOneServiceImpl<TCourse,TCourseExam
                 return JsonMap.of(true, "可用券数量不足",data);
             }
         }else{
-            TCouponMembersExample tCouponMembersExample = new TCouponMembersExample();
-            tCouponMembersExample.createCriteria().andMemberidEqualTo(membersId).andStatusEqualTo(0);
-            List<TCouponMembers> tCouponMembers = tCouponMembersMapper.selectByExample(tCouponMembersExample);
+//            TCouponMembersExample tCouponMembersExample = new TCouponMembersExample();
+//            tCouponMembersExample.createCriteria().andMemberidEqualTo(membersId).andStatusEqualTo(0);
+//            List<TCouponMembers> tCouponMembers = tCouponMembersMapper.selectByExample(tCouponMembersExample);
+            // TODO 获取用户门店劵和公司通用劵
+            List<TCouponMembers> tCouponMembers = tCouponMembersMapper.findByValidityPeriodUnion(
+                    tCourses.get(0).getMonth(), membersId, tMember.getAppuser(), tCourses.get(0).getCompanyid(),
+                    tCourses.get(0).getStoresid());
+
             data.put("defaultCouponNum",0);
             data.put("availableCoupon",tCouponMembers);
         }

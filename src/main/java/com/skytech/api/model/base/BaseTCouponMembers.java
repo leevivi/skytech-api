@@ -14,6 +14,13 @@ public class BaseTCouponMembers extends BaseModelOne<Integer>{
     private Integer memberid;
 
     private String orderno;
+    private Integer orderdetailid;
+
+    private Integer couponlogid;
+
+    private Integer storesid;
+
+    private Integer companyid;
 
     private Integer status;
     @JSONField(format="yyyy-MM-dd HH:mm:ss")
@@ -26,16 +33,52 @@ public class BaseTCouponMembers extends BaseModelOne<Integer>{
     public BaseTCouponMembers() {
     }
 
-    public BaseTCouponMembers(Integer id, Integer couponid, String validityperiod, Integer memberid, String orderno, Integer status, Date usedate, Date createtime, Date updatetime) {
+    public BaseTCouponMembers(Integer id,Integer couponid, String validityperiod, Integer memberid, String orderno, Integer orderdetailid, Integer couponlogid, Integer storesid, Integer companyid, Integer status, Date usedate, Date createtime, Date updatetime) {
         this.id = id;
         this.couponid = couponid;
         this.validityperiod = validityperiod;
         this.memberid = memberid;
         this.orderno = orderno;
+        this.orderdetailid = orderdetailid;
+        this.couponlogid = couponlogid;
+        this.storesid = storesid;
+        this.companyid = companyid;
         this.status = status;
         this.usedate = usedate;
         this.createtime = createtime;
         this.updatetime = updatetime;
+    }
+
+    public Integer getOrderdetailid() {
+        return orderdetailid;
+    }
+
+    public void setOrderdetailid(Integer orderdetailid) {
+        this.orderdetailid = orderdetailid;
+    }
+
+    public Integer getCouponlogid() {
+        return couponlogid;
+    }
+
+    public void setCouponlogid(Integer couponlogid) {
+        this.couponlogid = couponlogid;
+    }
+
+    public Integer getStoresid() {
+        return storesid;
+    }
+
+    public void setStoresid(Integer storesid) {
+        this.storesid = storesid;
+    }
+
+    public Integer getCompanyid() {
+        return companyid;
+    }
+
+    public void setCompanyid(Integer companyid) {
+        this.companyid = companyid;
     }
 
     public Integer getCouponid() {

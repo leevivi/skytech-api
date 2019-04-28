@@ -259,4 +259,21 @@ public class AccountServiceImpl extends GenericServiceImpl<Account, AccountExamp
 
         return JsonMap.of(true, "上传成功", data);
     }
+
+    @Override
+    public Map<String, Object> changePassword(String email, String oldPassword, String newPassword) {
+        Account account = accountMapper.findAccountByEmail(email);
+        if(account == null) {
+            return JsonMap.of(false, "account does not exist");
+        }
+        if(!account.getPassword().equals(oldPassword)) {
+            return JsonMap.of(false, "password mistake");
+        }
+        account.setPassword(newPassword);
+        int i = accountMapper.updateByPrimaryKeySelective(account);
+        if(i> 0) {
+            return JsonMap.of(true);
+        }
+        return JsonMap.of(false);
+    }
 }

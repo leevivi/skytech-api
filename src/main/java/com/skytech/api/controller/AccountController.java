@@ -15,11 +15,17 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
+import com.skytech.api.core.utils.picUtil;
+import com.skytech.api.mapper.PImgsMapper;
+import com.skytech.api.model.PImgs;
+import com.skytech.api.model.PImgsExample;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import javax.servlet.http.HttpSession;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -31,7 +37,8 @@ public class AccountController {
 
     @Autowired
     private AccountService accountService;
-
+    @Autowired
+    private PImgsMapper pImgsMapper;
     @ApiOperation(value = "列表")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "page", value = "页码", required = true, dataType = "Integer"),
@@ -178,5 +185,52 @@ public class AccountController {
 
         return accountService.saveAvatar(accountSid, picFile);
 
+    }
+
+    /**
+     * @Title: changePassword
+     * @Description: 密码修改
+     * @param session
+     * @param email
+     * @param oldPassword
+     * @param newPassword
+     * @return
+     * @return Map<String,Object>
+     * @throws
+     */
+    @ApiOperation(value = "密码修改")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "email", value = "email", required = true, dataType = "String"),
+            @ApiImplicitParam(name = "oldPassword", value = "oldPassword", required = true, dataType = "String"),
+            @ApiImplicitParam(name = "newPassword", value = "newPassword", required = true, dataType = "String")
+    })
+    @PostMapping("/account/changePassword")
+    public Map<String, Object> changePassword(HttpSession session,@RequestBody Account account) {
+        Map<String, Object> map = accountService.changePassword(account.getEmail(), account.getOldPassword(), account.getNewPassword());
+        String code = map.get("code").toString();
+        if(StringUtils.equals(code, "2000")) {
+            session.removeAttribute(session.getAttribute("accountSid").toString());
+        }
+        return map;
+    }
+
+    /**
+     * @Title: getImgs
+     * @Description: 获取event页面图片
+     * @return
+     * @return Map<String,Object>
+     * @throws
+     */
+    @GetMapping("/account/getImgs")
+    public Map<String, Object> getImgs() {
+        PImgsExample example = new PImgsExample();
+        example.createCriteria().andStatusEqualTo(0);
+        List<PImgs> list = pImgsMapper.selectByExample(example);
+        for (PImgs pImgs : list) {
+            if(!StringUtils.isBlank(pImgs.getImg())) {
+                pImgs.setImg(picUtil.TEST_SERVER_URL + pImgs.getImg());
+            }
+        }
+        return JsonMap.of("2000", list);
     }
 }

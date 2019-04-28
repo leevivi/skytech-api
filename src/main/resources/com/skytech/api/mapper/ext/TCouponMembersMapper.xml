@@ -1,4 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.skytech.api.mapper.TCouponMembersMapper">
+    <select id="findByValidityPeriodUnion" resultMap="BaseResultMap">
+        select * from t_coupon_members t where status = 0  and validityPeriod = #{validityPeriod} and memberId =#{memberId} and storesId =#{storesId} and couponId = 1
+        union all
+        select t.* from t_coupon_members t, t_member m where t.memberId = m.id and status = 0 and validityPeriod = #{validityPeriod} and appUser = #{appUser} and couponId = 2
+        and m.companyId =#{companyId}
+    </select>
+    <select id="findByValidityPeriod" resultMap="BaseResultMap">
+        select * from t_coupon_members t, t_member m
+        where t.memberId = m.id
+        and status = 0
+        and appUser = #{appUser} and couponId = 2
+        and t.validityPeriod <![CDATA[ >= ]]> DATE_FORMAT(CURDATE(),'%Y-%m')
+    </select>
 </mapper>

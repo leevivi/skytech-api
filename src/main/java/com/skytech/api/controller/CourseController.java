@@ -58,6 +58,9 @@ public class CourseController{
     private TOrderMapper tOrderMapper;
     @Autowired
     private TCourseMapper tCourseMapper;
+    @Autowired
+    private TCouponMembersMapper tCouponMembersMapper;
+
 
     @ApiOperation(value = "列表")
     @ApiImplicitParams({
@@ -219,7 +222,7 @@ public class CourseController{
                 companyId = memberInfo.getCompanyId();
                 storesId = memberInfo.getStoresId();
                 TMember tMember = tMemberMapper.selectByPrimaryKey(memberId);
-                if(tCourse.getCompanyid()==tMember.getCompanyid()&&tCourse.getStoresid()==tMember.getStoresid()){
+                if(tCourse.getCompanyid()==memberInfo.getCompanyId()&&tCourse.getStoresid()==memberInfo.getStoresId()){
                     try {
                         return courseService.join(memberId,companyId,storesId, courseId,couponIds, tCourseTimeIds);
                     } catch (Exception e) {
@@ -253,7 +256,7 @@ public class CourseController{
             for (MemberInfo memberInfo :memberList) {
                 memberId = memberInfo.getMemberId();
                 TMember tMember = tMemberMapper.selectByPrimaryKey(memberId);
-                if(tCourse.getCompanyid()==tMember.getCompanyid()&&tCourse.getStoresid()==tMember.getStoresid()){
+                if(tCourse.getCompanyid()==memberInfo.getCompanyId()&&memberInfo.getStoresId()==tMember.getStoresid()){
                     return courseService.defaultCoupon(memberId, courseId, courseNum);
                 }
             }
@@ -305,12 +308,29 @@ public class CourseController{
             return data;
         }
         for (TMember tMember :tMembers) {
-            MemberInfo memberInfo = new MemberInfo();
-            memberInfo.setMemberId(tMember.getId());
-            memberInfo.setCompanyId(tMember.getCompanyid());
-            memberInfo.setStoresId(tMember.getStoresid());
-            memberInfoList.add(memberInfo);
-
+            // TODO 校验是否有公司通用劵
+            TCouponMembersExample example = new TCouponMembersExample();
+            example.createCriteria().andCouponidEqualTo(2).andMemberidEqualTo(tMember.getId()).andStatusEqualTo(0);
+            List<TCouponMembers> list = tCouponMembersMapper.selectByExample(example);
+            if(list != null && list.size() > 0) {
+                // TODO 有通用劵获取所有公司下面门店信息
+                OrgStoresExample storesExample = new OrgStoresExample();
+                storesExample.createCriteria().andCompanyidEqualTo(tMember.getCompanyid());
+                List<OrgStores> list2 = orgStoresMapper.selectByExample(storesExample);
+                for (OrgStores orgStores : list2) {
+                    MemberInfo memberInfo = new MemberInfo();
+                    memberInfo.setMemberId(tMember.getId());
+                    memberInfo.setCompanyId(orgStores.getCompanyid());
+                    memberInfo.setStoresId(orgStores.getId());
+                    memberInfoList.add(memberInfo);
+                }
+            } else {
+                MemberInfo memberInfo = new MemberInfo();
+                memberInfo.setMemberId(tMember.getId());
+                memberInfo.setCompanyId(tMember.getCompanyid());
+                memberInfo.setStoresId(tMember.getStoresid());
+                memberInfoList.add(memberInfo);
+            }
         }
         data.put("memberInfoList",memberInfoList);
         return data;

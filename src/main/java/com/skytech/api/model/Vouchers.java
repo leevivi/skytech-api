@@ -11,6 +11,16 @@ public class Vouchers {
     String validityTime;
     //健身券适用健身会所
     String availableClub;
+    // 公司名称
+    private String companyName;
+
+    public String getCompanyName() {
+        return companyName;
+    }
+
+    public void setCompanyName(String companyName) {
+        this.companyName = companyName;
+    }
 
     public String getVouchersName() {
         return vouchersName;

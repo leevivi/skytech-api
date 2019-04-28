@@ -47,33 +47,27 @@ public class OrderServiceImpl extends GenericOneServiceImpl<TOrder,TOrderExample
 
     @Override
     public List<MyOrder> myOrder(String accountSid, int orderStatus) {
-        List<MyOrder> list = new ArrayList<>();
+        /*
         Map<String, Object> memberInfoData = new HashMap<>();
         memberInfoData = checkMembers(memberInfoData, accountSid);
         List<MemberInfo> memberList = new ArrayList<>();
-        List<String> allCourseTime = new ArrayList<>();
         int memberId = 0;
+            memberList = (List<MemberInfo>) memberInfoData.get("memberInfoList");*/
+		/*
+		 * for (MemberInfo memberInfo : memberList) { memberId =
+		 * memberInfo.getMemberId(); TOrderExample tOrderExample = new TOrderExample();
+		 * tOrderExample.createCriteria().andMemberidEqualTo(memberId).andStatusEqualTo(
+		 * orderStatus);
+		 */
+        Account account = accountMapper.selectByPrimaryKey(accountSid);
+        List<String> allCourseTime = new ArrayList<>();
+        List<MyOrder> list = new ArrayList<>();
         try {
-            memberList = (List<MemberInfo>) memberInfoData.get("memberInfoList");
-            for (MemberInfo memberInfo : memberList) {
-                memberId = memberInfo.getMemberId();
-                TOrderExample tOrderExample = new TOrderExample();
-                tOrderExample.createCriteria().andMemberidEqualTo(memberId).andStatusEqualTo(orderStatus);
-                List<TOrder> tOrders = tOrderMapper.selectByExample(tOrderExample);
-                if(!tOrders.isEmpty()){
-                    list = getMyOrder(list, allCourseTime, tOrders);
-                }
-                //查询所有订单
-                else if(orderStatus==3) {
-                    TOrderExample tOrderExample1 = new TOrderExample();
-                    tOrderExample1.createCriteria().andMemberidEqualTo(memberId);
-                    List<TOrder> tOrders1 = tOrderMapper.selectByExample(tOrderExample1);
-                    list = getMyOrder(list, allCourseTime, tOrders1);
-                }
-
+            List<TOrder> tOrders = tOrderMapper.listOrders(account.getEmail(), orderStatus, null);
+            if (!tOrders.isEmpty()) {
+                list = getMyOrder(list, allCourseTime, tOrders);
             }
-
-        }catch (Exception e){
+        } catch (Exception e) {
             return list;
         }
         return list;
@@ -82,19 +76,21 @@ public class OrderServiceImpl extends GenericOneServiceImpl<TOrder,TOrderExample
     @Transactional
     @Override
     public JsonMap cancelOrder(String accountSid, String orderNum, int[] courserTimeIds) throws Exception{
-        Map<String, Object> memberInfoData = new HashMap<>();
-        memberInfoData = checkMembers(memberInfoData, accountSid);
-        List<MemberInfo> memberList = new ArrayList<>();
+        //		Map<String, Object> memberInfoData = new HashMap<>();
+//		memberInfoData = checkMembers(memberInfoData, accountSid);
+//		List<MemberInfo> memberList = new ArrayList<>();
         int memberId = 0;
-            int oNum = 0;
-            int oDNum = 0;
-            int oCMNum = 0;
-            memberList = (List<MemberInfo>) memberInfoData.get("memberInfoList");
-            for (MemberInfo memberInfo : memberList) {
-                memberId = memberInfo.getMemberId();
-                TOrderExample tOrderExample = new TOrderExample();
-                tOrderExample.createCriteria().andOrdernoEqualTo(orderNum);
-                List<TOrder> tOrders = tOrderMapper.selectByExample(tOrderExample);
+        int oNum = 0;
+        int oDNum = 0;
+        int oCMNum = 0;
+//            memberList = (List<MemberInfo>) memberInfoData.get("memberInfoList");
+//            for (MemberInfo memberInfo : memberList) {
+//                memberId = memberInfo.getMemberId();
+//                TOrderExample tOrderExample = new TOrderExample();
+//                tOrderExample.createCriteria().andOrdernoEqualTo(orderNum);
+//                List<TOrder> tOrders = tOrderMapper.selectByExample(tOrderExample);
+        Account account = accountMapper.selectByPrimaryKey(accountSid);
+        List<TOrder> tOrders = tOrderMapper.listOrders(account.getEmail(), 0, orderNum);
                 //订单不存在
                 if(tOrders.isEmpty()){
                     return JsonMap.of(false, "订单不存在");
@@ -116,8 +112,10 @@ public class OrderServiceImpl extends GenericOneServiceImpl<TOrder,TOrderExample
                             calendar.setTime(new Date());
                             calendar.add(Calendar.HOUR, 2);
                             Date now = calendar.getTime();
-                            TCourseTime tCourseTime = tCourseTimeMapper.selectByPrimaryKey(tOrderDetails.get(0).getCoursetimeid());
-                            String time = DateUtil.formatStandardDate(tCourseTime.getCoursedate())+" "+tCourseTime.getStartcoursetime();
+                            TCourseTime tCourseTime = tCourseTimeMapper
+                                    .selectByPrimaryKey(tOrderDetails.get(0).getCoursetimeid());
+                            String time = DateUtil.formatStandardDate(tCourseTime.getCoursedate()) + " "
+                                    + tCourseTime.getStartcoursetime();
                             Date courseStartTime = DateUtil.parseDate(time);
                             boolean before = now.before(courseStartTime);
                             //当前时间大于课程开始时间两小时
@@ -131,13 +129,16 @@ public class OrderServiceImpl extends GenericOneServiceImpl<TOrder,TOrderExample
                                 }
                                 for(int j = 0;j<courserTimeIds.length;j++){
                                     TCouponMembersExample tCouponMembersExample = new TCouponMembersExample();
-                                    tCouponMembersExample.createCriteria().andOrdernoEqualTo(orderNum).andMemberidEqualTo(memberId).andStatusEqualTo(1);
-                                    List<TCouponMembers> tCouponMembersList = tCouponMembersMapper.selectByExample(tCouponMembersExample);
+                                    tCouponMembersExample.createCriteria().andOrdernoEqualTo(orderNum)
+                                            .andMemberidEqualTo(memberId).andStatusEqualTo(1);
+                                    List<TCouponMembers> tCouponMembersList = tCouponMembersMapper
+                                            .selectByExample(tCouponMembersExample);
                                     for(TCouponMembers tcm:tCouponMembersList){
                                         //退券
                                         tcm.setOrderno(null);
                                         tcm.setStatus(0);
                                         tcm.setUsedate(null);
+                                        tcm.setOrderdetailid(null);
                                         oCMNum = tCouponMembersMapper.updateByPrimaryKeySelective(tcm);
                                         if (oCMNum == 0) {
                                             return JsonMap.of(false, "退单失败");
@@ -188,26 +189,28 @@ public class OrderServiceImpl extends GenericOneServiceImpl<TOrder,TOrderExample
                 } else {
                     return JsonMap.of(false, "退单失败");
                 }
-            }
+//            }
 
-        return JsonMap.of(true, "退单成功");
+//        return JsonMap.of(true, "退单成功");
     }
 
     @Override
     public List<SelectCourseTime> cancelConfirm(String accountSid, String orderNum) {
         List<SelectCourseTime> list = new ArrayList<>();
-        List<String> allCourseTime = new ArrayList<>();
-        Map<String, Object> memberInfoData = new HashMap<>();
-        memberInfoData = checkMembers(memberInfoData, accountSid);
-        List<MemberInfo> memberList = new ArrayList<>();
-        int memberId = 0;
+        //        List<String> allCourseTime = new ArrayList<>();
+//        Map<String, Object> memberInfoData = new HashMap<>();
+//        memberInfoData = checkMembers(memberInfoData, accountSid);
+//        List<MemberInfo> memberList = new ArrayList<>();
+        Account account = accountMapper.selectByPrimaryKey(accountSid);
+        List<TOrder> tOrders = tOrderMapper.listOrders(account.getEmail(), 0, orderNum);
+//        int memberId = 0;
         try {
-            memberList = (List<MemberInfo>) memberInfoData.get("memberInfoList");
-            for (MemberInfo memberInfo : memberList) {
-                memberId = memberInfo.getMemberId();
-                TOrderExample tOrderExample = new TOrderExample();
-                tOrderExample.createCriteria().andOrdernoEqualTo(orderNum).andMemberidEqualTo(memberId);
-                List<TOrder> tOrders = tOrderMapper.selectByExample(tOrderExample);
+//            memberList = (List<MemberInfo>) memberInfoData.get("memberInfoList");
+//            for (MemberInfo memberInfo : memberList) {
+//                memberId = memberInfo.getMemberId();
+//                TOrderExample tOrderExample = new TOrderExample();
+//                tOrderExample.createCriteria().andOrdernoEqualTo(orderNum).andMemberidEqualTo(memberId);
+//                List<TOrder> tOrders = tOrderMapper.selectByExample(tOrderExample);
                 //订单存在
                 if (!tOrders.isEmpty()) {
                     TOrderDetailExample tOrderDetailExample = new TOrderDetailExample();
@@ -216,7 +219,8 @@ public class OrderServiceImpl extends GenericOneServiceImpl<TOrder,TOrderExample
                     if(!tOrderDetailList.isEmpty()){
                         for(TOrderDetail tod:tOrderDetailList){
                             TCourseTimeExample tCourseTimeExample = new TCourseTimeExample();
-                            tCourseTimeExample.createCriteria().andIdEqualTo(tod.getCoursetimeid()).andCoursedateGreaterThan(new Date());
+                            tCourseTimeExample.createCriteria().andIdEqualTo(tod.getCoursetimeid())
+                                    .andCoursedateGreaterThan(new Date());
                             List<TCourseTime> tCourseTimeList = tCourseTimeMapper.selectByExample(tCourseTimeExample);
                             for(TCourseTime tct:tCourseTimeList){
                                 SelectCourseTime selectCourseTime = new SelectCourseTime();
@@ -230,7 +234,7 @@ public class OrderServiceImpl extends GenericOneServiceImpl<TOrder,TOrderExample
                             }
                         }
                     }
-                }
+//                }
             }
         }catch (Exception e){
             return list;

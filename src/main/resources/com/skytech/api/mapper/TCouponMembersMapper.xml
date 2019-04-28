@@ -1,36 +1,40 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.skytech.api.mapper.TCouponMembersMapper">
-  <resultMap id="BaseResultMap" type="com.skytech.api.model.TCouponMembers">
-    <id column="id" jdbcType="INTEGER" property="id" />
-    <result column="couponId" jdbcType="INTEGER" property="couponid" />
-    <result column="validityPeriod" jdbcType="VARCHAR" property="validityperiod" />
-    <result column="memberId" jdbcType="INTEGER" property="memberid" />
-    <result column="orderNo" jdbcType="VARCHAR" property="orderno" />
-    <result column="status" jdbcType="INTEGER" property="status" />
-    <result column="useDate" jdbcType="TIMESTAMP" property="usedate" />
-    <result column="createTime" jdbcType="TIMESTAMP" property="createtime" />
-    <result column="updateTime" jdbcType="TIMESTAMP" property="updatetime" />
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.skytech.api.mapper.TCouponMembersMapper" >
+  <resultMap id="BaseResultMap" type="com.skytech.api.model.TCouponMembers" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="couponId" property="couponid" jdbcType="INTEGER" />
+    <result column="validityPeriod" property="validityperiod" jdbcType="VARCHAR" />
+    <result column="memberId" property="memberid" jdbcType="INTEGER" />
+    <result column="orderNo" property="orderno" jdbcType="VARCHAR" />
+    <result column="orderDetailId" property="orderdetailid" jdbcType="INTEGER" />
+    <result column="couponLogId" property="couponlogid" jdbcType="INTEGER" />
+    <result column="storesId" property="storesid" jdbcType="INTEGER" />
+    <result column="companyId" property="companyid" jdbcType="INTEGER" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="useDate" property="usedate" jdbcType="TIMESTAMP" />
+    <result column="createTime" property="createtime" jdbcType="TIMESTAMP" />
+    <result column="updateTime" property="updatetime" jdbcType="TIMESTAMP" />
   </resultMap>
-  <sql id="Example_Where_Clause">
-    <where>
-      <foreach collection="oredCriteria" item="criteria" separator="or">
-        <if test="criteria.valid">
-          <trim prefix="(" prefixOverrides="and" suffix=")">
-            <foreach collection="criteria.criteria" item="criterion">
-              <choose>
-                <when test="criterion.noValue">
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
                   and ${criterion.condition}
                 </when>
-                <when test="criterion.singleValue">
+                <when test="criterion.singleValue" >
                   and ${criterion.condition} #{criterion.value}
                 </when>
-                <when test="criterion.betweenValue">
+                <when test="criterion.betweenValue" >
                   and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
                 </when>
-                <when test="criterion.listValue">
+                <when test="criterion.listValue" >
                   and ${criterion.condition}
-                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
                     #{listItem}
                   </foreach>
                 </when>
@@ -41,25 +45,25 @@
       </foreach>
     </where>
   </sql>
-  <sql id="Update_By_Example_Where_Clause">
-    <where>
-      <foreach collection="example.oredCriteria" item="criteria" separator="or">
-        <if test="criteria.valid">
-          <trim prefix="(" prefixOverrides="and" suffix=")">
-            <foreach collection="criteria.criteria" item="criterion">
-              <choose>
-                <when test="criterion.noValue">
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
                   and ${criterion.condition}
                 </when>
-                <when test="criterion.singleValue">
+                <when test="criterion.singleValue" >
                   and ${criterion.condition} #{criterion.value}
                 </when>
-                <when test="criterion.betweenValue">
+                <when test="criterion.betweenValue" >
                   and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
                 </when>
-                <when test="criterion.listValue">
+                <when test="criterion.listValue" >
                   and ${criterion.condition}
-                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
                     #{listItem}
                   </foreach>
                 </when>
@@ -70,206 +74,262 @@
       </foreach>
     </where>
   </sql>
-  <sql id="Base_Column_List">
-    id, couponId, validityPeriod, memberId, orderNo, status, useDate, createTime, updateTime
+  <sql id="Base_Column_List" >
+    id, couponId, validityPeriod, memberId, orderNo, orderDetailId, couponLogId, storesId, 
+    companyId, status, useDate, createTime, updateTime
   </sql>
-  <select id="selectByExample" parameterType="com.skytech.api.model.TCouponMembersExample" resultMap="BaseResultMap">
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.skytech.api.model.TCouponMembersExample" >
     select
-    <if test="distinct">
+    <if test="distinct" >
       distinct
     </if>
     <include refid="Base_Column_List" />
     from t_coupon_members
-    <if test="_parameter != null">
+    <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
-    <if test="orderByClause != null">
+    <if test="orderByClause != null" >
       order by ${orderByClause}
     </if>
-    <if test="pagination != null and pagination.begin >= 0" >
-      limit #{pagination.begin}, #{pagination.pageSize}
-    </if>
   </select>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
     from t_coupon_members
     where id = #{id,jdbcType=INTEGER}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from t_coupon_members
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <delete id="deleteByExample" parameterType="com.skytech.api.model.TCouponMembersExample">
+  <delete id="deleteByExample" parameterType="com.skytech.api.model.TCouponMembersExample" >
     delete from t_coupon_members
-    <if test="_parameter != null">
+    <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.skytech.api.model.TCouponMembers">
+  <insert id="insert" parameterType="com.skytech.api.model.TCouponMembers" >
     insert into t_coupon_members (id, couponId, validityPeriod, 
-      memberId, orderNo, status, 
-      useDate, createTime, updateTime
-      )
+      memberId, orderNo, orderDetailId, 
+      couponLogId, storesId, companyId, 
+      status, useDate, createTime, 
+      updateTime)
     values (#{id,jdbcType=INTEGER}, #{couponid,jdbcType=INTEGER}, #{validityperiod,jdbcType=VARCHAR}, 
-      #{memberid,jdbcType=INTEGER}, #{orderno,jdbcType=VARCHAR}, #{status,jdbcType=BIT}, 
-      #{usedate,jdbcType=TIMESTAMP}, #{createtime,jdbcType=TIMESTAMP}, #{updatetime,jdbcType=TIMESTAMP}
-      )
+      #{memberid,jdbcType=INTEGER}, #{orderno,jdbcType=VARCHAR}, #{orderdetailid,jdbcType=INTEGER}, 
+      #{couponlogid,jdbcType=INTEGER}, #{storesid,jdbcType=INTEGER}, #{companyid,jdbcType=INTEGER}, 
+      #{status,jdbcType=INTEGER}, #{usedate,jdbcType=TIMESTAMP}, #{createtime,jdbcType=TIMESTAMP}, 
+      #{updatetime,jdbcType=TIMESTAMP})
   </insert>
-  <insert id="insertSelective" parameterType="com.skytech.api.model.TCouponMembers">
+  <insert id="insertSelective" parameterType="com.skytech.api.model.TCouponMembers" >
     insert into t_coupon_members
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="id != null">
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
         id,
       </if>
-      <if test="couponid != null">
+      <if test="couponid != null" >
         couponId,
       </if>
-      <if test="validityperiod != null">
+      <if test="validityperiod != null" >
         validityPeriod,
       </if>
-      <if test="memberid != null">
+      <if test="memberid != null" >
         memberId,
       </if>
-      <if test="orderno != null">
+      <if test="orderno != null" >
         orderNo,
       </if>
-      <if test="status != null">
+      <if test="orderdetailid != null" >
+        orderDetailId,
+      </if>
+      <if test="couponlogid != null" >
+        couponLogId,
+      </if>
+      <if test="storesid != null" >
+        storesId,
+      </if>
+      <if test="companyid != null" >
+        companyId,
+      </if>
+      <if test="status != null" >
         status,
       </if>
-      <if test="usedate != null">
+      <if test="usedate != null" >
         useDate,
       </if>
-      <if test="createtime != null">
+      <if test="createtime != null" >
         createTime,
       </if>
-      <if test="updatetime != null">
+      <if test="updatetime != null" >
         updateTime,
       </if>
     </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="id != null">
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
         #{id,jdbcType=INTEGER},
       </if>
-      <if test="couponid != null">
+      <if test="couponid != null" >
         #{couponid,jdbcType=INTEGER},
       </if>
-      <if test="validityperiod != null">
+      <if test="validityperiod != null" >
         #{validityperiod,jdbcType=VARCHAR},
       </if>
-      <if test="memberid != null">
+      <if test="memberid != null" >
         #{memberid,jdbcType=INTEGER},
       </if>
-      <if test="orderno != null">
+      <if test="orderno != null" >
         #{orderno,jdbcType=VARCHAR},
       </if>
-      <if test="status != null">
-        #{status,jdbcType=BIT},
+      <if test="orderdetailid != null" >
+        #{orderdetailid,jdbcType=INTEGER},
       </if>
-      <if test="usedate != null">
+      <if test="couponlogid != null" >
+        #{couponlogid,jdbcType=INTEGER},
+      </if>
+      <if test="storesid != null" >
+        #{storesid,jdbcType=INTEGER},
+      </if>
+      <if test="companyid != null" >
+        #{companyid,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="usedate != null" >
         #{usedate,jdbcType=TIMESTAMP},
       </if>
-      <if test="createtime != null">
+      <if test="createtime != null" >
         #{createtime,jdbcType=TIMESTAMP},
       </if>
-      <if test="updatetime != null">
+      <if test="updatetime != null" >
         #{updatetime,jdbcType=TIMESTAMP},
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.skytech.api.model.TCouponMembersExample" resultType="java.lang.Integer">
+  <select id="countByExample" parameterType="com.skytech.api.model.TCouponMembersExample" resultType="java.lang.Integer" >
     select count(*) from t_coupon_members
-    <if test="_parameter != null">
+    <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
-  <update id="updateByExampleSelective" parameterType="map">
+  <update id="updateByExampleSelective" parameterType="map" >
     update t_coupon_members
-    <set>
-      <if test="record.id != null">
+    <set >
+      <if test="record.id != null" >
         id = #{record.id,jdbcType=INTEGER},
       </if>
-      <if test="record.couponid != null">
+      <if test="record.couponid != null" >
         couponId = #{record.couponid,jdbcType=INTEGER},
       </if>
-      <if test="record.validityperiod != null">
+      <if test="record.validityperiod != null" >
         validityPeriod = #{record.validityperiod,jdbcType=VARCHAR},
       </if>
-      <if test="record.memberid != null">
+      <if test="record.memberid != null" >
         memberId = #{record.memberid,jdbcType=INTEGER},
       </if>
-      <if test="record.orderno != null">
+      <if test="record.orderno != null" >
         orderNo = #{record.orderno,jdbcType=VARCHAR},
       </if>
-      <if test="record.status != null">
-        status = #{record.status,jdbcType=BIT},
+      <if test="record.orderdetailid != null" >
+        orderDetailId = #{record.orderdetailid,jdbcType=INTEGER},
       </if>
-      <if test="record.usedate != null">
+      <if test="record.couponlogid != null" >
+        couponLogId = #{record.couponlogid,jdbcType=INTEGER},
+      </if>
+      <if test="record.storesid != null" >
+        storesId = #{record.storesid,jdbcType=INTEGER},
+      </if>
+      <if test="record.companyid != null" >
+        companyId = #{record.companyid,jdbcType=INTEGER},
+      </if>
+      <if test="record.status != null" >
+        status = #{record.status,jdbcType=INTEGER},
+      </if>
+      <if test="record.usedate != null" >
         useDate = #{record.usedate,jdbcType=TIMESTAMP},
       </if>
-      <if test="record.createtime != null">
+      <if test="record.createtime != null" >
         createTime = #{record.createtime,jdbcType=TIMESTAMP},
       </if>
-      <if test="record.updatetime != null">
+      <if test="record.updatetime != null" >
         updateTime = #{record.updatetime,jdbcType=TIMESTAMP},
       </if>
     </set>
-    <if test="_parameter != null">
+    <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByExample" parameterType="map">
+  <update id="updateByExample" parameterType="map" >
     update t_coupon_members
     set id = #{record.id,jdbcType=INTEGER},
       couponId = #{record.couponid,jdbcType=INTEGER},
       validityPeriod = #{record.validityperiod,jdbcType=VARCHAR},
       memberId = #{record.memberid,jdbcType=INTEGER},
       orderNo = #{record.orderno,jdbcType=VARCHAR},
-      status = #{record.status,jdbcType=BIT},
+      orderDetailId = #{record.orderdetailid,jdbcType=INTEGER},
+      couponLogId = #{record.couponlogid,jdbcType=INTEGER},
+      storesId = #{record.storesid,jdbcType=INTEGER},
+      companyId = #{record.companyid,jdbcType=INTEGER},
+      status = #{record.status,jdbcType=INTEGER},
       useDate = #{record.usedate,jdbcType=TIMESTAMP},
       createTime = #{record.createtime,jdbcType=TIMESTAMP},
       updateTime = #{record.updatetime,jdbcType=TIMESTAMP}
-    <if test="_parameter != null">
+    <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.skytech.api.model.TCouponMembers">
+  <update id="updateByPrimaryKeySelective" parameterType="com.skytech.api.model.TCouponMembers" >
     update t_coupon_members
-    <set>
-      <if test="couponid != null">
+    <set >
+      <if test="couponid != null" >
         couponId = #{couponid,jdbcType=INTEGER},
       </if>
-      <if test="validityperiod != null">
+      <if test="validityperiod != null" >
         validityPeriod = #{validityperiod,jdbcType=VARCHAR},
       </if>
-      <if test="memberid != null">
+      <if test="memberid != null" >
         memberId = #{memberid,jdbcType=INTEGER},
       </if>
-      <if test="orderno != null">
+      <if test="orderno != null" >
         orderNo = #{orderno,jdbcType=VARCHAR},
       </if>
-      <if test="status != null">
-        status = #{status,jdbcType=BIT},
+      <if test="orderdetailid != null" >
+        orderDetailId = #{orderdetailid,jdbcType=INTEGER},
       </if>
-      <if test="usedate != null">
+      <if test="couponlogid != null" >
+        couponLogId = #{couponlogid,jdbcType=INTEGER},
+      </if>
+      <if test="storesid != null" >
+        storesId = #{storesid,jdbcType=INTEGER},
+      </if>
+      <if test="companyid != null" >
+        companyId = #{companyid,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="usedate != null" >
         useDate = #{usedate,jdbcType=TIMESTAMP},
       </if>
-      <if test="createtime != null">
+      <if test="createtime != null" >
         createTime = #{createtime,jdbcType=TIMESTAMP},
       </if>
-      <if test="updatetime != null">
+      <if test="updatetime != null" >
         updateTime = #{updatetime,jdbcType=TIMESTAMP},
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.skytech.api.model.TCouponMembers">
+  <update id="updateByPrimaryKey" parameterType="com.skytech.api.model.TCouponMembers" >
     update t_coupon_members
     set couponId = #{couponid,jdbcType=INTEGER},
       validityPeriod = #{validityperiod,jdbcType=VARCHAR},
       memberId = #{memberid,jdbcType=INTEGER},
       orderNo = #{orderno,jdbcType=VARCHAR},
-      status = #{status,jdbcType=BIT},
+      orderDetailId = #{orderdetailid,jdbcType=INTEGER},
+      couponLogId = #{couponlogid,jdbcType=INTEGER},
+      storesId = #{storesid,jdbcType=INTEGER},
+      companyId = #{companyid,jdbcType=INTEGER},
+      status = #{status,jdbcType=INTEGER},
       useDate = #{usedate,jdbcType=TIMESTAMP},
       createTime = #{createtime,jdbcType=TIMESTAMP},
       updateTime = #{updatetime,jdbcType=TIMESTAMP}

@@ -25,6 +25,7 @@ public interface AccountService extends GenericService<Account, String> {
     JsonMap delete(String... accountSids);
 
     JsonMap saveAvatar(String accountSid,MultipartFile picFile);
+    Map<String, Object> changePassword(String email, String oldPassword, String newPassword);
 }
 
 

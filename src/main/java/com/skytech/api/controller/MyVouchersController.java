@@ -98,11 +98,11 @@ public class MyVouchersController {
         Map<String, List<MyVouchers>> allVouchers = new HashMap<>();
         List<MyVouchers> list = new ArrayList();
 
-        list = myVouchersService.findAllVouchers(accountSid);
+        Map<String,Object> map = myVouchersService.findAllVouchers(accountSid);
 
         data.put("code", "2000");
         data.put("message", "成功");
-        data.put("data",list);
+        data.put("data",map);
 
         return data;
     }

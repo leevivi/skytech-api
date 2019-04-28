@@ -8,7 +8,9 @@ import java.util.Date;
 public class BaseTOrderDetail extends BaseModelOne<Integer>{
 
     private String orderno;
+    private Integer storesamount;
 
+    private Integer companyamount;
     private Integer amount;
 
     private Integer status;
@@ -22,9 +24,11 @@ public class BaseTOrderDetail extends BaseModelOne<Integer>{
     public BaseTOrderDetail() {
     }
 
-    public BaseTOrderDetail(Integer id, String orderno, Integer amount, Integer status, Integer coursetimeid, Date createtime, Date updatetime) {
+    public BaseTOrderDetail(Integer id,String orderno, Integer storesamount, Integer companyamount, Integer amount, Integer status, Integer coursetimeid, Date createtime, Date updatetime) {
         this.id = id;
         this.orderno = orderno;
+        this.storesamount = storesamount;
+        this.companyamount = companyamount;
         this.amount = amount;
         this.status = status;
         this.coursetimeid = coursetimeid;
@@ -32,6 +36,21 @@ public class BaseTOrderDetail extends BaseModelOne<Integer>{
         this.updatetime = updatetime;
     }
 
+    public Integer getStoresamount() {
+        return storesamount;
+    }
+
+    public void setStoresamount(Integer storesamount) {
+        this.storesamount = storesamount;
+    }
+
+    public Integer getCompanyamount() {
+        return companyamount;
+    }
+
+    public void setCompanyamount(Integer companyamount) {
+        this.companyamount = companyamount;
+    }
     public String getOrderno() {
         return orderno;
     }

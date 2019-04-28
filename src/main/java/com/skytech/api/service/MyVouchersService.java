@@ -15,7 +15,7 @@ import java.util.Map;
 public interface MyVouchersService extends GenericOneService<TCouponMembers,Integer> {
     Pagination<TCouponMembers> findForPage(int memberId, int page, int limit);
 
-    List<MyVouchers> findAllVouchers(String accountSid);
+    Map<String, Object> findAllVouchers(String accountSid);
 //    Map<String, List<MyVouchers>> findAllVouchers(String accountSid);
 //    Map<String, List<MyVouchers>> findAllVouchers(int memberId, int companyId, int storesId);
 }

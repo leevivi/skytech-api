@@ -5,4 +5,17 @@
 
         SELECT COUNT(DISTINCT memberId) FROM t_order WHERE courseId =#{param1}
     </select>
+    <select id="listOrders" resultMap="BaseResultMap">
+        select * from t_order t, t_member m
+        where t.memberId = m.id
+        <if test="appUser != null and appUser != ''">
+            and m.appUser = #{appUser}
+        </if>
+        <if test="status != 3">
+            and t.status =#{status}
+        </if>
+        <if test="orderNo != null and orderNo != ''">
+            and t.orderNo = #{orderNo}
+        </if>
+    </select>
 </mapper>

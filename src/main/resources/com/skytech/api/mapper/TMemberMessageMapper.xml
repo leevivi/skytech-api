@@ -109,7 +109,7 @@
       status, type, createTime, 
       updateTime)
     values (#{id,jdbcType=INTEGER}, #{memberid,jdbcType=INTEGER}, #{messageid,jdbcType=INTEGER}, 
-      #{status,jdbcType=BIT}, #{type,jdbcType=TINYINT}, #{createtime,jdbcType=TIMESTAMP}, 
+      #{status,jdbcType=BIT}, #{type,jdbcType=INTEGER}, #{createtime,jdbcType=TIMESTAMP},
       #{updatetime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.skytech.api.model.TMemberMessage">
@@ -151,7 +151,7 @@
         #{status,jdbcType=BIT},
       </if>
       <if test="type != null">
-        #{type,jdbcType=TINYINT},
+        #{type,jdbcType=INTEGER},
       </if>
       <if test="createtime != null">
         #{createtime,jdbcType=TIMESTAMP},
@@ -183,7 +183,7 @@
         status = #{record.status,jdbcType=BIT},
       </if>
       <if test="record.type != null">
-        type = #{record.type,jdbcType=TINYINT},
+        type = #{record.type,jdbcType=INTEGER},
       </if>
       <if test="record.createtime != null">
         createTime = #{record.createtime,jdbcType=TIMESTAMP},
@@ -202,7 +202,7 @@
       memberId = #{record.memberid,jdbcType=INTEGER},
       messageId = #{record.messageid,jdbcType=INTEGER},
       status = #{record.status,jdbcType=BIT},
-      type = #{record.type,jdbcType=TINYINT},
+      type = #{record.type,jdbcType=INTEGER},
       createTime = #{record.createtime,jdbcType=TIMESTAMP},
       updateTime = #{record.updatetime,jdbcType=TIMESTAMP}
     <if test="_parameter != null">
@@ -222,7 +222,7 @@
         status = #{status,jdbcType=BIT},
       </if>
       <if test="type != null">
-        type = #{type,jdbcType=TINYINT},
+        type = #{type,jdbcType=INTEGER},
       </if>
       <if test="createtime != null">
         createTime = #{createtime,jdbcType=TIMESTAMP},
@@ -238,7 +238,7 @@
     set memberId = #{memberid,jdbcType=INTEGER},
       messageId = #{messageid,jdbcType=INTEGER},
       status = #{status,jdbcType=BIT},
-      type = #{type,jdbcType=TINYINT},
+      type = #{type,jdbcType=INTEGER},
       createTime = #{createtime,jdbcType=TIMESTAMP},
       updateTime = #{updatetime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}
