@@ -31,10 +31,11 @@ public class BaseHeartRate extends BaseModel<String>{
 
    @JSONField(format="yyyy-MM-dd HH:mm:ss")
     private Date recordDate;
+    private Integer isManual;
 
     public BaseHeartRate() {}
 
-    public BaseHeartRate(String sid, String accountSid, String accountName, String data, Date startDatetime, Date createdDatetime, Date endDatetime, String deviceSid, Date recordDate) {
+    public BaseHeartRate(String sid, String accountSid, String accountName, String data, Date startDatetime, Date createdDatetime, Date endDatetime, String deviceSid, Date recordDate,Integer isManual) {
         this.sid = sid;
         this.accountSid = accountSid;
         this.accountName = accountName;
@@ -44,6 +45,7 @@ public class BaseHeartRate extends BaseModel<String>{
         this.endDatetime = endDatetime;
         this.deviceSid = deviceSid;
         this.recordDate = recordDate;
+        this.isManual = isManual;
     }
 
     /********** get/set ***********/
@@ -104,6 +106,14 @@ public class BaseHeartRate extends BaseModel<String>{
         this.recordDate = recordDate;
     }
 
+    public Integer getIsManual() {
+        return isManual;
+    }
+
+    public void setIsManual(Integer isManual) {
+        this.isManual = isManual;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -119,6 +129,7 @@ public class BaseHeartRate extends BaseModel<String>{
         sb.append(", endDatetime=").append(endDatetime);
         sb.append(", deviceSid=").append(deviceSid);
         sb.append(", recordDate=").append(recordDate);
+        sb.append(", isManual=").append(isManual);
         sb.append("]");
         return sb.toString();
     }

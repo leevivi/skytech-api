@@ -9,13 +9,13 @@ public class BaseTCoupon extends BaseModelOne<Integer>{
 
     private String couponname;
 
-    private Boolean coupontype;
+    private Integer coupontype;
 
     private Integer companyid;
 
     private Integer storesid;
 
-    private Boolean status;
+    private Integer status;
     @JSONField(format="yyyy-MM-dd HH:mm:ss")
     private Date createtime;
     @JSONField(format="yyyy-MM-dd HH:mm:ss")
@@ -24,7 +24,7 @@ public class BaseTCoupon extends BaseModelOne<Integer>{
     public BaseTCoupon() {
     }
 
-    public BaseTCoupon(Integer id, String couponname, Boolean coupontype, Integer companyid, Integer storesid, Boolean status, Date createtime, Date updatetime) {
+    public BaseTCoupon(Integer id, String couponname, Integer coupontype, Integer companyid, Integer storesid, Integer status, Date createtime, Date updatetime) {
         this.id = id;
         this.couponname = couponname;
         this.coupontype = coupontype;
@@ -43,11 +43,11 @@ public class BaseTCoupon extends BaseModelOne<Integer>{
         this.couponname = couponname == null ? null : couponname.trim();
     }
 
-    public Boolean getCoupontype() {
+    public Integer getCoupontype() {
         return coupontype;
     }
 
-    public void setCoupontype(Boolean coupontype) {
+    public void setCoupontype(Integer coupontype) {
         this.coupontype = coupontype;
     }
 
@@ -67,11 +67,11 @@ public class BaseTCoupon extends BaseModelOne<Integer>{
         this.storesid = storesid;
     }
 
-    public Boolean getStatus() {
+    public Integer getStatus() {
         return status;
     }
 
-    public void setStatus(Boolean status) {
+    public void setStatus(Integer status) {
         this.status = status;
     }
 

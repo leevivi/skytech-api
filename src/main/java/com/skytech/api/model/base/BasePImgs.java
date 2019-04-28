@@ -2,6 +2,7 @@ package com.skytech.api.model.base;
 
 import java.util.Date;
 
+import com.alibaba.fastjson.annotation.JSONField;
 import com.skytech.api.core.model.BaseModelOne;
 
 public class BasePImgs extends BaseModelOne<Integer>{
@@ -12,7 +13,7 @@ public class BasePImgs extends BaseModelOne<Integer>{
     private Integer type;
 
     private Integer status;
-
+    @JSONField(format="yyyy-MM-dd HH:mm:ss")
     private Date createtime;
 
     public String getImg() {

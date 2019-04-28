@@ -67,17 +67,33 @@ public class HeartRateServiceImpl extends GenericServiceImpl<HeartRate, HeartRat
 
             List<HeartRate> heartRates = heartRateMapper.selectByExample(heartRateExample);
             if (heartRates.isEmpty()) {
+                //第一次传，新增
                 heartRate.setSid(UUID.randomUUID().toString().replaceAll("-", ""));
                 heartRate.setCreatedDatetime(new Date());
                 i = heartRateMapper.insertSelective(heartRate);
             } else {
-                HeartRate one = heartRates.get(0);
-                one.setCreatedDatetime(new Date());
-                one.setRecordDate(heartRate.getRecordDate());
-//            one.setStartDatetime(heartRate.getStartDatetime());
-//            one.setEndDatetime(heartRate.getEndDatetime());
-                one.setData(heartRate.getData());
-                i = heartRateMapper.updateByPrimaryKeySelective(one);
+                //没有传isManual字段或者isManual=0
+                // 非手动测试数据，和数据库数据比较大小，保存心率低的数据
+                if(heartRate.getIsManual() == null || heartRate.getIsManual() == 0){
+                    HeartRate one = heartRates.get(0);
+                    if(Integer.parseInt(one.getData())>Integer.parseInt(heartRate.getData())){
+                        one.setCreatedDatetime(new Date());
+                        one.setRecordDate(heartRate.getRecordDate());
+                        one.setData(heartRate.getData());
+                        i = heartRateMapper.updateByPrimaryKeySelective(one);
+                    }
+                    else {
+                        return JsonMap.of(true, "心率大于当前，不保存");
+                    }
+                }
+                //手动测试的心率，直接覆盖更新
+                else if(heartRate.getIsManual()==1){
+                    HeartRate one = heartRates.get(0);
+                    one.setCreatedDatetime(new Date());
+                    one.setRecordDate(heartRate.getRecordDate());
+                    one.setData(heartRate.getData());
+                    i = heartRateMapper.updateByPrimaryKeySelective(one);
+                }
             }
         } else {
             heartRate.setSid(UUID.randomUUID().toString().replaceAll("-", ""));

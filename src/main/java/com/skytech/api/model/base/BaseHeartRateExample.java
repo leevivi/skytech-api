@@ -645,6 +645,65 @@ protected List<Criteria> oredCriteria;
             addCriterion("record_date not between", value1, value2, "recordDate");
             return (Criteria) this;
         }
+        public Criteria andIsManualIsNull() {
+            addCriterion("is_manual is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsManualIsNotNull() {
+            addCriterion("is_manual is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsManualEqualTo(Integer value) {
+            addCriterion("is_manual =", value, "isManual");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsManualNotEqualTo(Integer value) {
+            addCriterion("is_manual <>", value, "isManual");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsManualGreaterThan(Integer value) {
+            addCriterion("is_manual >", value, "isManual");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsManualGreaterThanOrEqualTo(Integer value) {
+            addCriterion("is_manual >=", value, "isManual");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsManualLessThan(Integer value) {
+            addCriterion("is_manual <", value, "isManual");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsManualLessThanOrEqualTo(Integer value) {
+            addCriterion("is_manual <=", value, "isManual");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsManualIn(List<Integer> values) {
+            addCriterion("is_manual in", values, "isManual");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsManualNotIn(List<Integer> values) {
+            addCriterion("is_manual not in", values, "isManual");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsManualBetween(Integer value1, Integer value2) {
+            addCriterion("is_manual between", value1, value2, "isManual");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsManualNotBetween(Integer value1, Integer value2) {
+            addCriterion("is_manual not between", value1, value2, "isManual");
+            return (Criteria) this;
+        }
 
     }
 

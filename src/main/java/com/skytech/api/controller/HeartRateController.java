@@ -82,6 +82,9 @@ public class HeartRateController {
     })
     @PostMapping(value = "/heartRate/save")
     public JsonMap save(HttpSession session, HeartRate heartRate) {
+        if("0".equals(heartRate.getData())){
+            return JsonMap.of(true,"数据为0");
+        }
         Object accountSidObj = session.getAttribute("accountSid");
 
         String accountSid = accountSidObj.toString();

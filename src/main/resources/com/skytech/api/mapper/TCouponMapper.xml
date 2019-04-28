@@ -4,10 +4,10 @@
   <resultMap id="BaseResultMap" type="com.skytech.api.model.TCoupon">
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="couponName" jdbcType="VARCHAR" property="couponname" />
-    <result column="couponType" jdbcType="BIT" property="coupontype" />
+    <result column="couponType" jdbcType="INTEGER" property="coupontype" />
     <result column="companyId" jdbcType="INTEGER" property="companyid" />
     <result column="storesId" jdbcType="INTEGER" property="storesid" />
-    <result column="status" jdbcType="BIT" property="status" />
+    <result column="status" jdbcType="INTEGER" property="status" />
     <result column="createTime" jdbcType="TIMESTAMP" property="createtime" />
     <result column="updateTime" jdbcType="TIMESTAMP" property="updatetime" />
   </resultMap>
@@ -109,8 +109,8 @@
     insert into t_coupon (id, couponName, couponType, 
       companyId, storesId, status, 
       createTime, updateTime)
-    values (#{id,jdbcType=INTEGER}, #{couponname,jdbcType=VARCHAR}, #{coupontype,jdbcType=BIT}, 
-      #{companyid,jdbcType=INTEGER}, #{storesid,jdbcType=INTEGER}, #{status,jdbcType=BIT}, 
+    values (#{id,jdbcType=INTEGER}, #{couponname,jdbcType=VARCHAR}, #{coupontype,jdbcType=INTEGER},
+      #{companyid,jdbcType=INTEGER}, #{storesid,jdbcType=INTEGER}, #{status,jdbcType=INTEGER},
       #{createtime,jdbcType=TIMESTAMP}, #{updatetime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.skytech.api.model.TCoupon">
@@ -149,7 +149,7 @@
         #{couponname,jdbcType=VARCHAR},
       </if>
       <if test="coupontype != null">
-        #{coupontype,jdbcType=BIT},
+        #{coupontype,jdbcType=INTEGER},
       </if>
       <if test="companyid != null">
         #{companyid,jdbcType=INTEGER},
@@ -158,7 +158,7 @@
         #{storesid,jdbcType=INTEGER},
       </if>
       <if test="status != null">
-        #{status,jdbcType=BIT},
+        #{status,jdbcType=INTEGER},
       </if>
       <if test="createtime != null">
         #{createtime,jdbcType=TIMESTAMP},
@@ -184,7 +184,7 @@
         couponName = #{record.couponname,jdbcType=VARCHAR},
       </if>
       <if test="record.coupontype != null">
-        couponType = #{record.coupontype,jdbcType=BIT},
+        couponType = #{record.coupontype,jdbcType=INTEGER},
       </if>
       <if test="record.companyid != null">
         companyId = #{record.companyid,jdbcType=INTEGER},
@@ -193,7 +193,7 @@
         storesId = #{record.storesid,jdbcType=INTEGER},
       </if>
       <if test="record.status != null">
-        status = #{record.status,jdbcType=BIT},
+        status = #{record.status,jdbcType=INTEGER},
       </if>
       <if test="record.createtime != null">
         createTime = #{record.createtime,jdbcType=TIMESTAMP},
@@ -210,10 +210,10 @@
     update t_coupon
     set id = #{record.id,jdbcType=INTEGER},
       couponName = #{record.couponname,jdbcType=VARCHAR},
-      couponType = #{record.coupontype,jdbcType=BIT},
+      couponType = #{record.coupontype,jdbcType=INTEGER},
       companyId = #{record.companyid,jdbcType=INTEGER},
       storesId = #{record.storesid,jdbcType=INTEGER},
-      status = #{record.status,jdbcType=BIT},
+      status = #{record.status,jdbcType=INTEGER},
       createTime = #{record.createtime,jdbcType=TIMESTAMP},
       updateTime = #{record.updatetime,jdbcType=TIMESTAMP}
     <if test="_parameter != null">
@@ -227,7 +227,7 @@
         couponName = #{couponname,jdbcType=VARCHAR},
       </if>
       <if test="coupontype != null">
-        couponType = #{coupontype,jdbcType=BIT},
+        couponType = #{coupontype,jdbcType=INTEGER},
       </if>
       <if test="companyid != null">
         companyId = #{companyid,jdbcType=INTEGER},
@@ -236,7 +236,7 @@
         storesId = #{storesid,jdbcType=INTEGER},
       </if>
       <if test="status != null">
-        status = #{status,jdbcType=BIT},
+        status = #{status,jdbcType=INTEGER},
       </if>
       <if test="createtime != null">
         createTime = #{createtime,jdbcType=TIMESTAMP},
@@ -250,10 +250,10 @@
   <update id="updateByPrimaryKey" parameterType="com.skytech.api.model.TCoupon">
     update t_coupon
     set couponName = #{couponname,jdbcType=VARCHAR},
-      couponType = #{coupontype,jdbcType=BIT},
+      couponType = #{coupontype,jdbcType=INTEGER},
       companyId = #{companyid,jdbcType=INTEGER},
       storesId = #{storesid,jdbcType=INTEGER},
-      status = #{status,jdbcType=BIT},
+      status = #{status,jdbcType=INTEGER},
       createTime = #{createtime,jdbcType=TIMESTAMP},
       updateTime = #{updatetime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}

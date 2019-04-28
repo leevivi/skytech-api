@@ -229,52 +229,52 @@ public class BaseTCouponExample extends BaseModelExample{
             return (Criteria) this;
         }
 
-        public Criteria andCoupontypeEqualTo(Boolean value) {
+        public Criteria andCoupontypeEqualTo(Integer value) {
             addCriterion("couponType =", value, "coupontype");
             return (Criteria) this;
         }
 
-        public Criteria andCoupontypeNotEqualTo(Boolean value) {
+        public Criteria andCoupontypeNotEqualTo(Integer value) {
             addCriterion("couponType <>", value, "coupontype");
             return (Criteria) this;
         }
 
-        public Criteria andCoupontypeGreaterThan(Boolean value) {
+        public Criteria andCoupontypeGreaterThan(Integer value) {
             addCriterion("couponType >", value, "coupontype");
             return (Criteria) this;
         }
 
-        public Criteria andCoupontypeGreaterThanOrEqualTo(Boolean value) {
+        public Criteria andCoupontypeGreaterThanOrEqualTo(Integer value) {
             addCriterion("couponType >=", value, "coupontype");
             return (Criteria) this;
         }
 
-        public Criteria andCoupontypeLessThan(Boolean value) {
+        public Criteria andCoupontypeLessThan(Integer value) {
             addCriterion("couponType <", value, "coupontype");
             return (Criteria) this;
         }
 
-        public Criteria andCoupontypeLessThanOrEqualTo(Boolean value) {
+        public Criteria andCoupontypeLessThanOrEqualTo(Integer value) {
             addCriterion("couponType <=", value, "coupontype");
             return (Criteria) this;
         }
 
-        public Criteria andCoupontypeIn(List<Boolean> values) {
+        public Criteria andCoupontypeIn(List<Integer> values) {
             addCriterion("couponType in", values, "coupontype");
             return (Criteria) this;
         }
 
-        public Criteria andCoupontypeNotIn(List<Boolean> values) {
+        public Criteria andCoupontypeNotIn(List<Integer> values) {
             addCriterion("couponType not in", values, "coupontype");
             return (Criteria) this;
         }
 
-        public Criteria andCoupontypeBetween(Boolean value1, Boolean value2) {
+        public Criteria andCoupontypeBetween(Integer value1, Integer value2) {
             addCriterion("couponType between", value1, value2, "coupontype");
             return (Criteria) this;
         }
 
-        public Criteria andCoupontypeNotBetween(Boolean value1, Boolean value2) {
+        public Criteria andCoupontypeNotBetween(Integer value1, Integer value2) {
             addCriterion("couponType not between", value1, value2, "coupontype");
             return (Criteria) this;
         }
@@ -409,52 +409,52 @@ public class BaseTCouponExample extends BaseModelExample{
             return (Criteria) this;
         }
 
-        public Criteria andStatusEqualTo(Boolean value) {
+        public Criteria andStatusEqualTo(Integer value) {
             addCriterion("status =", value, "status");
             return (Criteria) this;
         }
 
-        public Criteria andStatusNotEqualTo(Boolean value) {
+        public Criteria andStatusNotEqualTo(Integer value) {
             addCriterion("status <>", value, "status");
             return (Criteria) this;
         }
 
-        public Criteria andStatusGreaterThan(Boolean value) {
+        public Criteria andStatusGreaterThan(Integer value) {
             addCriterion("status >", value, "status");
             return (Criteria) this;
         }
 
-        public Criteria andStatusGreaterThanOrEqualTo(Boolean value) {
+        public Criteria andStatusGreaterThanOrEqualTo(Integer value) {
             addCriterion("status >=", value, "status");
             return (Criteria) this;
         }
 
-        public Criteria andStatusLessThan(Boolean value) {
+        public Criteria andStatusLessThan(Integer value) {
             addCriterion("status <", value, "status");
             return (Criteria) this;
         }
 
-        public Criteria andStatusLessThanOrEqualTo(Boolean value) {
+        public Criteria andStatusLessThanOrEqualTo(Integer value) {
             addCriterion("status <=", value, "status");
             return (Criteria) this;
         }
 
-        public Criteria andStatusIn(List<Boolean> values) {
+        public Criteria andStatusIn(List<Integer> values) {
             addCriterion("status in", values, "status");
             return (Criteria) this;
         }
 
-        public Criteria andStatusNotIn(List<Boolean> values) {
+        public Criteria andStatusNotIn(List<Integer> values) {
             addCriterion("status not in", values, "status");
             return (Criteria) this;
         }
 
-        public Criteria andStatusBetween(Boolean value1, Boolean value2) {
+        public Criteria andStatusBetween(Integer value1, Integer value2) {
             addCriterion("status between", value1, value2, "status");
             return (Criteria) this;
         }
 
-        public Criteria andStatusNotBetween(Boolean value1, Boolean value2) {
+        public Criteria andStatusNotBetween(Integer value1, Integer value2) {
             addCriterion("status not between", value1, value2, "status");
             return (Criteria) this;
         }

@@ -11,6 +11,7 @@
         <result column="end_datetime" property="endDatetime" jdbcType="TIMESTAMP" />
         <result column="device_sid" property="deviceSid" jdbcType="VARCHAR" />
         <result column="record_date" property="recordDate" jdbcType="TIMESTAMP" />
+        <result column="is_manual" jdbcType="INTEGER" property="isManual" />
     </resultMap>
     <sql id="Example_Where_Clause" >
         <where >
@@ -120,7 +121,8 @@
         created_datetime,
         end_datetime,
         device_sid,
-        record_date
+        record_date,
+        is_manual
         )
         values (
         #{sid,jdbcType=VARCHAR},
@@ -131,7 +133,8 @@
         #{createdDatetime,jdbcType=TIMESTAMP},
         #{endDatetime,jdbcType=TIMESTAMP},
         #{deviceSid,jdbcType=VARCHAR},
-        #{recordDate,jdbcType=TIMESTAMP}
+        #{recordDate,jdbcType=TIMESTAMP},
+        #{isManual,jdbcType=INTEGER}
         )
     </insert>
 
@@ -163,7 +166,10 @@
             device_sid,
             </if>
             <if test="recordDate != null" >
-            record_date
+            record_date,
+            </if>
+            <if test="isManual != null">
+                is_manual,
             </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides="," >
@@ -193,7 +199,10 @@
                 #{deviceSid,jdbcType=VARCHAR},
             </if>
             <if test="recordDate != null" >
-                #{recordDate,jdbcType=TIMESTAMP}
+                #{recordDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="isManual != null">
+                #{isManual,jdbcType=INTEGER},
             </if>
         </trim>
     </insert>
@@ -233,7 +242,10 @@
             device_sid= #{deviceSid,jdbcType=VARCHAR},
             </if>
             <if test="recordDate != null" >
-            record_date= #{recordDate,jdbcType=TIMESTAMP}
+            record_date= #{recordDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="record.isManual != null">
+                is_manual = #{record.isManual,jdbcType=INTEGER},
             </if>
         </set>
         <if test="_parameter != null" >
@@ -252,7 +264,8 @@
         created_datetime= #{createdDatetime,jdbcType=TIMESTAMP},
         end_datetime= #{endDatetime,jdbcType=TIMESTAMP},
         device_sid= #{deviceSid,jdbcType=VARCHAR},
-        record_date= #{recordDate,jdbcType=TIMESTAMP}
+        record_date= #{recordDate,jdbcType=TIMESTAMP},
+        is_manual = #{record.isManual,jdbcType=INTEGER}
         <if test="_parameter != null" >
             <include refid="Update_By_Example_Where_Clause" />
         </if>
@@ -287,6 +300,9 @@
             <if test="recordDate != null" >
                 record_date= #{recordDate,jdbcType=TIMESTAMP}
             </if>
+            <if test="isManual != null">
+                is_manual = #{isManual,jdbcType=INTEGER},
+            </if>
         </set>
         where sid = #{sid,jdbcType=VARCHAR}
     </update>
@@ -301,7 +317,8 @@
         created_datetime= #{createdDatetime,jdbcType=TIMESTAMP},
         end_datetime= #{endDatetime,jdbcType=TIMESTAMP},
         device_sid= #{deviceSid,jdbcType=VARCHAR},
-        record_date= #{recordDate,jdbcType=TIMESTAMP}
+        record_date= #{recordDate,jdbcType=TIMESTAMP},
+        is_manual = #{isManual,jdbcType=INTEGER}
         where sid = #{sid,jdbcType=VARCHAR}
     </update>
 </mapper>
