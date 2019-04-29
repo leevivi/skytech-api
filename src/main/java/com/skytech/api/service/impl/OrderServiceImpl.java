@@ -4,6 +4,7 @@ import com.skytech.api.core.JsonMap;
 import com.skytech.api.core.mapper.GenericOneMapper;
 import com.skytech.api.core.service.impl.GenericOneServiceImpl;
 import com.skytech.api.core.utils.DateUtil;
+import com.skytech.api.core.utils.picUtil;
 import com.skytech.api.mapper.*;
 import com.skytech.api.model.*;
 import com.skytech.api.service.OrderService;
@@ -260,7 +261,7 @@ public class OrderServiceImpl extends GenericOneServiceImpl<TOrder,TOrderExample
             TCourse tCourse = tCourseMapper.selectByPrimaryKey(tOrder.getCourseid());
             myOrder.setOrderCourseName(tCourse.getTitle());
             if(tCourse.getCoverurl()!=null){
-                myOrder.setOrderCourseUrl("http://47.244.189.240:8080/statics" +tCourse.getCoverurl());
+                myOrder.setOrderCourseUrl(picUtil.getUrl() +tCourse.getCoverurl());
             }else{
                 myOrder.setOrderCourseUrl(tCourse.getCoverurl());
             }
@@ -299,6 +300,18 @@ public class OrderServiceImpl extends GenericOneServiceImpl<TOrder,TOrderExample
             }
             myOrder.setOrderCourseTime(orderCourseTimeList);
             list.add(myOrder);
+            Collections.sort(list, new Comparator<MyOrder>() {
+                @Override
+                public int compare(MyOrder o1, MyOrder o2) {
+                    if(o1.getOrderDate().before(o2.getOrderDate())){
+                        return 1;
+                    }
+                    if(o1.getOrderDate().equals(o2.getOrderDate())){
+                        return 0;
+                    }
+                    return -1;
+                }
+            });
         }
         return list;
     }

@@ -28,10 +28,8 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 import java.text.ParseException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * Created by LiWei on 2019/3/29.
@@ -84,7 +82,9 @@ public class CourseController{
         int storesId = 0;
         try {
             memberList = (List<MemberInfo>) memberInfoData.get("memberInfoList");
-            for (MemberInfo memberInfo : memberList) {
+            //根据公司和门店去重
+            List<MemberInfo> distinctClass = memberList.stream().collect(Collectors.collectingAndThen(Collectors.toCollection(() -> new TreeSet<>(Comparator.comparing(o -> o.getCompanyId() + ";" + o.getStoresId()))), ArrayList::new));
+            for (MemberInfo memberInfo : distinctClass) {
                 companyId = memberInfo.getCompanyId();
                 storesId = memberInfo.getStoresId();
                 Pagination<TCourse> pagination = courseService.findForPage(companyId,storesId,page, limit);
@@ -300,7 +300,7 @@ public class CourseController{
         TMemberExample tMemberExample = new TMemberExample();
         tMemberExample.createCriteria().andAppuserEqualTo(account.getEmail()).andIsoverdueEqualTo(0);
         List<TMember> tMembers = tMemberMapper.selectByExample(tMemberExample);
-        List<Object> memberInfoList = new ArrayList<>();
+        List<MemberInfo> memberInfoList = new ArrayList<>();
         if(tMembers.isEmpty()||tMembers.get(0).getCompanyid()==null||tMembers.get(0).getStoresid()==null){
             List<TCourse> list = new ArrayList<>();
             data.put("data", list);
@@ -323,6 +323,7 @@ public class CourseController{
                     memberInfo.setCompanyId(orgStores.getCompanyid());
                     memberInfo.setStoresId(orgStores.getId());
                     memberInfoList.add(memberInfo);
+
                 }
             } else {
                 MemberInfo memberInfo = new MemberInfo();
@@ -332,12 +333,12 @@ public class CourseController{
                 memberInfoList.add(memberInfo);
             }
         }
+
         data.put("memberInfoList",memberInfoList);
         return data;
     }
 
-    /*@Override
-    public PlatformTransactionManager annotationDrivenTransactionManager() {
-        return join;
-    }*/
+
+
+
 }

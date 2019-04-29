@@ -346,7 +346,7 @@ public class CourseServiceImpl extends GenericOneServiceImpl<TCourse,TCourseExam
                     TCouponMembers tCouponMembers = tCouponMembersMapper.selectByPrimaryKey(couponIds[i]);
                     // TODO 新增字段，订单详情ID
                     tCouponMembers.setOrderno(one.getOrderno());
-                    tCouponMembers.setStatus(1);
+                    tCouponMembers.setStatus(0);
                     tCouponMembers.setOrderdetailid(list.get(j).getId());
                     tCouponMembers.setUsedate(new Date());
                     tCMNum = tCouponMembersMapper.updateByPrimaryKeySelective(tCouponMembers);

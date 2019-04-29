@@ -34,4 +34,33 @@ public class MemberInfo {
     public void setStoresId(Integer storesId) {
         this.storesId = storesId;
     }
+
+    @Override
+    public String toString() {
+        return "MemberInfo{" +
+                "memberId=" + memberId +
+                ", companyId=" + companyId +
+                ", storesId=" + storesId +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        MemberInfo that = (MemberInfo) o;
+
+        if (memberId != null ? !memberId.equals(that.memberId) : that.memberId != null) return false;
+        if (companyId != null ? !companyId.equals(that.companyId) : that.companyId != null) return false;
+        return storesId != null ? storesId.equals(that.storesId) : that.storesId == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = memberId != null ? memberId.hashCode() : 0;
+        result = 31 * result + (companyId != null ? companyId.hashCode() : 0);
+        result = 31 * result + (storesId != null ? storesId.hashCode() : 0);
+        return result;
+    }
 }

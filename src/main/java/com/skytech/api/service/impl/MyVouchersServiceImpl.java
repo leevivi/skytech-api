@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * Created by LiWei on 2019/4/5.
@@ -65,12 +66,16 @@ public class MyVouchersServiceImpl extends GenericOneServiceImpl<TCouponMembers,
         Map<Integer, Object> companyMap = new HashMap<Integer, Object>();
         List<Vouchers> allCompanyCoupon = new ArrayList<Vouchers>();
         List<MyVouchers> allList = new ArrayList();
+        List<Vouchers> vouchersList = new ArrayList<>();
         int memberId = 0;
         int companyId = 0;
         int storesId = 0;
         try {
             memberList = (List<MemberInfo>) memberInfoData.get("memberInfoList");
-            for (MemberInfo memberInfo :memberList) {
+            //根据公司和门店去重
+            List<MemberInfo> distinctClass = memberList.stream().collect(Collectors.collectingAndThen(Collectors.toCollection(() -> new TreeSet<>(Comparator.comparing(o -> o.getCompanyId() + ";" + o.getStoresId()))), ArrayList::new));
+
+            for (MemberInfo memberInfo :distinctClass) {
                 if(companyMap.get(memberInfo.getCompanyId()) == null) {
                     companyMap.put(memberInfo.getCompanyId(), "t");
                     TMember member = tMemberMapper.selectByPrimaryKey(memberInfo.getMemberId());
@@ -106,24 +111,23 @@ public class MyVouchersServiceImpl extends GenericOneServiceImpl<TCouponMembers,
                 OrgStores orgStores = orgStoresMapper.selectByPrimaryKey(storesId);
                 myVouchers.setClubId(orgStores.getId());
                 myVouchers.setClubName(orgStores.getStoresname());
-                List<Vouchers> list = new ArrayList<>();
+
                 String now = DateUtil.formatmiddledatestr(new Date());
                 TCouponMembersExample tCouponMembersExample = new TCouponMembersExample();
-                tCouponMembersExample.createCriteria().andMemberidEqualTo(memberId).andValidityperiodGreaterThanOrEqualTo(now).andCouponidEqualTo(1);
+                tCouponMembersExample.createCriteria().andMemberidEqualTo(memberId).andValidityperiodGreaterThanOrEqualTo(now).andCouponidEqualTo(1).andStatusEqualTo(0);
                 List<TCouponMembers> tCouponMembers = tCouponMembersMapper.selectByExample(tCouponMembersExample);
                 for (TCouponMembers tcm :tCouponMembers) {
                     TCouponExample tCouponExample = new TCouponExample();
                     tCouponExample.createCriteria().andIdEqualTo(tcm.getCouponid());
                     List<TCoupon> tCoupons = tCouponMapper.selectByExample(tCouponExample);
-
                     Vouchers vouchers = new Vouchers();
                     vouchers.setVouchersName(tCoupons.get(0).getCouponname());
                     vouchers.setAvailableClub("This stores use only");
 
                     //通过有效时间补全当月日期2019-04-01-2019-04-30
                     vouchers.setValidityTime(DateUtil.getHeadAndEndDateForMonth(tcm.getValidityperiod()));
-                    list.add(vouchers);
-                    myVouchers.setVouchersList(list);
+                    vouchersList.add(vouchers);
+                    myVouchers.setVouchersList(vouchersList);
                 }
                 allList.add(myVouchers);
             }
