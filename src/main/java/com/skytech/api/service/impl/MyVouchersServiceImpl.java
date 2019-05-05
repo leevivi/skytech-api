@@ -80,7 +80,7 @@ public class MyVouchersServiceImpl extends GenericOneServiceImpl<TCouponMembers,
                     companyMap.put(memberInfo.getCompanyId(), "t");
                     TMember member = tMemberMapper.selectByPrimaryKey(memberInfo.getMemberId());
 
-                    List<TCouponMembers> list = tCouponMembersMapper.findByValidityPeriod(member.getAppuser());
+                    List<TCouponMembers> list = tCouponMembersMapper.findByValidityPeriod(member.getAppuser(),memberInfo.getCompanyId());
 
                     if(list.isEmpty()) {
                         list = new ArrayList<TCouponMembers>();
@@ -116,6 +116,9 @@ public class MyVouchersServiceImpl extends GenericOneServiceImpl<TCouponMembers,
                 TCouponMembersExample tCouponMembersExample = new TCouponMembersExample();
                 tCouponMembersExample.createCriteria().andMemberidEqualTo(memberId).andValidityperiodGreaterThanOrEqualTo(now).andCouponidEqualTo(1).andStatusEqualTo(0);
                 List<TCouponMembers> tCouponMembers = tCouponMembersMapper.selectByExample(tCouponMembersExample);
+                if(tCouponMembers.isEmpty()){
+                    myVouchers.setVouchersList(new ArrayList<>());
+                }
                 for (TCouponMembers tcm :tCouponMembers) {
                     TCouponExample tCouponExample = new TCouponExample();
                     tCouponExample.createCriteria().andIdEqualTo(tcm.getCouponid());

@@ -66,7 +66,7 @@ public class CourseServiceImpl extends GenericOneServiceImpl<TCourse,TCourseExam
     public Pagination<TCourse> findForPage(int companyId, int storesId, int page, int limit) {
         TCourseExample tCourseExample = new TCourseExample();
         BaseTCourseExample.Criteria criteria = tCourseExample.createCriteria();
-        criteria.andCompanyidEqualTo(companyId).andStoresidEqualTo(storesId).andStatusEqualTo(0);
+        criteria.andCompanyidEqualTo(companyId).andStoresidEqualTo(storesId).andStatusEqualTo(0).andMonthGreaterThanOrEqualTo(DateUtil.formatmiddledatestr(new Date()));
         Pagination<TCourse> pagination = this.queryByPage(tCourseExample, (page - 1) * limit, limit, "createtime desc");
 
         return pagination;
@@ -181,7 +181,7 @@ public class CourseServiceImpl extends GenericOneServiceImpl<TCourse,TCourseExam
                     List<TOrderDetail> tOrderDetails = tOrderDetailMapper.selectByExample(tOrderDetailExample);
                     if(!tOrderDetails.isEmpty()){
                         TOrderExample tOrderExample = new TOrderExample();
-                        tOrderExample.createCriteria().andOrdernoEqualTo(tOrderDetails.get(0).getOrderno());
+                        tOrderExample.createCriteria().andOrdernoEqualTo(tOrderDetails.get(0).getOrderno()).andStatusEqualTo(0);
                         List<TOrder> tOrders = tOrderMapper.selectByExample(tOrderExample);
                         if(tOrders.get(0).getMemberid()==membersId){
                             //会员已经加入该时段课程
@@ -263,10 +263,12 @@ public class CourseServiceImpl extends GenericOneServiceImpl<TCourse,TCourseExam
           List<TOrderDetail> tOrderDetails = tOrderDetailMapper.selectByExample(tOrderDetailExample);
           if(!tOrderDetails.isEmpty()){
               TOrderExample tOrderExample = new TOrderExample();
-              tOrderExample.createCriteria().andOrdernoEqualTo(tOrderDetails.get(0).getOrderno());
+              tOrderExample.createCriteria().andOrdernoEqualTo(tOrderDetails.get(0).getOrderno()).andStatusEqualTo(0);
               List<TOrder> tOrderList = tOrderMapper.selectByExample(tOrderExample);
-              if(tOrderList.get(0).getMemberid()==membersId){
-                  return JsonMap.of(false, "您已加入该课程");
+              if(!tOrderList.isEmpty()){
+                  if(tOrderList.get(0).getMemberid()==membersId){
+                      return JsonMap.of(false, "您已加入该课程");
+                  }
               }
           }
         }
@@ -346,7 +348,7 @@ public class CourseServiceImpl extends GenericOneServiceImpl<TCourse,TCourseExam
                     TCouponMembers tCouponMembers = tCouponMembersMapper.selectByPrimaryKey(couponIds[i]);
                     // TODO 新增字段，订单详情ID
                     tCouponMembers.setOrderno(one.getOrderno());
-                    tCouponMembers.setStatus(0);
+                    tCouponMembers.setStatus(1);
                     tCouponMembers.setOrderdetailid(list.get(j).getId());
                     tCouponMembers.setUsedate(new Date());
                     tCMNum = tCouponMembersMapper.updateByPrimaryKeySelective(tCouponMembers);

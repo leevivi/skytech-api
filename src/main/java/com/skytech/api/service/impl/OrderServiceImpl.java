@@ -131,7 +131,7 @@ public class OrderServiceImpl extends GenericOneServiceImpl<TOrder,TOrderExample
                                 for(int j = 0;j<courserTimeIds.length;j++){
                                     TCouponMembersExample tCouponMembersExample = new TCouponMembersExample();
                                     tCouponMembersExample.createCriteria().andOrdernoEqualTo(orderNum)
-                                            .andMemberidEqualTo(memberId).andStatusEqualTo(1);
+                                            .andMemberidEqualTo(tOrders.get(0).getMemberid()).andStatusEqualTo(1);
                                     List<TCouponMembers> tCouponMembersList = tCouponMembersMapper
                                             .selectByExample(tCouponMembersExample);
                                     for(TCouponMembers tcm:tCouponMembersList){
@@ -145,45 +145,44 @@ public class OrderServiceImpl extends GenericOneServiceImpl<TOrder,TOrderExample
                                             return JsonMap.of(false, "退单失败");
                                         }
                                     }
-
+                                }
+                                //修改订单状态
+                                TOrderDetailExample tOrderDetailExample1 = new TOrderDetailExample();
+                                tOrderDetailExample1.createCriteria().andOrdernoEqualTo(orderNum);
+                                List<TOrderDetail> tOrderDetailList = tOrderDetailMapper.selectByExample(tOrderDetailExample1);
+                                int index = 0;
+                                for (TOrderDetail tod :tOrderDetailList) {
+                                    for(int x =0;x<tOrderDetailList.size();x++){
+                                        if(tod.getStatus()==0 || tod.getStatus()==1){
+                                            TOrder tOrder = tOrders.get(0);
+                                            tOrder.setStatus(0);
+                                            oNum = tOrderMapper.updateByPrimaryKeySelective(tOrder);
+                                            index++;
+                                            break;
+                                        }
+                                    }
+                                    if(index>0){
+                                        break;
+                                    }
+                                    for(int j = 0;j<tOrderDetailList.size();j++){
+                                        if(tOrderDetailList.get(j).getStatus()==2 ){
+                                            TOrder tOrder = tOrders.get(0);
+                                            tOrder.setStatus(1);
+                                            oNum = tOrderMapper.updateByPrimaryKeySelective(tOrder);
+                                        }
+                                    }
+                                    for(int k = 0;k<tOrderDetailList.size();k++){
+                                        if(tOrderDetailList.get(k).getStatus()==3 || tOrderDetailList.get(k).getStatus()==4){
+                                            TOrder tOrder = tOrders.get(0);
+                                            tOrder.setStatus(2);
+                                            oNum = tOrderMapper.updateByPrimaryKeySelective(tOrder);
+                                        }
+                                    }
                                 }
                             }
                         }
                     }
-                    //修改订单状态
-                    TOrderDetailExample tOrderDetailExample = new TOrderDetailExample();
-                    tOrderDetailExample.createCriteria().andOrdernoEqualTo(orderNum);
-                    List<TOrderDetail> tOrderDetailList = tOrderDetailMapper.selectByExample(tOrderDetailExample);
-                    int index = 0;
-                    for (TOrderDetail tod :tOrderDetailList) {
-                        for(int i =0;i<tOrderDetailList.size();i++){
-                            if(tod.getStatus()==0 || tod.getStatus()==1){
-                                TOrder tOrder = tOrders.get(0);
-                                tOrder.setStatus(0);
-                                oNum = tOrderMapper.updateByPrimaryKeySelective(tOrder);
-                                index++;
-                                break;
-                            }
-                        }
-                        if(index>0){
-                            break;
-                        }
-                        for(int j = 0;j<tOrderDetailList.size();j++){
-                            if(tOrderDetailList.get(j).getStatus()==2 ){
-                                TOrder tOrder = tOrders.get(0);
-                                tOrder.setStatus(1);
-                                oNum = tOrderMapper.updateByPrimaryKeySelective(tOrder);
-                            }
-                        }
-                        for(int k = 0;k<tOrderDetailList.size();k++){
-                            if(tOrderDetailList.get(k).getStatus()==3 || tOrderDetailList.get(k).getStatus()==4){
-                                TOrder tOrder = tOrders.get(0);
-                                tOrder.setStatus(2);
-                                oNum = tOrderMapper.updateByPrimaryKeySelective(tOrder);
-                            }
-                        }
 
-                    }
                 }
                 if (oNum > 0 ) {
                     return JsonMap.of(true, "退单成功");

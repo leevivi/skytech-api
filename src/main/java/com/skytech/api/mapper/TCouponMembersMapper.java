@@ -30,5 +30,5 @@ public interface TCouponMembersMapper extends GenericOneMapper<TCouponMembers,TC
      * @return List<TCouponMembers>
      * @throws
      */
-    List<TCouponMembers> findByValidityPeriod(@Param("appUser") String appuser);
+    List<TCouponMembers> findByValidityPeriod(@Param("appUser") String appuser,@Param("companyId") int companyId);
 }

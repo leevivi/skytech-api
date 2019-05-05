@@ -11,7 +11,7 @@
         select * from t_coupon_members t, t_member m
         where t.memberId = m.id
         and status = 0
-        and appUser = #{appUser} and couponId = 2
+        and appUser = #{appUser} and couponId = 2 and t.companyId =#{companyId}
         and t.validityPeriod <![CDATA[ >= ]]> DATE_FORMAT(CURDATE(),'%Y-%m')
     </select>
 </mapper>
